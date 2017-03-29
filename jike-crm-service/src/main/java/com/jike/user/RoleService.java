@@ -21,7 +21,7 @@ public interface RoleService {
 	 * @created wangyb
 	 * @createtime 2017年3月27日下午5:38:35
 	 */
-	String addRole(JSONObject roleJson);
+	JSONObject addRole(JSONObject roleJson);
 	
 	/**
 	 * 更新角色
@@ -30,6 +30,6 @@ public interface RoleService {
 	 * @created wangyb
 	 * @createtime 2017年3月27日下午5:39:57
 	 */
-	String updateRole(JSONObject roleJson);
+	JSONObject updateRole(JSONObject roleJson);
 
 }

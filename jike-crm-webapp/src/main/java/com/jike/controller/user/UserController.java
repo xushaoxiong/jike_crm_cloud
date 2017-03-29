@@ -46,7 +46,7 @@ public class UserController {
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public @ResponseBody String updateUser(HttpServletRequest request) {
 		String userJson;
-		String result ="fail" ;
+		JSONObject result = null ;
 		try {
 			userJson = RequestUtils.getRequestJsonString(request);
 		    result = userService.updateUser(JSONObject.parseObject(userJson));
@@ -54,7 +54,7 @@ public class UserController {
 			logger.error("addUser error", e);
 			e.printStackTrace();
 		}
-		return result;
+		return result.toJSONString();
 	}
 	
 	/**
@@ -67,15 +67,35 @@ public class UserController {
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public @ResponseBody String addUser(HttpServletRequest request) {
 		String userJson;
-		String result ="fail" ;
+		JSONObject result = null ;
 		try {
 			userJson = RequestUtils.getRequestJsonString(request);
 		    result = userService.addUser(JSONObject.parseObject(userJson));
 		} catch (IOException e) {
 			logger.error("addUser error", e);
-			e.printStackTrace();
 		}
-		return result;
+		return result.toJSONString();
+	}
+	
+	/**
+	 * 用户登录
+	 * @param request
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月28日上午10:36:56
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public @ResponseBody String login(HttpServletRequest request,String loginName,String password) {
+		String userLoginJson;
+		JSONObject result = null ;
+		try {
+			userLoginJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(userLoginJson);
+		    result = userService.login(parseObject);
+		} catch (IOException e) {
+			logger.error("login error", e);
+		}
+		return result.toJSONString();
 	}
 	
 	

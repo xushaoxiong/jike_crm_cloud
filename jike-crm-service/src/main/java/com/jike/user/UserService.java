@@ -20,7 +20,7 @@ public interface UserService {
 	 * @created wangyb
 	 * @createtime 2017年3月27日上午11:44:42
 	 */
-	String addUser(JSONObject userJson);
+	JSONObject addUser(JSONObject userJson);
 	
 	/**
 	 * 更新用户基本信息
@@ -29,7 +29,7 @@ public interface UserService {
 	 * @created wangyb
 	 * @createtime 2017年3月27日上午11:44:54
 	 */
-	String updateUser(JSONObject userJson);
+	JSONObject updateUser(JSONObject userJson);
 	
 	/**
 	 * 登录
@@ -39,7 +39,6 @@ public interface UserService {
 	 * @created wangyb
 	 * @createtime 2017年3月27日下午5:25:37
 	 */
-	JSONObject login(String loginName,String password);
-	
-	
+	JSONObject login(JSONObject parseObject);
+
 }

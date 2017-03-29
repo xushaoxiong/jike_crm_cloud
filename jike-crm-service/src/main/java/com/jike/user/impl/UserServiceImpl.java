@@ -10,6 +10,7 @@ import com.jike.user.UserService;
 import com.jike.user.dao.UserMapper;
 import com.jike.user.dao.UserRoleMapper;
 import com.jike.user.model.User;
+import com.jike.user.model.UserRole;
 import com.jike.user.utils.security.Password;
 import com.jike.user.utils.security.impl.ShaPasswordImplV1;
 
@@ -39,12 +40,16 @@ public class UserServiceImpl implements UserService {
 		return userjson;
 	}
 
-	public String addUser(JSONObject userJson) {
+	public JSONObject addUser(JSONObject userJson) {
+		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
 			User oldUser = userMapper.selectByLoginName(userJson.getString("loginName"));
 			if (oldUser != null) {
-				return "isExit";
+				resultJson.put("status", "fail");
+				resultJson.put("message", "登录名已存在");
+				return resultJson;
 			}
+			//添加角色
 			User user = new User();
 			user.setLoginName(userJson.getString("loginName"));
 			// 密码加密存储
@@ -53,24 +58,33 @@ public class UserServiceImpl implements UserService {
 			user.setName(userJson.getString("name"));
 			user.setEmail(userJson.getString("email"));
 			user.setEmployeeNum(userJson.getString("employeeNum"));
-			user.setIsEmployment(userJson.getInteger("isEmployment"));
+			user.setIsEmployment(0);//添加员工是默认在职
 			user.setPhone(userJson.getString("phone"));
 			user.setEntryDate(userJson.getDate("entryDate"));
 			user.setCreateTime(new Date());
-			int insert = userMapper.insert(user);
-			System.out.println(insert);
+			userMapper.insert(user);
 			
-//			UserRole userRole = new UserRole();
-//			userRoleMapper.insert(userRole);
-			return "success";
+			//分配角色
+			User userNew = userMapper.selectByLoginName(userJson.getString("loginName"));
+			UserRole userRole = new UserRole();
+			userRole.setUserId(userNew.getUserId());
+			userRole.setRoleId(userJson.getLong("roleId"));
+			user.setCreateTime(new Date());
+			userRoleMapper.insert(userRole);
+			
+			resultJson.put("status", "success");
+			resultJson.put("message", "添加成功");
+			return resultJson;
 		}
-		return "fail";
+		resultJson.put("status", "fail");
+		resultJson.put("message", "添加内容为空");
+		return resultJson;
 	}
 
-	public String updateUser(JSONObject userJson) {
+	public JSONObject updateUser(JSONObject userJson) {
+		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
 			User user = userMapper.selectByLoginName(userJson.getString("loginName"));
-			// 密码加密存储
 			user.setGender(userJson.getInteger("gender"));
 			user.setName(userJson.getString("name"));
 			user.setEmail(userJson.getString("email"));
@@ -79,13 +93,24 @@ public class UserServiceImpl implements UserService {
 			user.setPhone(userJson.getString("phone"));
 			user.setEntryDate(userJson.getDate("entryDate"));
 			user.setUpdateTime(new Date());
-			userMapper.updateByPrimaryKey(user);
-			return "success";
+			userMapper.updateByPrimaryKeySelective(user);
+			
+			UserRole userRole = userRoleMapper.selectByUserId(user.getUserId());
+			
+			
+			resultJson.put("status", "success");
+			resultJson.put("message", "添加成功");
+		}else{
+			resultJson.put("status", "fail");
+			resultJson.put("message", "添加内容为空");
 		}
-		return "fail";
+		
+		return resultJson;
 	}
 
-	public JSONObject login(String loginName, String password) {
+	public JSONObject login(JSONObject parseObject) {
+		String loginName = parseObject.getString("loginName");
+		String password = parseObject.getString("password");
 		User user = userMapper.selectUserByLoginnameAndPw(loginName,passwordenEcrypt.encrypt(password));
 		JSONObject json = new JSONObject();
 		if(user!=null){

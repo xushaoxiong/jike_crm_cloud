@@ -39,4 +39,13 @@ public interface UserRoleMapper {
 	 * @mbggenerated  Mon Mar 27 17:49:49 CST 2017
 	 */
 	int updateByPrimaryKey(UserRole record);
+
+	/**
+	 * 通过用户ID查询角色
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月28日上午9:20:26
+	 */
+	UserRole selectByUserId(Long userId);
 }
