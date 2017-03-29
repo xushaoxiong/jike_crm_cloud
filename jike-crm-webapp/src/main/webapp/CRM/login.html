@@ -6,7 +6,10 @@
 		<title>登录</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="js/pub/ajaxUrl.js" ></script>
+		<script type="text/javascript" src="js/pub/pub.js" ></script>
 		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		
 	</head>
 	<style>
 		.login-wap{
@@ -16,6 +19,7 @@
 			background-size: 100% 100%;
 		}
 		.login-wap .wap{
+			
 			height: 200px;
 			position: absolute;
 			top: 0;
@@ -25,38 +29,36 @@
 			margin: auto;
 		}
 		.input-group{
-		
+			float: left !important;
 			margin-bottom: 15px;
 			
 		}
-	
-		/*.wap span{
-			padding: 0px 5px;
-		}*/
-		.wap .text-danger{font-size: 13px;display: none;}
+		.wap .text-danger{font-size: 13px;padding-top: 9px;height: 34px;}
 	</style>
 	<body>
 		<div class="container-fluid login-wap">
-			<div class="col-md-2 col-sm-2 col-lg-2 wap">
+			
+			<div class="col-md-3 col-sm-3 col-lg-3 wap col-xs-6">
+				<p class="text-danger alert-Ninfo col-xs-8 col-md-8 col-sm-8 col-lg-8"></p>
 				<!--登录名-->
-				 <div class='input-group' id=''> 
+				 <div class='input-group col-xs-8 col-md-8 col-sm-8 col-lg-8'> 
 				 	<span class="input-group-addon">  
 	                    <span class="glyphicon glyphicon-user"></span>  
 	                </span> 
 	                <input type='text' class="form-control LoginName" />  
 	                 
 	            </div>  
-				<p class="text-danger alert-Ninfo">请填写登录名</p>
+				
 				<!--密码-->
-				<div class='input-group' id=''> 
+				<div class='input-group col-md-8 col-sm-8 col-lg-8 col-xs-8'> 
 				 	<span class="input-group-addon">  
 	                    <span class="glyphicon glyphicon-lock"></span>  
 	                </span> 
 	                <input type='password' class="form-control LoginPwd" />  
 	                 
 	            </div>  
-				<p class="text-danger alert-Pinfo">密码错误</p>
-				<button class="btn btn-primary col-md-12 col-xs-12" id="login-btn">登录系统</button>
+				<!--<p class="text-danger alert-Pinfo col-md-4 col-sm-4 col-lg-4 col-xs-4">密码错误</p>-->
+				<button class="btn btn-primary col-md-8 col-sm-8 col-lg-8 col-xs-8" id="login-btn">登录系统</button>
 			</div>
 			
 		</div>
@@ -64,34 +66,52 @@
 	<script>
 		$('.login-wap').height($(window).height());
 		//登录
-		$('#login-btn').click(function(){
+		var login=function(){
 			var loginJ={};
 			var LoginName=$.trim($('.LoginName').val());
 			var LoginPwd=$.trim($('.LoginPwd').val());
 			
 			if(LoginName==''){
-				$('.alert-Ninfo').show();
+				$('.alert-Ninfo').html('请输入登录名');
 				return false;
 			}else{
-				$('.alert-Ninfo').hide();
+				$('.alert-Ninfo').html('');
 			}
 			if(LoginPwd==''){
-				$('.alert-Pinfo').show();
+				$('.alert-Ninfo').html('请输入姓名');
 				return false;
 			}else{
-				$('.alert-Pinfo').hide();
+				$('.alert-Ninfo').html('');
 			}
 			loginJ.loginName=LoginName;
 			loginJ.password=LoginPwd;
+			var j=JSON.stringify(loginJ);
+			console.log(j)
 			$.ajax({
 				type:"POST",
-				url:"http://localhost:8080/jike-crm-webapp/user/login",
-//				dataType:'jsonp',
+				contentType: "application/json; charset=utf-8",
+				url:ajaxUrl,
+				dataType:'json',
+				data:j,
 				success:function(data){
-					console.log(data)
+					console.log(data.status)
+					if(data.status=='success'){
+						window.location.href='index.html'
+					}else{
+						$('.alert-Ninfo').html('账号或密码错误');
+					}
 				}
 			});
 			
+		}
+		$('#login-btn').click(function(){
+			login();
+		})
+		//键盘enter
+		$(window).keydown(function(e){
+			if(e.keyCode==13){
+				login();
+			}
 		})
 	</script>
 </html>

@@ -1,0 +1,1 @@
+var ajaxUrl="http://localhost:8080/jike-crm-webapp/user/login";
