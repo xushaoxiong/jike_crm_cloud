@@ -36,6 +36,7 @@ public class RoleServiceImpl implements RoleService {
 //			role.setRoleDescription(roleJson.getString("roleDescription"));
 			role.setRoleNum(roleJson.getString("roleNum"));
 			role.setCreateTime(new Date());
+			roleMapper.insert(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
@@ -64,6 +65,7 @@ public class RoleServiceImpl implements RoleService {
 			role.setRoleDescription(roleJson.getString("roleDescription"));
 			role.setRoleNum(roleJson.getString("roleNum"));
 			role.setCreateTime(new Date());
+			roleMapper.updateByPrimaryKeySelective(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "更新成功");
 			return resultJson;
