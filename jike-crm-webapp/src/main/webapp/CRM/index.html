@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<title>CRM系统</title>
+		<link rel="stylesheet" href="css/resetP.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.mousewheel.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.mCustomScrollbar.js" ></script>
+	</head>
+
+	<body>
+		<!--头部-->
+		<header class="nav">
+			<span class="nav-title">极课CRM</span>
+			<ul class="pull-right list-inline nav-list" style="padding-right: 2%;">
+				<li><img src="img/2.png" class="img-circle my-photo img-responsive" style="margin-top: 9px;"/></li>
+				<li class="dropdown" style="padding-right: 15px;">
+					<a class="dropdown-toggle" data-toggle='dropdown' >
+						张三张三张三<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role='menu'>
+						<li><a href="">张三张三</a></li>
+						<li><a>修改密码</a></li>
+						<li><a>安全退出</a></li>
+					</ul>
+				</li>
+				<li><a href=""><span class="glyphicon glyphicon-question-sign"></span>帮助中心</a></li>
+			</ul>
+		</header>
+		<div class="row">
+			<!--左边列表导航-->
+			<div class="col-md-2 col-sm-2 L-wap">
+				<ul class="L-list">
+					<li class="L-list-item">
+						<div>
+							<span class="glyphicon glyphicon-wrench img-icon"></span>
+							<span>首页</span>
+						</div>
+					</li>
+					<li class="L-list-item">
+						<div>
+							<span class="glyphicon glyphicon-wrench img-icon"></span>
+							<span>首页</span>
+							<span class="caret"></span>
+						</div>
+						<ul class="hide-menu">
+							<li><a>账户管理</a></li>
+							<li><a>账户组管理</a></li>
+							<li><a>权限管理</a></li>
+						</ul>
+					</li>
+					<li class="L-list-item">
+						<div>
+							<span class="glyphicon glyphicon-wrench img-icon"></span>
+							<span>首页</span>
+							<span class="caret"></span>
+						</div>
+						<ul class="hide-menu">
+							<li><a>账户管理</a></li>
+							<li><a>账户组管理</a></li>
+							<li><a >权限管理</a></li>
+						</ul>
+					</li>
+					<li class="L-list-item">
+						<div>
+							<span class="glyphicon glyphicon-wrench img-icon"></span>
+							<span>首页</span>
+							<span class="caret"></span>
+						</div>
+						<ul class="hide-menu">
+							<li>账户组管理</li>
+							<li>权限管理</li>
+						</ul>
+					</li>
+					<li class="L-list-item">
+						<div>
+							<span class="glyphicon glyphicon-wrench img-icon"></span>
+							<span>首页</span>
+							<span class="caret"></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--右侧load内容-->
+			<div class="col-md-10 col-sm-10 R-wap">
+				
+			</div>
+		</div>
+		
+		<script>
+			$('.L-list li div').click(function(){
+				$(this).next().slideToggle();
+			})
+			$('.L-wap').height($(window).height()-60);
+			//账户管理
+			$('.hide-menu li').each(function(i){
+				$(this).click(function(){
+					if(i==0){
+						$('.R-wap').load('zhanghuguanli.html')
+					}
+				})
+				
+			})
+		</script>
+	</body>
+</html>
