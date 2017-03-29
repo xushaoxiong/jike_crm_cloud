@@ -1,20 +1,26 @@
 package com.jike.user.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.RoleService;
 import com.jike.user.dao.RoleMapper;
+import com.jike.user.dao.RolePermissionMapper;
 import com.jike.user.model.Role;
+import com.jike.user.model.RolePermission;
 
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+	private RolePermissionMapper rolePermissionMapper;
 
 	public JSONObject addRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
@@ -27,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
 			}
 			Role role = new Role();
 			role.setRoleName(roleJson.getString("roleName"));
-			role.setRoleDescription(roleJson.getString("roleDescription"));
+//			role.setRoleDescription(roleJson.getString("roleDescription"));
 			role.setRoleNum(roleJson.getString("roleNum"));
 			role.setCreateTime(new Date());
 			resultJson.put("status", "success");
@@ -65,6 +71,36 @@ public class RoleServiceImpl implements RoleService {
 		resultJson.put("status", "fail");
 		resultJson.put("message", "添加内容为空");
 		return resultJson;
+	}
+
+	public JSONObject addRolePermission(JSONObject parseObject) {
+		Long roleId = parseObject.getLong("roleId");
+		JSONArray permissonList = parseObject.getJSONArray("permissonList");
+		for (Object object : permissonList) {
+			JSONObject permissonJson = (JSONObject) object;
+			Long permissionId = permissonJson.getLong("permissionId");
+			RolePermission rolePermission = new RolePermission();
+			rolePermission.setRoleId(roleId);
+			rolePermission.setPermissionId(permissionId);
+			rolePermission.setCreateTime(new Date());
+			rolePermissionMapper.insert(rolePermission);
+		}
+		JSONObject json = new JSONObject();
+		json.put("status", "success");
+		json.put("message", "分配成功");
+		return json;
+	}
+
+	public JSONArray queryRole(JSONObject parseObject) {
+		JSONArray roleList = new JSONArray();
+		List<Role> roles = roleMapper.selectRoles();
+		for (Role role : roles) {
+			JSONObject roleJson = new JSONObject();
+			roleJson.put("roleId", role.getRoleId());
+			roleJson.put("roleName", role.getRoleName());
+			roleList.add(roleJson);
+		}
+		return roleList;
 	}
 
 }

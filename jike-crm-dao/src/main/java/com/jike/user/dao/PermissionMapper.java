@@ -1,6 +1,11 @@
 package com.jike.user.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.jike.user.model.Permission;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 
 public interface PermissionMapper {
 
@@ -48,4 +53,35 @@ public interface PermissionMapper {
 	 * @createtime 2017年3月28日上午11:58:06
 	 */
 	Permission selectByPermissionName(String permissionName);
+
+	/**
+	 * 查询菜单
+	 * @param menuLevel
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午1:59:35
+	 */
+	List<Permission> queryPermissionMenu(int menuLevel);
+
+	/**
+	 * 查询父级菜单下子菜单
+	 * @param menuLevel
+	 * @param parentId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午2:21:55
+	 */
+	List<Permission> queryPermissionMenuByParentId(@Param("menuLevel") int menuLevel, @Param("parentId")Long parentId);
+	
+	/**
+	 * 通过角色id查询权限列表
+	 * @param roleId
+	 * @param i 
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午1:37:06
+	 */
+	List<Permission> selectPermissionMenuByRoleId(@Param("roleId")Long roleId,@Param("menuLevel") int menuLevel);
+
+	List<Permission> selectPermissionMenuByRoleIdAndParentId(@Param("roleId")Long roleId,@Param("menuLevel") int menuLevel, @Param("parentId")Long parentId);
 }

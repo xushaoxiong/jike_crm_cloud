@@ -166,4 +166,44 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where permission_id = #{permissionId,jdbcType=BIGINT}
   </update>
+  <select id="queryPermissionMenu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from permission
+    where menu_level = #{menuLevel,jdbcType=INTEGER}
+    order by sort
+  </select>
+  <select id="queryPermissionMenuByParentId"  resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from permission
+    where menu_level = #{menuLevel,jdbcType=INTEGER}
+    and  parent_id = #{parentId,jdbcType=BIGINT}
+    order by sort
+  </select>
+  <select id="selectPermissionMenuByRoleId" resultMap="BaseResultMap">
+     select 
+    p.permission_id,p.permission_name 
+    from
+    role_permission rp,
+     permission p
+    where rp.permission_id = p.permission_id
+    and  rp.role_id = #{roleId,jdbcType=INTEGER}
+    and  p.menu_level = #{menuLevel,jdbcType=INTEGER}
+    order by sort
+  </select>
+  <select id="selectPermissionMenuByRoleIdAndParentId" resultMap="BaseResultMap">
+    select 
+    p.permission_id,p.permission_name 
+    from
+    role_permission rp,
+     permission p
+    where 
+    rp.permission_id = p.permission_id
+    and  rp.role_id = #{roleId,jdbcType=INTEGER}
+    and  p.menu_level = #{menuLevel,jdbcType=INTEGER}
+    and  p.parent_id = #{parentId,jdbcType=BIGINT}
+    order by sort
+  </select>
+  
 </mapper>

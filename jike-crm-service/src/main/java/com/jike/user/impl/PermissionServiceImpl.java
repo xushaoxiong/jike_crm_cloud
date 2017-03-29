@@ -1,10 +1,12 @@
 package com.jike.user.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.PermissionService;
 import com.jike.user.dao.PermissionMapper;
@@ -15,8 +17,6 @@ import com.jike.user.model.Permission;
 public class PermissionServiceImpl implements PermissionService{
 	@Autowired
 	private PermissionMapper permissionMapper;
-	@Autowired
-	private RolePermissionMapper rolePermissionMapper;
 
 	public JSONObject addPermission(JSONObject permissioJson) {
 		JSONObject resultJson = new JSONObject();
@@ -93,10 +93,64 @@ public class PermissionServiceImpl implements PermissionService{
 
 
 	public JSONObject selectPermissionByRoleId(JSONObject permissioJson) {
-		
+		JSONObject resultJson = new JSONObject();
 		Long roleId = permissioJson.getLong("roleId");
-		rolePermissionMapper.selectPermissionMenuOneByRoleId(roleId);
-		return null;
+		//查询一级菜单权限
+		List<Permission> permissionMenuOneList = permissionMapper.selectPermissionMenuByRoleId(roleId,1);
+		if(!permissionMenuOneList.isEmpty()){
+			JSONArray menu1 = new JSONArray();
+			for (Permission permission : permissionMenuOneList) {
+				JSONObject permissionJson = new JSONObject();
+				permissionJson.put("menuName", permission.getPermissionName());
+				permissionJson.put("menuId", permission.getPermissionId());
+				//查询二级菜单权限
+				List<Permission> permissionMenuTwoList = permissionMapper.selectPermissionMenuByRoleIdAndParentId(roleId,2,permission.getPermissionId());
+				if(!permissionMenuTwoList.isEmpty()){
+					JSONArray menu2 = new JSONArray();
+					for (Permission permission2 : permissionMenuTwoList) {
+						JSONObject permissionJson2 = new JSONObject();
+						permissionJson2.put("menuName", permission2.getPermissionName());
+						permissionJson2.put("menuId", permission2.getPermissionId());
+						menu2.add(permissionJson2);
+					}
+					permissionJson.put("menu2", menu2);
+				}
+				menu1.add(permissionJson);
+			}
+			resultJson.put("menu1", menu1);
+		}
+		return resultJson;
+	}
+
+
+	public JSONObject queryPermission(JSONObject parseObject) {
+		JSONObject resultJson = new JSONObject();
+		//查询一级菜单权限
+		List<Permission> permissionMenuOneList = permissionMapper.queryPermissionMenu(1);
+		
+		if(!permissionMenuOneList.isEmpty()){
+			JSONArray menu1 = new JSONArray();
+			for (Permission permission : permissionMenuOneList) {
+				JSONObject permissionJson = new JSONObject();
+				permissionJson.put("menuName", permission.getPermissionName());
+				permissionJson.put("menuId", permission.getPermissionId());
+				//查询二级菜单权限
+				List<Permission> permissionMenuTwoList = permissionMapper.queryPermissionMenuByParentId(2,permission.getPermissionId());
+				if(!permissionMenuTwoList.isEmpty()){
+					JSONArray menu2 = new JSONArray();
+					for (Permission permission2 : permissionMenuTwoList) {
+						JSONObject permissionJson2 = new JSONObject();
+						permissionJson2.put("menuName", permission2.getPermissionName());
+						permissionJson2.put("menuId", permission2.getPermissionId());
+						menu2.add(permissionJson2);
+					}
+					permissionJson.put("menu2", menu2);
+				}
+				menu1.add(permissionJson);
+			}
+			resultJson.put("menu1", menu1);
+		}
+		return resultJson;
 	}
 
 }

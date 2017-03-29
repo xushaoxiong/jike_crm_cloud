@@ -40,6 +40,9 @@ public class RequestUtils {
 		String submitMehtod = request.getMethod();
 		// GET
 		if (submitMehtod.equals("GET")) {
+			if(request.getQueryString() == null){
+				return null;
+			}
 			return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");
 		// POST
 		} else {
