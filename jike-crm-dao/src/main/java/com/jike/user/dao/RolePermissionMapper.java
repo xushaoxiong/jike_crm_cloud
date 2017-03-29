@@ -1,5 +1,10 @@
 package com.jike.user.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.jike.user.model.Permission;
 import com.jike.user.model.RolePermission;
 
 public interface RolePermissionMapper {
@@ -39,6 +44,4 @@ public interface RolePermissionMapper {
 	 * @mbggenerated  Mon Mar 27 17:49:49 CST 2017
 	 */
 	int updateByPrimaryKey(RolePermission record);
-
-	void selectPermissionMenuOneByRoleId(Long roleId);
 }

@@ -5,6 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 public interface PermissionService {
 	
 	/**
+	 * 查询权限菜单
+	 * @param parseObject
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午1:33:52
+	 */
+	JSONObject queryPermission(JSONObject parseObject);
+	
+	/**
 	 * 查询角色权限
 	 * @param permissioJson
 	 * @return

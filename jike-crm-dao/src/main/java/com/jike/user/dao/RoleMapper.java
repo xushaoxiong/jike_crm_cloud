@@ -1,5 +1,7 @@
 package com.jike.user.dao;
 
+import java.util.List;
+
 import com.jike.user.model.Role;
 
 public interface RoleMapper {
@@ -48,4 +50,12 @@ public interface RoleMapper {
 	 * @createtime 2017年3月27日下午5:56:25
 	 */
 	Role selectRoleByRoleName(String roleName);
+
+	/**
+	 * 查询所有角色
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午4:17:57
+	 */
+	List<Role> selectRoles();
 }

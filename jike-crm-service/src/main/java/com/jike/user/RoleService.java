@@ -1,5 +1,6 @@
 package com.jike.user;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.model.Role;
 
@@ -31,5 +32,23 @@ public interface RoleService {
 	 * @createtime 2017年3月27日下午5:39:57
 	 */
 	JSONObject updateRole(JSONObject roleJson);
+
+	/**
+	 * 添加角色权限
+	 * @param parseObject
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午4:01:12
+	 */
+	JSONObject addRolePermission(JSONObject parseObject);
+
+	/**
+	 * 查询角色
+	 * @param parseObject
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午4:12:15
+	 */
+	JSONArray queryRole(JSONObject parseObject);
 
 }

@@ -149,4 +149,9 @@
     from role
     where role_name = #{roleName,jdbcType=VARCHAR}
   </select>
+  <select id="selectRoles" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+  </select>
 </mapper>
