@@ -86,11 +86,10 @@
 			loginJ.loginName=LoginName;
 			loginJ.password=LoginPwd;
 			var j=JSON.stringify(loginJ);
-			console.log(j)
 			$.ajax({
 				type:"POST",
 				contentType: "application/json; charset=utf-8",
-				url:ajaxUrl,
+				url:ajaxUrl+"user/login",
 				dataType:'json',
 				data:j,
 				success:function(data){
