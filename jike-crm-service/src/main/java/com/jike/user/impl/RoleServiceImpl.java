@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
 
 	public JSONObject addRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
-		if (!roleJson.isEmpty()) {
+		if (roleJson!=null&&!roleJson.isEmpty()) {
 			Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
 			if (roleOld != null) {
 				resultJson.put("status", "fail");
@@ -36,6 +36,7 @@ public class RoleServiceImpl implements RoleService {
 //			role.setRoleDescription(roleJson.getString("roleDescription"));
 			role.setRoleNum(roleJson.getString("roleNum"));
 			role.setCreateTime(new Date());
+			roleMapper.insert(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
@@ -64,6 +65,7 @@ public class RoleServiceImpl implements RoleService {
 			role.setRoleDescription(roleJson.getString("roleDescription"));
 			role.setRoleNum(roleJson.getString("roleNum"));
 			role.setCreateTime(new Date());
+			roleMapper.updateByPrimaryKeySelective(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "更新成功");
 			return resultJson;
