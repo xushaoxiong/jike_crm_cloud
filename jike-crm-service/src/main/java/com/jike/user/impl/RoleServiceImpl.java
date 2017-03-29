@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
 
 	public JSONObject addRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
-		if (!roleJson.isEmpty()) {
+		if (roleJson!=null&&!roleJson.isEmpty()) {
 			Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
 			if (roleOld != null) {
 				resultJson.put("status", "fail");
