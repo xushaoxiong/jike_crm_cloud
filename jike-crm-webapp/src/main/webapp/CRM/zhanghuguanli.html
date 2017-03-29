@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>Document</title>
+	<title>账户管理</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="js/scrollbar/css/jquery.mCustomScrollbar.min.css" />
+	<link rel="stylesheet" href="js/skin/jedate.css" />
 	<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+	<script type="text/javascript" src="js/pub/pub.js" ></script>
+	<script type="text/javascript" src="js/scrollbar/js/jquery.mousewheel.min.js" ></script>
+	<script type="text/javascript" src="js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>
 	<script type="text/javascript" src="js/jedate.min.js" ></script>
 	<script type="text/javascript" src="js/bootstrap.min.js" ></script>
 	<script type="text/javascript" src="js/bootstrap-paginator.js" ></script>
-	
 </head>
 <body>
 	<style>
@@ -32,8 +36,8 @@
 		text-align: right;
 	}
 </style>
-
-<div class="ZH-account clearfix" style="width: 95%;">
+<div class="wapper">
+	<div class="ZH-account clearfix" style="width: 95%;">
 	<h3 class="title pull-left">账户管理</h3>
 	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>新增账户</button>
 </div>
@@ -69,6 +73,36 @@
 		<tr>
 			<td class="loginName">liuzhibing</td>
 			<td class="Name">刘志兵</td>
+			<td class="gender" gid='1'>男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment" eid='0'>在职</td>
+			<td class="entryDate">2016/9/25 18:20:49</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender " gid='0'>女</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment" eid='1'>离职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
 			<td class="gender ">男</td>
 			<td class="phone">122212121</td>
 			<td class="email">21545@qq.com</td>
@@ -89,36 +123,6 @@
 			<td class="email">21545@qq.com</td>
 			<td class="employeeNum">02</td>
 			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25 18:20:49</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25 18:20:49</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
 			<td class="entryDate">2016/9/25</td>
 			<td class="roleId">管理员</td>
 			<td>
@@ -294,13 +298,13 @@
 		<tr>
 			<td class="loginName">liuzhibing</td>
 			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
+			<td class="gender" gid='1'>男</td>
 			<td class="phone">122212121</td>
 			<td class="email">21545@qq.com</td>
 			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
+			<td class="isEmployment" eid='0'>在职</td>
 			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
+			<td class="roleId" roleId='0'>管理员</td>
 			<td>
 				<a class="amend">修改</a>
 				<a class="del">删除</a>
@@ -329,7 +333,7 @@
             <div class="modal-body form-inline">
                 <div class="form-group">
                 	<label>登录名：</label>
-                	<input type="text" value="账号" class="form-control AccountInp"/>
+                	<input type="text" value="登录名" class="form-control AccountInp"/>
                 </div>
                 <div class="form-group">
                 	<label>员工姓名：</label>
@@ -339,28 +343,27 @@
                 	<label>密码：</label>
                 	<input type="password" value="密码" class="form-control PwdInp" />
                 </div>
-                <div class="form-group">
+                <div class="form-group genderGroup">
                 	<label>性别：</label>
-                	<input type="radio" id="1" value="option1" name="optionsRadios"/>男
-                	<input type="radio" id="0" value="option0" name="optionsRadios"/>女
-                	
+                	<input type="radio" gid="1" value="option1" name="optionsRadios"/>男
+                	<input type="radio" gid="0" value="option0" name="optionsRadios"/>女
                 </div>
                 <div class="form-group">
                 	<label>手机号：</label>
-                	<input type="tel" class="form-control" placeholder="手机号" />
+                	<input type="tel" class="form-control phoneInp" placeholder="手机号" />
                 </div>
                 <div class="form-group">
                 	<label>邮箱：</label>
-                	<input type="text" class="form-control" placeholder="邮箱" />
+                	<input type="text" class="form-control emailInp" placeholder="邮箱" />
                 </div>
                 <div class="form-group">
                 	<label>工号：</label>
-                	<input type="text" class="form-control" placeholder="工号" />
+                	<input type="text" class="form-control eplyeNumInp" placeholder="工号" />
                 </div>
                 <div class="form-group" id="workStats" style="display: none;">
                 	<label>是否在职：</label>
-                	<input type="radio" Epid="0" value="option1" name="isEplment"/>在职
-                	<input type="radio" Epid="1" value="option0" name="isEplment"/>离职
+                	<input type="radio" epid="0" value="option1" name="isEplment"/>在职
+                	<input type="radio" epid="1" value="option0" name="isEplment"/>离职
                 	
                 </div>
                 <div class="form-group">
@@ -368,7 +371,6 @@
                 	<div class='input-group'>  
                 		<p class="datep">
                 			<input class="datainp form-control" id="indate" type="text" placeholder="2015/5/8" value=""  readonly>
-                			
                 		</p>
             		</div>  
                 </div>
@@ -393,74 +395,10 @@
         </div>
     </div>
 </div>
+</div>
 
+<script type="text/javascript" src="js/index/zhanghuguanli.js" ></script>
 </body>
-<script>
-$(function(){
-	$('.alert-del-wap').height($(window).height())
-	
-	 $(".addBtn").click(function(){
-      	$("#newAdd").modal("toggle");
-      	$('#workStats').hide();
-      	$('.AccountInp').val('');
-		$('.NameInp').val('');
-		$(".RoleInp").find("option[idName='0']").prop("selected",true);
-
-    });
-    
-    //日期
-    jeDate({
-		dateCell:"#indate",
-		format:"YYYY/MM/DD ",
-		zIndex:2099,
-		isinitVal:true,
-		fixed:true,
-		isTime:true, //isClear:false,
-		minDate:"2014-09-19",
-		choosefun:function(elem, val) {
-			console.log(elem)
-		}    //选中日期后的回调, elem当前输入框ID, val当前选择的值
-		
-	})
-	//修改
-
-	$('.amend').each(function(i){
-		$(this).click(function(){
-			var Account=$('.Account').eq(i).html();
-			var Name=$('.Name').eq(i).html();
-			var Role=$('Role').eq(i).html();
-			var Rid=$('.Role').eq(i).attr('rid');
-			$("#newAdd").modal("toggle");
-			$('#workStats').show();
-			$('.AccountInp').val(Account);
-			$('.NameInp').val(Name);
-			$(".RoleInp").find("option[idName='"+Rid+"']").prop("selected",true);
-			
-		})
-	})
-	//分页
-	var options={
-        bootstrapMajorVersion:1,    //版本
-        currentPage:1,    //当前页数
-        numberOfPages:5,    //最多显示Page页
-        totalPages:10,    //所有数据可以显示的页数
-        onPageClicked:function(e,originalEvent,type,page){
-//					console.log(e)
-			console.log(originalEvent)
-//					console.log(type)
-
-        },
-        pageUrl:function(type, page, current){
-        	 return "zhanghuguanli/"+page;  
-        }
-                
-    }
-    $(".pagination").bootstrapPaginator(options);
-})
-	
-
-	
-</script>
 </html>
 
 

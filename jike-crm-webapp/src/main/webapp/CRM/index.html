@@ -2,20 +2,28 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1"/>
 		<title>CRM系统</title>
 		<link rel="stylesheet" href="css/resetP.css" />
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js/scrollbar/css/jquery.mCustomScrollbar.min.css" />
+			<!--[if lte IE 9]>
+		<script src="js/respond.js"></script>
+		<script src="js/html5.js"></script>
+		<![endif]-->
 		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
 		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="js/jquery.mousewheel.min.js" ></script>
-		<script type="text/javascript" src="js/jquery.mCustomScrollbar.js" ></script>
+		<script type="text/javascript" src="js/scrollbar/js/jquery.mousewheel.min.js" ></script>
+		<script type="text/javascript" src="js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>
+		<script type="text/javascript" src="js/pub/ajaxUrl.js" ></script>
+		
 	</head>
 
 	<body>
-		<!--头部-->
-		<header class="nav">
+		<div class="container-fluid">
+			<!--头部-->
+		<header class="nav row navbar-fixed-top">
 			<span class="nav-title">极课CRM</span>
 			<ul class="pull-right list-inline nav-list" style="padding-right: 2%;">
 				<li><img src="img/2.png" class="img-circle my-photo img-responsive" style="margin-top: 9px;"/></li>
@@ -32,7 +40,7 @@
 				<li><a href=""><span class="glyphicon glyphicon-question-sign"></span>帮助中心</a></li>
 			</ul>
 		</header>
-		<div class="row">
+		<div class="row" style="margin-top: 60px;">
 			<!--左边列表导航-->
 			<div class="col-md-2 col-sm-2 L-wap">
 				<ul class="L-list">
@@ -50,7 +58,7 @@
 						</div>
 						<ul class="hide-menu">
 							<li><a>账户管理</a></li>
-							<li><a>账户组管理</a></li>
+							<li><a>角色管理</a></li>
 							<li><a>权限管理</a></li>
 						</ul>
 					</li>
@@ -88,11 +96,14 @@
 			</div>
 			<!--右侧load内容-->
 			<div class="col-md-10 col-sm-10 R-wap">
-				
+				<p class="R-First" style="font-size: 25px;font-weight: bold;padding: 15px;">欢迎登陆CRM-1.0系统!</p>
 			</div>
 		</div>
+		</div>
+		
 		
 		<script>
+		$(function(){
 			$('.L-list li div').click(function(){
 				$(this).next().slideToggle();
 			})
@@ -103,9 +114,15 @@
 					if(i==0){
 						$('.R-wap').load('zhanghuguanli.html')
 					}
+					if(i==1){
+						$('.R-wap').load('jueseguanli.html')
+					}
 				})
 				
 			})
+			
+		})
+			
 		</script>
 	</body>
 </html>
