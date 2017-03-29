@@ -220,4 +220,11 @@
     from user
     where login_name = #{loginName,jdbcType=VARCHAR}
   </select>
+  <select id="selectUserByLoginnameAndPw"  parameterType="java.lang.String" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from user
+    where login_name = #{loginName,jdbcType=VARCHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>
