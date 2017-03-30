@@ -143,4 +143,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where role_permission_id = #{rolePermissionId,jdbcType=BIGINT}
   </update>
+  <delete id="deleteByRoleId">
+    delete from role_permission
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
 </mapper>

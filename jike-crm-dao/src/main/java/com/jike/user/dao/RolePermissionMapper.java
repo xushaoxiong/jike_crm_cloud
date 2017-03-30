@@ -44,4 +44,12 @@ public interface RolePermissionMapper {
 	 * @mbggenerated  Mon Mar 27 17:49:49 CST 2017
 	 */
 	int updateByPrimaryKey(RolePermission record);
+
+	/**
+	 * 删除角色旧的权限
+	 * @param roleId
+	 * @created wangyb
+	 * @createtime 2017年3月30日上午10:30:28
+	 */
+	void deleteByRoleId(Long roleId);
 }
