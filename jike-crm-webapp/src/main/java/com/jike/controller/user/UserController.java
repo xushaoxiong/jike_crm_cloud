@@ -114,4 +114,20 @@ public class UserController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	@RequestMapping(value = "/getUserByPage", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody String getUserByPage(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.getUserByPage(parseObject);
+		} catch (IOException e) {
+			logger.error("getUserByPage error", e);
+		}
+		return result.toString();
+	}
 }

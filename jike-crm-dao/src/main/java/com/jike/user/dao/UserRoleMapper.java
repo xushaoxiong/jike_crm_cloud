@@ -48,4 +48,13 @@ public interface UserRoleMapper {
 	 * @createtime 2017年3月28日上午9:20:26
 	 */
 	UserRole selectByUserId(Long userId);
+
+	/**
+	 * 通过用户ID查询角色名称
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月30日下午3:52:38
+	 */
+	String getRoleNameByUserId(Long userId);
 }

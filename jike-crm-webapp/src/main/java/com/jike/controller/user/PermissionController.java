@@ -25,7 +25,7 @@ public class PermissionController extends BaseController{
 	private static Logger logger = Logger.getLogger(PermissionController.class);
 
 	/**
-	 * 添加角色
+	 * 查询权限列表
 	 * 
 	 * @param request
 	 * @return
