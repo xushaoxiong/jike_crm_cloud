@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1"/>
 		<title>CRM系统</title>
 		<link rel="stylesheet" href="css/resetP.css" />
-		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/management/index.css" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js/scrollbar/css/jquery.mCustomScrollbar.min.css" />
 			<!--[if lte IE 9]>
@@ -17,14 +17,13 @@
 		<script type="text/javascript" src="js/scrollbar/js/jquery.mousewheel.min.js" ></script>
 		<script type="text/javascript" src="js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>
 		<script type="text/javascript" src="js/pub/ajaxUrl.js" ></script>
-		
 	</head>
 
 	<body>
 		<div class="container-fluid">
 			<!--头部-->
 		<header class="nav row navbar-fixed-top">
-			<span class="nav-title">极课CRM</span>
+			<span class="nav-title" style="padding-left: 20px;">极课CRM</span>
 			<ul class="pull-right list-inline nav-list" style="padding-right: 2%;">
 				<li><img src="img/2.png" class="img-circle my-photo img-responsive" style="margin-top: 9px;"/></li>
 				<li class="dropdown" style="padding-right: 15px;">
@@ -44,54 +43,6 @@
 			<!--左边列表导航-->
 			<div class="col-md-2 col-sm-2 L-wap">
 				<ul class="L-list">
-					<li class="L-list-item">
-						<div>
-							<span class="glyphicon glyphicon-wrench img-icon"></span>
-							<span>首页</span>
-						</div>
-					</li>
-					<li class="L-list-item">
-						<div>
-							<span class="glyphicon glyphicon-wrench img-icon"></span>
-							<span>首页</span>
-							<span class="caret"></span>
-						</div>
-						<ul class="hide-menu">
-							<li><a>账户管理</a></li>
-							<li><a>角色管理</a></li>
-							<li><a>权限管理</a></li>
-						</ul>
-					</li>
-					<li class="L-list-item">
-						<div>
-							<span class="glyphicon glyphicon-wrench img-icon"></span>
-							<span>首页</span>
-							<span class="caret"></span>
-						</div>
-						<ul class="hide-menu">
-							<li><a>账户管理</a></li>
-							<li><a>账户组管理</a></li>
-							<li><a >权限管理</a></li>
-						</ul>
-					</li>
-					<li class="L-list-item">
-						<div>
-							<span class="glyphicon glyphicon-wrench img-icon"></span>
-							<span>首页</span>
-							<span class="caret"></span>
-						</div>
-						<ul class="hide-menu">
-							<li>账户组管理</li>
-							<li>权限管理</li>
-						</ul>
-					</li>
-					<li class="L-list-item">
-						<div>
-							<span class="glyphicon glyphicon-wrench img-icon"></span>
-							<span>首页</span>
-							<span class="caret"></span>
-						</div>
-					</li>
 				</ul>
 			</div>
 			<!--右侧load内容-->
@@ -100,29 +51,6 @@
 			</div>
 		</div>
 		</div>
-		
-		
-		<script>
-		$(function(){
-			$('.L-list li div').click(function(){
-				$(this).next().slideToggle();
-			})
-			$('.L-wap').height($(window).height()-60);
-			//账户管理
-			$('.hide-menu li').each(function(i){
-				$(this).click(function(){
-					if(i==0){
-						$('.R-wap').load('zhanghuguanli.html')
-					}
-					if(i==1){
-						$('.R-wap').load('jueseguanli.html')
-					}
-				})
-				
-			})
-			
-		})
-			
-		</script>
 	</body>
+	<script type="text/javascript" src="js/index/index.js" ></script>
 </html>
