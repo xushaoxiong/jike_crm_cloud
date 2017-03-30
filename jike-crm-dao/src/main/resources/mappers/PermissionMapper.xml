@@ -207,7 +207,7 @@
   </select>
   <select id="selectPermissionMenuByRoleIdAndParentId" resultMap="BaseResultMap">
     select 
-    p.permission_id,p.permission_name 
+    p.permission_id,p.permission_name ,p.source_url
     from
     role_permission rp,
      permission p
