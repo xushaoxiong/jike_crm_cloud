@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 				resultJson.put("message", "登录名已存在");
 				return resultJson;
 			}
-			//添加角色
+			//添加用户
 			User user = new User();
 			user.setLoginName(userJson.getString("loginName"));
 			// 密码加密存储
@@ -96,13 +96,15 @@ public class UserServiceImpl implements UserService {
 			userMapper.updateByPrimaryKeySelective(user);
 			
 			UserRole userRole = userRoleMapper.selectByUserId(user.getUserId());
-			
+			userRole.setRoleId(userJson.getLong("roleId"));
+			user.setUpdateTime(new Date());
+			userRoleMapper.updateByPrimaryKeySelective(userRole);
 			
 			resultJson.put("status", "success");
-			resultJson.put("message", "添加成功");
+			resultJson.put("message", "更新成功");
 		}else{
 			resultJson.put("status", "fail");
-			resultJson.put("message", "添加内容为空");
+			resultJson.put("message", "更新内容为空");
 		}
 		
 		return resultJson;
