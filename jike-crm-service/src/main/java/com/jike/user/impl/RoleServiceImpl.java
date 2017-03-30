@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jike.crm.utils.DateUtil;
 import com.jike.user.RoleService;
 import com.jike.user.dao.RoleMapper;
 import com.jike.user.dao.RolePermissionMapper;
@@ -108,6 +109,9 @@ public class RoleServiceImpl implements RoleService {
 			JSONObject roleJson = new JSONObject();
 			roleJson.put("roleId", role.getRoleId());
 			roleJson.put("roleName", role.getRoleName());
+			roleJson.put("roleNum", role.getRoleNum());
+			roleJson.put("createTime", DateUtil.getDateTimeFormat(role.getCreateTime()));
+			roleJson.put("updateTime", DateUtil.getDateTimeFormat(role.getUpdateTime()));
 			roleList.add(roleJson);
 		}
 		return roleList;
