@@ -1,11 +1,15 @@
 package com.jike.user.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jike.crm.utils.DateUtil;
+import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
 import com.jike.user.dao.UserMapper;
 import com.jike.user.dao.UserRoleMapper;
@@ -122,5 +126,56 @@ public class UserServiceImpl implements UserService {
 			json.put("status", "fail");
 		}
 		return json;
+	}
+
+	public JSONObject getUserByPage(JSONObject queryJson) {
+		JSONObject resultJson = new JSONObject();
+		if (queryJson != null) {
+			String name = queryJson.getString("name");
+			Integer start = queryJson.getInteger("start");
+			Integer pageSize = queryJson.getInteger("pageSize");
+			if(name==null){
+			   name = "";
+			}
+			name="%"+name+"%";
+			int totalCount = userMapper.getUserCount(name);
+			int startPosition = (start - 1) * pageSize;
+			List<User> userList = userMapper.getUserByPage(name,startPosition,pageSize);
+			JSONArray userArr = new JSONArray();
+			if(!userList.isEmpty()){
+				for (User user : userList) {
+					JSONObject userJson = new JSONObject();
+					String roleName = userRoleMapper.getRoleNameByUserId(user.getUserId());
+					userJson.put("roleName", roleName);
+					userJson.put("loginName", user.getLoginName());
+					userJson.put("name", user.getName());
+					userJson.put("gender", user.getGender()==0?"女":"男");
+					userJson.put("phone", user.getPhone());
+					userJson.put("email", user.getEmail());
+					userJson.put("employeeNum", user.getEmployeeNum());
+					userJson.put("isEmployment", user.getIsEmployment()==0?"在职":"离职");
+					userJson.put("entryDate", DateUtil.getDateFormat(user.getEntryDate()));
+					userArr.add(userJson);
+				}
+			}
+			
+			
+			int totalPage = 0;
+			if (totalCount / pageSize > 0) {
+	            if (totalCount % pageSize == 0) {
+	                totalPage = totalCount / pageSize;
+	            } else {
+	                totalPage = totalCount / pageSize + 1;
+	            }
+	        } else {
+	            totalPage = 1;
+	        }
+			List<Integer> pageList = PageUtil.for_each(start, (int) totalPage, 6);
+			resultJson.put("totalCount", totalCount);
+			resultJson.put("totalPage", totalPage);
+			resultJson.put("pageList", pageList);
+			resultJson.put("userList", userArr);
+		}
+		return resultJson;
 	}
 }

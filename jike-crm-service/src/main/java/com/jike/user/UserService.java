@@ -41,4 +41,13 @@ public interface UserService {
 	 */
 	JSONObject login(JSONObject parseObject);
 
+	/**
+	 * 分页查询用户
+	 * @param parseObject
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月30日下午2:28:08
+	 */
+	JSONObject getUserByPage(JSONObject parseObject);
+
 }

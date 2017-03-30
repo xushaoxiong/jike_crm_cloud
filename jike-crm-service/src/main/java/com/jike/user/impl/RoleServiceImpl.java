@@ -111,7 +111,12 @@ public class RoleServiceImpl implements RoleService {
 			roleJson.put("roleName", role.getRoleName());
 			roleJson.put("roleNum", role.getRoleNum());
 			roleJson.put("createTime", DateUtil.getDateTimeFormat(role.getCreateTime()));
-			roleJson.put("updateTime", DateUtil.getDateTimeFormat(role.getUpdateTime()));
+			if(role.getCreateTime()!=null){
+				roleJson.put("updateTime", DateUtil.getDateTimeFormat(role.getUpdateTime()));
+			}else{
+				roleJson.put("updateTime", DateUtil.getDateTimeFormat(""));
+			}
+			
 			roleList.add(roleJson);
 		}
 		return roleList;

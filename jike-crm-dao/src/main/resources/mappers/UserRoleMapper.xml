@@ -135,6 +135,12 @@
     <include refid="Base_Column_List" />
     from user_role
     where user_role_id = #{userRoleId,jdbcType=BIGINT}
-  
   </select>
+	<select id="getRoleNameByUserId" resultType="java.lang.String">
+	  select r.role_name from
+		user_role u,
+		role r
+		where u.role_id = r.role_id
+		and u.user_id = #{userId,jdbcType=BIGINT}
+	</select>
 </mapper>
