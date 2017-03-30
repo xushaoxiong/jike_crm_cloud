@@ -103,6 +103,7 @@ public class PermissionServiceImpl implements PermissionService{
 				JSONObject permissionJson = new JSONObject();
 				permissionJson.put("menuName", permission.getPermissionName());
 				permissionJson.put("menuId", permission.getPermissionId());
+				permissionJson.put("sourceUrl", permission.getSourceUrl());
 				//查询二级菜单权限
 				List<Permission> permissionMenuTwoList = permissionMapper.selectPermissionMenuByRoleIdAndParentId(roleId,2,permission.getPermissionId());
 				if(!permissionMenuTwoList.isEmpty()){
@@ -111,6 +112,7 @@ public class PermissionServiceImpl implements PermissionService{
 						JSONObject permissionJson2 = new JSONObject();
 						permissionJson2.put("menuName", permission2.getPermissionName());
 						permissionJson2.put("menuId", permission2.getPermissionId());
+						permissionJson2.put("sourceUrl", permission2.getSourceUrl());
 						menu2.add(permissionJson2);
 					}
 					permissionJson.put("menu2", menu2);

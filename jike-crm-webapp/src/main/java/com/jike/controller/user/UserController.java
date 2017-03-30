@@ -3,6 +3,7 @@ package com.jike.controller.user;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jike.controller.base.BaseController;
 import com.jike.controller.utils.RequestUtils;
 import com.jike.user.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 	@Autowired
 	private UserService userService;
 	private static Logger logger = Logger.getLogger(UserController.class);  
-
 	
 	/**
 	 * 通过用户名
@@ -31,9 +32,13 @@ public class UserController {
 	 * @createtime 2017年3月27日下午2:35:22
 	 */
 	@RequestMapping(value = "/getUserByLoginName", method = RequestMethod.GET)
-	public @ResponseBody String getUser(String loginName) {
-		JSONObject json = userService.getUser(loginName);
-		return json.toString();
+	public @ResponseBody String getUser(String loginName, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
+        result = userService.getUser(loginName);
+		return result.toString();
 	}
 	
 	/**
@@ -44,15 +49,18 @@ public class UserController {
 	 * @createtime 2017年3月27日下午2:55:07
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public @ResponseBody String updateUser(HttpServletRequest request) {
+	public @ResponseBody String updateUser(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
+		
 		String userJson;
-		JSONObject result = null ;
 		try {
 			userJson = RequestUtils.getRequestJsonString(request);
 		    result = userService.updateUser(JSONObject.parseObject(userJson));
 		} catch (IOException e) {
 			logger.error("addUser error", e);
-			e.printStackTrace();
 		}
 		return result.toJSONString();
 	}
@@ -65,9 +73,12 @@ public class UserController {
 	 * @createtime 2017年3月27日下午2:56:47
 	 */
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public @ResponseBody String addUser(HttpServletRequest request) {
+	public @ResponseBody String addUser(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
 		String userJson;
-		JSONObject result = null ;
 		try {
 			userJson = RequestUtils.getRequestJsonString(request);
 		    result = userService.addUser(JSONObject.parseObject(userJson));
@@ -85,21 +96,22 @@ public class UserController {
 	 * @createtime 2017年3月28日上午10:36:56
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(HttpServletRequest request,String loginName,String password) {
+	public @ResponseBody String login(HttpServletRequest request, HttpSession session) {
 		String userLoginJson;
 		JSONObject result = null ;
 		try {
 			userLoginJson = RequestUtils.getRequestJsonString(request);
 			JSONObject parseObject = JSONObject.parseObject(userLoginJson);
 		    result = userService.login(parseObject);
+		    if("success".equals(result.getString("status"))){
+		    	session.setAttribute(loginFlag, true);
+		    }else{
+		    	session.setAttribute(loginFlag, false);
+		    }
 		} catch (IOException e) {
 			logger.error("login error", e);
 		}
 		return result.toJSONString();
 	}
-	
-	
-	
-	
 	
 }

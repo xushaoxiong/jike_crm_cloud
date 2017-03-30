@@ -78,6 +78,14 @@ public class RoleServiceImpl implements RoleService {
 	public JSONObject addRolePermission(JSONObject parseObject) {
 		Long roleId = parseObject.getLong("roleId");
 		JSONArray permissonList = parseObject.getJSONArray("permissonList");
+		JSONObject json = new JSONObject();
+		if(permissonList==null||permissonList.isEmpty()){
+			json.put("status", "fail");
+			json.put("message", "分配权限不能为空");
+			return json;
+		}
+		//删除以前分配权限
+		rolePermissionMapper.deleteByRoleId(roleId);
 		for (Object object : permissonList) {
 			JSONObject permissonJson = (JSONObject) object;
 			Long permissionId = permissonJson.getLong("permissionId");
@@ -87,7 +95,7 @@ public class RoleServiceImpl implements RoleService {
 			rolePermission.setCreateTime(new Date());
 			rolePermissionMapper.insert(rolePermission);
 		}
-		JSONObject json = new JSONObject();
+		
 		json.put("status", "success");
 		json.put("message", "分配成功");
 		return json;
