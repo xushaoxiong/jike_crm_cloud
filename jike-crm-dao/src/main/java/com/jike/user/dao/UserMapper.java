@@ -1,5 +1,7 @@
 package com.jike.user.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.jike.user.model.User;
@@ -60,4 +62,24 @@ public interface UserMapper {
 	 * @createtime 2017年3月27日下午5:50:23
 	 */
 	User selectUserByLoginnameAndPw(@Param("loginName")String loginName, @Param("password")String password);
+
+	/**
+	 * 分页查询用户
+	 * @param name
+	 * @param start
+	 * @param pageSize
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月30日下午2:51:46
+	 */
+	List<User> getUserByPage(@Param("name")String name, @Param("start")Integer start, @Param("pageSize")Integer pageSize);
+
+	/**
+	 * 查询用户数量
+	 * @param name
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月30日下午2:55:56
+	 */
+	int getUserCount(String name);
 }
