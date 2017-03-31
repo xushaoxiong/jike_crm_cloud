@@ -148,8 +148,10 @@ public class UserServiceImpl implements UserService {
 				for (User user : userList) {
 					JSONObject userJson = new JSONObject();
 					Map<String, String> map = userRoleMapper.getRoleNameByUserId(user.getUserId());
-					userJson.put("roleName", map.get("role_name"));
-					userJson.put("roleId", map.get("role_id"));
+					if(map!=null){
+						userJson.put("roleName", map.get("role_name"));
+						userJson.put("roleId", map.get("role_id"));
+					}
 					userJson.put("loginName", user.getLoginName());
 					userJson.put("name", user.getName());
 					userJson.put("gender", user.getGender()==0?"女":"男");
