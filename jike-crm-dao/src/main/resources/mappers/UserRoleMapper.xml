@@ -136,8 +136,8 @@
     from user_role
     where user_role_id = #{userRoleId,jdbcType=BIGINT}
   </select>
-	<select id="getRoleNameByUserId" resultType="java.lang.String">
-	  select r.role_name from
+	<select id="getRoleNameByUserId" resultType="java.util.Map">
+	  select r.role_name,r.role_id from
 		user_role u,
 		role r
 		where u.role_id = r.role_id

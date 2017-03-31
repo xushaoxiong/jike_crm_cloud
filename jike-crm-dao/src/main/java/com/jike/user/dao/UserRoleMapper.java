@@ -1,5 +1,7 @@
 package com.jike.user.dao;
 
+import java.util.Map;
+
 import com.jike.user.model.UserRole;
 
 public interface UserRoleMapper {
@@ -56,5 +58,5 @@ public interface UserRoleMapper {
 	 * @created wangyb
 	 * @createtime 2017年3月30日下午3:52:38
 	 */
-	String getRoleNameByUserId(Long userId);
+	Map<String,String> getRoleNameByUserId(Long userId);
 }

@@ -126,9 +126,9 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/getUserByPage", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String getUserByPage(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
-			return result.toJSONString();
-		}
+//		if("unLogin".equals(result.getString("status"))){
+//			return result.toJSONString();
+//		}
 		String queryJson;
 		try {
 			queryJson = RequestUtils.getRequestJsonString(request);

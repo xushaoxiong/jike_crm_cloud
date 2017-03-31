@@ -2,6 +2,7 @@ package com.jike.user.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,8 +147,9 @@ public class UserServiceImpl implements UserService {
 			if(!userList.isEmpty()){
 				for (User user : userList) {
 					JSONObject userJson = new JSONObject();
-					String roleName = userRoleMapper.getRoleNameByUserId(user.getUserId());
-					userJson.put("roleName", roleName);
+					Map<String, String> map = userRoleMapper.getRoleNameByUserId(user.getUserId());
+					userJson.put("roleName", map.get("role_name"));
+					userJson.put("roleId", map.get("role_id"));
 					userJson.put("loginName", user.getLoginName());
 					userJson.put("name", user.getName());
 					userJson.put("gender", user.getGender()==0?"女":"男");
