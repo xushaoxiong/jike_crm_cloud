@@ -160,6 +160,10 @@ public class UserController extends BaseController{
 			JSONObject parseObject = JSONObject.parseObject(passwordJson);
 			parseObject.put("loginName", session.getAttribute(loginName));
 		    result = userService.updateUserPassword(parseObject);
+		    if("success".equals(result.getString("status"))){
+		    	session.removeAttribute(loginFlag);
+				session.removeAttribute(loginName);
+		    }
 		} catch (IOException e) {
 			logger.error("updateUserPassword error", e);
 		}
