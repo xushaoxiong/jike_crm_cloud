@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
 		if(user!=null){
 			json.put("status", "success");
 			json.put("name", user.getName());
+			json.put("loginName", user.getLoginName());
 		}else {
 			json.put("status", "fail");
 		}
@@ -176,6 +177,31 @@ public class UserServiceImpl implements UserService {
 			resultJson.put("pageList", pageList);
 			resultJson.put("userList", userArr);
 		}
+		return resultJson;
+	}
+
+	public JSONObject updateUserPassword(JSONObject parseObject) {
+		JSONObject resultJson = new JSONObject();
+		String password1 = parseObject.getString("password1");
+		String password2 = parseObject.getString("password2");
+		if(!password1.equals(password2)){
+			resultJson.put("status", "fail");
+			resultJson.put("message", "两次密码不一致");
+			return resultJson;
+		}
+		String loginName = parseObject.getString("loginName");
+		String oldPassword = parseObject.getString("oldPassword");
+		User user = userMapper.selectUserByLoginnameAndPw(loginName, passwordenEcrypt.encrypt(oldPassword));
+		
+		if(user==null){
+			resultJson.put("status", "fail");
+			resultJson.put("message", "原密码输入错误");
+			return resultJson;
+		}
+		user.setPassword(passwordenEcrypt.encrypt(password1));
+		userMapper.updateByPrimaryKeySelective(user);
+		resultJson.put("status", "success");
+		resultJson.put("message", "密码修改成功");
 		return resultJson;
 	}
 }

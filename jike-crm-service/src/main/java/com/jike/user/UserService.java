@@ -50,4 +50,13 @@ public interface UserService {
 	 */
 	JSONObject getUserByPage(JSONObject parseObject);
 
+	/**
+	 * 修改密码
+	 * @param parseObject
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月31日上午10:11:32
+	 */
+	JSONObject updateUserPassword(JSONObject parseObject);
+
 }
