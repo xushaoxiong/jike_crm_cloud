@@ -121,9 +121,13 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.selectUserByLoginnameAndPw(loginName,passwordenEcrypt.encrypt(password));
 		JSONObject json = new JSONObject();
 		if(user!=null){
+			Map<String, String> map = userRoleMapper.getRoleNameByUserId(user.getUserId());
 			json.put("status", "success");
-			json.put("name", user.getName());
+			json.put("userName", user.getName());
 			json.put("loginName", user.getLoginName());
+			if(map!=null){
+				json.put("roleId", map.get("role_id"));
+			}
 		}else {
 			json.put("status", "fail");
 		}

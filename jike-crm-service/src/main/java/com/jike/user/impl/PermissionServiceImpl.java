@@ -120,6 +120,7 @@ public class PermissionServiceImpl implements PermissionService{
 				menu1.add(permissionJson);
 			}
 			resultJson.put("menu1", menu1);
+			resultJson.put("name", permissioJson.getString("userName"));
 		}
 		return resultJson;
 	}
