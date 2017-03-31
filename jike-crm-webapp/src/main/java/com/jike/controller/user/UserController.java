@@ -105,6 +105,7 @@ public class UserController extends BaseController{
 		    result = userService.login(parseObject);
 		    if("success".equals(result.getString("status"))){
 		    	session.setAttribute(loginFlag, true);
+		    	session.setAttribute(loginName, result.getString("loginName"));
 		    }else{
 		    	session.setAttribute(loginFlag, false);
 		    }
@@ -114,6 +115,14 @@ public class UserController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 分页查询用户
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月31日上午9:59:58
+	 */
 	@RequestMapping(value = "/getUserByPage", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String getUserByPage(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -129,5 +138,48 @@ public class UserController extends BaseController{
 			logger.error("getUserByPage error", e);
 		}
 		return result.toString();
+	}
+	
+	/**
+	 * 修改密码
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月31日上午10:11:13
+	 */
+	@RequestMapping(value = "/updateUserPassword", method = {RequestMethod.POST})
+	public @ResponseBody String updateUserPassword(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
+		String passwordJson;
+		try {
+			passwordJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(passwordJson);
+			parseObject.put("loginName", session.getAttribute(loginName));
+		    result = userService.updateUserPassword(parseObject);
+		} catch (IOException e) {
+			logger.error("updateUserPassword error", e);
+		}
+		return result.toString();
+	}
+	
+	/**
+	 * 退出登录
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月31日上午10:44:51
+	 */
+	@RequestMapping(value = "/loginOut", method = {RequestMethod.GET})
+	public @ResponseBody String loginOut(HttpSession session) {
+		session.removeAttribute(loginFlag);
+		session.removeAttribute(loginName);
+		JSONObject json = new JSONObject();
+		json.put("status", "success");
+		return json.toJSONString();
 	}
 }

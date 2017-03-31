@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 public class BaseController {
 	
 	public static final String loginFlag = "loginFlag";
+	public static final String loginName = "loginName";
 
 	/**
 	 * 验证是否登录
@@ -18,7 +19,7 @@ public class BaseController {
 	public JSONObject checkLogin(HttpSession session) {
 		Boolean loginResult = (Boolean) session.getAttribute(loginFlag);
 		JSONObject result = new JSONObject();
-		if (!loginResult) {
+		if (loginResult==null||!loginResult) {
 			result.put("status", "unLogin");
 			result.put("message", "未登录");
 		} else {
