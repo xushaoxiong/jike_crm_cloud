@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>账户管理</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="js/scrollbar/css/jquery.mCustomScrollbar.min.css" />
+	<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+	<script type="text/javascript" src="../js/pub/pub.js" ></script>
+	<script type="text/javascript" src="../js/scrollbar/js/jquery.mousewheel.min.js" ></script>
+	<script type="text/javascript" src="../js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>
+	<script type="text/javascript" src="../js/myDate/My97DatePicker/WdatePicker.js" ></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../js/bootstrap-paginator.js" ></script>
+	<script type="text/javascript" src="../js/management/user.js" ></script>
+</head>
+<body>
+	<style>
+	.ZH-account button{
+		margin-top: 20px;
+	}
+	.search-wap{
+		padding: 20px 0;
+	}
+	.tableAccnt tr th{text-align: center;}
+	.pagination-wap{
+		line-height: 80px;
+	}
+	.total-page{
+		padding-right: 15px;
+	}
+	.table tr td a{cursor: pointer;}
+	#newAdd .form-group{display: block;margin-bottom: 8px;}
+	#newAdd label{
+		width: 30% !important;
+		text-align: right;
+	}
+</style>
+<div class="wapper">
+	<div class="ZH-account clearfix" style="width: 95%;">
+	<h3 class="title pull-left">账户管理</h3>
+	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>新增账户</button>
+</div>
+<div class="search-wap form-inline clearfix">
+	<!--<div class="form-group">
+		<label>用户名：</label>
+		<input type="text" class="form-control" placeholder="用户名"/>
+	</div>-->
+	<div class="form-group">
+		<label>员工姓名：</label>
+		<input type="text" class="form-control" placeholder="员工姓名"/>
+	</div>
+	<button class="btn btn-default">
+		<span class="glyphicon glyphicon-search"></span>
+	</button>
+</div>
+<table class="table table-bordered text-center table-responsive tableAccnt">
+	<thead>
+		<tr>
+			<th>用户名</th>
+			<th>员工姓名</th>
+			<th>性别</th>
+			<th>手机号</th>
+			<th>邮箱</th>
+			<th>工号</th>
+			<th>是否在职</th>
+			<th>入职日期</th>
+			<th>角色分配</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender" gid='1'>男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment" eid='0'>在职</td>
+			<td class="entryDate">2016/9/25 18:20:49</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender " gid='0'>女</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment" eid='1'>离职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25 18:20:49</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender ">男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment">在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId">管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="loginName">liuzhibing</td>
+			<td class="Name">刘志兵</td>
+			<td class="gender" gid='1'>男</td>
+			<td class="phone">122212121</td>
+			<td class="email">21545@qq.com</td>
+			<td class="employeeNum">02</td>
+			<td class="isEmployment" eid='0'>在职</td>
+			<td class="entryDate">2016/9/25</td>
+			<td class="roleId" roleId='0'>管理员</td>
+			<td>
+				<a class="amend">修改</a>
+				<a class="del">删除</a>
+			</td>
+		</tr>
+		
+		
+	</tbody>
+</table>
+<div class="pagination-wap">
+	<div class="total-page pull-left">
+		<span>共15页</span>
+		<span>180条</span>
+	</div>
+	<ul class="pagination">
+	</ul> 
+</div>
+<!--新增弹框-->
+<div class="modal fade " id="newAdd">
+	<div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增账户</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <div class="form-group">
+                	<label>登录名：</label>
+                	<input type="text" value="登录名" class="form-control AccountInp"/>
+                </div>
+                <div class="form-group">
+                	<label>员工姓名：</label>
+                	<input type="text" value="姓名" class="form-control NameInp" />
+                </div>
+                <div class="form-group">
+                	<label>密码：</label>
+                	<input type="password" value="密码" class="form-control PwdInp" />
+                </div>
+                <div class="form-group genderGroup">
+                	<label>性别：</label>
+                	<input type="radio" gid="1" value="option1" name="optionsRadios"/>男
+                	<input type="radio" gid="0" value="option0" name="optionsRadios"/>女
+                </div>
+                <div class="form-group">
+                	<label>手机号：</label>
+                	<input type="tel" class="form-control phoneInp" placeholder="手机号" />
+                </div>
+                <div class="form-group">
+                	<label>邮箱：</label>
+                	<input type="text" class="form-control emailInp" placeholder="邮箱" />
+                </div>
+                <div class="form-group">
+                	<label>工号：</label>
+                	<input type="text" class="form-control eplyeNumInp" placeholder="工号" />
+                </div>
+                <div class="form-group" id="workStats" style="display: none;">
+                	<label>是否在职：</label>
+                	<input type="radio" epid="0" value="option1" name="isEplment"/>在职
+                	<input type="radio" epid="1" value="option0" name="isEplment"/>离职
+                	
+                </div>
+                <div class="form-group">
+                	<label>入职日期：</label>
+                	<div class='input-group'>  
+                		<p class="datep">
+                			<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:120px; padding:5px 34px 5px 10px">
+                		</p>
+            		</div>  
+                </div>
+                <div class="form-group">
+                	<label>权限组名称：</label>
+                	<select class="form-control RoleInp">
+                		<option idName='0'>管理员</option>
+                		<option idName='1'>技术人员</option>
+                		<option idName='2'>运营人员</option>
+                		<option idName='3'>销售人员</option>
+                		<option idName='0'>管理员</option>
+                		<option idName='1'>技术人员</option>
+                		<option idName='2'>运营人员</option>
+                		<option idName='3'>销售人员</option>
+                	</select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../js/management/user.js" ></script>
+</body>
+</html>
+
+
+

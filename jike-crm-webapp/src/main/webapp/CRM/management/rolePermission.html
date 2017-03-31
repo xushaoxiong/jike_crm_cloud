@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+	<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="js/pub/ajaxUrl.js" ></script>
+</head>
+<body>
+	<style>
+	.checkAll{
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		padding: 10px 0;
+		margin-top: 10px;
+	}
+	.check2{
+		padding-left: 15px;
+	}
+	.check3{
+		padding-left: 15px;
+	}
+	.check3 input{margin-right: 5px;}
+	.checkList span{
+		border-bottom:2px solid #105598;
+		height: 25px;
+		display: inline-block;
+		margin-bottom: 5px;
+		padding: 0 2px;
+	}
+</style>
+
+<div class="ZH-account clearfix" style="width: 95%;">
+	<h3 class="title pull-left">权限管理</h3>
+</div>
+<div class="search-wap form-inline clearfix">
+	<div class="form-group">
+		<label>权限组选择：</label>
+		<select class="form-control roleList">
+			<!--<option>财务人员</option>
+			<option>运营人员</option>
+			<option>大boss</option>-->
+		</select>
+	</div>
+	
+</div>
+<div class="form-group checkAll">
+	<label>权限选择：</label>
+	<input type="checkbox" value="checkAll" uid='0'/>全选
+</div>
+<div class="checkItem row">
+	<!--<ul class="check1 list-unstyled pull-left">
+		<li><input type="checkbox"/>概括
+			<ul class="check2 list-unstyled">
+				<li><input type="checkbox" />整体概括</li>
+				<li class="check3-item"><input type="checkbox" />账户与权限
+					<ul class="check3 list-unstyled">
+						<li><input type="checkbox" />账户管理</li>
+						<li><input type="checkbox" />账户管理</li>
+						<li><input type="checkbox" />账户管理</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>-->
+</div>
+<button class="btn btn-primary rolePerConfirm">确定</button>
+</body>
+<script>
+function checked(){
+		var roleId=$('.roleList').find('option:checked').attr('roleid');
+		$.ajax({
+			type:"post",
+			contentType: "application/json; charset=utf-8",
+			url:ajaxUrl+'permission/queryPermissionByRoleId',
+			data:'{"roleId":'+roleId+'}',
+			dataType:'json',
+			success:function(jo){
+				$('.check3 li').find('input').prop('checked',false);
+				if(jo.menu1!=undefined){
+					$.each(jo.menu1,function(i,item){
+					if(item.menu2==undefined){
+							$('.check3 li').find('input').prop('checked',false);
+					}else{
+						$.each(item.menu2, function(i2,item2) {
+							$('.check3 li[menuId="'+item2.menuId+'"]').find('input').prop('checked',true);
+						});
+					}
+					
+				})
+				}
+			}
+		});
+	}
+	//角色列表
+	$.ajax({
+		type:"post",
+		contentType: "application/json; charset=utf-8",
+		url:ajaxUrl+'role/queryRole',
+		data:'{"roleId":2}',
+		dataType:'json',
+		success:function(jo){
+			var roleList='';
+			$.each(jo, function(i,item) {
+				roleList+='<option class="RoleName" roleid="'+item.roleId+'">'+item.roleName+'</option>';
+			})
+			$('.roleList').html(roleList);
+		}
+		
+		
+	});
+	//权限列表
+	$.ajax({
+		type:"post",
+		contentType: "application/json; charset=utf-8",
+		url:ajaxUrl+'permission/queryPermissionByRoleId',
+		data:'{"roleId":2}',
+		dataType:'json',
+		success:function(jo){
+			var perHtml='';
+			$.each(jo.menu1,function(i,item){
+				perHtml+='<ul class="check2 list-unstyled col-md-3 col-xs-4 col-sm-3">';
+				perHtml+='<li class="checkList"><span menuId="'+item.menuId+'">'+item.menuName+'</span></li>';
+				if(item.menu2==undefined){
+					perHtml+='</ul>';
+				}else{
+					perHtml+='<ul class="check3 list-unstyled">';
+					$.each(item.menu2, function(i2,item2) {
+						perHtml+='<li menuId="'+item2.menuId+'" style="line-height:25px;"><input type="checkbox"/>'+item2.menuName+'</li>';
+					});
+					perHtml+='</ul>';
+					perHtml+='</ul>';
+				}
+				
+			})
+			$('.checkItem').html(perHtml);
+			checked();
+		}
+	});
+	//全选
+	$('.checkAll').find('input').click(function(){
+		var uid=$(this).attr('uid');		
+		if(uid=='0'){
+			$('.checkItem').find('input').prop('checked',true);
+			$('.checkAll').find('input').attr('uid','1')
+		}else{
+			$('.checkItem').find('input').prop('checked',false);
+			$('.checkAll').find('input').attr('uid','0')
+			
+		}
+	})
+	
+	$('.roleList').change(function(){
+		checked();
+	})
+	
+	
+	//确定
+	$('.rolePerConfirm').click(function(){
+		var roleId=$('.roleList option:checked').attr('roleid');
+		var PermisionJ={};
+		PermisionJ.roleId=roleId;
+		PermisionJ.permissonList=[];
+		
+		//获取一级权限id
+		$('.check2').each(function(i1){
+			if($('.check2').eq(i1).find('input').is(':checked')){
+				var menuId1=$(this).find('span').attr('menuid');
+				PermisionJ.permissonList.push({"permissionId":menuId1})
+			}
+		})
+		//获取二级权限id
+		$('.check3 input').each(function(i){
+			if($('.check3 input').eq(i).is(':checked')){
+				console.log($(this).parent().html())
+				var menuId2=$(this).parent().attr('menuId');
+				PermisionJ.permissonList.push({"permissionId":menuId2})
+			}
+			
+		})
+		console.log(JSON.stringify(PermisionJ))
+		$.ajax({
+			type:"post",
+			contentType: "application/json; charset=utf-8",
+			url:ajaxUrl+'role/addRolePermission',
+//			data:'{"roleId":2,"permissonList":[{"permissionId":1},{"permissionId":2},{"permissionId":3}]}',
+			data:JSON.stringify(PermisionJ),
+			dataType:'json',
+			success:function(jo){
+				pub.Alt('分配成功！',false,function(){
+					checked();
+				});
+				
+			}
+		});
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//二级权限选择
+//	$('.check1').each(function(i){
+//		$(this).find('input:eq(0)').click(function(){
+//			if($(this).prop('checked')==true){
+//				$('.check1').eq(i).find('input').prop('checked',true)
+//			}else{
+//				$('.check1').eq(i).find('input').prop('checked',false)
+//			}
+//	1
+//		})
+//	})
+	//三级权限选择
+//	$('.check3-item').each(function(i){
+//		$(this).find('input:eq(0)').click(function(){
+//			if($(this).prop('checked')==true){
+//				$('.check3-item').eq(i).find('input').prop('checked',true);
+//				console.log(11)
+//			}else{
+//				$('.check3-item').eq(i).find('input').prop('checked',false);
+//				console.log(22)
+//			}
+//	
+//		})
+//	})
+</script>	
+</html>
+
+
+
