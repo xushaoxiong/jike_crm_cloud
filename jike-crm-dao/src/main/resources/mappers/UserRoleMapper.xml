@@ -134,7 +134,7 @@
   	select 
     <include refid="Base_Column_List" />
     from user_role
-    where user_role_id = #{userRoleId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <select id="getRoleNameByUserId" resultType="java.util.Map">
 	  select r.role_name,r.role_id from
