@@ -130,7 +130,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_role_id = #{userRoleId,jdbcType=BIGINT}
   </update>
-  <select id="selectByUserId">
+  <select id="selectByUserId"  parameterType="java.lang.Long" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from user_role
