@@ -106,6 +106,8 @@ public class UserController extends BaseController{
 		    if("success".equals(result.getString("status"))){
 		    	session.setAttribute(loginFlag, true);
 		    	session.setAttribute(loginName, result.getString("loginName"));
+		    	session.setAttribute(userName, result.getString("userName"));
+		    	session.setAttribute(roleId, result.getString("roleId"));
 		    }else{
 		    	session.setAttribute(loginFlag, false);
 		    }
@@ -160,6 +162,12 @@ public class UserController extends BaseController{
 			JSONObject parseObject = JSONObject.parseObject(passwordJson);
 			parseObject.put("loginName", session.getAttribute(loginName));
 		    result = userService.updateUserPassword(parseObject);
+		    if("success".equals(result.getString("status"))){
+		    	session.removeAttribute(loginFlag);
+				session.removeAttribute(loginName);
+				session.removeAttribute(userName);
+		    	session.removeAttribute(roleId);
+		    }
 		} catch (IOException e) {
 			logger.error("updateUserPassword error", e);
 		}
@@ -178,6 +186,8 @@ public class UserController extends BaseController{
 	public @ResponseBody String loginOut(HttpSession session) {
 		session.removeAttribute(loginFlag);
 		session.removeAttribute(loginName);
+		session.removeAttribute(userName);
+    	session.removeAttribute(roleId);
 		JSONObject json = new JSONObject();
 		json.put("status", "success");
 		return json.toJSONString();

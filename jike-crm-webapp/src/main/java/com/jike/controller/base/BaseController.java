@@ -8,6 +8,8 @@ public class BaseController {
 	
 	public static final String loginFlag = "loginFlag";
 	public static final String loginName = "loginName";
+	public static final String roleId = "roleId";
+	public static final String userName = "userName";
 
 	/**
 	 * 验证是否登录

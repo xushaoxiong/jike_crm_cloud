@@ -62,12 +62,10 @@ public class PermissionController extends BaseController{
 		if("unLogin".equals(result.getString("status"))){
 			return result.toJSONString();
 		}
-		try {
-			String requestJson = RequestUtils.getRequestJsonString(request);
-			result = permissionService.selectPermissionByRoleId(JSONObject.parseObject(requestJson));
-		} catch (IOException e) {
-			logger.error("selectPermissionByRoleId error", e);
-		}
+		JSONObject json = new JSONObject();
+		json.put("roleId", session.getAttribute(roleId));
+		json.put("userName", session.getAttribute(userName));
+		result = permissionService.selectPermissionByRoleId(json);
 
 		return result.toJSONString();
 	}
