@@ -1,20 +1,20 @@
-<!doctype html>
+<!--<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>账户管理</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="js/scrollbar/css/jquery.mCustomScrollbar.min.css" />
-	<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
-	<script type="text/javascript" src="../js/pub/pub.js" ></script>
-	<script type="text/javascript" src="../js/scrollbar/js/jquery.mousewheel.min.js" ></script>
-	<script type="text/javascript" src="../js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>
-	<script type="text/javascript" src="../js/myDate/My97DatePicker/WdatePicker.js" ></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../js/bootstrap-paginator.js" ></script>
-	<script type="text/javascript" src="../js/management/user.js" ></script>
-</head>
-<body>
+	<title>账户管理</title>-->
+	<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />-->
+	<!--<link rel="stylesheet" href="../js/scrollbar/css/jquery.mCustomScrollbar.min.css" />-->
+	<!--<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+	<script type="text/javascript" src="../js/pub/pub.js" ></script>-->
+	<!--<script type="text/javascript" src="../js/scrollbar/js/jquery.mousewheel.min.js" ></script>
+	<script type="text/javascript" src="../js/scrollbar/js/jquery.mCustomScrollbar.js" ></script>-->
+	<!--<script type="text/javascript" src="js/myDate/My97DatePicker/WdatePicker.js" ></script>-->
+	<!--<script type="text/javascript" src="../js/bootstrap.min.js" ></script>-->
+	<!--<script type="text/javascript" src="../js/bootstrap-paginator.js" ></script>-->
+	<!--<script type="text/javascript" src="js/management/user.js" ></script>-->
+<!--</head>
+<body>-->
 	<style>
 	.ZH-account button{
 		margin-top: 20px;
@@ -29,7 +29,7 @@
 	.total-page{
 		padding-right: 15px;
 	}
-	.table tr td a{cursor: pointer;}
+	.table tr td a{cursor: pointer;padding: 0 5px;}
 	#newAdd .form-group{display: block;margin-bottom: 8px;}
 	#newAdd label{
 		width: 30% !important;
@@ -48,9 +48,9 @@
 	</div>-->
 	<div class="form-group">
 		<label>员工姓名：</label>
-		<input type="text" class="form-control" placeholder="员工姓名"/>
+		<input type="text" class="form-control userName" placeholder="员工姓名"/>
 	</div>
-	<button class="btn btn-default">
+	<button class="btn btn-default userSearch">
 		<span class="glyphicon glyphicon-search"></span>
 	</button>
 </div>
@@ -69,261 +69,22 @@
 			<th>操作</th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender" gid='1'>男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment" eid='0'>在职</td>
-			<td class="entryDate">2016/9/25 18:20:49</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender " gid='0'>女</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment" eid='1'>离职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25 18:20:49</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender ">男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment">在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId">管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="loginName">liuzhibing</td>
-			<td class="Name">刘志兵</td>
-			<td class="gender" gid='1'>男</td>
-			<td class="phone">122212121</td>
-			<td class="email">21545@qq.com</td>
-			<td class="employeeNum">02</td>
-			<td class="isEmployment" eid='0'>在职</td>
-			<td class="entryDate">2016/9/25</td>
-			<td class="roleId" roleId='0'>管理员</td>
-			<td>
-				<a class="amend">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		
+	<tbody class="userList">
+
 		
 	</tbody>
 </table>
+<!--分页-->
 <div class="pagination-wap">
 	<div class="total-page pull-left">
-		<span>共15页</span>
-		<span>180条</span>
+		<span class="totalPage"></span>
+		<span class="totalNum"></span>
 	</div>
 	<ul class="pagination">
 	</ul> 
 </div>
 <!--新增弹框-->
-<div class="modal fade " id="newAdd">
+<div class="modal " id="newAdd">
 	<div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -396,9 +157,195 @@
     </div>
 </div>
 </div>
-<script type="text/javascript" src="../js/management/user.js" ></script>
-</body>
-</html>
+<script>
+	$('.alert-del-wap').height($(window).height());
+	
+	//用户列表
+	var paginatorJ={"name":"","start":1,"pageSize":10};
+			
+	
+	$.ajax({
+		
+		type:"post",
+		contentType: "application/json; charset=utf-8",
+		url:ajaxUrl+'user/getUserByPage',
+//		data:'{"name":"","start":1,"pageSize":2}',
+		data:JSON.stringify(paginatorJ),
+		dataType:'json',
+		success:function(jo){
+			console.log(jo);
+			//分页
+			var options={
+				alignment:"center",
+		        bootstrapMajorVersion:1,    //版本
+		        currentPage:1,    //当前页数
+		        numberOfPages:9,    //最多显示Page页
+		        totalPages:jo.totalPage,    //所有数据可以显示的页数
+		        onPageClicked:function(e,originalEvent,type,page){
+			      	paginatorJ.start=page;
+			      	clickPage(paginatorJ)
+		        },
+		        pageUrl:function(type, page, current){
+		        	 
+		        }        
+		    }
+		    $(".pagination").bootstrapPaginator(options);
+			$('.totalPage').html('共'+jo.totalCount+'条');
+			$('.totalNum').html(jo.totalPage+'页');
+			var userHtml='';
+			$.each(jo.userList,function(i,item){
+				userHtml+='<tr>';
+				userHtml+='<td class="loginName">'+item.loginName+'</td>';
+				userHtml+='<td class="Name">'+item.name+'</td>';
+				userHtml+='<td class="gender">'+item.loginName+'</td>';
+				userHtml+='<td class="phone">'+item.gender+'</td>';
+				userHtml+='<td class="email">'+item.email+'</td>';
+				userHtml+='<td class="employeeNum">'+item.employeeNum+'</td>';
+				userHtml+='<td class="isEmployment">'+item.isEmployment+'</td>';
+				userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
+				userHtml+='<td class="roleId">'+item.roleName+'</td>';
+				userHtml+='<td>';
+					userHtml+='<a class="amend">修改</a>';
+					userHtml+='<a class="del">删除</a>';
+				userHtml+='</td>';
+			userHtml+='</tr>';
+			})
+		$('.userList').html(userHtml);
+		}
+	});
+	
+	//点击跳转页
+	function clickPage(PJson){
+		$.ajax({
+		type:"post",
+		contentType: "application/json; charset=utf-8",
+		url:ajaxUrl+'user/getUserByPage',
+		data:JSON.stringify(PJson),
+		dataType:'json',
+		success:function(jo){
+			var userHtml='';
+			$.each(jo.userList,function(i,item){
+				userHtml+='<tr>';
+				userHtml+='<td class="loginName">'+item.loginName+'</td>';
+				userHtml+='<td class="Name">'+item.name+'</td>';
+				userHtml+='<td class="gender">'+item.gender+'</td>';
+				userHtml+='<td class="phone">'+item.phone+'</td>';
+				userHtml+='<td class="email">'+item.email+'</td>';
+				userHtml+='<td class="employeeNum">'+item.employeeNum+'</td>';
+				userHtml+='<td class="isEmployment">'+item.isEmployment+'</td>';
+				userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
+				userHtml+='<td class="roleId">'+item.roleName+'</td>';
+				userHtml+='<td>';
+					userHtml+='<a class="userAmend">修改</a>';
+					userHtml+='<a class="userDel">删除</a>';
+				userHtml+='</td>';
+			userHtml+='</tr>';
+			})
+		$('.userList').html(userHtml);
+		}
+	});
+	}
+	
+	//搜索
+	
+	$('.userSearch').click(function(){
+		var nameVal=$.trim($('.userName').val());
+		paginatorJ.name=nameVal;
+		clickPage(paginatorJ)
+	})
+	
+	
+	
+	//新增
+	 $(".addBtn").click(function(){
+      	$("#newAdd").modal("toggle");
+      	$('#workStats').hide();
+      	$('.AccountInp').val('');
+		$('.NameInp').val('');
+		$(".RoleInp").find("option[idName='0']").prop("selected",true);
+		
+
+    });
+    
+    //日期
+ 
+	//修改
+	$(document).on('click','.amend',function(){
+		var trs=$(this).parents('tr')
+		var loginName=trs.find('.loginName').html();
+		var Name=trs.find('.Name').html();
+//		var genderID=trs.find('.gender').attr('gid');
+//		var phone=$('.phone').eq(i).html();
+//		var email=$('.email').eq(i).html();
+//		var employeeNum=$('.employeeNum').eq(i).html();
+//		var isEmp=$('.isEmployment').eq(i).attr('eid');
+//		var entryDate=$('.entryDate').eq(i).html();
+//		var Rid=$('.roleId').eq(i).attr('rid');
+//		var Rid=$('.roleId').eq(i).html();
+//		$("#newAdd").modal("toggle");
+//		$('#workStats').show();//是否在职
+//		$('.AccountInp').val(loginName);
+//		$('.NameInp').val(Name);
+//		$('.genderGroup').find("input[gid='"+genderID+"']").prop('checked',true);
+//		$('.phoneInp').val(phone);
+//		$('.emailInp').val(email);
+//		$('.eplyeNumInp').val(employeeNum);
+//		$('#workStats').find("input[epid='"+isEmp+"']").prop('checked',true);
+//		$('#indate').val(entryDate);
+//		$(".RoleInp").find("option[idName='"+Rid+"']").prop("selected",true);
+	})
+//	$('.userAmend').each(function(i){
+//		$(this).click(function(){
+//			var loginName=$('.loginName').eq(i).html();
+//			var Name=$('.Name').eq(i).html();
+//			var genderID=$('.gender').eq(i).attr('gid');
+//			var phone=$('.phone').eq(i).html();
+//			var email=$('.email').eq(i).html();
+//			var employeeNum=$('.employeeNum').eq(i).html();
+//			var isEmp=$('.isEmployment').eq(i).attr('eid');
+//			var entryDate=$('.entryDate').eq(i).html();
+//			var Rid=$('.roleId').eq(i).attr('rid');
+//			var Rid=$('.roleId').eq(i).html();
+//			$("#newAdd").modal("toggle");
+//			$('#workStats').show();//是否在职
+//			$('.AccountInp').val(loginName);
+//			$('.NameInp').val(Name);
+//			$('.genderGroup').find("input[gid='"+genderID+"']").prop('checked',true);
+//			$('.phoneInp').val(phone);
+//			$('.emailInp').val(email);
+//			$('.eplyeNumInp').val(employeeNum);
+//			$('#workStats').find("input[epid='"+isEmp+"']").prop('checked',true);
+//			$('#indate').val(entryDate);
+//			$(".RoleInp").find("option[idName='"+Rid+"']").prop("selected",true);
+//			
+//			
+//		})
+//	})
+	//删除
+	$('.userDdel').click(function(){
+		var tr=$(this).parents('tr');
+		pub.Alt('确定删除？',true,function(){
+			$('.confirm').click(function(){
+				tr.remove();
+				$('.alert-del').hide();
+			})
+		})
+	})
+	
+    
+    var H=$(window).height()-60;
+	$(".wapper").mCustomScrollbar({
+		set_height:H,
+		scrollButtons:{enable:true},
+		theme:"minimal-dark",
+		scrollbarPosition:"relative",
+	
+		
+	});
+//})
+
+//	</body>
+//</html>
 
 
 
