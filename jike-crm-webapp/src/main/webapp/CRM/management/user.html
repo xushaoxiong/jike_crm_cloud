@@ -73,7 +73,10 @@
 
 		
 	</tbody>
+	<!--搜索无数据-->
+
 </table>
+<div class="noUserSearch" style="display: none;font-size: 25px;"><b>无数据</b></div>
 <!--分页-->
 <div class="pagination-wap">
 	<div class="total-page pull-left">
@@ -164,9 +167,12 @@
 		data:JSON.stringify(paginatorJ),
 		dataType:'json',
 		success:function(jo){
-			console.log(jo)
 			if(jo.userList.length==0){
-				$('.userList').html('无数据');
+				$('.noUserSearch').show();
+				$('.pagination,.totalNum').hide();
+			}else{
+				$('.noUserSearch').hide();
+				$('.pagination,.totalNum').show();
 			}
 			//分页
 			var options={
@@ -227,7 +233,6 @@
 		data:JSON.stringify(PJson),
 		dataType:'json',
 		success:function(jo){
-			console.log(jo)
 			var userHtml='';
 			$.each(jo.userList,function(i,item){
 				userHtml+='<tr>';
@@ -336,7 +341,6 @@
 			$('.userModalAlt').html('请填写入职日期');
 			return false;
 		};
-		$("#newAdd").modal("hide");
 		$.ajax({
 			type:"post",
 			contentType: "application/json; charset=utf-8",
@@ -344,9 +348,13 @@
 			data:JSON.stringify(userJ),
 			dataType:'json',
 			success:function(jo){
-				if(jo.status=='success'){
+				if(jo.state=='success'){
+					$('.userModalAlt').html('');
 					$("#newAdd").modal("hide");
 					userpage();
+				}else{
+					$('.userModalAlt').html(jo.message);
+					return;
 				}
 				
 			}
@@ -398,7 +406,7 @@
 		});
 	})
 	$('#newAdd').on('click','#editUserCofirm',function(e){
-		$("#newAdd").modal("show");
+//		$("#newAdd").modal("hide");
 		$('.userModalAlt').html('');
 		var editUserJ={};
 		editUserJ.name=$('.NameInp').val();
@@ -438,9 +446,12 @@
 			data:JSON.stringify(editUserJ),
 			dataType:'json',
 			success:function(jo){
-				if(jo.status=='success'){
+				if(jo.state=='success'){
 					$("#newAdd").modal("hide");
 					userpage();
+				}else{
+					$('.userModalAlt').html(jo.message);
+					return;
 				}
 				
 			}

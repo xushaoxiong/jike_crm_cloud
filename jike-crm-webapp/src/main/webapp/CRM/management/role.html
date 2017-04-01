@@ -114,7 +114,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	            <button type="button" class="btn btn-primary confirm">保存</button>
+	            <button type="button" class="btn btn-primary Rconfirm">保存</button>
 			</div>
 		</div>
 	</div>
@@ -152,7 +152,7 @@
 		$("#MRole").modal("toggle");
 		$('#roleNum').val('');
 		$('#roleName').val('');
-		$('.confirm').attr('id','addRoleconfirm');
+		$('.Rconfirm').attr('id','addRoleconfirm');
 	})
 	//添加角色
 	$('#MRole').on('click','#addRoleconfirm',function(e){
@@ -169,7 +169,8 @@
 			dataType:'json',
 			data:JSON.stringify(roleJ),
 			success:function(jo){
-				if(jo.status=='success'){
+				if(jo.state=='success'){
+					console.log(jo)
 					$('#MRole').modal('hide');
 					roleList();
 				}else{
