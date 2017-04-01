@@ -29,7 +29,7 @@ public class RoleServiceImpl implements RoleService {
 			synchronized (this) {
 				Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
 				if (roleOld != null) {
-					resultJson.put("status", "fail");
+					resultJson.put("state", "fail");
 					resultJson.put("message", "该角色已存在");
 					return resultJson;
 				}
@@ -40,11 +40,11 @@ public class RoleServiceImpl implements RoleService {
 				role.setCreateTime(new Date());
 				roleMapper.insert(role);
 			}
-			resultJson.put("status", "success");
+			resultJson.put("state", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
 		}
-		resultJson.put("status", "fail");
+		resultJson.put("state", "fail");
 		resultJson.put("message", "添加内容为空");
 		return resultJson;
 	}
@@ -65,11 +65,11 @@ public class RoleServiceImpl implements RoleService {
 				role.setCreateTime(new Date());
 				roleMapper.updateByPrimaryKeySelective(role);
 			}
-			resultJson.put("status", "success");
+			resultJson.put("state", "success");
 			resultJson.put("message", "更新成功");
 			return resultJson;
 		}
-		resultJson.put("status", "fail");
+		resultJson.put("state", "fail");
 		resultJson.put("message", "添加内容为空");
 		return resultJson;
 	}
@@ -79,7 +79,7 @@ public class RoleServiceImpl implements RoleService {
 		JSONArray permissonList = parseObject.getJSONArray("permissonList");
 		JSONObject json = new JSONObject();
 		if(permissonList==null||permissonList.isEmpty()){
-			json.put("status", "fail");
+			json.put("state", "fail");
 			json.put("message", "分配权限不能为空");
 			return json;
 		}
@@ -96,7 +96,7 @@ public class RoleServiceImpl implements RoleService {
 				rolePermissionMapper.insert(rolePermission);
 			}
 		}
-		json.put("status", "success");
+		json.put("state", "success");
 		json.put("message", "分配成功");
 		return json;
 	}

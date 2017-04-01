@@ -50,13 +50,13 @@ public class UserServiceImpl implements UserService {
 		if (!userJson.isEmpty()) {
 			synchronized (this) {
 				if(userJson.getString("loginName")==null){
-					resultJson.put("status", "fail");
+					resultJson.put("state", "fail");
 					resultJson.put("message", "登录名必填");
 					return resultJson;
 				}
 				User oldUser = userMapper.selectByLoginName(userJson.getString("loginName"));
 				if (oldUser != null) {
-					resultJson.put("status", "fail");
+					resultJson.put("state", "fail");
 					resultJson.put("message", "登录名已存在");
 					return resultJson;
 				}
@@ -84,11 +84,11 @@ public class UserServiceImpl implements UserService {
 				user.setCreateTime(new Date());
 				userRoleMapper.insert(userRole);
 			}
-			resultJson.put("status", "success");
+			resultJson.put("state", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
 		}
-		resultJson.put("status", "fail");
+		resultJson.put("state", "fail");
 		resultJson.put("message", "添加内容为空");
 		return resultJson;
 	}
@@ -113,10 +113,10 @@ public class UserServiceImpl implements UserService {
 			user.setUpdateTime(new Date());
 			userRoleMapper.updateByPrimaryKeySelective(userRole);
 			}
-			resultJson.put("status", "success");
+			resultJson.put("state", "success");
 			resultJson.put("message", "更新成功");
 		}else{
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "更新内容为空");
 		}
 		
@@ -130,14 +130,14 @@ public class UserServiceImpl implements UserService {
 		JSONObject json = new JSONObject();
 		if(user!=null){
 			Map<String, String> map = userRoleMapper.getRoleNameByUserId(user.getUserId());
-			json.put("status", "success");
+			json.put("state", "success");
 			json.put("userName", user.getName());
 			json.put("loginName", user.getLoginName());
 			if(map!=null){
 				json.put("roleId", map.get("role_id"));
 			}
 		}else {
-			json.put("status", "fail");
+			json.put("state", "fail");
 		}
 		return json;
 	}
@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService {
 		String password1 = parseObject.getString("password1");
 		String password2 = parseObject.getString("password2");
 		if(!password1.equals(password2)){
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "两次密码不一致");
 			return resultJson;
 		}
@@ -210,13 +210,13 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.selectUserByLoginnameAndPw(loginName, passwordenEcrypt.encrypt(oldPassword));
 		
 		if(user==null){
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "原密码输入错误");
 			return resultJson;
 		}
 		user.setPassword(passwordenEcrypt.encrypt(password1));
 		userMapper.updateByPrimaryKeySelective(user);
-		resultJson.put("status", "success");
+		resultJson.put("state", "success");
 		resultJson.put("message", "密码修改成功");
 		return resultJson;
 	}
