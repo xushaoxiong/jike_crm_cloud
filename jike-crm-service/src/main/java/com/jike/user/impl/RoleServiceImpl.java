@@ -26,18 +26,20 @@ public class RoleServiceImpl implements RoleService {
 	public JSONObject addRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
 		if (roleJson!=null&&!roleJson.isEmpty()) {
-			Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
-			if (roleOld != null) {
-				resultJson.put("status", "fail");
-				resultJson.put("message", "该角色已存在");
-				return resultJson;
+			synchronized (this) {
+				Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
+				if (roleOld != null) {
+					resultJson.put("status", "fail");
+					resultJson.put("message", "该角色已存在");
+					return resultJson;
+				}
+				Role role = new Role();
+				role.setRoleName(roleJson.getString("roleName"));
+				// role.setRoleDescription(roleJson.getString("roleDescription"));
+				role.setRoleNum(roleJson.getString("roleNum"));
+				role.setCreateTime(new Date());
+				roleMapper.insert(role);
 			}
-			Role role = new Role();
-			role.setRoleName(roleJson.getString("roleName"));
-//			role.setRoleDescription(roleJson.getString("roleDescription"));
-			role.setRoleNum(roleJson.getString("roleNum"));
-			role.setCreateTime(new Date());
-			roleMapper.insert(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
@@ -55,18 +57,20 @@ public class RoleServiceImpl implements RoleService {
 	public JSONObject updateRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
 		if (!roleJson.isEmpty()) {
-			Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
-			if (roleOld != null) {
-				resultJson.put("status", "fail");
-				resultJson.put("message", "该角色已存在");
-				return resultJson;
+			synchronized (this) {
+				Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
+				if (roleOld != null) {
+					resultJson.put("status", "fail");
+					resultJson.put("message", "该角色已存在");
+					return resultJson;
+				}
+				Role role = new Role();
+				role.setRoleName(roleJson.getString("roleName"));
+				role.setRoleDescription(roleJson.getString("roleDescription"));
+				role.setRoleNum(roleJson.getString("roleNum"));
+				role.setCreateTime(new Date());
+				roleMapper.updateByPrimaryKeySelective(role);
 			}
-			Role role = new Role();
-			role.setRoleName(roleJson.getString("roleName"));
-			role.setRoleDescription(roleJson.getString("roleDescription"));
-			role.setRoleNum(roleJson.getString("roleNum"));
-			role.setCreateTime(new Date());
-			roleMapper.updateByPrimaryKeySelective(role);
 			resultJson.put("status", "success");
 			resultJson.put("message", "更新成功");
 			return resultJson;
@@ -86,17 +90,18 @@ public class RoleServiceImpl implements RoleService {
 			return json;
 		}
 		//删除以前分配权限
-		rolePermissionMapper.deleteByRoleId(roleId);
-		for (Object object : permissonList) {
-			JSONObject permissonJson = (JSONObject) object;
-			Long permissionId = permissonJson.getLong("permissionId");
-			RolePermission rolePermission = new RolePermission();
-			rolePermission.setRoleId(roleId);
-			rolePermission.setPermissionId(permissionId);
-			rolePermission.setCreateTime(new Date());
-			rolePermissionMapper.insert(rolePermission);
+		synchronized (this) {
+			rolePermissionMapper.deleteByRoleId(roleId);
+			for (Object object : permissonList) {
+				JSONObject permissonJson = (JSONObject) object;
+				Long permissionId = permissonJson.getLong("permissionId");
+				RolePermission rolePermission = new RolePermission();
+				rolePermission.setRoleId(roleId);
+				rolePermission.setPermissionId(permissionId);
+				rolePermission.setCreateTime(new Date());
+				rolePermissionMapper.insert(rolePermission);
+			}
 		}
-		
 		json.put("status", "success");
 		json.put("message", "分配成功");
 		return json;
