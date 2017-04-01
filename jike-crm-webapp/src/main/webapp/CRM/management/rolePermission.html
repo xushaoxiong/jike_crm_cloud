@@ -69,8 +69,9 @@
 <button class="btn btn-primary rolePerConfirm">确定</button>
 </body>
 <script>
-function checked(){
+	function checked(){
 		var roleId=$('.roleList').find('option:checked').attr('roleid');
+		console.log(roleId);
 		$.ajax({
 			type:"post",
 			contentType: "application/json; charset=utf-8",
@@ -99,7 +100,6 @@ function checked(){
 		type:"post",
 		contentType: "application/json; charset=utf-8",
 		url:ajaxUrl+'role/queryRole',
-		data:'{"roleId":2}',
 		dataType:'json',
 		success:function(jo){
 			var roleList='';
@@ -115,8 +115,8 @@ function checked(){
 	$.ajax({
 		type:"post",
 		contentType: "application/json; charset=utf-8",
-		url:ajaxUrl+'permission/queryPermissionByRoleId',
-		data:'{"roleId":2}',
+		url:ajaxUrl+'permission/queryLoginPermission',
+//		data:'{"roleId":2}',
 		dataType:'json',
 		success:function(jo){
 			var perHtml='';
@@ -174,13 +174,12 @@ function checked(){
 		//获取二级权限id
 		$('.check3 input').each(function(i){
 			if($('.check3 input').eq(i).is(':checked')){
-				console.log($(this).parent().html())
 				var menuId2=$(this).parent().attr('menuId');
 				PermisionJ.permissonList.push({"permissionId":menuId2})
 			}
 			
 		})
-		console.log(JSON.stringify(PermisionJ))
+	
 		$.ajax({
 			type:"post",
 			contentType: "application/json; charset=utf-8",
@@ -198,38 +197,6 @@ function checked(){
 	})
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	//二级权限选择
-//	$('.check1').each(function(i){
-//		$(this).find('input:eq(0)').click(function(){
-//			if($(this).prop('checked')==true){
-//				$('.check1').eq(i).find('input').prop('checked',true)
-//			}else{
-//				$('.check1').eq(i).find('input').prop('checked',false)
-//			}
-//	1
-//		})
-//	})
-	//三级权限选择
-//	$('.check3-item').each(function(i){
-//		$(this).find('input:eq(0)').click(function(){
-//			if($(this).prop('checked')==true){
-//				$('.check3-item').eq(i).find('input').prop('checked',true);
-//				console.log(11)
-//			}else{
-//				$('.check3-item').eq(i).find('input').prop('checked',false);
-//				console.log(22)
-//			}
-//	
-//		})
-//	})
 </script>	
 </html>
 

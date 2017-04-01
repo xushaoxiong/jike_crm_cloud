@@ -38,8 +38,6 @@
 			<th>角色编号</th>
 			<th>角色名称</th>
 			<th>创建时间</th>
-			<th>修改时间</th>
-			<th>操作</th>
 		</tr>
 	</thead>
 	<tbody id="role-wap">
@@ -130,23 +128,21 @@
 		type:"post",
 		contentType: "application/json; charset=utf-8",
 		url:ajaxUrl+'role/queryRole',
-		data:'{"roleId":2}',
 		dataType:'json',
 		success:function(jo){
-			var RoleHtml="";
-			$.each(jo, function(i,item) {
-				RoleHtml+='<tr>';
-					RoleHtml+='<td class="RoleName">'+item.roleNum+'</td>';
-					RoleHtml+='<td class="RoleName" roleId="'+item.roleId+'">'+item.roleName+'</td>';
-					RoleHtml+='<td>'+item.createTime+'</td>';
-					RoleHtml+='<td>'+item.updateTime+'</td>';
-					RoleHtml+='<td>';
-						RoleHtml+='<a style="padding-right:5px;" class="edit">修改</a>';
-						RoleHtml+='<a class="del">删除</a>';
-					RoleHtml+='</td>';
-				RoleHtml+='</tr>';
-			});
-			$('#role-wap').html(RoleHtml);
+				var RoleHtml="";
+				$.each(jo, function(i,item) {
+					RoleHtml+='<tr>';
+						RoleHtml+='<td class="RoleNum">'+item.roleNum+'</td>';
+						RoleHtml+='<td class="RoleName" roleId="'+item.roleId+'">'+item.roleName+'</td>';
+						RoleHtml+='<td>'+item.createTime+'</td>';
+					RoleHtml+='</tr>';
+				});
+				$('#role-wap').html(RoleHtml);
+			
+		},
+		error:function(jo){
+			alert('服务器忙')
 		}
 	});
 	}roleList()
@@ -156,9 +152,11 @@
 		$("#MRole").modal("toggle");
 		$('#roleNum').val('');
 		$('#roleName').val('');
+		$('.confirm').attr('id','addRoleconfirm');
 	})
 	//添加角色
-	$('.confirm').click(function(){
+	$('#MRole').on('click','#addRoleconfirm',function(e){
+		e.preventDefault();
 		var roleJ={};
 		var roleNum=$('#roleNum').val();
 		var roleName=$('#roleName').val();
@@ -180,25 +178,7 @@
 			}
 		});
 	})
-	//修改
-	$(document).on('click','.edit',function(){
-		$("#MRole").modal("toggle");
-		var RoleName=$(this).parents('tr').find('.rolename').html();
-		var RoleNum=$(this).parents('tr').find('.rolenum').html();
-		$('#roleNum').val(RoleName);
-		$('#roleName').val(RoleNum);
-		roleList();
-	})
-	//删除
-	$(document).on('click','.del',function(){
-		var tr=$(this).parents('tr');
-		pub.Alt('确定删除该项？',true,function(){
-			$('.confirm').click(function(){
-				tr.remove();
-				$('.alert-del').hide();
-			})
-		})
-	})
+
 
 </script>
 </html>

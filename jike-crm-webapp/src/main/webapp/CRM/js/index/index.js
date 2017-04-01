@@ -4,10 +4,10 @@ $(function(){
 	$.ajax({
 		type:"post",
 		contentType: "application/json; charset=utf-8",
-		url:ajaxUrl+"permission/queryPermissionByRoleId",
-		data:'{"roleId":2}',
+		url:ajaxUrl+"permission/queryLoginPermission",
 		dataType:'json',
 		success:function(jo){
+			$('.indexName').html(jo.name);
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
 				NavHtml+='<li class="L-list-item">';
@@ -26,10 +26,13 @@ $(function(){
 				})	
 				NavHtml+='</ul>';
 				NavHtml+='</li>';
-				}
-//						
+				}				
 			})
 			$('.L-list').append(NavHtml);
+			
+		},
+		error:function(){
+			alert('服务器忙！')
 		}
 	});
 
@@ -39,8 +42,23 @@ $(function(){
 	
 	$(document).on('click','.hide-menu li',function(){
 		var url=$(this).attr('url');
-		console.log(url)
 			$('.R-wap').load(url);
 			
+	})	
+	
+	//退出
+	$('.loginOut').click(function(){
+		$.ajax({
+			type:"get",
+			contentType: "application/json; charset=utf-8",
+			url:ajaxUrl+"user/loginOut",
+			dataType:'json',
+			success:function(jo){
+				if(jo.status=='success'){
+					window.location.href="login.html";
+				}
+			}
+		});
 	})
+	
 })
