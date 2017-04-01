@@ -50,6 +50,27 @@ public class PermissionController extends BaseController{
 	}
 	
 	/**
+	 * 查询登录角色拥有的菜单
+	 * @param request
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年3月29日下午3:07:03
+	 */
+	@RequestMapping(value = "/queryLoginPermission", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody String queryLoginPermission(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("status"))){
+			return result.toJSONString();
+		}
+		JSONObject json = new JSONObject();
+		json.put("roleId", session.getAttribute(roleId));
+		json.put("userName", session.getAttribute(userName));
+		result = permissionService.selectPermissionByRoleId(json);
+
+		return result.toJSONString();
+	}
+	
+	/**
 	 * 查询角色拥有的菜单
 	 * @param request
 	 * @return
@@ -62,10 +83,12 @@ public class PermissionController extends BaseController{
 		if("unLogin".equals(result.getString("status"))){
 			return result.toJSONString();
 		}
-		JSONObject json = new JSONObject();
-		json.put("roleId", session.getAttribute(roleId));
-		json.put("userName", session.getAttribute(userName));
-		result = permissionService.selectPermissionByRoleId(json);
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			result = permissionService.selectPermissionByRoleId(JSONObject.parseObject(requestJson));
+		} catch (IOException e) {
+			logger.error("selectPermissionByRoleId error", e);
+		}
 
 		return result.toJSONString();
 	}
