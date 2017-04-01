@@ -7,6 +7,14 @@ $(function(){
 		url:ajaxUrl+"permission/queryLoginPermission",
 		dataType:'json',
 		success:function(jo){
+			if(jo.state=='unLogin'){
+				pub.Alt(jo.message,true,function(){
+					$('.confirm').click(function(){
+						window.location.href='login.html';
+						return;
+					})
+				})
+			}
 			$('.indexName').html(jo.name);
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
@@ -29,6 +37,7 @@ $(function(){
 				}				
 			})
 			$('.L-list').append(NavHtml);
+		
 			
 		},
 		error:function(){
