@@ -35,7 +35,7 @@ public class PermissionController extends BaseController{
 	@RequestMapping(value = "/queryPermission", method ={RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody String queryPermission(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		try {
@@ -59,7 +59,7 @@ public class PermissionController extends BaseController{
 	@RequestMapping(value = "/queryLoginPermission", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody String queryLoginPermission(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		JSONObject json = new JSONObject();
@@ -80,7 +80,7 @@ public class PermissionController extends BaseController{
 	@RequestMapping(value = "/queryPermissionByRoleId", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody String queryPermissionByRoleId(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		try {

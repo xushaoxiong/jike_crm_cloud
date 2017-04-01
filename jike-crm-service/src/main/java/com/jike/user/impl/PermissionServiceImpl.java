@@ -24,7 +24,7 @@ public class PermissionServiceImpl implements PermissionService{
 			Permission permissionOld = permissionMapper
 					.selectByPermissionName(permissioJson.getString("permissionName"));
 			if (permissionOld != null) {
-				resultJson.put("status", "fail");
+				resultJson.put("state", "fail");
 				resultJson.put("message", "该权限名称已存在");
 				return resultJson;
 			}
@@ -35,10 +35,10 @@ public class PermissionServiceImpl implements PermissionService{
 			permission.setParentId(permissioJson.getLong("parentId"));
 			permission.setSort(permissioJson.getInteger("sort"));
 			permission.setCreateTime(new Date());
-			resultJson.put("status", "success");
+			resultJson.put("state", "success");
 			resultJson.put("message", "添加成功");
 		} else {
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "添加内容为空");
 		}
 		return resultJson;
@@ -58,14 +58,14 @@ public class PermissionServiceImpl implements PermissionService{
 				permission.setSort(permissioJson.getInteger("sort"));
 				permission.setUpdateTime(new Date());
 				permissionMapper.updateByPrimaryKeySelective(permission);
-				resultJson.put("status", "success");
+				resultJson.put("state", "success");
 				resultJson.put("message", "更新成功");
 			}else{
-				resultJson.put("status", "fail");
+				resultJson.put("state", "fail");
 				resultJson.put("message", "更新权限不存在");
 			}
 		} else {
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "更新内容为空");
 		}
 		return resultJson;
@@ -78,14 +78,14 @@ public class PermissionServiceImpl implements PermissionService{
 					.selectByPermissionName(permissioJson.getString("permissionName"));
 			if (permission != null) {
 				permissionMapper.deleteByPrimaryKey(permission.getPermissionId());
-				resultJson.put("status", "success");
+				resultJson.put("state", "success");
 				resultJson.put("message", "删除成功");
 			}else{
-				resultJson.put("status", "fail");
+				resultJson.put("state", "fail");
 				resultJson.put("message", "删除数据不存在");
 			}
 		} else {
-			resultJson.put("status", "fail");
+			resultJson.put("state", "fail");
 			resultJson.put("message", "请求参数不能为空");
 		}
 		return resultJson;

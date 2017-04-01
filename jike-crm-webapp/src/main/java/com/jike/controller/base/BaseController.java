@@ -22,10 +22,10 @@ public class BaseController {
 		Boolean loginResult = (Boolean) session.getAttribute(loginFlag);
 		JSONObject result = new JSONObject();
 		if (loginResult==null||!loginResult) {
-			result.put("status", "unLogin");
+			result.put("state", "unLogin");
 			result.put("message", "未登录");
 		} else {
-			result.put("status", "login");
+			result.put("state", "login");
 			result.put("message", "登录");
 		}
 		return result;

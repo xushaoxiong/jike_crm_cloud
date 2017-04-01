@@ -35,7 +35,7 @@ public class RoleController extends BaseController{
 	@RequestMapping(value = "/addRole", method = RequestMethod.POST)
 	public @ResponseBody String addRole(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		try {
@@ -58,7 +58,7 @@ public class RoleController extends BaseController{
 	@RequestMapping(value = "/updateRole", method = RequestMethod.POST)
 	public @ResponseBody String updateRole(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		try {
@@ -82,7 +82,7 @@ public class RoleController extends BaseController{
 	@RequestMapping(value = "/addRolePermission", method = RequestMethod.POST)
 	public @ResponseBody String addRolePermission(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		try {
@@ -106,7 +106,7 @@ public class RoleController extends BaseController{
 	@RequestMapping(value = "/queryRole", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String queryRole(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		JSONArray json = null;
