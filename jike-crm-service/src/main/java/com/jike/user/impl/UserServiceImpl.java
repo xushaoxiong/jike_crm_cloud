@@ -49,12 +49,18 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
 			synchronized (this) {
+				if(userJson.getString("loginName")==null){
+					resultJson.put("status", "fail");
+					resultJson.put("message", "登录名必填");
+					return resultJson;
+				}
 				User oldUser = userMapper.selectByLoginName(userJson.getString("loginName"));
 				if (oldUser != null) {
 					resultJson.put("status", "fail");
 					resultJson.put("message", "登录名已存在");
 					return resultJson;
 				}
+				
 				// 添加用户
 				User user = new User();
 				user.setLoginName(userJson.getString("loginName"));
