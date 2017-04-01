@@ -63,7 +63,7 @@ $(function(){
 			url:ajaxUrl+"user/loginOut",
 			dataType:'json',
 			success:function(jo){
-				if(jo.status=='success'){
+				if(jo.state=='success'){
 					window.location.href="login.html";
 				}
 			}
