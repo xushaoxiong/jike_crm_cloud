@@ -48,35 +48,36 @@ public class UserServiceImpl implements UserService {
 	public JSONObject addUser(JSONObject userJson) {
 		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
-			User oldUser = userMapper.selectByLoginName(userJson.getString("loginName"));
-			if (oldUser != null) {
-				resultJson.put("status", "fail");
-				resultJson.put("message", "登录名已存在");
-				return resultJson;
+			synchronized (this) {
+				User oldUser = userMapper.selectByLoginName(userJson.getString("loginName"));
+				if (oldUser != null) {
+					resultJson.put("status", "fail");
+					resultJson.put("message", "登录名已存在");
+					return resultJson;
+				}
+				// 添加用户
+				User user = new User();
+				user.setLoginName(userJson.getString("loginName"));
+				// 密码加密存储
+				user.setPassword(passwordenEcrypt.encrypt(userJson.getString("password")));
+				user.setGender(userJson.getInteger("gender"));
+				user.setName(userJson.getString("name"));
+				user.setEmail(userJson.getString("email"));
+				user.setEmployeeNum(userJson.getString("employeeNum"));
+				user.setIsEmployment(0);// 添加员工是默认在职
+				user.setPhone(userJson.getString("phone"));
+				user.setEntryDate(userJson.getDate("entryDate"));
+				user.setCreateTime(new Date());
+				userMapper.insert(user);
+
+				// 分配角色
+				User userNew = userMapper.selectByLoginName(userJson.getString("loginName"));
+				UserRole userRole = new UserRole();
+				userRole.setUserId(userNew.getUserId());
+				userRole.setRoleId(userJson.getLong("roleId"));
+				user.setCreateTime(new Date());
+				userRoleMapper.insert(userRole);
 			}
-			//添加用户
-			User user = new User();
-			user.setLoginName(userJson.getString("loginName"));
-			// 密码加密存储
-			user.setPassword(passwordenEcrypt.encrypt(userJson.getString("password")));
-			user.setGender(userJson.getInteger("gender"));
-			user.setName(userJson.getString("name"));
-			user.setEmail(userJson.getString("email"));
-			user.setEmployeeNum(userJson.getString("employeeNum"));
-			user.setIsEmployment(0);//添加员工是默认在职
-			user.setPhone(userJson.getString("phone"));
-			user.setEntryDate(userJson.getDate("entryDate"));
-			user.setCreateTime(new Date());
-			userMapper.insert(user);
-			
-			//分配角色
-			User userNew = userMapper.selectByLoginName(userJson.getString("loginName"));
-			UserRole userRole = new UserRole();
-			userRole.setUserId(userNew.getUserId());
-			userRole.setRoleId(userJson.getLong("roleId"));
-			user.setCreateTime(new Date());
-			userRoleMapper.insert(userRole);
-			
 			resultJson.put("status", "success");
 			resultJson.put("message", "添加成功");
 			return resultJson;
@@ -89,6 +90,7 @@ public class UserServiceImpl implements UserService {
 	public JSONObject updateUser(JSONObject userJson) {
 		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
+			synchronized (this) {
 			User user = userMapper.selectByLoginName(userJson.getString("loginName"));
 			user.setGender(userJson.getInteger("gender"));
 			user.setName(userJson.getString("name"));
@@ -104,7 +106,7 @@ public class UserServiceImpl implements UserService {
 			userRole.setRoleId(userJson.getLong("roleId"));
 			user.setUpdateTime(new Date());
 			userRoleMapper.updateByPrimaryKeySelective(userRole);
-			
+			}
 			resultJson.put("status", "success");
 			resultJson.put("message", "更新成功");
 		}else{
