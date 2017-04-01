@@ -34,7 +34,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/getUserByLoginName", method = RequestMethod.GET)
 	public @ResponseBody String getUser(String loginName, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
         result = userService.getUser(loginName);
@@ -51,7 +51,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public @ResponseBody String updateUser(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		
@@ -75,7 +75,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public @ResponseBody String addUser(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		String userJson;
@@ -103,7 +103,7 @@ public class UserController extends BaseController{
 			userLoginJson = RequestUtils.getRequestJsonString(request);
 			JSONObject parseObject = JSONObject.parseObject(userLoginJson);
 		    result = userService.login(parseObject);
-		    if("success".equals(result.getString("status"))){
+		    if("success".equals(result.getString("state"))){
 		    	session.setAttribute(loginFlag, true);
 		    	session.setAttribute(loginName, result.getString("loginName"));
 		    	session.setAttribute(userName, result.getString("userName"));
@@ -128,7 +128,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/getUserByPage", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String getUserByPage(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		String queryJson;
@@ -153,7 +153,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/updateUserPassword", method = {RequestMethod.POST})
 	public @ResponseBody String updateUserPassword(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
-		if("unLogin".equals(result.getString("status"))){
+		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
 		String passwordJson;
@@ -162,7 +162,7 @@ public class UserController extends BaseController{
 			JSONObject parseObject = JSONObject.parseObject(passwordJson);
 			parseObject.put("loginName", session.getAttribute(loginName));
 		    result = userService.updateUserPassword(parseObject);
-		    if("success".equals(result.getString("status"))){
+		    if("success".equals(result.getString("state"))){
 		    	session.removeAttribute(loginFlag);
 				session.removeAttribute(loginName);
 				session.removeAttribute(userName);
@@ -189,7 +189,7 @@ public class UserController extends BaseController{
 		session.removeAttribute(userName);
     	session.removeAttribute(roleId);
 		JSONObject json = new JSONObject();
-		json.put("status", "success");
+		json.put("state", "success");
 		return json.toJSONString();
 	}
 }
