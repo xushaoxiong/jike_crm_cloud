@@ -28,3 +28,37 @@ pub.Alt=function(text,flag,fun){
  	}
 	 	
 }
+//手机验证
+function phoneCheck(phoneNum,selector){ 
+	console.log(1)
+	var phoneReg=/^1[34578]\d{9}$/;
+	if(phoneNum==''){
+		$(selector).html('请填写手机号！');
+		return false; 
+	}
+    if(!phoneReg.test(phoneNum)){ 
+        $(selector).html('手机号填写有误');
+        return false; 
+	}
+    return true;
+}
+//邮箱验证
+function isEmail(Email,selector){
+	 var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+	 if(Email==''){
+	 	$(selector).html('请填写邮箱！');
+	 	return false;
+	 }
+	 if(!reg.test(Email)){
+	 	$(selector).html('请填写正确邮箱！');
+	 	return false;
+	 }
+	 return true;
+}
+
+
+
+
+
+
+

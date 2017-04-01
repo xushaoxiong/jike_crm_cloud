@@ -29,17 +29,8 @@
 </style>
 
 <div class="ZH-account clearfix" style="width: 95%;">
-	<h3 class="title pull-left">权限组管理</h3>
-	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>创建权限组</button>
-</div>
-<div class="search-wap form-inline clearfix">
-	<div class="form-group">
-		<label>权限组名称：</label>
-		<input type="text" class="form-control" placeholder="名称"/>
-	</div>
-	<button class="btn btn-default">
-		<span class="glyphicon glyphicon-search"></span>
-	</button>
+	<h3 class="title pull-left">角色管理</h3>
+	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>创建角色</button>
 </div>
 <table class="table table-bordered text-center table-responsive tableAccnt">
 	<thead>
@@ -47,12 +38,10 @@
 			<th>角色编号</th>
 			<th>角色名称</th>
 			<th>创建时间</th>
-			<th>修改时间</th>
-			<th>操作</th>
 		</tr>
 	</thead>
-	<tbody>
-		<tr>
+	<tbody id="role-wap">
+		<!--<tr>
 			<td class="rolenum">001</td>
 			<td class="rolename">管理员</td>
 			<td>2016/9/25 18:20:49</td>
@@ -101,7 +90,7 @@
 				<a>修改</a>
 				<a>删除</a>
 			</td>
-		</tr>
+		</tr>-->
 	</tbody>
 </table>
 	<!--新增、修改弹框-->
@@ -110,9 +99,10 @@
 		<div class="modal-content form-inline">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-				<h4>新增角色</h4>
+				<h4>创建角色</h4>
 			</div>
 			<div class="modal-body">
+				<p class="text-danger text-center RoleStats"></p>
 				<div class="form-group">
 					<label>角色编号：</label>
 					<input type="text" placeholder="编号" class="form-control" id="roleNum"/>
@@ -124,61 +114,72 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	            <button type="button" class="btn btn-primary">保存</button>
+	            <button type="button" class="btn btn-primary confirm">保存</button>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="pagination-wap">
-	<div class="total-page pull-left">
-		<span>共15页</span>
-		<span>180条</span>
-	</div>
-	<ul class="pagination">
-	  <li><a href="#">&laquo;第一页</a></li>
-	  <li><a href="#">1</a></li>
-	  <li><a href="#">2</a></li>
-	  <li class="active"><a href="#">3</a></li>
-	  <li><a href="#">4</a></li>
-	  <li><a href="#">5</a></li>
-	  <li class="disabled"><a href="#">最后一页&raquo;</a></li>
-	</ul> 
-</div>
 
 </body>
 <script>
+	//角色列表
+	function roleList(){
+		$.ajax({
+		type:"post",
+		contentType: "application/json; charset=utf-8",
+		url:ajaxUrl+'role/queryRole',
+		dataType:'json',
+		success:function(jo){
+				var RoleHtml="";
+				$.each(jo, function(i,item) {
+					RoleHtml+='<tr>';
+						RoleHtml+='<td class="RoleNum">'+item.roleNum+'</td>';
+						RoleHtml+='<td class="RoleName" roleId="'+item.roleId+'">'+item.roleName+'</td>';
+						RoleHtml+='<td>'+item.createTime+'</td>';
+					RoleHtml+='</tr>';
+				});
+				$('#role-wap').html(RoleHtml);
+			
+		},
+		error:function(jo){
+			alert('服务器忙')
+		}
+	});
+	}roleList()
+	
+//新增弹框
 	$('.addBtn').click(function(){
 		$("#MRole").modal("toggle");
 		$('#roleNum').val('');
 		$('#roleName').val('');
+		$('.confirm').attr('id','addRoleconfirm');
+	})
+	//添加角色
+	$('#MRole').on('click','#addRoleconfirm',function(e){
+		e.preventDefault();
+		var roleJ={};
+		var roleNum=$('#roleNum').val();
+		var roleName=$('#roleName').val();
+		roleJ.roleNum=roleNum;
+		roleJ.roleName=roleName;
 		$.ajax({
 			type:"post",
 			contentType: "application/json; charset=utf-8",
 			url:ajaxUrl+"role/addRole",
 			dataType:'json',
+			data:JSON.stringify(roleJ),
 			success:function(jo){
-				console.log(jo)
+				if(jo.status=='success'){
+					$('#MRole').modal('hide');
+					roleList();
+				}else{
+					$('.RoleStats').html('该角色已存在!');
+				}
 			}
 		});
 	})
-	//修改
-	$('.edit').click(function(){
-		$("#MRole").modal("toggle");
-		var RoleName=$(this).parents('tr').find('.rolename').html();
-		var RoleNum=$(this).parents('tr').find('.rolenum').html();
-		$('#roleNum').val(RoleName);
-		$('#roleName').val(RoleNum);
-	})
-	//删除
-	$('.del').click(function(){
-		var tr=$(this).parents('tr');
-		pub.Alt('确定删除该项？',true,function(){
-			$('.confirm').click(function(){
-				tr.remove();
-				$('.alert-del').hide();
-			})
-		})
-	})
+
+
 </script>
 </html>
 
