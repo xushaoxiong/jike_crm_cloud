@@ -58,13 +58,7 @@ public class RoleServiceImpl implements RoleService {
 		JSONObject resultJson = new JSONObject();
 		if (!roleJson.isEmpty()) {
 			synchronized (this) {
-				Role roleOld = getRoleByRoleName(roleJson.getString("roleName"));
-				if (roleOld != null) {
-					resultJson.put("status", "fail");
-					resultJson.put("message", "该角色已存在");
-					return resultJson;
-				}
-				Role role = new Role();
+				Role role = getRoleByRoleName(roleJson.getString("roleName"));
 				role.setRoleName(roleJson.getString("roleName"));
 				role.setRoleDescription(roleJson.getString("roleDescription"));
 				role.setRoleNum(roleJson.getString("roleNum"));
