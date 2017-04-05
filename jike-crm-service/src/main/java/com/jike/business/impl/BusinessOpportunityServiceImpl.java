@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.model.BusinessOpportunity;
-import com.jike.user.model.Role;
 
 @Service("businessOpportunityService")
 public class BusinessOpportunityServiceImpl implements BusinessOpportunityService {
@@ -22,11 +21,19 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(json!=null&&!json.isEmpty()){
 			BusinessOpportunity businessOpportunity = new BusinessOpportunity();
 			businessOpportunity.setBusinessOpportunityName(json.getString("businessOpportunityName"));
-//			businessOpportunity.setBusinessOpportunityNum(businessOpportunityNum); //TODO 商机流水号
-			businessOpportunity.setBusinessOpportunityType(json.getInteger("businessOpportunityType"));
+			Integer businessOpportunityType = json.getInteger("businessOpportunityType");
+			String businessOpportunityNum =null;
+			if (businessOpportunityType == 0) {
+
+				businessOpportunityNum = "S"+new Date().getTime();
+			} else if (businessOpportunityType == 1) {
+				businessOpportunityNum = "P"+new Date().getTime();
+			}
+			businessOpportunity.setBusinessOpportunityNum(businessOpportunityNum); //商机流水号
+			businessOpportunity.setBusinessOpportunityType(businessOpportunityType);
 			businessOpportunity.setAddressProvince(json.getString("addressProvince"));
 			businessOpportunity.setAddressCity(json.getString("addressCity"));
-			businessOpportunity.setAddressCounty(json.getString("dddressCounty"));
+			businessOpportunity.setAddressCounty(json.getString("addressCounty"));
 			businessOpportunity.setAddressDetail(json.getString("addressDetail"));
 			businessOpportunity.setIsCancellation(0);//0-未注销  1-注销
 			businessOpportunity.setCreateBy(json.getLong("userId"));
