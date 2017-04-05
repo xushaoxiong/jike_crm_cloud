@@ -133,6 +133,7 @@ public class UserServiceImpl implements UserService {
 			json.put("state", "success");
 			json.put("userName", user.getName());
 			json.put("loginName", user.getLoginName());
+			json.put("userId", user.getUserId());
 			if(map!=null){
 				json.put("roleId", map.get("role_id"));
 			}

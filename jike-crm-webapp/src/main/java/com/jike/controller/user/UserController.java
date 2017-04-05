@@ -108,6 +108,7 @@ public class UserController extends BaseController{
 		    	session.setAttribute(loginName, result.getString("loginName"));
 		    	session.setAttribute(userName, result.getString("userName"));
 		    	session.setAttribute(roleId, result.getString("roleId"));
+		    	session.setAttribute(userId, result.getString("userId"));
 		    }else{
 		    	session.setAttribute(loginFlag, false);
 		    }
@@ -167,6 +168,7 @@ public class UserController extends BaseController{
 				session.removeAttribute(loginName);
 				session.removeAttribute(userName);
 		    	session.removeAttribute(roleId);
+		    	session.removeAttribute(userId);
 		    }
 		} catch (IOException e) {
 			logger.error("updateUserPassword error", e);
@@ -188,6 +190,7 @@ public class UserController extends BaseController{
 		session.removeAttribute(loginName);
 		session.removeAttribute(userName);
     	session.removeAttribute(roleId);
+    	session.removeAttribute(userId);
 		JSONObject json = new JSONObject();
 		json.put("state", "success");
 		return json.toJSONString();

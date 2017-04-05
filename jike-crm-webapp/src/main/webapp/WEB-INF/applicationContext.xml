@@ -33,10 +33,10 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- mybatis配置文件 -->
-		<property name="mapperLocations" value="classpath*:mappers/*.xml" />  
+		<property name="mapperLocations" value="classpath*:mappers/**/*.xml" />  
     </bean>  
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-        <property name="basePackage" value="com.jike.user.dao" />  
+        <property name="basePackage" value="com.jike.user.dao,com.jike.business.dao" />  
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
 	</bean>
 

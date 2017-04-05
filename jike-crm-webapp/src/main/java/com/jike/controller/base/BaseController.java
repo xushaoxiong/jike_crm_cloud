@@ -10,6 +10,7 @@ public class BaseController {
 	public static final String loginName = "loginName";
 	public static final String roleId = "roleId";
 	public static final String userName = "userName";
+	public static final String userId = "userId";
 
 	/**
 	 * 验证是否登录
