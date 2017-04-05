@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.PermissionService;
 import com.jike.user.dao.PermissionMapper;
-import com.jike.user.dao.RolePermissionMapper;
 import com.jike.user.model.Permission;
 
 @Service("permissionService")
