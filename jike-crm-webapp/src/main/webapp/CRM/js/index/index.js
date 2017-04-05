@@ -7,6 +7,14 @@ $(function(){
 		url:ajaxUrl+"permission/queryLoginPermission",
 		dataType:'json',
 		success:function(jo){
+			if(jo.state=='unLogin'){
+				pub.Alt(jo.message,true,function(){
+					$('.confirm').click(function(){
+						window.location.href='login.html';
+						return;
+					})
+				})
+			}
 			$('.indexName').html(jo.name);
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
@@ -29,6 +37,7 @@ $(function(){
 				}				
 			})
 			$('.L-list').append(NavHtml);
+		
 			
 		},
 		error:function(){
@@ -36,11 +45,11 @@ $(function(){
 		}
 	});
 
-	$(document).on('click','.navTitle',function(){
+	$('.L-list').on('click','.navTitle',function(){
 		$(this).next().slideToggle()
 	});
 	
-	$(document).on('click','.hide-menu li',function(){
+	$('.L-list').on('click','.hide-menu li',function(){
 		var url=$(this).attr('url');
 			$('.R-wap').load(url);
 			
@@ -54,7 +63,7 @@ $(function(){
 			url:ajaxUrl+"user/loginOut",
 			dataType:'json',
 			success:function(jo){
-				if(jo.status=='success'){
+				if(jo.state=='success'){
 					window.location.href="login.html";
 				}
 			}
