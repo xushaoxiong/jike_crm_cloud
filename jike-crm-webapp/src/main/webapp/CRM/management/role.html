@@ -3,10 +3,6 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Document</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
-	<script type="text/javascript" src="js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="js/pub/pub.js" ></script>
 </head>
 <body>
 	<style>
@@ -41,56 +37,6 @@
 		</tr>
 	</thead>
 	<tbody id="role-wap">
-		<!--<tr>
-			<td class="rolenum">001</td>
-			<td class="rolename">管理员</td>
-			<td>2016/9/25 18:20:49</td>
-			<td>2016/9/26 08:20:49</td>
-			<td>
-				<a class="edit">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="rolenum">002</td>
-			<td class="rolename">管理员2</td>
-			<td>2016/9/25 18:20:49</td>
-			<td>2016/9/26 08:20:49</td>
-			<td>
-				<a class="edit">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="rolenum">003</td>
-			<td class="rolename">管理员3</td>
-			<td>2016/9/25 18:20:49</td>
-			<td>2016/9/26 08:20:49</td>
-			<td>
-				<a class="edit">修改</a>
-				<a class="del">删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td>001</td>
-			<td>管理员</td>
-			<td>2016/9/25 18:20:49</td>
-			<td>2016/9/26 08:20:49</td>
-			<td>
-				<a>修改</a>
-				<a>删除</a>
-			</td>
-		</tr>
-		<tr>
-			<td>001</td>
-			<td>管理员</td>
-			<td>2016/9/25 18:20:49</td>
-			<td>2016/9/26 08:20:49</td>
-			<td>
-				<a>修改</a>
-				<a>删除</a>
-			</td>
-		</tr>-->
 	</tbody>
 </table>
 	<!--新增、修改弹框-->
@@ -121,67 +67,7 @@
 </div>
 
 </body>
-<script>
-	//角色列表
-	function roleList(){
-		$.ajax({
-		type:"post",
-		contentType: "application/json; charset=utf-8",
-		url:ajaxUrl+'role/queryRole',
-		dataType:'json',
-		success:function(jo){
-				var RoleHtml="";
-				$.each(jo, function(i,item) {
-					RoleHtml+='<tr>';
-						RoleHtml+='<td class="RoleNum">'+item.roleNum+'</td>';
-						RoleHtml+='<td class="RoleName" roleId="'+item.roleId+'">'+item.roleName+'</td>';
-						RoleHtml+='<td>'+item.createTime+'</td>';
-					RoleHtml+='</tr>';
-				});
-				$('#role-wap').html(RoleHtml);
-			
-		},
-		error:function(jo){
-			alert('服务器忙')
-		}
-	});
-	}roleList()
-	
-//新增弹框
-	$('.addBtn').click(function(){
-		$("#MRole").modal("toggle");
-		$('#roleNum').val('');
-		$('#roleName').val('');
-		$('.Rconfirm').attr('id','addRoleconfirm');
-	})
-	//添加角色
-	$('#MRole').on('click','#addRoleconfirm',function(e){
-		e.preventDefault();
-		var roleJ={};
-		var roleNum=$('#roleNum').val();
-		var roleName=$('#roleName').val();
-		roleJ.roleNum=roleNum;
-		roleJ.roleName=roleName;
-		$.ajax({
-			type:"post",
-			contentType: "application/json; charset=utf-8",
-			url:ajaxUrl+"role/addRole",
-			dataType:'json',
-			data:JSON.stringify(roleJ),
-			success:function(jo){
-				if(jo.state=='success'){
-					console.log(jo)
-					$('#MRole').modal('hide');
-					roleList();
-				}else{
-					$('.RoleStats').html('该角色已存在!');
-				}
-			}
-		});
-	})
-
-
-</script>
+<script type="text/javascript" src="js/management/role.js" ></script>
 </html>
 
 
