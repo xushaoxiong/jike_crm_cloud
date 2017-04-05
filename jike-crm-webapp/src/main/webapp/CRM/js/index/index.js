@@ -45,11 +45,11 @@ $(function(){
 		}
 	});
 
-	$(document).on('click','.navTitle',function(){
+	$('.L-list').on('click','.navTitle',function(){
 		$(this).next().slideToggle()
 	});
 	
-	$(document).on('click','.hide-menu li',function(){
+	$('.L-list').on('click','.hide-menu li',function(){
 		var url=$(this).attr('url');
 			$('.R-wap').load(url);
 			
