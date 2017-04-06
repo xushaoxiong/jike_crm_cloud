@@ -166,9 +166,9 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
 				}
 				if(!queryJson.getLong("userId").equals(createBy)){
-					resultJson.put("authority", 1);
+					businessOpportunityJson.put("authority", 1);
 				}else{
-					resultJson.put("authority", 0);
+					businessOpportunityJson.put("authority", 0);
 				}
 				businessOpportunityArr.add(businessOpportunityJson);
 			}
