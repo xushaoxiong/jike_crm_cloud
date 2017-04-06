@@ -48,5 +48,14 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年4月6日下午2:40:30
 	 */
 	public JSONObject operationBusinessOpportunity(JSONObject json);
+	
+	/**
+	 * 分配商机
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午3:02:08
+	 */
+	public JSONObject distributionBusinessOpportunity(JSONObject json);
 
 }

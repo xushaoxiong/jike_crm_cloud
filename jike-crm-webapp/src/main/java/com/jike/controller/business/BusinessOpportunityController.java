@@ -127,6 +127,31 @@ public class BusinessOpportunityController extends BaseController{
 	}
 	
 	/**
+	 * 分配商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午3:19:05
+	 */
+	@RequestMapping(value = "/distributionBusinessOpportunity", method ={RequestMethod.POST})
+	public @ResponseBody String distributionBusinessOpportunity(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.distributionBusinessOpportunity(json);
+		} catch (IOException e) {
+			logger.error("distributionBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	/**
 	 * 通过流水编号查询商机
 	 * @param request
 	 * @param session

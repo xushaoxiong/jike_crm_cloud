@@ -165,6 +165,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					User distributeUser = userService.getUserById(distributeUserId);
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
 				}
+				if(!businessOpportunityJson.getLong("userId").equals(createBy)){
+					resultJson.put("authority", 1);
+				}else{
+					resultJson.put("authority", 0);
+				}
 				businessOpportunityArr.add(businessOpportunityJson);
 			}
 		}
@@ -237,5 +242,28 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("message", "操作失败");
 		return resultJson;
 	}
+
+	public JSONObject distributionBusinessOpportunity(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(json.getString("businessOpportunityNum"));
+		if (businessOpportunityOld == null) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "未查到该商机");
+			return resultJson;
+		}
+		SaleBusinessOpportunity saleBusinessOpportunity = new SaleBusinessOpportunity();
+		saleBusinessOpportunity.setBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
+		Date nowdate = new Date();
+		saleBusinessOpportunity.setDistributionTime(nowdate);//分配时间
+		saleBusinessOpportunity.setUserId(json.getLong("userId"));
+		saleBusinessOpportunity.setCreateBy(json.getLong("userId"));
+		saleBusinessOpportunity.setCreateTime(nowdate);
+		saleBusinessOpportunityMapper.insert(saleBusinessOpportunity);
+		resultJson.put("state", "success");
+		resultJson.put("message", "操作成功");
+		return resultJson;
+	}
+	
+	
 
 }
