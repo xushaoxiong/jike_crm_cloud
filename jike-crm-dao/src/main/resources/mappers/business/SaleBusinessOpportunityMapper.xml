@@ -166,4 +166,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByBusinessOpportunityId"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+   select 
+    <include refid="Base_Column_List" />
+    from sale_business_opportunity
+    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+  </select>
 </mapper>

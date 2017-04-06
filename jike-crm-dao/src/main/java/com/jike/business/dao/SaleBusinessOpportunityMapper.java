@@ -50,4 +50,13 @@ public interface SaleBusinessOpportunityMapper {
      * @mbggenerated Wed Apr 05 13:53:33 CST 2017
      */
     int updateByPrimaryKey(SaleBusinessOpportunity record);
+
+    /**
+     * 通过商机ID查询分配信息
+     * @param businessOpportunityId
+     * @return
+     * @created wangyb
+     * @createtime 2017年4月6日下午3:27:38
+     */
+	SaleBusinessOpportunity selectByBusinessOpportunityId(Long businessOpportunityId);
 }
