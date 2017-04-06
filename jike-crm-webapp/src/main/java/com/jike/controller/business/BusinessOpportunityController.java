@@ -42,6 +42,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.addBusinessOpportunity(json);
 		} catch (IOException e) {
 			logger.error("addBusinessOpportunity error", e);
@@ -63,6 +64,40 @@ public class BusinessOpportunityController extends BaseController{
 			result = businessOpportunityService.qeueryBusinessOpportunityByParams(json);
 		} catch (IOException e) {
 			logger.error("queryBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	@RequestMapping(value = "/updateBusinessOpportunity", method ={RequestMethod.POST})
+	public @ResponseBody String updateBusinessOpportunity(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.updateBusinessOpportunity(json);
+		} catch (IOException e) {
+			logger.error("updateBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	@RequestMapping(value = "/queryBusinessOpportunityByBoNum", method ={RequestMethod.POST})
+	public @ResponseBody String queryBusinessOpportunityByBoNum(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.queryBusinessOpportunityByBoNum(json);
+		} catch (IOException e) {
+			logger.error("queryBusinessOpportunityByBoNum error", e);
 		}
 		return result.toJSONString();
 	}
