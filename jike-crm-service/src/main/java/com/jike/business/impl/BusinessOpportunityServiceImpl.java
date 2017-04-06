@@ -213,4 +213,29 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		return resultJson;
 	}
 
+
+	public JSONObject operationBusinessOpportunity(JSONObject businessOpportunityJson) {
+		JSONObject resultJson = new JSONObject();
+		if (!businessOpportunityJson.isEmpty()) {
+			BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
+			if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "没有操作权限");
+				return resultJson;
+			}
+			
+			businessOpportunity.setIsClosed(businessOpportunityJson.getInteger("isClosed"));
+			businessOpportunity.setIsCancellation(businessOpportunityJson.getInteger("isCancellation"));
+			businessOpportunity.setUpdateBy(businessOpportunityJson.getLong("userId"));
+			businessOpportunity.setUpdateTime(new Date());
+			businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
+			resultJson.put("state", "success");
+			resultJson.put("message", "操作成功");
+			return resultJson;
+		}
+		resultJson.put("state", "fail");
+		resultJson.put("message", "操作失败");
+		return resultJson;
+	}
+
 }

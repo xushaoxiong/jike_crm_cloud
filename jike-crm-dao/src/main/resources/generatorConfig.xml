@@ -17,22 +17,20 @@
              <property name="forceBigDecimals" value="false"/>
          </javaTypeResolver>
          <!--生成Model类存放位置-->
-         <javaModelGenerator targetPackage="com.jike.user.model" targetProject="jike-crm-dao/src/main/java">
+         <javaModelGenerator targetPackage="com.jike.business.model" targetProject="jike-crm-dao/src/main/java">
              <property name="enableSubPackages" value="true"/>
          </javaModelGenerator>
          <!--生成映射文件存放位置-->
-         <sqlMapGenerator targetPackage="mappers" targetProject="jike-crm-dao/src/main/resources">
+         <sqlMapGenerator targetPackage="mappers.business" targetProject="jike-crm-dao/src/main/resources">
              <property name="enableSubPackages" value="true"/>
          </sqlMapGenerator>
          <!--生成Dao类存放位置-->
-         <javaClientGenerator type="XMLMAPPER" targetPackage="com.jike.user.dao" targetProject="jike-crm-dao/src/main/java">
+         <javaClientGenerator type="XMLMAPPER" targetPackage="com.jike.business.dao" targetProject="jike-crm-dao/src/main/java">
              <property name="enableSubPackages" value="true"/>
          </javaClientGenerator>
          <!--生成对应表及类名-->
-         <table tableName="permission" domainObjectName="Permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <!--  <table tableName="role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         <table tableName="role_permission" domainObjectName="RolePermission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         <table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         <table tableName="user_role" domainObjectName="UserRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
+         <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+         <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+    	 <table tableName="bo_information_collect" domainObjectName="BoInformationCollect" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
      </context>
 </generatorConfiguration>

@@ -102,6 +102,31 @@ public class BusinessOpportunityController extends BaseController{
 	}
 	
 	/**
+	 * 操作商机（关闭，删除，重启）
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午2:48:07
+	 */
+	@RequestMapping(value = "/operationBusinessOpportunity", method ={RequestMethod.POST})
+	public @ResponseBody String operationBusinessOpportunity(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.operationBusinessOpportunity(json);
+		} catch (IOException e) {
+			logger.error("operationBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	/**
 	 * 通过流水编号查询商机
 	 * @param request
 	 * @param session
