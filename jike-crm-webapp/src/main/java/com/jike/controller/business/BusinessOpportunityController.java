@@ -25,7 +25,7 @@ public class BusinessOpportunityController extends BaseController{
 	private static Logger logger = Logger.getLogger(BusinessOpportunityController.class);
 
 	/**
-	 * 查询权限列表
+	 * 添加商机
 	 * 
 	 * @param request
 	 * @return
@@ -50,6 +50,14 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 分页查询商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日上午11:04:10
+	 */
 	@RequestMapping(value = "/queryBusinessOpportunity", method ={RequestMethod.POST})
 	public @ResponseBody String queryBusinessOpportunity(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -68,6 +76,14 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 更新商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日上午11:04:32
+	 */
 	@RequestMapping(value = "/updateBusinessOpportunity", method ={RequestMethod.POST})
 	public @ResponseBody String updateBusinessOpportunity(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -85,6 +101,14 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 通过流水编号查询商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日上午11:08:53
+	 */
 	@RequestMapping(value = "/queryBusinessOpportunityByBoNum", method ={RequestMethod.POST})
 	public @ResponseBody String queryBusinessOpportunityByBoNum(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
