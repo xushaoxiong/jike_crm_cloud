@@ -221,7 +221,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("addressCity", businessOpportunity.getAddressCity());
 			resultJson.put("addressCounty", businessOpportunity.getAddressCounty());
 			resultJson.put("addressDetail", businessOpportunity.getAddressDetail());
-			resultJson.put("state", "fail");
+			resultJson.put("state", "success");
 			resultJson.put("message", "查询成功");
 		}
 		return resultJson;
