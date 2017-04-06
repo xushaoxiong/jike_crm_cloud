@@ -1,6 +1,7 @@
 package com.jike.user;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jike.user.model.User;
 
 public interface UserService {
 
@@ -58,5 +59,14 @@ public interface UserService {
 	 * @createtime 2017年3月31日上午10:11:32
 	 */
 	JSONObject updateUserPassword(JSONObject parseObject);
+
+	/**
+	 * 通过userId查询用户信息
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日上午9:31:25
+	 */
+	User getUserById(Long userId);
 
 }

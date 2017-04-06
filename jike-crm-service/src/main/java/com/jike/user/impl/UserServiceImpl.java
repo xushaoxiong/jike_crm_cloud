@@ -221,4 +221,8 @@ public class UserServiceImpl implements UserService {
 		resultJson.put("message", "密码修改成功");
 		return resultJson;
 	}
+
+	public User getUserById(Long userId) {
+		return userMapper.selectByPrimaryKey(userId);
+	}
 }

@@ -264,10 +264,64 @@
       is_closed = #{isClosed,jdbcType=INTEGER}
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
   </update>
-	<select id="selectByBusinessOpportunityNum" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="selectByBusinessOpportunityNum" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from business_opportunity
 		where business_opportunity_num = #{businessOpportunityNum,jdbcType=VARCHAR}
-	</select>
+  </select>
+  <select id="getBusinessOpportunityCount" resultType="java.lang.Integer">
+	select
+	count(1)
+	from business_opportunity bo,sale_business_opportunity sbo
+	where bo.business_opportunity_id = sbo.business_opportunity_id
+	      and is_cancellation = 0
+		<if test="businessOpportunityName != null">
+			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+			and DATE_FORMAT(bo.create_time,'%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}
+		</if>
+		<if test="endTime != null">
+			and #{endTime,jdbcType=VARCHAR} >= DATE_FORMAT(bo.create_time,'%Y-%m-%d')
+		</if>
+		<if test="businessOpportunityProcess != null">
+			and bo.business_opportunity_process = #{businessOpportunityProcess,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		</if>
+  </select>
+  <select id="getBusinessOpportunityByPage" resultType="java.util.Map">
+    select
+	DATE_FORMAT(bo.create_time,'%Y-%m-%d') create_time,
+	bo.business_opportunity_name,
+	bo.business_opportunity_num,
+	bo.business_opportunity_type,
+	bo.business_opportunity_process,
+	bo.create_by,
+	bo.is_closed,
+	bo.is_cancellation,
+	sbo.user_id
+	from business_opportunity bo,sale_business_opportunity sbo
+	where bo.business_opportunity_id = sbo.business_opportunity_id
+	      and is_cancellation = 0
+		<if test="businessOpportunityName != null">
+			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+			and DATE_FORMAT(bo.create_time,'%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}
+		</if>
+		<if test="endTime != null">
+			and #{endTime,jdbcType=VARCHAR} >= DATE_FORMAT(bo.create_time,'%Y-%m-%d')
+		</if>
+		<if test="businessOpportunityProcess != null">
+			and bo.business_opportunity_process = #{businessOpportunityProcess,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		</if>
+		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
+  </select>
+	
 </mapper>

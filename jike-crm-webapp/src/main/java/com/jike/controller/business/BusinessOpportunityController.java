@@ -16,7 +16,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.controller.base.BaseController;
 import com.jike.controller.utils.RequestUtils;
-import com.jike.user.PermissionService;
 
 @Controller
 @RequestMapping("/businessOpportunity")
@@ -34,7 +33,7 @@ public class BusinessOpportunityController extends BaseController{
 	 * @createtime 2017年3月28日上午11:05:25
 	 */
 	@RequestMapping(value = "/addBusinessOpportunity", method ={RequestMethod.POST})
-	public @ResponseBody String queryPermission(HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String addBusinessOpportunity(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
@@ -45,8 +44,25 @@ public class BusinessOpportunityController extends BaseController{
 			json.put("userId", session.getAttribute(userId));
 			result = businessOpportunityService.addBusinessOpportunity(json);
 		} catch (IOException e) {
-			logger.error("queryPermission error", e);
-			e.printStackTrace();
+			logger.error("addBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	@RequestMapping(value = "/queryBusinessOpportunity", method ={RequestMethod.POST})
+	public @ResponseBody String queryBusinessOpportunity(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.qeueryBusinessOpportunityByParams(json);
+		} catch (IOException e) {
+			logger.error("queryBusinessOpportunity error", e);
 		}
 		return result.toJSONString();
 	}
