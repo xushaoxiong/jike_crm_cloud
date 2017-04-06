@@ -131,7 +131,16 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		Integer pageSize = queryJson.getInteger("pageSize");
 		String startTime = queryJson.getString("startTime");
 		String endTime = queryJson.getString("endTime");
+		if("".equals(startTime)){
+			startTime = null;
+		}
+		if("".equals(endTime)){
+			endTime = null;
+		}
 		String businessOpportunityProcess = queryJson.getString("businessOpportunityProcess");
+		if("".equals(businessOpportunityProcess)){
+			businessOpportunityProcess = null;
+		}
 		if(businessOpportunityName!=null){
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
