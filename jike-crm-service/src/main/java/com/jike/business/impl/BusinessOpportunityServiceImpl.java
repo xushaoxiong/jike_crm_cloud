@@ -185,6 +185,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("totalPage", totalPage);
 		resultJson.put("pageList", pageList);
 		resultJson.put("businessOpportunityList", businessOpportunityArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
 		return resultJson;
 	}
 	
