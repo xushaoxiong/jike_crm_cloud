@@ -165,7 +165,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					User distributeUser = userService.getUserById(distributeUserId);
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
 				}
-				if(!businessOpportunityJson.getLong("userId").equals(createBy)){
+				if(!userId.equals(createBy)){
 					resultJson.put("authority", 1);
 				}else{
 					resultJson.put("authority", 0);
@@ -263,13 +263,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			saleBusinessOpportunity = new SaleBusinessOpportunity();
 			saleBusinessOpportunity.setBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
 			saleBusinessOpportunity.setDistributionTime(nowdate);//分配时间
-			saleBusinessOpportunity.setUserId(json.getLong("userId"));
+			saleBusinessOpportunity.setUserId(json.getLong("distributionId"));
 			saleBusinessOpportunity.setCreateBy(json.getLong("userId"));
 			saleBusinessOpportunity.setCreateTime(nowdate);
 			saleBusinessOpportunityMapper.insert(saleBusinessOpportunity);
 		}else{
 			saleBusinessOpportunity.setDistributionTime(nowdate);//分配时间
-			saleBusinessOpportunity.setUserId(json.getLong("userId"));
+			saleBusinessOpportunity.setUserId(json.getLong("distributionId"));
 			saleBusinessOpportunity.setUpdateBy(json.getLong("userId"));
 			saleBusinessOpportunity.setUpdateTime(nowdate);
 			saleBusinessOpportunityMapper.updateByPrimaryKeySelective(saleBusinessOpportunity);
