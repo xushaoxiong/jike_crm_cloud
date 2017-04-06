@@ -275,7 +275,7 @@
 	count(1)
 	from business_opportunity bo left join sale_business_opportunity sbo
 	on bo.business_opportunity_id = sbo.business_opportunity_id
-	      and bo.is_cancellation = 0
+	      where bo.is_cancellation = 0
 		<if test="businessOpportunityName != null">
 			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
@@ -305,7 +305,7 @@
 	sbo.user_id
 	from  business_opportunity bo left join sale_business_opportunity sbo
 	on bo.business_opportunity_id = sbo.business_opportunity_id
-	      and bo.is_cancellation = 0
+	      where bo.is_cancellation = 0
 		<if test="businessOpportunityName != null">
 			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
