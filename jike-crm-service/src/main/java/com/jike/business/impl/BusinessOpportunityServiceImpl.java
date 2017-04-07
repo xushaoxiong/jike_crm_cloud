@@ -323,6 +323,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		Long businessOpportunityId = json.getLong("businessOpportunityId");
 		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
 		businessOpportunity.setBusinessOpportunityProcess(json.getString("businessOpportunityProcess"));
+		businessOpportunity.setUpdateBy(json.getLong("userId"));
+		businessOpportunity.setUpdateTime(json.getDate("nowDate"));
 		businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
 	}
 

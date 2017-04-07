@@ -17,6 +17,7 @@ import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInformationCollect;
 import com.jike.business.model.BusinessOpportunityLog;
 @Service("businessOpportunityLogService")
+@Transactional 
 public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLogService {
 
 	@Autowired
@@ -34,6 +35,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			Long detailFeeId = null;
@@ -55,6 +57,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boFeeDetail.setOtherFee(otherFee);
 				boFeeDetail.setAdvanceFee(advanceFee);
 				boFeeDetail.setAdvancePerson(advancePerson);
+				boFeeDetail.setCreateTime(nowDate);
+				boFeeDetail.setCreateBy(jsonData.getLong("userId"));
 				boFeeDetailMapper.insert(boFeeDetail);
 				detailFeeId = boFeeDetail.getDetailFeeId();
 			}
@@ -80,6 +84,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			businessOpportunityLog.setInternalParticipant(internalParticipant);
 			businessOpportunityLog.setExternalParticipant(externalParticipant);
 			businessOpportunityLog.setDetailFeeId(detailFeeId);
+			businessOpportunityLog.setCreateTime(nowDate);
+			businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
 			businessOpportunityLogMapper.insert(businessOpportunityLog);
 			
 			//保存信息收集
@@ -129,6 +135,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boInformationCollect.setDecisionMakerWechat(decisionMakerWechat);
 			boInformationCollect.setIfIntention(ifIntention);
 			boInformationCollect.setIfInterested(ifInterested);
+			boInformationCollect.setCreateTime(nowDate);
+			boInformationCollect.setCreateBy(jsonData.getLong("userId"));
 			boInformationCollectMapper.insert(boInformationCollect);
 			if(informationSources!=null&&schoolScale!=null&&schoolLevel!=null&&schoolProperty!=null
 					&&schoolType!=null&&contactName!=null&&contactTitle!=null&&
@@ -139,6 +147,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				JSONObject json = new JSONObject();
 				json.put("businessOpportunityId", businessOpportunityId);
 				json.put("businessOpportunityProcess", "信息收集完成");
+				json.put("userId", jsonData.getLong("userId"));
+				json.put("nowDate", nowDate);
 				businessOpportunityService.updateBusinessOpportunityProcess(json);
 			}
 		}
