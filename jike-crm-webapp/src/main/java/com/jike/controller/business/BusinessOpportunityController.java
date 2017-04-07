@@ -175,5 +175,29 @@ public class BusinessOpportunityController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	/**
+	 * 通过商机名称查询商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午7:15:16
+	 */
+	@RequestMapping(value = "/queryBusinessOpportunityByName", method ={RequestMethod.POST})
+	public @ResponseBody String queryBusinessOpportunityByName(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.queryBusinessOpportunityByName(json);
+		} catch (IOException e) {
+			logger.error("queryBusinessOpportunity error", e);
+		}
+		return result.toJSONString();
+	}
 
 }

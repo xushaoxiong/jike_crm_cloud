@@ -94,4 +94,14 @@ public interface BusinessOpportunityMapper {
 	 */
 	List<java.util.Map<String, Object>> getBusinessOpportunityByPage(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime, @Param("endTime")String endTime,
 			@Param("businessOpportunityProcess")String businessOpportunityProcess, @Param("userId")Long userId,@Param("start")Integer start, @Param("pageSize")Integer pageSize);
+
+	/**
+	 * 通过商机名称查询商机
+	 * @param businessOpportunityName
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午7:20:22
+	 */
+	List<BusinessOpportunity> selectByBusinessOpportunityName(@Param("businessOpportunityName")String businessOpportunityName,  @Param("userId")Long userId);
 }

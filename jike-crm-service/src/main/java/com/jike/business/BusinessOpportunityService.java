@@ -58,4 +58,13 @@ public interface BusinessOpportunityService {
 	 */
 	public JSONObject distributionBusinessOpportunity(JSONObject json);
 
+	/**
+	 * 通过商机名称查询商机
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月6日下午7:15:59
+	 */
+	public JSONObject queryBusinessOpportunityByName(JSONObject json);
+
 }

@@ -45,6 +45,7 @@
     <include refid="Base_Column_List" />
     from business_opportunity
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+    and is_cancellation = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     <!--
@@ -322,6 +323,19 @@
 			and sbo.user_id = #{userId,jdbcType=BIGINT}
 		</if>
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
+  </select>
+  <select id="selectByBusinessOpportunityName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	 select
+		bo.*
+		from  business_opportunity bo , sale_business_opportunity sbo
+		where bo.business_opportunity_id = sbo.business_opportunity_id
+		and bo.is_cancellation = 0
+		<if test="userId != null">
+			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		</if>
+		<if test="businessOpportunityName != null">
+			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
   </select>
 	
 </mapper>

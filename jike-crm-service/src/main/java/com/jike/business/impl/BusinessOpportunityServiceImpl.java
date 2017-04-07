@@ -287,7 +287,35 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("message", "操作成功");
 		return resultJson;
 	}
-	
-	
+
+	public JSONObject queryBusinessOpportunityByName(JSONObject queryJson) {
+		JSONObject resultJson = new JSONObject();
+		String businessOpportunityName = queryJson.getString("businessOpportunityName");
+		if(businessOpportunityName!=null){
+			businessOpportunityName="%"+businessOpportunityName+"%";
+		}
+		Long userId = queryJson.getLong("userId");
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId);
+		JSONArray arr = new JSONArray();
+		if(!businessOpportunityList.isEmpty()){
+			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
+				JSONObject json = new JSONObject();
+				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
+				json.put("businessOpportunityNum", businessOpportunity.getBusinessOpportunityNum());
+				json.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
+				json.put("addressProvince", businessOpportunity.getAddressProvince());
+				json.put("addressCity", businessOpportunity.getAddressCity());
+				json.put("addressCounty", businessOpportunity.getAddressCounty());
+				json.put("addressDetail", businessOpportunity.getAddressDetail());
+				json.put("businessOpportunityProcess", businessOpportunity.getBusinessOpportunityProcess());
+				arr.add(json);
+			}
+			
+		}
+		resultJson.put("businessOpportunityList", arr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 
 }

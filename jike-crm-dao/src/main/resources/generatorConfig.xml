@@ -11,7 +11,7 @@
            
            <!--数据库链接地址账号密码-->
            <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-	        connectionURL="jdbc:mysql://localhost/jikecrm" userId="root" password="root">
+	        connectionURL="jdbc:mysql://47.93.43.215:3306/crm" userId="itoffice" password="itoffice">
            </jdbcConnection>
          <javaTypeResolver>
              <property name="forceBigDecimals" value="false"/>
@@ -29,8 +29,8 @@
              <property name="enableSubPackages" value="true"/>
          </javaClientGenerator>
          <!--生成对应表及类名-->
-         <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-    	 <table tableName="bo_information_collect" domainObjectName="BoInformationCollect" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <!--  <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+         -->  <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+    	 <!--<table tableName="bo_information_collect" domainObjectName="BoInformationCollect" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
      </context>
 </generatorConfiguration>
