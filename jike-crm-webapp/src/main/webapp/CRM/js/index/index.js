@@ -50,8 +50,10 @@ $(function(){
 	});
 	
 	$('.L-list').on('click','.hide-menu li',function(){
+		
 		var url=$(this).attr('url');
-			$('.R-wap').load(url);
+		console.log(url)
+		$('.R-wap').load(url);
 			
 	})	
 	
