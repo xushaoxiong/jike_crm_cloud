@@ -308,6 +308,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 				json.put("addressCounty", businessOpportunity.getAddressCounty());
 				json.put("addressDetail", businessOpportunity.getAddressDetail());
 				json.put("businessOpportunityProcess", businessOpportunity.getBusinessOpportunityProcess());
+				json.put("businessOpportunityId", businessOpportunity.getBusinessOpportunityId());
 				arr.add(json);
 			}
 			
@@ -316,6 +317,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
+	}
+
+	public void updateBusinessOpportunityProcess(JSONObject json) {
+		Long businessOpportunityId = json.getLong("businessOpportunityId");
+		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
+		businessOpportunity.setBusinessOpportunityProcess(json.getString("businessOpportunityProcess"));
+		businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
 	}
 
 }

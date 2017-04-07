@@ -67,4 +67,11 @@ public interface BusinessOpportunityService {
 	 */
 	public JSONObject queryBusinessOpportunityByName(JSONObject json);
 
+	/**
+	 * 更新商机进度
+	 * @param json
+	 * @created wangyb
+	 * @createtime 2017年4月7日上午11:30:37
+	 */
+	public void updateBusinessOpportunityProcess(JSONObject json);
 }
