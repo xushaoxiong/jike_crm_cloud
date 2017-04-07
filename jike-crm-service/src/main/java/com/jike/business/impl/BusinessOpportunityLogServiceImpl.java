@@ -36,6 +36,33 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	@Autowired
 	private BusinessOpportunityService businessOpportunityService;
 	
+	
+	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
+		JSONObject resultJson = new JSONObject();
+		Long businessOpportunityId = jsonData.getLong("businessOpportunityId");
+		BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
+		if(boInformationCollect!=null){
+			Object json = JSONObject.toJSON(boInformationCollect);
+			JSONObject informationCollectJson = (JSONObject) json;
+			if(informationCollectJson.get("createBy")!=null){
+				informationCollectJson.remove("createBy");
+			}
+			if(informationCollectJson.get("createTime")!=null){
+				informationCollectJson.remove("createTime");
+			}
+			if(informationCollectJson.get("updateBy")!=null){
+				informationCollectJson.remove("updateBy");
+			}
+			if(informationCollectJson.get("updateTime")!=null){
+				informationCollectJson.remove("updateTime");
+			}
+			resultJson.put("boInformationCollect", informationCollectJson);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	
 	@Transactional
 	public JSONObject addBOLogInformationCollection(JSONObject jsonData) {
 		
@@ -76,32 +103,61 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Integer ifIntention = boInformationCollectJson.getInteger("ifIntention");
 			Integer ifInterested = boInformationCollectJson.getInteger("ifInterested");
 			
-			BoInformationCollect boInformationCollect = new BoInformationCollect();
-			boInformationCollect.setBusinessOpportunityId(businessOpportunityId);//设置商机ID
-			boInformationCollect.setInformationSources(informationSources);
-			boInformationCollect.setSchoolScale(schoolScale);
-			boInformationCollect.setSchoolLevel(schoolLevel);
-			boInformationCollect.setSchoolProperty(schoolProperty);
-			boInformationCollect.setSchoolType(schoolType);
-			boInformationCollect.setContactName(contactName);
-			boInformationCollect.setContactTitle(contactTitle);
-			boInformationCollect.setContactLandline(contactLandline);
-			boInformationCollect.setContactPhone(contactPhone);
-			boInformationCollect.setContactEmail(contactEmail);
-			boInformationCollect.setContactQq(contactQq);
-			boInformationCollect.setContactWechat(contactWechat);
-			boInformationCollect.setDecisionMakerName(decisionMakerName);
-			boInformationCollect.setDecisionMakerTitle(decisionMakerTitle);
-			boInformationCollect.setDecisionMakerLandline(decisionMakerLandline);
-			boInformationCollect.setDecisionMakerPhone(decisionMakerPhone);
-			boInformationCollect.setDecisionMakerEmail(decisionMakerEmail);
-			boInformationCollect.setDecisionMakerQq(decisionMakerQq);
-			boInformationCollect.setDecisionMakerWechat(decisionMakerWechat);
-			boInformationCollect.setIfIntention(ifIntention);
-			boInformationCollect.setIfInterested(ifInterested);
-			boInformationCollect.setCreateTime(nowDate);
-			boInformationCollect.setCreateBy(jsonData.getLong("userId"));
-			boInformationCollectMapper.insert(boInformationCollect);
+			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
+			if(boInformationCollect == null){
+				boInformationCollect = new BoInformationCollect();
+				boInformationCollect.setBusinessOpportunityId(businessOpportunityId);// 设置商机ID
+				boInformationCollect.setInformationSources(informationSources);
+				boInformationCollect.setSchoolScale(schoolScale);
+				boInformationCollect.setSchoolLevel(schoolLevel);
+				boInformationCollect.setSchoolProperty(schoolProperty);
+				boInformationCollect.setSchoolType(schoolType);
+				boInformationCollect.setContactName(contactName);
+				boInformationCollect.setContactTitle(contactTitle);
+				boInformationCollect.setContactLandline(contactLandline);
+				boInformationCollect.setContactPhone(contactPhone);
+				boInformationCollect.setContactEmail(contactEmail);
+				boInformationCollect.setContactQq(contactQq);
+				boInformationCollect.setContactWechat(contactWechat);
+				boInformationCollect.setDecisionMakerName(decisionMakerName);
+				boInformationCollect.setDecisionMakerTitle(decisionMakerTitle);
+				boInformationCollect.setDecisionMakerLandline(decisionMakerLandline);
+				boInformationCollect.setDecisionMakerPhone(decisionMakerPhone);
+				boInformationCollect.setDecisionMakerEmail(decisionMakerEmail);
+				boInformationCollect.setDecisionMakerQq(decisionMakerQq);
+				boInformationCollect.setDecisionMakerWechat(decisionMakerWechat);
+				boInformationCollect.setIfIntention(ifIntention);
+				boInformationCollect.setIfInterested(ifInterested);
+				boInformationCollect.setCreateTime(nowDate);
+				boInformationCollect.setCreateBy(jsonData.getLong("userId"));
+				boInformationCollectMapper.insert(boInformationCollect);
+			} else {
+				boInformationCollect.setBusinessOpportunityId(businessOpportunityId);// 设置商机ID
+				boInformationCollect.setInformationSources(informationSources);
+				boInformationCollect.setSchoolScale(schoolScale);
+				boInformationCollect.setSchoolLevel(schoolLevel);
+				boInformationCollect.setSchoolProperty(schoolProperty);
+				boInformationCollect.setSchoolType(schoolType);
+				boInformationCollect.setContactName(contactName);
+				boInformationCollect.setContactTitle(contactTitle);
+				boInformationCollect.setContactLandline(contactLandline);
+				boInformationCollect.setContactPhone(contactPhone);
+				boInformationCollect.setContactEmail(contactEmail);
+				boInformationCollect.setContactQq(contactQq);
+				boInformationCollect.setContactWechat(contactWechat);
+				boInformationCollect.setDecisionMakerName(decisionMakerName);
+				boInformationCollect.setDecisionMakerTitle(decisionMakerTitle);
+				boInformationCollect.setDecisionMakerLandline(decisionMakerLandline);
+				boInformationCollect.setDecisionMakerPhone(decisionMakerPhone);
+				boInformationCollect.setDecisionMakerEmail(decisionMakerEmail);
+				boInformationCollect.setDecisionMakerQq(decisionMakerQq);
+				boInformationCollect.setDecisionMakerWechat(decisionMakerWechat);
+				boInformationCollect.setIfIntention(ifIntention);
+				boInformationCollect.setIfInterested(ifInterested);
+				boInformationCollect.setUpdateTime(nowDate);
+				boInformationCollect.setUpdateBy(jsonData.getLong("userId"));
+				boInformationCollectMapper.updateByPrimaryKeySelective(boInformationCollect);
+			}
 			if(informationSources!=null&&schoolScale!=null&&schoolLevel!=null&&schoolProperty!=null
 					&&schoolType!=null&&contactName!=null&&contactTitle!=null&&
 					(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)

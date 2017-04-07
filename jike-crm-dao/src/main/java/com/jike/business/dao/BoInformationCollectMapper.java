@@ -39,4 +39,13 @@ public interface BoInformationCollectMapper {
 	 * @mbggenerated  Fri Apr 07 09:29:54 CST 2017
 	 */
 	int updateByPrimaryKey(BoInformationCollect record);
+
+	/**
+	 * 通过商机ID查询信息收集
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月7日下午4:08:08
+	 */
+	BoInformationCollect selectByBusinessOpportunityId(Long businessOpportunityId);
 }
