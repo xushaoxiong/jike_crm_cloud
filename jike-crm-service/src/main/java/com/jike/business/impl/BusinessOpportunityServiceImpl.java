@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +20,7 @@ import com.jike.user.UserService;
 import com.jike.user.model.User;
 
 @Service("businessOpportunityService")
+@Transactional
 public class BusinessOpportunityServiceImpl implements BusinessOpportunityService {
 
 	@Autowired

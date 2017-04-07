@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import com.jike.user.model.Role;
 import com.jike.user.model.RolePermission;
 
 @Service("roleService")
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
 	@Autowired
@@ -74,6 +76,7 @@ public class RoleServiceImpl implements RoleService {
 		return resultJson;
 	}
 
+	@Transactional
 	public JSONObject addRolePermission(JSONObject parseObject) {
 		Long roleId = parseObject.getLong("roleId");
 		JSONArray permissonList = parseObject.getJSONArray("permissonList");
