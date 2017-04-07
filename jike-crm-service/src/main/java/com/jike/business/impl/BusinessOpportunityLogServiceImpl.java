@@ -40,56 +40,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			Long detailFeeId = null;
 			if (totalDetail != null) {
-				BoFeeDetail boFeeDetail = new BoFeeDetail();
-				BigDecimal trafficFee = totalDetail.getBigDecimal("trafficFee");
-				BigDecimal hotelFee = totalDetail.getBigDecimal("hotelFee");
-				BigDecimal foodFee = totalDetail.getBigDecimal("foodFee");
-				BigDecimal entertainFee = totalDetail.getBigDecimal("entertainFee");
-				BigDecimal giftFee = totalDetail.getBigDecimal("giftFee");
-				BigDecimal otherFee = totalDetail.getBigDecimal("otherFee");
-				BigDecimal advanceFee = totalDetail.getBigDecimal("advanceFee");
-				String advancePerson = totalDetail.getString("advancePerson");
-				boFeeDetail.setTrafficFee(trafficFee);
-				boFeeDetail.setHotelFee(hotelFee);
-				boFeeDetail.setFoodFee(foodFee);
-				boFeeDetail.setEntertainFee(entertainFee);
-				boFeeDetail.setGiftFee(giftFee);
-				boFeeDetail.setOtherFee(otherFee);
-				boFeeDetail.setAdvanceFee(advanceFee);
-				boFeeDetail.setAdvancePerson(advancePerson);
-				boFeeDetail.setCreateTime(nowDate);
-				boFeeDetail.setCreateBy(jsonData.getLong("userId"));
-				boFeeDetailMapper.insert(boFeeDetail);
-				detailFeeId = boFeeDetail.getDetailFeeId();
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
 			}
-			
-			
-			
 			//保存日志
 			JSONObject logData = jsonData.getJSONObject("logData");
-			Date logDate = logData.getDate("logDate");
-			Long businessOpportunityId = logData.getLong("businessOpportunityId");
-			String eventType = logData.getString("eventType");
-			String specificEvent = logData.getString("specificEvent");
-			BigDecimal workingHours = logData.getBigDecimal("workingHours");
-			String internalParticipant = logData.getString("internalParticipant");
-			String externalParticipant = logData.getString("externalParticipant");
-			
-			BusinessOpportunityLog businessOpportunityLog = new BusinessOpportunityLog();
-			businessOpportunityLog.setLogDate(logDate);
-			businessOpportunityLog.setBusinessOpportunityId(businessOpportunityId);
-			businessOpportunityLog.setEventType(eventType);
-			businessOpportunityLog.setSpecificEvent(specificEvent);
-			businessOpportunityLog.setWorkingHours(workingHours);
-			businessOpportunityLog.setInternalParticipant(internalParticipant);
-			businessOpportunityLog.setExternalParticipant(externalParticipant);
-			businessOpportunityLog.setDetailFeeId(detailFeeId);
-			businessOpportunityLog.setCreateTime(nowDate);
-			businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
-			businessOpportunityLogMapper.insert(businessOpportunityLog);
+			Long businessOpportunityId = this.createLogData(jsonData, nowDate, detailFeeId, logData);
 			
 			//保存信息收集
-			//保存日志
 			JSONObject boInformationCollectJson = jsonData.getJSONObject("boInformationCollect");
 			String informationSources = boInformationCollectJson.getString("informationSources");
 			String schoolScale = boInformationCollectJson.getString("schoolScale");
@@ -114,6 +71,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Integer ifInterested = boInformationCollectJson.getInteger("ifInterested");
 			
 			BoInformationCollect boInformationCollect = new BoInformationCollect();
+			boInformationCollect.setBusinessOpportunityId(businessOpportunityId);//设置商机ID
 			boInformationCollect.setInformationSources(informationSources);
 			boInformationCollect.setSchoolScale(schoolScale);
 			boInformationCollect.setSchoolLevel(schoolLevel);
@@ -155,6 +113,65 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
 		return resultJson;
+	}
+
+	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData) {
+		Date logDate = logData.getDate("logDate");
+		Long businessOpportunityId = logData.getLong("businessOpportunityId");
+		String eventType = logData.getString("eventType");
+		String specificEvent = logData.getString("specificEvent");
+		BigDecimal workingHours = logData.getBigDecimal("workingHours");
+		String internalParticipant = logData.getString("internalParticipant");
+		String externalParticipant = logData.getString("externalParticipant");
+		
+		BusinessOpportunityLog businessOpportunityLog = new BusinessOpportunityLog();
+		businessOpportunityLog.setLogDate(logDate);
+		businessOpportunityLog.setBusinessOpportunityId(businessOpportunityId);
+		businessOpportunityLog.setEventType(eventType);
+		businessOpportunityLog.setSpecificEvent(specificEvent);
+		businessOpportunityLog.setWorkingHours(workingHours);
+		businessOpportunityLog.setInternalParticipant(internalParticipant);
+		businessOpportunityLog.setExternalParticipant(externalParticipant);
+		businessOpportunityLog.setDetailFeeId(detailFeeId);
+		businessOpportunityLog.setCreateTime(nowDate);
+		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
+		businessOpportunityLogMapper.insert(businessOpportunityLog);
+		return businessOpportunityId;
+	}
+
+	/**
+	 * 添加费用
+	 * @param jsonData
+	 * @param nowDate
+	 * @param totalDetail
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月7日下午2:37:50
+	 */
+	private Long createBoFeeDatail(JSONObject jsonData, Date nowDate, JSONObject totalDetail) {
+		Long detailFeeId;
+		BoFeeDetail boFeeDetail = new BoFeeDetail();
+		BigDecimal trafficFee = totalDetail.getBigDecimal("trafficFee");
+		BigDecimal hotelFee = totalDetail.getBigDecimal("hotelFee");
+		BigDecimal foodFee = totalDetail.getBigDecimal("foodFee");
+		BigDecimal entertainFee = totalDetail.getBigDecimal("entertainFee");
+		BigDecimal giftFee = totalDetail.getBigDecimal("giftFee");
+		BigDecimal otherFee = totalDetail.getBigDecimal("otherFee");
+		BigDecimal advanceFee = totalDetail.getBigDecimal("advanceFee");
+		String advancePerson = totalDetail.getString("advancePerson");
+		boFeeDetail.setTrafficFee(trafficFee);
+		boFeeDetail.setHotelFee(hotelFee);
+		boFeeDetail.setFoodFee(foodFee);
+		boFeeDetail.setEntertainFee(entertainFee);
+		boFeeDetail.setGiftFee(giftFee);
+		boFeeDetail.setOtherFee(otherFee);
+		boFeeDetail.setAdvanceFee(advanceFee);
+		boFeeDetail.setAdvancePerson(advancePerson);
+		boFeeDetail.setCreateTime(nowDate);
+		boFeeDetail.setCreateBy(jsonData.getLong("userId"));
+		boFeeDetailMapper.insert(boFeeDetail);
+		detailFeeId = boFeeDetail.getDetailFeeId();
+		return detailFeeId;
 	}
 
 }
