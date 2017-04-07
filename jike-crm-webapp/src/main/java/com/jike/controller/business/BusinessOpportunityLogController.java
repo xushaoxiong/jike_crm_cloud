@@ -51,4 +51,30 @@ public class BusinessOpportunityLogController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 添加拜访计划日志
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月7日下午3:40:51
+	 */
+	@RequestMapping(value = "/addBOVisitPlan", method ={RequestMethod.POST})
+	public @ResponseBody String addBOVisitPlan(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogVisitPlan(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOVisitPlan error", e);
+		}
+		return result.toJSONString();
+	}
+	
 }
