@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +21,7 @@ import com.jike.user.utils.security.Password;
 import com.jike.user.utils.security.impl.ShaPasswordImplV1;
 
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return userjson;
 	}
-
+	@Transactional
 	public JSONObject addUser(JSONObject userJson) {
 		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {
@@ -93,6 +95,7 @@ public class UserServiceImpl implements UserService {
 		return resultJson;
 	}
 
+	@Transactional
 	public JSONObject updateUser(JSONObject userJson) {
 		JSONObject resultJson = new JSONObject();
 		if (!userJson.isEmpty()) {

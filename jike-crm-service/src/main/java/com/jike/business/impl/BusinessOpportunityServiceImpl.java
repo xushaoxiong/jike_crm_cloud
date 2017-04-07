@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +20,7 @@ import com.jike.user.UserService;
 import com.jike.user.model.User;
 
 @Service("businessOpportunityService")
+@Transactional
 public class BusinessOpportunityServiceImpl implements BusinessOpportunityService {
 
 	@Autowired
@@ -308,6 +310,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 				json.put("addressCounty", businessOpportunity.getAddressCounty());
 				json.put("addressDetail", businessOpportunity.getAddressDetail());
 				json.put("businessOpportunityProcess", businessOpportunity.getBusinessOpportunityProcess());
+				json.put("businessOpportunityId", businessOpportunity.getBusinessOpportunityId());
 				arr.add(json);
 			}
 			
@@ -316,6 +319,15 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
+	}
+
+	public void updateBusinessOpportunityProcess(JSONObject json) {
+		Long businessOpportunityId = json.getLong("businessOpportunityId");
+		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
+		businessOpportunity.setBusinessOpportunityProcess(json.getString("businessOpportunityProcess"));
+		businessOpportunity.setUpdateBy(json.getLong("userId"));
+		businessOpportunity.setUpdateTime(json.getDate("nowDate"));
+		businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
 	}
 
 }
