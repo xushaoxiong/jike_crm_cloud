@@ -50,6 +50,23 @@ public class BusinessOpportunityLogController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	@RequestMapping(value = "/queryInformationCollectionByBoId", method ={RequestMethod.POST})
+	public @ResponseBody String queryInformationCollectionByBoId(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.queryInformationCollectionByBoId(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogInformationCollection error", e);
+		}
+		return result.toJSONString();
+	}
 	
 	/**
 	 * 添加拜访计划日志
