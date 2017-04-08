@@ -2,72 +2,56 @@ $('.alert-del-wap').height($(window).height());
 	//初始用户列表
 	//设置每页数量开始页
 	var paginatorJ={"name":"","start":1,"pageSize":10};	
-	function userpage(){
-		
-		$.ajax({
-		type:"post",
-		contentType: "application/json; charset=utf-8",
-		url:ajaxUrl+'user/getUserByPage',
-		data:JSON.stringify(paginatorJ),
-		dataType:'json',
-		success:function(jo){
-			if(jo.userList.length==0){
-				$('.noUserSearch').show();
-				$('.pagination,.totalNum').hide();
-			}else{
-				$('.noUserSearch').hide();
-				$('.pagination,.totalNum').show();
-			}
-			//分页
-			var options={
-				alignment:"center",
-		        bootstrapMajorVersion:1,    //版本
-		        numberOfPages:9,    //最多显示Page页
-		        totalPages:jo.totalPage,    //所有数据可以显示的页数
-		        onPageClicked:function(e,originalEvent,type,page){//点击跳转页
-			      	paginatorJ.start=page;
-			      	clickPage(paginatorJ)
-// 					userpage()
-		        },
-		        currentPage:paginatorJ.start,    //当前页数
-		        pageUrl:function(type, page, current){
-		        	 
-		        }        
-		    }
-		    $(".pagination").bootstrapPaginator(options);
+	var creaPage = function (jo){
+		var options={
+			alignment:"center",
+	        bootstrapMajorVersion:1,    //版本
+	        numberOfPages:9,    //最多显示Page页
+	        totalPages:jo.totalPage,    //所有数据可以显示的页数
+	        onPageClicked:function(e,originalEvent,type,page){//点击跳转页
+		      	paginatorJ.start=page;
+		      	clickPage(paginatorJ)
+
+	        },
+	        currentPage:paginatorJ.start,    //当前页数
+	        pageUrl:function(type, page, current){
+	        	 
+	        }        
+	    }
+		$(".pagination").bootstrapPaginator(options);
 			$('.totalPage').html('共'+jo.totalCount+'条');
 			$('.totalNum').html(jo.totalPage+'页');
-			var userHtml='';
-			$.each(jo.userList,function(i,item){
-				userHtml+='<tr>';
-				userHtml+='<td class="loginName">'+item.loginName+'</td>';
-				userHtml+='<td class="Name">'+item.name+'</td>';
-				if(item.gender=='男'){
-					userHtml+='<td class="gender" gid="1">'+item.gender+'</td>';
-				}else{
-					userHtml+='<td class="gender" gid="0">'+item.gender+'</td>';
-				}
-				userHtml+='<td class="phone">'+item.phone+'</td>';
-				userHtml+='<td class="email">'+item.email+'</td>';
-				userHtml+='<td class="employeeNum">'+item.employeeNum+'</td>';
-				if(item.isEmployment=='在职'){
-					userHtml+='<td class="isEmployment" epid="0">'+item.isEmployment+'</td>';
-				}else{
-					userHtml+='<td class="isEmployment" epid="1">'+item.isEmployment+'</td>';
-				}				
-				userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
-				userHtml+='<td class="roleId" roleid="'+item.roleId+'">'+item.roleName+'</td>';
-				userHtml+='<td>';
-					userHtml+='<a class="userAmend">修改</a>';
-				userHtml+='</td>';
-			userHtml+='</tr>';
-			})
+	}
+	//列表
+	var uselist=function(jo){
+		var userHtml='';
+		$.each(jo.userList,function(i,item){
+			userHtml+='<tr>';
+			userHtml+='<td class="loginName">'+item.loginName+'</td>';
+			userHtml+='<td class="Name">'+item.name+'</td>';
+			if(item.gender=='男'){
+				userHtml+='<td class="gender" gid="1">'+item.gender+'</td>';
+			}else{
+				userHtml+='<td class="gender" gid="0">'+item.gender+'</td>';
+			}
+			
+			userHtml+='<td class="phone">'+item.phone+'</td>';
+			userHtml+='<td class="email">'+item.email+'</td>';
+			userHtml+='<td class="employeeNum">'+item.employeeNum+'</td>';
+			if(item.isEmployment=='在职'){
+				userHtml+='<td class="isEmployment" epid="0">'+item.isEmployment+'</td>';
+			}else{
+				userHtml+='<td class="isEmployment" epid="1">'+item.isEmployment+'</td>';
+			}				
+			userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
+			userHtml+='<td class="roleId" roleid="'+item.roleId+'">'+item.roleName+'</td>';
+			userHtml+='<td>';
+				userHtml+='<a class="userAmend">修改</a>';
+			userHtml+='</td>';
+		userHtml+='</tr>';
+		})
 		$('.userList').html(userHtml);
-		}
-	});
-	}userpage();
-	
-	
+	}
 	//点击跳转页
 	function clickPage(PJson){
 		$.ajax({
@@ -77,43 +61,20 @@ $('.alert-del-wap').height($(window).height());
 		data:JSON.stringify(PJson),
 		dataType:'json',
 		success:function(jo){
-			var userHtml='';
-			$.each(jo.userList,function(i,item){
-				userHtml+='<tr>';
-				userHtml+='<td class="loginName">'+item.loginName+'</td>';
-				userHtml+='<td class="Name">'+item.name+'</td>';
-				if(item.gender=='男'){
-					userHtml+='<td class="gender" gid="1">'+item.gender+'</td>';
-				}else{
-					userHtml+='<td class="gender" gid="0">'+item.gender+'</td>';
-				}
-				
-				userHtml+='<td class="phone">'+item.phone+'</td>';
-				userHtml+='<td class="email">'+item.email+'</td>';
-				userHtml+='<td class="employeeNum">'+item.employeeNum+'</td>';
-				if(item.isEmployment=='在职'){
-					userHtml+='<td class="isEmployment" epid="0">'+item.isEmployment+'</td>';
-				}else{
-					userHtml+='<td class="isEmployment" epid="1">'+item.isEmployment+'</td>';
-				}				
-				userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
-				userHtml+='<td class="roleId" roleid="'+item.roleId+'">'+item.roleName+'</td>';
-				userHtml+='<td>';
-					userHtml+='<a class="userAmend">修改</a>';
-				userHtml+='</td>';
-			userHtml+='</tr>';
-			})
-		$('.userList').html(userHtml);
+			uselist(jo);
+			creaPage(jo);
 		}
 	});
 	}
+	clickPage(paginatorJ);
 	
 	//搜索
 	
 	$('.userSearch').click(function(){
 		var nameVal=$.trim($('.userName').val());
+		paginatorJ.start = 1;
 		paginatorJ.name=nameVal;
-		userpage()
+		clickPage(paginatorJ)
 	})
 	
 	//新增
