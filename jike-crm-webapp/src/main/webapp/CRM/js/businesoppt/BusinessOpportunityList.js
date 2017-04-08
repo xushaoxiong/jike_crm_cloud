@@ -1,7 +1,7 @@
 //新建商机
 //$(function(){
 	$('.newlist').click(function(){
-	window.location.href='newlist.html';
+		$('.R-wap').load('businesoppt/BusinessOpportunityCreate.html');
 })
 //添加服务人员
 //$('.plusOppt').click(function(){
@@ -27,9 +27,9 @@
 
 //列表查询
 	var paginatorJ={"businessOpportunityProcess":"","start":1,"pageSize":10};
-	function listwap(){
-		$ajax("post","businessOpportunity/queryBusinessOpportunity",paginatorJ,function succF(jo){
-			
+	//分页
+	var cartePage=function(jo){
+		console.log(jo)
 		var options={
 			alignment:"center",
 	        bootstrapMajorVersion:1,    //版本
@@ -48,9 +48,7 @@
 		$(".pagination").bootstrapPaginator(options);
 		$('.totalNum').html('共'+jo.totalCount+'条');
 		$('.pageTotal span').html(jo.businessOpportunityList.length);
-		list(jo.businessOpportunityList);
-	},function errF(){})
-	}listwap();
+	}
 	//列表内容
 	function list(List){
 		var Html="";
@@ -78,11 +76,21 @@
 			if(item.authority==0){
 				Html+='<button class="btn btn-primary edit">编辑</button>';
 				Html+='<button class="btn btn-primary delBuiness">删除</button>';
-				Html+='<button class="btn btn-primary" id="closeBuiness">关闭</button>';
+				if(item.isClosed==1){
+					Html+='<button class="btn btn-primary closeBuiness" isClosedip="'+item.isClosed+'">关闭</button>';
+				}else{
+					Html+='<button class="btn btn-info closeBuiness" isClosedip="'+item.isClosed+'">重启</button>';
+				}
+				
 			}else{
 				Html+='<button class="btn" disabled="disabled">编辑</button>';
 				Html+='<button class="btn" disabled="disabled">删除</button>';
-				Html+='<button class="btn" disabled="disabled">关闭</button>';
+				if(item.isClosed==1){
+					Html+='<button class="btn" disabled="disabled">关闭</button>';
+				}else{
+					Html+='<button class="btn" disabled="disabled">重启</button>';
+				}
+				
 			}
 				
 			Html+='</td>';
@@ -90,24 +98,15 @@
 		});
 		$('.list-tr').html(Html);
 	}
-	//操作设置
-	//点击操作时存入流水号
-	$('.list-tr').on('click','.operBtn-wap .btn',function(){
-		var BusinessOppNumb=$(this).parents('tr').find('.opptNumb').attr('numb');
-		window.localStorage.opptNumb=BusinessOppNumb;
-		
-	})
-	//编辑
-	$('.list-tr').on('click','.operBtn-wap .edit',function(){
-		$('.R-wap').load('businesoppt/editlist.html');
-	})
+
 	//点击页码
 	
 	function clickPage(PJson){
 		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
 		list(jo.businessOpportunityList);
+		cartePage(jo);
 	},function errF(){})
-	}
+	}clickPage(paginatorJ)
 	
 	
 	//搜索
@@ -124,10 +123,21 @@
 		paginatorJ.businessOpportunityName=OpportunityName;
 		paginatorJ.startTime=startTime;
 		paginatorJ.endTime=endTime;
-		listwap()
+		paginatorJ.start=1;
+		clickPage(paginatorJ);
 	})
 
-
+	//操作设置
+	//点击操作时存入流水号
+	$('.list-tr').on('click','.operBtn-wap .btn',function(){
+		var BusinessOppNumb=$(this).parents('tr').find('.opptNumb').attr('numb');
+		window.localStorage.opptNumb=BusinessOppNumb;
+		
+	})
+	//编辑
+	$('.list-tr').on('click','.operBtn-wap .edit',function(){
+		$('.R-wap').load('businesoppt/editlist.html');
+	})
 
 //删除商机
 $('.list-tr').on('click','.delBuiness',function(){
@@ -144,52 +154,56 @@ $('.delConfirm').click(function(){
 	delJ.isCancellation=isCancellation;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',delJ,function succF(jo){
 		$("#delbuinessModal").modal("hide");
-		listwap();
+//		clickPage(paginatorJ);
+	$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().remove();
 	},function errF(jo){
 		
 	})
 })
 //关闭商机
-$('.list-tr').on('click','#closeBuiness',function(){
+//isClosed=0重启
+//isClosed=1关闭
+var closeBtnPart = "";
+var isClosedip=""
+$('.list-tr').on('click','.closeBuiness',function(){
+	closeBtnPart=$(this).parent();
+	isClosedip=$(this).attr('isClosedip');
+	if(isClosedip==1){
+		$('#closebuinessModal .modal-header h4').html('关闭商机');
+	}else{
+		$('#closebuinessModal .modal-header h4').html('重启商机');
+	}
 	$("#closebuinessModal").modal("toggle");
-	$('.closeConfirm').attr('isClosed','1')
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
 	$('.businessNum').html(businessOpportunityNum);
-	var opptnumb=$(this).parents('tr').find('.opptNumb').attr('numb');
-	$("#closebuinessModal").attr('opt',opptnumb);
+	
 })
 $('.closeConfirm').click(function(){
 	var colJ={};
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
-	var isClosed=$('.closeConfirm').attr('isClosed');
 	colJ.businessOpportunityNum=businessOpportunityNum;
-	colJ.isClosed=isClosed;
-	var coloptNumb=$("#closebuinessModal").attr('opt');
+	colJ.isClosed=isClosedip;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',colJ,function succF(jo){
 		$("#closebuinessModal").modal("hide");
-		if(isClosed==0){
-			$('.opptNumb[numb="'+coloptNumb+'"]').parent().find('#reOpen').attr('id','closeBuiness');
-			$('.opptNumb[numb="'+coloptNumb+'"]').parent().find('#closeBuiness').attr('class','btn btn-primary');
-			$('#closeBuiness').html('关闭');
+		if(isClosedip== '0'){
+
+			closeBtnPart.find('.closeBuiness').html('关闭');
+			closeBtnPart.find('.closeBuiness').attr('isclosedip','1');
+			closeBtnPart.find('.closeBuiness').addClass('btn-primary');
+			closeBtnPart.find('.closeBuiness').removeClass('btn-info');
 		}else{
-			$('.opptNumb[numb="'+coloptNumb+'"]').parent().find('#closeBuiness').attr('id','reOpen');
-			$('.opptNumb[numb="'+coloptNumb+'"]').parent().find('#reOpen').attr('class','btn btn-info');
-			$('#reOpen').html('重启');
+
+			closeBtnPart.find('.closeBuiness').html('重启');
+			closeBtnPart.find('.closeBuiness').attr('isclosedip','0');
+			closeBtnPart.find('.closeBuiness').addClass('btn-info');
+			closeBtnPart.find('.closeBuiness').removeClass('btn-primary');
 		}
 				
 	},function errF(jo){
 		
 	})
 })
-//重启
-$('.list-tr').on('click','#reOpen',function(){
-	$("#closebuinessModal").modal("toggle");
-	$('.closeConfirm').attr('isClosed','0')
-	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
-	$('.businessNum').html(businessOpportunityNum);
-	var opptnumb=$(this).parents('tr').find('.opptNumb').attr('numb');
-	$("#closebuinessModal").attr('opt',opptnumb);
-})
+
 	var myDate = new Date();
 	var year=myDate.getFullYear();
 	var month=myDate.getMonth()+1;
@@ -221,7 +235,7 @@ $('.reset').click(function(){
 	$('.OpportunityName').val('');
 	$('#indate').val('');
 	$('#enddate').val('');
-	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true)
+	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
 })
 
 var H=$(window).height()-60;
