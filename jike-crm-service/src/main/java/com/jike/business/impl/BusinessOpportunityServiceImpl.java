@@ -330,4 +330,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
 	}
 
+	public JSONObject queryByBusinessOpportunityId(Long businessOpportunityId) {
+		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
+		JSONObject json = new JSONObject();
+		if(businessOpportunity!=null){
+			json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
+		}
+		return json;
+	}
+
 }

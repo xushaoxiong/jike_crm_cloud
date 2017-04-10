@@ -2,6 +2,7 @@ package com.jike.business.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInformationCollect;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
+import com.jike.crm.utils.DateUtil;
 @Service("businessOpportunityLogService")
 @Transactional 
 public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLogService {
@@ -44,6 +46,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if(boInformationCollect!=null){
 			Object json = JSONObject.toJSON(boInformationCollect);
 			JSONObject informationCollectJson = (JSONObject) json;
+			
+			String visitPlanName = generateVisitPlanNameByBoId(businessOpportunityId);
+			informationCollectJson.put("visitPlanName", visitPlanName);
 			if(informationCollectJson.get("createBy")!=null){
 				informationCollectJson.remove("createBy");
 			}
@@ -77,7 +82,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 			//保存日志
 			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = this.createLogData(jsonData, nowDate, detailFeeId, logData);
+			
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
 			//保存信息收集
 			JSONObject boInformationCollectJson = jsonData.getJSONObject("boInformationCollect");
@@ -186,9 +193,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 			//保存日志
 			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = this.createLogData(jsonData, nowDate, detailFeeId, logData);
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
-			//添加拜访计划
 			JSONObject boVisitPlanJson = jsonData.getJSONObject("boVisitPlan");
 			String visitPlanName = boVisitPlanJson.getString("visitPlanName");
 			String visitorName = boVisitPlanJson.getString("visitorName");
@@ -210,6 +217,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String tools = boVisitPlanJson.getString("tools");
 			
 			BoVisitPlan boVisitPlan = new BoVisitPlan();
+			boVisitPlan.setLogId(logId);
 			boVisitPlan.setBusinessOpportunityId(businessOpportunityId);//设置商机ID
 			boVisitPlan.setVisitPlanName(visitPlanName);
 			boVisitPlan.setVisitorName(visitorName);
@@ -240,6 +248,22 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return resultJson;
 	}
 
+	/**
+	 * 自动生成拜访计划名称
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日上午9:36:01
+	 */
+	private String generateVisitPlanNameByBoId(Long businessOpportunityId) {
+		//查询拜访计划
+		List<BoVisitPlan> boVisitPlanList = boVisitPlanMapper.selectVisitPlanByBusinessOpportunityId(businessOpportunityId);
+		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+		//添加拜访计划
+		String visitPlanName = DateUtil.getDateFormat(new Date(), "yyyyMMdd")+"-"+businessOpportunityJson.getString("businessOpportunityName")+"-第"+(boVisitPlanList.size()+1)+"次拜访计划";
+	    return visitPlanName;
+	}
+
 	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
 		JSONObject json = new JSONObject();
 		json.put("businessOpportunityId", businessOpportunityId);
@@ -249,9 +273,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityService.updateBusinessOpportunityProcess(json);
 	}
 
-	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData) {
+	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData,Long businessOpportunityId) {
 		Date logDate = logData.getDate("logDate");
-		Long businessOpportunityId = logData.getLong("businessOpportunityId");
 		String eventType = logData.getString("eventType");
 		String specificEvent = logData.getString("specificEvent");
 		BigDecimal workingHours = logData.getBigDecimal("workingHours");
@@ -270,7 +293,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityLog.setCreateTime(nowDate);
 		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
 		businessOpportunityLogMapper.insert(businessOpportunityLog);
-		return businessOpportunityId;
+		return businessOpportunityLog.getLogId();
 	}
 
 	/**
