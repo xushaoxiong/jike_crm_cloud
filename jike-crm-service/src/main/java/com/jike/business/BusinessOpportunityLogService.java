@@ -29,5 +29,14 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月7日下午5:24:02
 	 */
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData);
+	
+	/**
+	 * 通过商机ID查询拜访计划详情
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日上午10:57:09
+	 */
+	public JSONObject queryVisitPlanByBoId(JSONObject jsonData);
 
 }
