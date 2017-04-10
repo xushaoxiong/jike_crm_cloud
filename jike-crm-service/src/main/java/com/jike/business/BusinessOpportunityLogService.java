@@ -38,5 +38,31 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月10日上午10:57:09
 	 */
 	public JSONObject queryVisitPlanByBoId(JSONObject jsonData);
+	
+	/**
+	 * 添加拜访
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:12:03
+	 */
+	public JSONObject addBOLogVisit(JSONObject jsonData);
+	/**
+	 * 添加谈判
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:12:13
+	 */
+	public JSONObject addBOLogNegotiation(JSONObject jsonData);
+	
+	/**
+	 * 通过商机ID自动生成谈判名称
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:12:22
+	 */
+	public JSONObject generateNegotiationNameByBoId(JSONObject jsonData);
 
 }

@@ -13,11 +13,13 @@ import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoFeeDetailMapper;
 import com.jike.business.dao.BoInformationCollectMapper;
+import com.jike.business.dao.BoNegotiationMapper;
 import com.jike.business.dao.BoVisitMapper;
 import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInformationCollect;
+import com.jike.business.model.BoNegotiation;
 import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
@@ -38,6 +40,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoVisitMapper boVisitMapper;
 	@Autowired
 	private BusinessOpportunityService businessOpportunityService;
+	@Autowired
+	private BoNegotiationMapper boNegotiationMapper;
 	
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
@@ -211,6 +215,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String visitPlanName = boVisitPlanJson.getString("visitPlanName");
 			String visitorName = boVisitPlanJson.getString("visitorName");
 			String visitorTitle = boVisitPlanJson.getString("visitorTitle");
+			String visitorTitleDetail = boVisitPlanJson.getString("visitorTitleDetail");
 			String visitorLandline = boVisitPlanJson.getString("visitorLandline");
 			String visitorPhone = boVisitPlanJson.getString("visitorPhone");
 			String visitorEmail = boVisitPlanJson.getString("visitorEmail");
@@ -233,6 +238,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setVisitPlanName(visitPlanName);
 			boVisitPlan.setVisitorName(visitorName);
 			boVisitPlan.setVisitorTitle(visitorTitle);
+			boVisitPlan.setVisitorTitleDetail(visitorTitleDetail);
 			boVisitPlan.setVisitorLandline(visitorLandline);
 			boVisitPlan.setVisitorPhone(visitorPhone);
 			boVisitPlan.setVisitorEmail(visitorEmail);
@@ -250,7 +256,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setVisitPlanReason(visitPlanReason);
 			boVisitPlan.setCreateTime(nowDate);
 			boVisitPlan.setCreateBy(jsonData.getLong("userId"));
-			boVisitPlan.setInPlaning(0);
+			boVisitPlan.setInPlaning(0);//第一次添加处于激活状态
 			boVisitPlanMapper.insert(boVisitPlan);
 			//修改商机进度
 			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
@@ -270,6 +276,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			resultJson.put("visitPlanName", boVisitPlan.getVisitPlanName());
 			resultJson.put("visitorName", boVisitPlan.getVisitorName());
 			resultJson.put("visitorTitle", boVisitPlan.getVisitorTitle());
+			resultJson.put("visitorTitleDetail", boVisitPlan.getVisitorTitleDetail());
 			resultJson.put("visitorLandline", boVisitPlan.getVisitorLandline());
 			resultJson.put("visitorPhone", boVisitPlan.getVisitorPhone());
 			resultJson.put("visitorEmail", boVisitPlan.getVisitorEmail());
@@ -295,6 +302,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
+			
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByBusinessOpportunityId(businessOpportunityId, 0);
+			if(boVisitPlaning.isEmpty()){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "请先创建拜访计划");
+				return resultJson;
+			}
 			Date nowDate = new Date();
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
@@ -303,14 +319,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
 			}
 			//保存日志
-			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = logData.getLong("businessOpportunityId");
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
 			JSONObject boVisitJson = jsonData.getJSONObject("boVisit");
 			Long visitPlanId = boVisitJson.getLong("visitPlanId");//拜访计划ID
 			String visitorName = boVisitJson.getString("visitorName");
 			String visitorTitle = boVisitJson.getString("visitorTitle");
+			String visitorTitleDetail = boVisitJson.getString("visitorTitleDetail");
 			String visitorLandline = boVisitJson.getString("visitorLandline");
 			String visitorPhone = boVisitJson.getString("visitorPhone");
 			String visitorEmail = boVisitJson.getString("visitorEmail");
@@ -328,6 +343,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisit.setVisitPlanId(visitPlanId);
 			boVisit.setVisitorName(visitorName);
 			boVisit.setVisitorTitle(visitorTitle);
+			boVisit.setVisitorTitleDetail(visitorTitleDetail);
 			boVisit.setVisitLandline(visitorLandline);
 			boVisit.setVisitPhone(visitorPhone);
 			boVisit.setVisitEmail(visitorEmail);
@@ -343,11 +359,86 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisit.setCreateTime(nowDate);
 			boVisit.setCreateBy(jsonData.getLong("userId"));
 			boVisitMapper.insert(boVisit);
+			//修改拜访计划状态
+			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectByPrimaryKey(visitPlanId);
+			if(boVisitPlan!=null){
+				boVisitPlan.setInPlaning(1);
+				boVisitPlan.setUpdateBy(jsonData.getLong("userId"));
+				boVisitPlan.setUpdateTime(nowDate);
+				boVisitPlanMapper.updateByPrimaryKeySelective(boVisitPlan);
+			}
 			//修改商机进度
-			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
+			String specificEvent = logData.getString("specificEvent");
+			if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
+			}else if("达成合作意向".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+			}
+			
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject addBOLogNegotiation(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boNegotiationJson = jsonData.getJSONObject("boNegotiation");
+			String negotiationName = boNegotiationJson.getString("negotiationName");
+			String negotiationDetail = boNegotiationJson.getString("negotiationDetail");
+			
+			BoNegotiation boNegotiation = new BoNegotiation();
+			boNegotiation.setNegotiationName(negotiationName);
+			boNegotiation.setNegotiationDetail(negotiationDetail);
+			boNegotiation.setBusinessOpportunityId(businessOpportunityId);
+			boNegotiation.setLogId(logId);
+			boNegotiation.setCreateTime(nowDate);
+			boNegotiation.setCreateBy(jsonData.getLong("userId"));
+			boNegotiationMapper.insert(boNegotiation);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("谈判中".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+			}else if("承诺试用".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待试用");
+			}else if("承诺购买".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+			}else if("走招投标流程".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	public JSONObject generateNegotiationNameByBoId(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		Long businessOpportunityId = jsonData.getLong("businessOpportunityId");
+		//查询拜访计划
+		List<BoVisitPlan> boNegotiationList = boNegotiationMapper.selecNegotiationByBusinessOpportunityId(businessOpportunityId);
+		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+		//添加拜访计划
+		String negotiationName = DateUtil.getDateFormat(new Date(), "yyyyMMdd")+"-"+businessOpportunityJson.getString("businessOpportunityName")+"-第"+(boNegotiationList.size()+1)+"次谈判";
+		resultJson.put("negotiationName", negotiationName);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
 		return resultJson;
 	}
 

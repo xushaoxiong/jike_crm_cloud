@@ -127,5 +127,81 @@ public class BusinessOpportunityLogController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	/**
+	 * 添加拜访日志
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:15:21
+	 */
+	@RequestMapping(value = "/addBOVisit", method ={RequestMethod.POST})
+	public @ResponseBody String addBOVisit(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogVisit(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOVisit error", e);
+		}
+		return result.toJSONString();
+	}
+	/**
+	 * 添加谈判日志
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:15:49
+	 */
+	@RequestMapping(value = "/addBOLogNegotiation", method ={RequestMethod.POST})
+	public @ResponseBody String addBOLogNegotiation(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogNegotiation(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogNegotiation error", e);
+		}
+		return result.toJSONString();
+	}
+	/**
+	 * 自动生成谈判名称
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日下午2:16:23
+	 */
+	@RequestMapping(value = "/generateNegotiationNameByBoId", method ={RequestMethod.POST})
+	public @ResponseBody String generateNegotiationNameByBoId(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.generateNegotiationNameByBoId(jsonData);
+		} catch (IOException e) {
+			logger.error("generateNegotiationNameByBoId error", e);
+		}
+		return result.toJSONString();
+	}
+	
 	
 }
