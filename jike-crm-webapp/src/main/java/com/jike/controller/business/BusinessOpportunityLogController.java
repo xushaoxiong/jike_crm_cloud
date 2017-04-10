@@ -50,6 +50,14 @@ public class BusinessOpportunityLogController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	/**
+	 * 通过商机ID查询信息收集信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日上午10:57:59
+	 */
 	@RequestMapping(value = "/queryInformationCollectionByBoId", method ={RequestMethod.POST})
 	public @ResponseBody String queryInformationCollectionByBoId(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -90,6 +98,32 @@ public class BusinessOpportunityLogController extends BaseController{
 			result = businessOpportunityLogService.addBOLogVisitPlan(jsonData);
 		} catch (IOException e) {
 			logger.error("addBOVisitPlan error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	/**
+	 * 通过商机ID查询拜访计划信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日上午10:58:38
+	 */
+	@RequestMapping(value = "/queryVisitPlanByBoId", method ={RequestMethod.POST})
+	public @ResponseBody String queryVisitPlanByBoId(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.queryVisitPlanByBoId(jsonData);
+		} catch (IOException e) {
+			logger.error("queryVisitPlanByBoId error", e);
 		}
 		return result.toJSONString();
 	}

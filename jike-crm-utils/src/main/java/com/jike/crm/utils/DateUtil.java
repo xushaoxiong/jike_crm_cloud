@@ -96,7 +96,7 @@ public class DateUtil {
      * @return
      */
     public static String getDateFormat(Date date, String formatStr) {
-        if (StringUtils.isEmpty(formatStr)) {
+        if (!StringUtils.isEmpty(formatStr)) {
             return new SimpleDateFormat(formatStr).format(date);
         }
         return null;

@@ -2,6 +2,7 @@ package com.jike.business.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInformationCollect;
+import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
+import com.jike.crm.utils.DateUtil;
 @Service("businessOpportunityLogService")
 @Transactional 
 public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLogService {
@@ -44,6 +47,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if(boInformationCollect!=null){
 			Object json = JSONObject.toJSON(boInformationCollect);
 			JSONObject informationCollectJson = (JSONObject) json;
+			
+			String visitPlanName = generateVisitPlanNameByBoId(businessOpportunityId);
+			informationCollectJson.put("visitPlanName", visitPlanName);
 			if(informationCollectJson.get("createBy")!=null){
 				informationCollectJson.remove("createBy");
 			}
@@ -77,7 +83,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 			//保存日志
 			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = this.createLogData(jsonData, nowDate, detailFeeId, logData);
+			
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
 			//保存信息收集
 			JSONObject boInformationCollectJson = jsonData.getJSONObject("boInformationCollect");
@@ -88,6 +96,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String schoolType = boInformationCollectJson.getString("schoolType");
 			String contactName = boInformationCollectJson.getString("contactName");
 			String contactTitle = boInformationCollectJson.getString("contactTitle");
+			String contactTitleDetail = boInformationCollectJson.getString("contactTitleDetail");
 			String contactLandline = boInformationCollectJson.getString("contactLandline");
 			String contactPhone = boInformationCollectJson.getString("contactPhone");
 			String contactEmail = boInformationCollectJson.getString("contactEmail");
@@ -95,6 +104,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String contactWechat = boInformationCollectJson.getString("contactWechat");
 			String decisionMakerName = boInformationCollectJson.getString("decisionMakerName");
 			String decisionMakerTitle = boInformationCollectJson.getString("decisionMakerTitle");
+			String decisionMakerTitleDetail = boInformationCollectJson.getString("decisionMakerTitleDetail");
 			String decisionMakerLandline = boInformationCollectJson.getString("decisionMakerLandline");
 			String decisionMakerPhone = boInformationCollectJson.getString("decisionMakerPhone");
 			String decisionMakerEmail = boInformationCollectJson.getString("decisionMakerEmail");
@@ -114,6 +124,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boInformationCollect.setSchoolType(schoolType);
 				boInformationCollect.setContactName(contactName);
 				boInformationCollect.setContactTitle(contactTitle);
+				boInformationCollect.setContactTitleDetail(contactTitleDetail);
 				boInformationCollect.setContactLandline(contactLandline);
 				boInformationCollect.setContactPhone(contactPhone);
 				boInformationCollect.setContactEmail(contactEmail);
@@ -121,6 +132,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boInformationCollect.setContactWechat(contactWechat);
 				boInformationCollect.setDecisionMakerName(decisionMakerName);
 				boInformationCollect.setDecisionMakerTitle(decisionMakerTitle);
+				boInformationCollect.setDecisionMakerTitleDetail(decisionMakerTitleDetail);
 				boInformationCollect.setDecisionMakerLandline(decisionMakerLandline);
 				boInformationCollect.setDecisionMakerPhone(decisionMakerPhone);
 				boInformationCollect.setDecisionMakerEmail(decisionMakerEmail);
@@ -177,6 +189,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByBusinessOpportunityId(businessOpportunityId, 0);
+			if(!boVisitPlaning.isEmpty()){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "已存在正在进行的拜访计划");
+				return resultJson;
+			}
 			Date nowDate = new Date();
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
@@ -185,10 +205,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
 			}
 			//保存日志
-			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = this.createLogData(jsonData, nowDate, detailFeeId, logData);
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
-			//添加拜访计划
 			JSONObject boVisitPlanJson = jsonData.getJSONObject("boVisitPlan");
 			String visitPlanName = boVisitPlanJson.getString("visitPlanName");
 			String visitorName = boVisitPlanJson.getString("visitorName");
@@ -210,6 +228,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String tools = boVisitPlanJson.getString("tools");
 			
 			BoVisitPlan boVisitPlan = new BoVisitPlan();
+			boVisitPlan.setLogId(logId);
 			boVisitPlan.setBusinessOpportunityId(businessOpportunityId);//设置商机ID
 			boVisitPlan.setVisitPlanName(visitPlanName);
 			boVisitPlan.setVisitorName(visitorName);
@@ -231,6 +250,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setVisitPlanReason(visitPlanReason);
 			boVisitPlan.setCreateTime(nowDate);
 			boVisitPlan.setCreateBy(jsonData.getLong("userId"));
+			boVisitPlan.setInPlaning(0);
 			boVisitPlanMapper.insert(boVisitPlan);
 			//修改商机进度
 			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
@@ -238,6 +258,113 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
 		return resultJson;
+	}
+	
+	public JSONObject queryVisitPlanByBoId(JSONObject jsonData){
+		Long businessOpportunityId = jsonData.getLong("businessOpportunityId");
+		List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByBusinessOpportunityId(businessOpportunityId, 0);
+		JSONObject resultJson = new JSONObject();
+		if(!boVisitPlaning.isEmpty()){
+			BoVisitPlan boVisitPlan = boVisitPlaning.get(0);
+			resultJson.put("visitPlanId", boVisitPlan.getVisitPlanId());
+			resultJson.put("visitPlanName", boVisitPlan.getVisitPlanName());
+			resultJson.put("visitorName", boVisitPlan.getVisitorName());
+			resultJson.put("visitorTitle", boVisitPlan.getVisitorTitle());
+			resultJson.put("visitorLandline", boVisitPlan.getVisitorLandline());
+			resultJson.put("visitorPhone", boVisitPlan.getVisitorPhone());
+			resultJson.put("visitorEmail", boVisitPlan.getVisitorEmail());
+			resultJson.put("visitorQq", boVisitPlan.getVisitorQq());
+			resultJson.put("visitorWechat", boVisitPlan.getVisitorWechat());
+			resultJson.put("visitProvince", boVisitPlan.getVisitProvince());
+			resultJson.put("visitCity", boVisitPlan.getVisitCity());
+			resultJson.put("visitCountry", boVisitPlan.getVisitCountry());
+			resultJson.put("visitAddressDetail", boVisitPlan.getVisitAddressDetail());
+			resultJson.put("state", "success");
+			resultJson.put("message", "添加成功");
+		}else{
+			resultJson.put("state", "fail");
+			resultJson.put("message", "未查到拜访计划");
+		}
+		
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject addBOLogVisit(JSONObject jsonData) {
+		
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			//保存日志
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boVisitJson = jsonData.getJSONObject("boVisit");
+			Long visitPlanId = boVisitJson.getLong("visitPlanId");//拜访计划ID
+			String visitorName = boVisitJson.getString("visitorName");
+			String visitorTitle = boVisitJson.getString("visitorTitle");
+			String visitorLandline = boVisitJson.getString("visitorLandline");
+			String visitorPhone = boVisitJson.getString("visitorPhone");
+			String visitorEmail = boVisitJson.getString("visitorEmail");
+			String visitorQq = boVisitJson.getString("visitorQq");
+			String visitorWechat = boVisitJson.getString("visitorWechat");
+			String visitProvince = boVisitJson.getString("visitProvince");
+			String visitCity = boVisitJson.getString("visitCity");
+			String visitCountry = boVisitJson.getString("visitCountry");
+			String visitAddressDetail = boVisitJson.getString("visitAddressDetail");
+			BigDecimal procurementBudget = boVisitJson.getBigDecimal("procurementBudget");
+			Integer decisionMakerAdvice = boVisitJson.getInteger("decisionMakerAdvice");
+			String visitDetail = boVisitJson.getString("visitDetail");
+			
+			BoVisit boVisit = new BoVisit();
+			boVisit.setVisitPlanId(visitPlanId);
+			boVisit.setVisitorName(visitorName);
+			boVisit.setVisitorTitle(visitorTitle);
+			boVisit.setVisitLandline(visitorLandline);
+			boVisit.setVisitPhone(visitorPhone);
+			boVisit.setVisitEmail(visitorEmail);
+			boVisit.setVisitQq(visitorQq);
+			boVisit.setVisitWechat(visitorWechat);
+			boVisit.setVisitProvince(visitProvince);
+			boVisit.setVisitCity(visitCity);
+			boVisit.setVisitCountry(visitCountry);
+			boVisit.setVisitAddressDetail(visitAddressDetail);
+			boVisit.setProcurementBudget(procurementBudget);
+			boVisit.setDecisionMakerAdvice(decisionMakerAdvice);
+			boVisit.setVisitDetail(visitDetail);
+			boVisit.setCreateTime(nowDate);
+			boVisit.setCreateBy(jsonData.getLong("userId"));
+			boVisitMapper.insert(boVisit);
+			//修改商机进度
+			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+
+	/**
+	 * 自动生成拜访计划名称
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月10日上午9:36:01
+	 */
+	private String generateVisitPlanNameByBoId(Long businessOpportunityId) {
+		//查询拜访计划
+		List<BoVisitPlan> boVisitPlanList = boVisitPlanMapper.selectVisitPlanByBusinessOpportunityId(businessOpportunityId);
+		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+		//添加拜访计划
+		String visitPlanName = DateUtil.getDateFormat(new Date(), "yyyyMMdd")+"-"+businessOpportunityJson.getString("businessOpportunityName")+"-第"+(boVisitPlanList.size()+1)+"次拜访计划";
+	    return visitPlanName;
 	}
 
 	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
@@ -249,9 +376,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityService.updateBusinessOpportunityProcess(json);
 	}
 
-	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData) {
+	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData,Long businessOpportunityId) {
 		Date logDate = logData.getDate("logDate");
-		Long businessOpportunityId = logData.getLong("businessOpportunityId");
 		String eventType = logData.getString("eventType");
 		String specificEvent = logData.getString("specificEvent");
 		BigDecimal workingHours = logData.getBigDecimal("workingHours");
@@ -270,7 +396,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityLog.setCreateTime(nowDate);
 		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
 		businessOpportunityLogMapper.insert(businessOpportunityLog);
-		return businessOpportunityId;
+		return businessOpportunityLog.getLogId();
 	}
 
 	/**

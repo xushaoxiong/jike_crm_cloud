@@ -30,7 +30,9 @@
          </javaClientGenerator>
          <!--生成对应表及类名-->
         <!--  <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         -->  <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-    	 <!--<table tableName="bo_information_collect" domainObjectName="BoInformationCollect" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
+          <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
+    	<table tableName="bo_information_collect" domainObjectName="BoInformationCollect" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+     	<!-- <table tableName="bo_visit" domainObjectName="BoVisit" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+      -->
      </context>
 </generatorConfiguration>
