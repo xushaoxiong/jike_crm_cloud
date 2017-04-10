@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../js/myDate/My97DatePicker/WdatePicker.js" ></script>
-		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>
+		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>-->
 	</head>
 	<style>
 		.col{color: red;}
@@ -68,7 +68,7 @@
 		.contact-wap .form-control{margin-bottom: 15px;}
 		.contact-wap .nomarg{margin-bottom: 0;}
 		.businesscheck{
-			background: url(../img/checked.png) no-repeat center;
+			background:url('img/checked.png') no-repeat center;
 			background-size: 15px;
 		}
 	</style>
@@ -82,7 +82,7 @@
 				<div class="form-group row">
 					<label class="col-md-1 col-ms-2"><span class="col">*</span>日志日期</label>
 					<div class="col-md-3 col-sm-5">
-						<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" >
+						<span class="form-control" id="indate" data-format="dd-mm-yyyy" ></span>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -143,13 +143,13 @@
 				<div class="form-group row">
 					<label class="col-md-1 col-ms-2">内部参与人员</label>
 					<div class="col-md-3 col-sm-5">
-						<input type="text" class="form-control" >
+						<input type="text" class="form-control insetpeopName" >
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-md-1 col-ms-2">外部参与人员</label>
 					<div class="col-md-3 col-sm-5">
-						<input type="text" class="form-control" >
+						<input type="text" class="form-control outpeopName" >
 					</div>
 				</div>
 				<div class="form-group row">
@@ -160,12 +160,12 @@
 					<span style="display: inline-block;padding-top:6px;padding-left: 5px;">元</span>
 				</div>
 				<div class="form-group row">
-					<label class="col-md-1 col-ms-2">补充信息</label>
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>补充信息</label>
 					<button class="btn addMessage">添加信息</button>
 				</div>
 			</div>
 			<div class="text-center col-md-3 col-sm-5 journal-btn">
-				<button class="btn btn-primary journaConfirm">提交</button>
+				<button class="btn btn-primary journaConfirm" disabled="disabled">提交</button>
 				<button class="btn btn-primary">重置</button>
 			</div>
 		</div>
@@ -181,49 +181,49 @@
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">交通费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp1" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp1 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">住宿费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp2" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp2 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">餐补费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp3" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp3 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">招待费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp4" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp4 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">礼品费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp5" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp5 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">其它</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp6" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp6 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
 						<div class="form-group col-md-6 col-sm-6">
 							<label class="col-md-4 col-sm-6">垫付费</label>
 							<div class="col-md-6 col-sm-6">
-								<input type="text" class="form-control reachInp7" onkeyup="(this.v=function(){this.value=this.value.replace(/[^\d.]/g,'');}).call(this)" onblur="this.v();"/>
+								<input type="text" class="form-control reachInp7 ReachInp" onkeyup="num(this)"/>
 							</div>
 							<span>元</span>
 						</div>
@@ -275,6 +275,6 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../js/journal/xinjianrizhi.js" ></script>
-	<script type="text/javascript" src="../js/journal/eventType.js" ></script>
+	<script type="text/javascript" src="js/journal/xinjianrizhi.js" ></script>
+	<script type="text/javascript" src="js/journal/eventType.js" ></script>
 </html>
