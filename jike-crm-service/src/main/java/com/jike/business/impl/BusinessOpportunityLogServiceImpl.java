@@ -184,6 +184,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByBusinessOpportunityId(businessOpportunityId, 0);
+			if(!boVisitPlaning.isEmpty()){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "已存在正在进行的拜访计划");
+				return resultJson;
+			}
 			Date nowDate = new Date();
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
@@ -192,8 +200,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
 			}
 			//保存日志
-			JSONObject logData = jsonData.getJSONObject("logData");
-			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
 			JSONObject boVisitPlanJson = jsonData.getJSONObject("boVisitPlan");
@@ -239,6 +245,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setVisitPlanReason(visitPlanReason);
 			boVisitPlan.setCreateTime(nowDate);
 			boVisitPlan.setCreateBy(jsonData.getLong("userId"));
+			boVisitPlan.setInPlaning(0);
 			boVisitPlanMapper.insert(boVisitPlan);
 			//修改商机进度
 			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
