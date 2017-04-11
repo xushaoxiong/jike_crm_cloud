@@ -11,18 +11,32 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
+import com.jike.business.dao.BoBiddingMapper;
+import com.jike.business.dao.BoBiddingResultMapper;
 import com.jike.business.dao.BoFeeDetailMapper;
+import com.jike.business.dao.BoInTrialMapper;
 import com.jike.business.dao.BoInformationCollectMapper;
 import com.jike.business.dao.BoNegotiationMapper;
+import com.jike.business.dao.BoPurchaseMapper;
+import com.jike.business.dao.BoSignMapper;
+import com.jike.business.dao.BoTrialReusltMapper;
 import com.jike.business.dao.BoVisitMapper;
 import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
+import com.jike.business.dao.DailyEventsMapper;
+import com.jike.business.model.BoBidding;
+import com.jike.business.model.BoBiddingResult;
 import com.jike.business.model.BoFeeDetail;
+import com.jike.business.model.BoInTrial;
 import com.jike.business.model.BoInformationCollect;
 import com.jike.business.model.BoNegotiation;
+import com.jike.business.model.BoPurchase;
+import com.jike.business.model.BoSign;
+import com.jike.business.model.BoTrialReuslt;
 import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
+import com.jike.business.model.DailyEvents;
 import com.jike.crm.utils.DateUtil;
 @Service("businessOpportunityLogService")
 @Transactional 
@@ -42,6 +56,21 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BusinessOpportunityService businessOpportunityService;
 	@Autowired
 	private BoNegotiationMapper boNegotiationMapper;
+	@Autowired
+	private BoInTrialMapper boInTrialMapper;
+	@Autowired
+	private BoTrialReusltMapper  boTrialReusltMapper;
+	@Autowired
+	private BoBiddingMapper  boBiddingMapper;
+	@Autowired
+	private BoBiddingResultMapper  boBiddingResultMapper;
+	@Autowired
+	private BoSignMapper  boSignMapper;
+	@Autowired
+	private BoPurchaseMapper  boPurchaseMapper;
+	@Autowired
+	private DailyEventsMapper  dailyEventsMapper;
+	
 	
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
@@ -523,6 +552,287 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		boFeeDetailMapper.insert(boFeeDetail);
 		detailFeeId = boFeeDetail.getDetailFeeId();
 		return detailFeeId;
+	}
+
+	@Transactional
+	public JSONObject addBOLogInTrial(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boInTrialJson = jsonData.getJSONObject("boInTrial");
+			Date trialStartDate = boInTrialJson.getDate("trialStartDate");
+			Date trialEndDate = boInTrialJson.getDate("trialEndDate");
+			String trialGrade = boInTrialJson.getString("trialGrade");
+			String trialSubject = boInTrialJson.getString("trialSubject");
+			String trialModel = boInTrialJson.getString("trialModel");
+			Integer trialMachineNum = boInTrialJson.getInteger("trialMachineNum");
+			
+			BoInTrial boInTrial = new BoInTrial();
+			boInTrial.setBusinessOpportunityId(businessOpportunityId);
+			boInTrial.setLogId(logId);
+			boInTrial.setTrialStartDate(trialStartDate);
+			boInTrial.setTrialEndDate(trialEndDate);
+			boInTrial.setTrialGrade(trialGrade);
+			boInTrial.setTrialSubject(trialSubject);
+			boInTrial.setTrialModel(trialModel);
+			boInTrial.setTrialMachineNum(trialMachineNum);
+			boInTrial.setCreateTime(nowDate);
+			boInTrial.setCreateBy(jsonData.getLong("userId"));
+			boInTrialMapper.insert(boInTrial);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("试用准备".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"试用中");
+			}
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addBOLogTrialReuslt(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boTrialReusltJson = jsonData.getJSONObject("boTrialReuslt");
+			String trialResultDetail = boTrialReusltJson.getString("trialResultDetail");
+			
+			BoTrialReuslt boTrialReuslt = new BoTrialReuslt();
+			boTrialReuslt.setBusinessOpportunityId(businessOpportunityId);
+			boTrialReuslt.setLogId(logId);
+			boTrialReuslt.setTrialResultDetail(trialResultDetail);
+			boTrialReuslt.setCreateTime(nowDate);
+			boTrialReuslt.setCreateBy(jsonData.getLong("userId"));
+			boTrialReusltMapper.insert(boTrialReuslt);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("承诺购买".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+			}else if("走招投标流程".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addBOLogBoBidding(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boBiddingJson = jsonData.getJSONObject("boBidding");
+			String biddingMode = boBiddingJson.getString("biddingMode");
+			String cooperativePartner = boBiddingJson.getString("cooperativePartner");
+			String networkLink = boBiddingJson.getString("networkLink");
+			Integer ifHaveBusinessFee = boBiddingJson.getInteger("ifHaveBusinessFee");
+			
+			BoBidding boBidding = new BoBidding();
+			boBidding.setBusinessOpportunityId(businessOpportunityId);
+			boBidding.setLogId(logId);
+			boBidding.setBiddingMode(biddingMode);
+			boBidding.setCooperativePartner(cooperativePartner);
+			boBidding.setNetworkLink(networkLink);
+			boBidding.setIfHaveBusinessFee(ifHaveBusinessFee);
+			boBidding.setCreateTime(nowDate);
+			boBidding.setCreateBy(jsonData.getLong("userId"));
+			boBiddingMapper.insert(boBidding);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("投标准备".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"招投标");
+			}else if("投标成功".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addBOLogBoBiddingResult(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boBiddingResultJson = jsonData.getJSONObject("boBiddingResult");
+			String biddingResultDetail = boBiddingResultJson.getString("biddingResultDetail");
+			
+			BoBiddingResult boBiddingResult = new BoBiddingResult();
+			boBiddingResult.setBusinessOpportunityId(businessOpportunityId);
+			boBiddingResult.setLogId(logId);
+			boBiddingResult.setBiddingResultDetail(biddingResultDetail);
+			boBiddingResult.setCreateTime(nowDate);
+			boBiddingResult.setCreateBy(jsonData.getLong("userId"));
+			boBiddingResultMapper.insert(boBiddingResult);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("投标成功".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addBOLogBoSign(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boSignJson = jsonData.getJSONObject("boSign");
+			Date signDate = boSignJson.getDate("signDate");
+			BigDecimal signAmonut = boSignJson.getBigDecimal("signAmonut");
+			
+			BoSign boSign = new BoSign();
+			boSign.setBusinessOpportunityId(businessOpportunityId);
+			boSign.setLogId(logId);
+			boSign.setSignDate(signDate);
+			boSign.setSignAmonut(signAmonut);
+			boSign.setCreateTime(nowDate);
+			boSign.setCreateBy(jsonData.getLong("userId"));
+			boSignMapper.insert(boSign);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("签约".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约完成");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addBOLogBoPurchase(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boPurchaseJson = jsonData.getJSONObject("boPurchase");
+			Date hardwareArrivalDate = boPurchaseJson.getDate("hardwareArrivalDate");
+			Date softwareInstallationDate = boPurchaseJson.getDate("softwareInstallationDate");
+			
+			BoPurchase boPurchase = new BoPurchase();
+			boPurchase.setBusinessOpportunityId(businessOpportunityId);
+			boPurchase.setLogId(logId);
+			boPurchase.setHardwareArrivalDate(hardwareArrivalDate);
+			boPurchase.setSoftwareInstallationDate(softwareInstallationDate);
+			boPurchase.setCreateTime(nowDate);
+			boPurchase.setCreateBy(jsonData.getLong("userId"));
+			boPurchaseMapper.insert(boPurchase);
+			//修改商机进度
+			String specificEvent = logData.getString("specificEvent");
+			if("采购".equals(specificEvent)){
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"采购完成");
+			}
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject addDailyEvents(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, null);
+			
+			JSONObject dailyEventsJson = jsonData.getJSONObject("dailyEvents");
+			String dailyEventsDetail = dailyEventsJson.getString("dailyEventsDetail");
+			
+			DailyEvents dailyEvents = new DailyEvents();
+			dailyEvents.setLogId(logId);
+			dailyEvents.setDailyEventsDetail(dailyEventsDetail);
+			dailyEvents.setCreateTime(nowDate);
+			dailyEvents.setCreateBy(jsonData.getLong("userId"));
+			dailyEventsMapper.insert(dailyEvents);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
 	}
 
 }

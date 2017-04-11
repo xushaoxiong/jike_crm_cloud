@@ -31,7 +31,9 @@
          <!--生成对应表及类名-->
         <!--  <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
           <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
-    	<table tableName="bo_visit_plan" domainObjectName="BoVisitPlan" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+    	<table tableName="bo_support" domainObjectName="BoSupport" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+     <table tableName="bo_customer_service" domainObjectName="BoCustomerService" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+     <table tableName="bo_train" domainObjectName="BoTrain" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
      
      </context>
 </generatorConfiguration>
