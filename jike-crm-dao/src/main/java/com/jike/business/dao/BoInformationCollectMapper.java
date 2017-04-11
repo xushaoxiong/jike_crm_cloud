@@ -48,4 +48,12 @@ public interface BoInformationCollectMapper {
 	 * @createtime 2017年4月7日下午4:08:08
 	 */
 	BoInformationCollect selectByBusinessOpportunityId(Long businessOpportunityId);
+
+	/**
+	 * 通过logId删除信息收集
+	 * @param logId
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午3:23:11
+	 */
+	void deleteByBusinessOpportunityId(Long businessOpportunityId);
 }

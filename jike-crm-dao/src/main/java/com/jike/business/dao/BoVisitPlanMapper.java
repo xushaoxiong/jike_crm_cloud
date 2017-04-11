@@ -62,4 +62,13 @@ public interface BoVisitPlanMapper {
 	 * @createtime 2017年4月10日上午10:29:41
 	 */
 	List<BoVisitPlan> selectVisitPlaningByBusinessOpportunityId(@Param("businessOpportunityId")Long businessOpportunityId,@Param("isPlaning")int isPlaning);
+
+	/**
+	 * 通过日志ID查询拜访计划
+	 * @param logId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午6:53:13
+	 */
+	BoVisitPlan selectVisitPlanByLogId(Long logId);
 }

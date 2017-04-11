@@ -226,4 +226,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where in_trial_id = #{inTrialId,jdbcType=BIGINT}
   </update>
+  <select id="selectInTrialByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_in_trial
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

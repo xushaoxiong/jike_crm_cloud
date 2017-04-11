@@ -50,4 +50,13 @@ public interface BoInTrialMapper {
      * @mbggenerated Mon Apr 10 15:26:29 CST 2017
      */
     int updateByPrimaryKey(BoInTrial record);
+
+    /**
+     * 通过日志ID查询试用
+     * @param logId
+     * @return
+     * @created wangyb
+     * @createtime 2017年4月11日下午7:26:20
+     */
+	BoInTrial selectInTrialByLogId(Long logId);
 }

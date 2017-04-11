@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
+import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BusinessOpportunity;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
@@ -324,10 +325,16 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	public void updateBusinessOpportunityProcess(JSONObject json) {
 		Long businessOpportunityId = json.getLong("businessOpportunityId");
 		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
-		businessOpportunity.setBusinessOpportunityProcess(json.getString("businessOpportunityProcess"));
-		businessOpportunity.setUpdateBy(json.getLong("userId"));
-		businessOpportunity.setUpdateTime(json.getDate("nowDate"));
-		businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
+		String businessOpportunityProcess = json.getString("businessOpportunityProcess");
+		//如果更新的商机状态比现在商机状态推后执行更新
+		//或者原来商机状态为拜访更新到准备拜访状态
+		if(SaleFlowState.getValue(businessOpportunityProcess)>SaleFlowState.getValue(businessOpportunity.getBusinessOpportunityProcess())||
+			(SaleFlowState.getValue(businessOpportunityProcess)==3&&SaleFlowState.getValue(businessOpportunity.getBusinessOpportunityProcess())==4)){
+			businessOpportunity.setBusinessOpportunityProcess(businessOpportunityProcess);
+			businessOpportunity.setUpdateBy(json.getLong("userId"));
+			businessOpportunity.setUpdateTime(json.getDate("nowDate"));
+			businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
+		}
 	}
 
 	public JSONObject queryByBusinessOpportunityId(Long businessOpportunityId) {
