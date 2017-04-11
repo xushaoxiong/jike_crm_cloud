@@ -1,5 +1,10 @@
 package com.jike.business.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.jike.business.model.BusinessOpportunityLog;
 
 public interface BusinessOpportunityLogMapper {
@@ -39,4 +44,34 @@ public interface BusinessOpportunityLogMapper {
 	 * @mbggenerated  Thu Apr 06 18:05:05 CST 2017
 	 */
 	int updateByPrimaryKey(BusinessOpportunityLog record);
+
+	/**
+	 * 查询日志数量
+	 * @param logName
+	 * @param startTime
+	 * @param endTime
+	 * @param eventType
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:52:25
+	 */
+	int getBusinessOpportunityLogCount(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime,
+			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId);
+
+	/**
+	 * 分页查询日志信息
+	 * @param logName
+	 * @param startTime
+	 * @param endTime
+	 * @param eventType
+	 * @param userId
+	 * @param startPosition
+	 * @param pageSize
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:54:20
+	 */
+	List<Map<String, Object>> getBusinessOpportunityLogByPage(@Param("logName")String logName, @Param("startTime")String startTime,
+			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId, @Param("startPosition")int startPosition, @Param("pageSize")Integer pageSize);
 }

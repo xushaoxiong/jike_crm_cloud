@@ -3,11 +3,13 @@ package com.jike.business.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
@@ -44,6 +46,9 @@ import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.DailyEvents;
 import com.jike.crm.utils.DateUtil;
+import com.jike.crm.utils.PageUtil;
+import com.jike.user.UserService;
+import com.jike.user.model.User;
 @Service("businessOpportunityLogService")
 @Transactional 
 public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLogService {
@@ -82,6 +87,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoTrainMapper  boTrainMapper;
 	@Autowired
 	private BoCustomerServiceMapper  boCustomerServiceMapper;
+	@Autowired
+	private UserService  userService;
+	
 	
 	
 	
@@ -92,9 +100,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if(boInformationCollect!=null){
 			Object json = JSONObject.toJSON(boInformationCollect);
 			JSONObject informationCollectJson = (JSONObject) json;
-			
-			String visitPlanName = generateVisitPlanNameByBoId(businessOpportunityId);
-			informationCollectJson.put("visitPlanName", visitPlanName);
 			if(informationCollectJson.get("createBy")!=null){
 				informationCollectJson.remove("createBy");
 			}
@@ -109,6 +114,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 			resultJson.put("boInformationCollect", informationCollectJson);
 		}
+		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+		List<BoVisitPlan> boVisitPlanList = boVisitPlanMapper.selectVisitPlanByBusinessOpportunityId(businessOpportunityId);
+		//自动生成拜访计划名称
+		String visitPlanName = DateUtil.getDateFormat(new Date(), "yyyyMMdd")+"-"+businessOpportunityJson.getString("businessOpportunityName")+"-第"+(boVisitPlanList.size()+1)+"次拜访计划";
+		resultJson.put("visitPlanName", visitPlanName);
+		resultJson.put("addressProvince", businessOpportunityJson.getString("addressProvince"));
+		resultJson.put("addressCity", businessOpportunityJson.getString("addressCity"));
+		resultJson.put("addressCounty", businessOpportunityJson.getString("addressCounty"));
+		resultJson.put("addressDetail", businessOpportunityJson.getString("addressDetail"));
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
@@ -481,89 +495,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
-	}
-
-	/**
-	 * 自动生成拜访计划名称
-	 * @param businessOpportunityId
-	 * @return
-	 * @created wangyb
-	 * @createtime 2017年4月10日上午9:36:01
-	 */
-	private String generateVisitPlanNameByBoId(Long businessOpportunityId) {
-		//查询拜访计划
-		List<BoVisitPlan> boVisitPlanList = boVisitPlanMapper.selectVisitPlanByBusinessOpportunityId(businessOpportunityId);
-		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
-		//添加拜访计划
-		String visitPlanName = DateUtil.getDateFormat(new Date(), "yyyyMMdd")+"-"+businessOpportunityJson.getString("businessOpportunityName")+"-第"+(boVisitPlanList.size()+1)+"次拜访计划";
-	    return visitPlanName;
-	}
-
-	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
-		JSONObject json = new JSONObject();
-		json.put("businessOpportunityId", businessOpportunityId);
-		json.put("businessOpportunityProcess", process);
-		json.put("userId", jsonData.getLong("userId"));
-		json.put("nowDate", nowDate);
-		businessOpportunityService.updateBusinessOpportunityProcess(json);
-	}
-
-	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData,Long businessOpportunityId) {
-		Date logDate = logData.getDate("logDate");
-		String eventType = logData.getString("eventType");
-		String specificEvent = logData.getString("specificEvent");
-		BigDecimal workingHours = logData.getBigDecimal("workingHours");
-		String internalParticipant = logData.getString("internalParticipant");
-		String externalParticipant = logData.getString("externalParticipant");
-		
-		BusinessOpportunityLog businessOpportunityLog = new BusinessOpportunityLog();
-		businessOpportunityLog.setLogDate(logDate);
-		businessOpportunityLog.setBusinessOpportunityId(businessOpportunityId);
-		businessOpportunityLog.setEventType(eventType);
-		businessOpportunityLog.setSpecificEvent(specificEvent);
-		businessOpportunityLog.setWorkingHours(workingHours);
-		businessOpportunityLog.setInternalParticipant(internalParticipant);
-		businessOpportunityLog.setExternalParticipant(externalParticipant);
-		businessOpportunityLog.setDetailFeeId(detailFeeId);
-		businessOpportunityLog.setCreateTime(nowDate);
-		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
-		businessOpportunityLogMapper.insert(businessOpportunityLog);
-		return businessOpportunityLog.getLogId();
-	}
-
-	/**
-	 * 添加费用
-	 * @param jsonData
-	 * @param nowDate
-	 * @param totalDetail
-	 * @return
-	 * @created wangyb
-	 * @createtime 2017年4月7日下午2:37:50
-	 */
-	private Long createBoFeeDatail(JSONObject jsonData, Date nowDate, JSONObject totalDetail) {
-		Long detailFeeId;
-		BoFeeDetail boFeeDetail = new BoFeeDetail();
-		BigDecimal trafficFee = totalDetail.getBigDecimal("trafficFee");
-		BigDecimal hotelFee = totalDetail.getBigDecimal("hotelFee");
-		BigDecimal foodFee = totalDetail.getBigDecimal("foodFee");
-		BigDecimal entertainFee = totalDetail.getBigDecimal("entertainFee");
-		BigDecimal giftFee = totalDetail.getBigDecimal("giftFee");
-		BigDecimal otherFee = totalDetail.getBigDecimal("otherFee");
-		BigDecimal advanceFee = totalDetail.getBigDecimal("advanceFee");
-		String advancePerson = totalDetail.getString("advancePerson");
-		boFeeDetail.setTrafficFee(trafficFee);
-		boFeeDetail.setHotelFee(hotelFee);
-		boFeeDetail.setFoodFee(foodFee);
-		boFeeDetail.setEntertainFee(entertainFee);
-		boFeeDetail.setGiftFee(giftFee);
-		boFeeDetail.setOtherFee(otherFee);
-		boFeeDetail.setAdvanceFee(advanceFee);
-		boFeeDetail.setAdvancePerson(advancePerson);
-		boFeeDetail.setCreateTime(nowDate);
-		boFeeDetail.setCreateBy(jsonData.getLong("userId"));
-		boFeeDetailMapper.insert(boFeeDetail);
-		detailFeeId = boFeeDetail.getDetailFeeId();
-		return detailFeeId;
 	}
 
 	@Transactional
@@ -962,5 +893,157 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("message", "添加成功");
 		return resultJson;
 	}
+	
+
+	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
+		JSONObject json = new JSONObject();
+		json.put("businessOpportunityId", businessOpportunityId);
+		json.put("businessOpportunityProcess", process);
+		json.put("userId", jsonData.getLong("userId"));
+		json.put("nowDate", nowDate);
+		businessOpportunityService.updateBusinessOpportunityProcess(json);
+	}
+
+	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData,Long businessOpportunityId) {
+		Date logDate = logData.getDate("logDate");
+		String eventType = logData.getString("eventType");
+		String specificEvent = logData.getString("specificEvent");
+		BigDecimal workingHours = logData.getBigDecimal("workingHours");
+		String internalParticipant = logData.getString("internalParticipant");
+		String externalParticipant = logData.getString("externalParticipant");
+		
+		BusinessOpportunityLog businessOpportunityLog = new BusinessOpportunityLog();
+		businessOpportunityLog.setLogDate(logDate);
+		businessOpportunityLog.setBusinessOpportunityId(businessOpportunityId);
+		businessOpportunityLog.setEventType(eventType);
+		businessOpportunityLog.setSpecificEvent(specificEvent);
+		businessOpportunityLog.setWorkingHours(workingHours);
+		businessOpportunityLog.setInternalParticipant(internalParticipant);
+		businessOpportunityLog.setExternalParticipant(externalParticipant);
+		businessOpportunityLog.setDetailFeeId(detailFeeId);
+		businessOpportunityLog.setCreateTime(nowDate);
+		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
+		businessOpportunityLogMapper.insert(businessOpportunityLog);
+		return businessOpportunityLog.getLogId();
+	}
+
+	/**
+	 * 添加费用
+	 * @param jsonData
+	 * @param nowDate
+	 * @param totalDetail
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月7日下午2:37:50
+	 */
+	private Long createBoFeeDatail(JSONObject jsonData, Date nowDate, JSONObject totalDetail) {
+		Long detailFeeId;
+		BoFeeDetail boFeeDetail = new BoFeeDetail();
+		BigDecimal trafficFee = totalDetail.getBigDecimal("trafficFee");
+		BigDecimal hotelFee = totalDetail.getBigDecimal("hotelFee");
+		BigDecimal foodFee = totalDetail.getBigDecimal("foodFee");
+		BigDecimal entertainFee = totalDetail.getBigDecimal("entertainFee");
+		BigDecimal giftFee = totalDetail.getBigDecimal("giftFee");
+		BigDecimal otherFee = totalDetail.getBigDecimal("otherFee");
+		BigDecimal advanceFee = totalDetail.getBigDecimal("advanceFee");
+		String advancePerson = totalDetail.getString("advancePerson");
+		boFeeDetail.setTrafficFee(trafficFee);
+		boFeeDetail.setHotelFee(hotelFee);
+		boFeeDetail.setFoodFee(foodFee);
+		boFeeDetail.setEntertainFee(entertainFee);
+		boFeeDetail.setGiftFee(giftFee);
+		boFeeDetail.setOtherFee(otherFee);
+		boFeeDetail.setAdvanceFee(advanceFee);
+		boFeeDetail.setAdvancePerson(advancePerson);
+		boFeeDetail.setCreateTime(nowDate);
+		boFeeDetail.setCreateBy(jsonData.getLong("userId"));
+		boFeeDetailMapper.insert(boFeeDetail);
+		detailFeeId = boFeeDetail.getDetailFeeId();
+		return detailFeeId;
+	}
+	
+	public JSONObject qeueryBusinessOpportunityLogByParams(JSONObject queryJson) {
+		JSONObject resultJson = new JSONObject();
+		//1、组件参数
+		String businessOpportunityName = queryJson.getString("businessOpportunityName");
+		Integer start = queryJson.getInteger("start");
+		Integer pageSize = queryJson.getInteger("pageSize");
+		String startTime = queryJson.getString("startTime");
+		String endTime = queryJson.getString("endTime");
+		String eventType = queryJson.getString("eventType");
+		if("".equals(startTime)){
+			startTime = null;
+		}
+		if("".equals(endTime)){
+			endTime = null;
+		}
+		if (businessOpportunityName != null) {
+			businessOpportunityName = "%" + businessOpportunityName + "%";
+		}
+		
+		if(eventType!=null&&"".equals(eventType.trim())){
+			eventType = null;
+		}
+		
+		Long userId = queryJson.getLong("userId");
+		Long roleId = queryJson.getLong("roleId");
+		if (roleId == 2) {// 商务查看所有角色
+			userId = null;
+		}
+		
+		int totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+		int startPosition = (start - 1) * pageSize;
+		List<Map<String,Object>> businessOpportunityList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		JSONArray businessOpportunityArr = new JSONArray();
+		if(!businessOpportunityList.isEmpty()){
+			for (Map<String, Object> businessOpportunityMap : businessOpportunityList) {
+				JSONObject businessOpportunityJson = new JSONObject();
+				businessOpportunityJson.put("createTime", businessOpportunityMap.get("create_time"));
+				businessOpportunityJson.put("businessOpportunityName", businessOpportunityMap.get("business_opportunity_name"));
+				businessOpportunityJson.put("businessOpportunityNum", businessOpportunityMap.get("business_opportunity_num"));
+				businessOpportunityJson.put("businessOpportunityType", businessOpportunityMap.get("business_opportunity_type"));
+				businessOpportunityJson.put("businessOpportunityProcess", businessOpportunityMap.get("business_opportunity_process"));
+				businessOpportunityJson.put("isClosed", businessOpportunityMap.get("is_closed"));
+				businessOpportunityJson.put("isCancellation", businessOpportunityMap.get("is_cancellation"));
+				Long createBy = (Long) businessOpportunityMap.get("create_by");
+				User user = userService.getUserById(createBy);
+				businessOpportunityJson.put("createUserName", user.getName());
+				Object userIdObj = businessOpportunityMap.get("user_id");
+				if(userIdObj!=null){
+					Long distributeUserId = (Long) userIdObj;
+					User distributeUser = userService.getUserById(distributeUserId);
+					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
+				}
+				if(!queryJson.getLong("userId").equals(createBy)){
+					businessOpportunityJson.put("authority", 1);
+				}else{
+					businessOpportunityJson.put("authority", 0);
+				}
+				businessOpportunityArr.add(businessOpportunityJson);
+			}
+		}
+		
+		
+		int totalPage = 0;
+		if (totalCount / pageSize > 0) {
+            if (totalCount % pageSize == 0) {
+                totalPage = totalCount / pageSize;
+            } else {
+                totalPage = totalCount / pageSize + 1;
+            }
+        } else {
+            totalPage = 1;
+        }
+		List<Integer> pageList = PageUtil.for_each(start, (int) totalPage, 6);
+		resultJson.put("totalCount", totalCount);
+		resultJson.put("totalPage", totalPage);
+		resultJson.put("pageList", pageList);
+		resultJson.put("businessOpportunityList", businessOpportunityArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	
+	
 
 }

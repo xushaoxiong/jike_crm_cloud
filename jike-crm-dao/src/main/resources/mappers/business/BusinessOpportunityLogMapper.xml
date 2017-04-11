@@ -221,4 +221,26 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where log_id = #{logId,jdbcType=BIGINT}
   </update>
+  <select id="getBusinessOpportunityLogCount" resultType="java.lang.Integer">
+    select 
+    count(1)
+    from business_opportunity_log bol,business_opportunity bo
+    where 
+     bol.business_opportunity_id = bo.business_opportunity_id
+    	<if test="businessOpportunityName != null">
+			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}
+		</if>
+		<if test="endTime != null">
+			and #{endTime,jdbcType=VARCHAR} >= DATE_FORMAT(bol.log_date,'%Y-%m-%d')
+		</if>
+		<if test="eventType != null">
+			and bol.event_type = #{eventType,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and create_by = #{userId,jdbcType=BIGINT}
+		</if>
+  </select>
 </mapper>
