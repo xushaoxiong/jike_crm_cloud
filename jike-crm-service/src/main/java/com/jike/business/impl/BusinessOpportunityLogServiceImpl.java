@@ -47,7 +47,9 @@ import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.DailyEvents;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
+import com.jike.user.RoleService;
 import com.jike.user.UserService;
+import com.jike.user.model.Role;
 import com.jike.user.model.User;
 @Service("businessOpportunityLogService")
 @Transactional 
@@ -89,6 +91,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoCustomerServiceMapper  boCustomerServiceMapper;
 	@Autowired
 	private UserService  userService;
+	@Autowired
+	private RoleService  roleService;
+	
 	
 	
 	
@@ -993,33 +998,71 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		int totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
 		int startPosition = (start - 1) * pageSize;
-		List<Map<String,Object>> businessOpportunityList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
-		JSONArray businessOpportunityArr = new JSONArray();
-		if(!businessOpportunityList.isEmpty()){
-			for (Map<String, Object> businessOpportunityMap : businessOpportunityList) {
+		List<Map<String,Object>> businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		JSONArray businessOpportunityLogArr = new JSONArray();
+		if(!businessOpportunityLogList.isEmpty()){
+			for (Map<String, Object> businessOpportunityLogMap : businessOpportunityLogList) {
 				JSONObject businessOpportunityJson = new JSONObject();
-				businessOpportunityJson.put("createTime", businessOpportunityMap.get("create_time"));
-				businessOpportunityJson.put("businessOpportunityName", businessOpportunityMap.get("business_opportunity_name"));
-				businessOpportunityJson.put("businessOpportunityNum", businessOpportunityMap.get("business_opportunity_num"));
-				businessOpportunityJson.put("businessOpportunityType", businessOpportunityMap.get("business_opportunity_type"));
-				businessOpportunityJson.put("businessOpportunityProcess", businessOpportunityMap.get("business_opportunity_process"));
-				businessOpportunityJson.put("isClosed", businessOpportunityMap.get("is_closed"));
-				businessOpportunityJson.put("isCancellation", businessOpportunityMap.get("is_cancellation"));
-				Long createBy = (Long) businessOpportunityMap.get("create_by");
+				Date logDateLong = (Date) businessOpportunityLogMap.get("log_date");
+				businessOpportunityJson.put("logDate", DateUtil.getDateFormat(logDateLong, "yyyy-MM-dd"));
+				businessOpportunityJson.put("businessOpportunityName", businessOpportunityLogMap.get("business_opportunity_name"));
+				businessOpportunityJson.put("eventType", businessOpportunityLogMap.get("event_type"));
+				businessOpportunityJson.put("specificEvent", businessOpportunityLogMap.get("specific_event"));
+				businessOpportunityJson.put("workingHours", businessOpportunityLogMap.get("working_hours"));
+				businessOpportunityJson.put("internalParticipant", businessOpportunityLogMap.get("internal_participant"));
+				businessOpportunityJson.put("externalParticipant", businessOpportunityLogMap.get("external_participant"));
+				//查询总费用
+				Object detailFeeIdObj =  businessOpportunityLogMap.get("detail_fee_id");
+				BigDecimal totalFee = new BigDecimal(0);
+				if(detailFeeIdObj!=null){
+					Long detailFeeId = (Long) detailFeeIdObj;
+					BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(detailFeeId);
+					BigDecimal trafficFee = boFeeDetail.getTrafficFee();
+					BigDecimal hotelFee = boFeeDetail.getHotelFee();
+					BigDecimal foodFee = boFeeDetail.getFoodFee();
+					BigDecimal entertainFee = boFeeDetail.getEntertainFee();
+					BigDecimal giftFee = boFeeDetail.getGiftFee();
+					BigDecimal otherFee = boFeeDetail.getOtherFee();
+					BigDecimal advanceFee = boFeeDetail.getAdvanceFee();
+					if(trafficFee!=null){
+						totalFee = totalFee.add(trafficFee);
+					}
+					if(hotelFee!=null){
+						totalFee = totalFee.add(hotelFee);
+					}
+					if(foodFee!=null){
+						totalFee = totalFee.add(foodFee);
+					}
+					if(entertainFee!=null){
+						totalFee = totalFee.add(entertainFee);
+					}
+					if(giftFee!=null){
+						totalFee = totalFee.add(giftFee);
+					}
+					if(otherFee!=null){
+						totalFee = totalFee.add(otherFee);
+					}
+					if(advanceFee!=null){
+						totalFee = totalFee.add(advanceFee);
+					}
+				}
+				businessOpportunityJson.put("totalFee", totalFee.doubleValue());
+				//查询创建人名字
+				Long createBy = (Long) businessOpportunityLogMap.get("create_by");
 				User user = userService.getUserById(createBy);
 				businessOpportunityJson.put("createUserName", user.getName());
-				Object userIdObj = businessOpportunityMap.get("user_id");
-				if(userIdObj!=null){
-					Long distributeUserId = (Long) userIdObj;
-					User distributeUser = userService.getUserById(distributeUserId);
-					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
-				}
+				//查询角色
+				JSONObject json = new JSONObject();
+				json.put("userId", createBy);
+				Role role = roleService.getRoleByUserId(json);
+				businessOpportunityJson.put("roleName", role.getRoleName());
+				
 				if(!queryJson.getLong("userId").equals(createBy)){
 					businessOpportunityJson.put("authority", 1);
 				}else{
 					businessOpportunityJson.put("authority", 0);
 				}
-				businessOpportunityArr.add(businessOpportunityJson);
+				businessOpportunityLogArr.add(businessOpportunityJson);
 			}
 		}
 		
@@ -1038,7 +1081,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("totalCount", totalCount);
 		resultJson.put("totalPage", totalPage);
 		resultJson.put("pageList", pageList);
-		resultJson.put("businessOpportunityList", businessOpportunityArr);
+		resultJson.put("businessOpportunityLogList", businessOpportunityLogArr);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;

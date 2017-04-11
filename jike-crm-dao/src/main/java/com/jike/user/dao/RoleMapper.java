@@ -58,4 +58,13 @@ public interface RoleMapper {
 	 * @createtime 2017年3月29日下午4:17:57
 	 */
 	List<Role> selectRoles();
+
+	/**
+	 * 查询用户角色信息
+	 * @param userId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午1:53:39
+	 */
+	Role getRoleByUserId(Long userId);
 }
