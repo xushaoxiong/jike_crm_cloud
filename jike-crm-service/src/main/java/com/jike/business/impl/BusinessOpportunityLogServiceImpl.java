@@ -13,12 +13,15 @@ import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoBiddingMapper;
 import com.jike.business.dao.BoBiddingResultMapper;
+import com.jike.business.dao.BoCustomerServiceMapper;
 import com.jike.business.dao.BoFeeDetailMapper;
 import com.jike.business.dao.BoInTrialMapper;
 import com.jike.business.dao.BoInformationCollectMapper;
 import com.jike.business.dao.BoNegotiationMapper;
 import com.jike.business.dao.BoPurchaseMapper;
 import com.jike.business.dao.BoSignMapper;
+import com.jike.business.dao.BoSupportMapper;
+import com.jike.business.dao.BoTrainMapper;
 import com.jike.business.dao.BoTrialReusltMapper;
 import com.jike.business.dao.BoVisitMapper;
 import com.jike.business.dao.BoVisitPlanMapper;
@@ -26,12 +29,15 @@ import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.dao.DailyEventsMapper;
 import com.jike.business.model.BoBidding;
 import com.jike.business.model.BoBiddingResult;
+import com.jike.business.model.BoCustomerService;
 import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInTrial;
 import com.jike.business.model.BoInformationCollect;
 import com.jike.business.model.BoNegotiation;
 import com.jike.business.model.BoPurchase;
 import com.jike.business.model.BoSign;
+import com.jike.business.model.BoSupport;
+import com.jike.business.model.BoTrain;
 import com.jike.business.model.BoTrialReuslt;
 import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
@@ -70,6 +76,12 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoPurchaseMapper  boPurchaseMapper;
 	@Autowired
 	private DailyEventsMapper  dailyEventsMapper;
+	@Autowired
+	private BoSupportMapper  boSupportMapper;
+	@Autowired
+	private BoTrainMapper  boTrainMapper;
+	@Autowired
+	private BoCustomerServiceMapper  boCustomerServiceMapper;
 	
 	
 	
@@ -829,6 +841,122 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			dailyEvents.setCreateTime(nowDate);
 			dailyEvents.setCreateBy(jsonData.getLong("userId"));
 			dailyEventsMapper.insert(dailyEvents);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject addBOLogBoSupport(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boSupportJson = jsonData.getJSONObject("boSupport");
+			Integer accountOpenCount = boSupportJson.getInteger("accountOpenCount");
+			Integer informationConfirmationCount = boSupportJson.getInteger("informationConfirmationCount");
+			
+			BoSupport boSupport = new BoSupport();
+			boSupport.setBusinessOpportunityId(businessOpportunityId);
+			boSupport.setLogId(logId);
+			boSupport.setAccountOpenCount(accountOpenCount);
+			boSupport.setInformationConfirmationCount(informationConfirmationCount);
+			boSupport.setCreateTime(nowDate);
+			boSupport.setCreateBy(jsonData.getLong("userId"));
+			boSupportMapper.insert(boSupport);
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject addBOLogBoTrain(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boTrainJson = jsonData.getJSONObject("boTrain");
+			Integer operationTrainingCount = boTrainJson.getInteger("operationTrainingCount");
+			Integer correctingTrainingCount = boTrainJson.getInteger("correctingTrainingCount");
+			
+			BoTrain boTrain = new BoTrain();
+			boTrain.setBusinessOpportunityId(businessOpportunityId);
+			boTrain.setLogId(logId);
+			boTrain.setOperationTrainingCount(operationTrainingCount);
+			boTrain.setCorrectingTrainingCount(correctingTrainingCount);
+			boTrain.setCreateTime(nowDate);
+			boTrain.setCreateBy(jsonData.getLong("userId"));
+			boTrainMapper.insert(boTrain);
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject addBOLogBoCustomerService(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boCustomerServiceJson = jsonData.getJSONObject("boCustomerService");
+			Integer installationDebuggingCount = boCustomerServiceJson.getInteger("installationDebuggingCount");
+			Integer homeworkVolumeCount = boCustomerServiceJson.getInteger("homeworkVolumeCount");
+			Integer homeworkMarkingCount = boCustomerServiceJson.getInteger("homeworkMarkingCount");
+			Integer printingInspectionCount = boCustomerServiceJson.getInteger("printingInspectionCount");
+			Integer markingHandleCount = boCustomerServiceJson.getInteger("markingHandleCount");
+			Integer systemObstacleCount = boCustomerServiceJson.getInteger("systemObstacleCount");
+			
+			BoCustomerService boCustomerService = new BoCustomerService();
+			boCustomerService.setBusinessOpportunityId(businessOpportunityId);
+			boCustomerService.setLogId(logId);
+			boCustomerService.setInstallationDebuggingCount(installationDebuggingCount);
+			boCustomerService.setHomeworkVolumeCount(homeworkVolumeCount);
+			boCustomerService.setHomeworkMarkingCount(homeworkMarkingCount);
+			boCustomerService.setPrintingInspectionCount(printingInspectionCount);
+			boCustomerService.setMarkingHandleCount(markingHandleCount);
+			boCustomerService.setSystemObstacleCount(systemObstacleCount);
+			boCustomerService.setCreateTime(nowDate);
+			boCustomerService.setCreateBy(jsonData.getLong("userId"));
+			boCustomerServiceMapper.insert(boCustomerService);
+			
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");

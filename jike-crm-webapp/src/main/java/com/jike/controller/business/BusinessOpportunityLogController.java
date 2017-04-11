@@ -378,5 +378,83 @@ public class BusinessOpportunityLogController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+
+	/**
+	 * 添加支持
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:10:11
+	 */
+	@RequestMapping(value = "/addBOLogBoSupport", method ={RequestMethod.POST})
+	public @ResponseBody String addBOLogBoSupport(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogBoSupport(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogBoSupport error", e);
+		}
+		return result.toJSONString();
+	}
+
+	/**
+	 * 添加培训
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:10:34
+	 */
+	@RequestMapping(value = "/addBOLogBoTrain", method ={RequestMethod.POST})
+	public @ResponseBody String addBOLogBoTrain(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogBoTrain(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogBoTrain error", e);
+		}
+		return result.toJSONString();
+	}
 	
+	/**
+	 * 添加售后
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:11:01
+	 */
+	@RequestMapping(value = "/addBOLogBoCustomerService", method ={RequestMethod.POST})
+	public @ResponseBody String addBOLogBoCustomerService(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogBoCustomerService(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogBoCustomerService error", e);
+		}
+		return result.toJSONString();
+	}
+
 }

@@ -121,5 +121,29 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月10日下午7:00:41
 	 */
 	public JSONObject addDailyEvents(JSONObject jsonData);
+	/**
+	 * 添加支持
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午9:52:28
+	 */
+	public JSONObject addBOLogBoSupport(JSONObject jsonData);
+	/**
+	 * 添加培训
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:08:42
+	 */
+	public JSONObject addBOLogBoTrain(JSONObject jsonData);
+	/**
+	 * 添加售后
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日上午10:08:51
+	 */
+	public JSONObject addBOLogBoCustomerService(JSONObject jsonData);
 
 }
