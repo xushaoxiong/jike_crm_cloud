@@ -5,7 +5,7 @@ $(function(){
 	    dist: "东城区",  
 	    nodata: "none"  
 		}); 
-		
+		//确定
 		$('.businesConfirm').click(function(){
 			$('.newlist-alert').html('');
 			var businessJ={};
@@ -34,6 +34,9 @@ $(function(){
 				})
 		})
 		
-		
+		//返回上一级
+		$('.goBack').click(function(){
+			$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+		})
 })
   

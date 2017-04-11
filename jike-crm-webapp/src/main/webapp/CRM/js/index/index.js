@@ -52,8 +52,8 @@ $(function(){
 	$('.L-list').on('click','.hide-menu li',function(){
 		
 		var url=$(this).attr('url');
-		console.log(url)
 		$('.R-wap').load(url);
+		$('.R-wap').load('journal/xinjianrizhi.html');
 			
 	})	
 	

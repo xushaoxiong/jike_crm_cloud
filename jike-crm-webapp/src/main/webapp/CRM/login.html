@@ -85,7 +85,7 @@
 			}
 			loginJ.loginName=LoginName;
 			loginJ.password=LoginPwd;
-			var j=JSON.stringify(loginJ);
+//			var j=JSON.stringify(loginJ);
 //			$.ajax({
 //				type:"POST",
 //				contentType: "application/json; charset=utf-8",
@@ -103,7 +103,7 @@
 //					alert('服务器忙')
 //				}
 //			});
-$ajax('post','user/login',j,function succF(jo){
+$ajax('post','user/login',loginJ,function succF(jo){
 	window.location.href='index.html';
 },function errF(jo){
 	$('.alert-Ninfo').html('账号或密码错误');

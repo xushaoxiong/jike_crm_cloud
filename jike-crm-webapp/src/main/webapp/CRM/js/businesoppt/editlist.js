@@ -4,12 +4,11 @@
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
 	editlistJ.businessOpportunityNum=businessOpportunityNum;
 	$ajax('post','businessOpportunity/queryBusinessOpportunityByBoNum',editlistJ,function succF(jo){
-		console.log(jo)
 		$("#city").citySelect({
 		    prov: jo.addressProvince,  
 		    city: jo.addressCity,  
-		    dist: jo.addressCounty,  
-		    nodata: "none"  
+		    dist: jo.addressCounty,
+		    nodata: "none"    
 	
 		})
 		$('.businessName').val(jo.businessOpportunityName);
