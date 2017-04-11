@@ -291,7 +291,7 @@ function infodata(bInfoColet){
 		jourInJ.logData=logData;
 		jourInJ.totalDetail=totalDetail
 		jourInJ.boInformationCollect=boInformationCollect;
-		
+		console.log(jourInJ)
 		$ajax('post','businessOpportunityLog/addBOLogInformationCollection',jourInJ,function succF(jo){
 			console.log(jo)
 		},function errF(jo){

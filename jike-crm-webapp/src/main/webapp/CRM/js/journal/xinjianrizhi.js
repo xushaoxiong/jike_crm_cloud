@@ -174,7 +174,7 @@ $(function(){
 		}
 		//制定拜访计划页面
 		if(spcid=='201'){
-			$.getScript("js/journal/baifangjihuaInfo.js");
+			$.getScript("js/journal/baifangInfo.js");
 			$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
 				console.log(jo)
 				var bInfoColet=jo.boInformationCollect;
