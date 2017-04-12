@@ -201,4 +201,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where bidding_id = #{biddingId,jdbcType=BIGINT}
   </update>
+ <select id="selectBoBiddingByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_bidding
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

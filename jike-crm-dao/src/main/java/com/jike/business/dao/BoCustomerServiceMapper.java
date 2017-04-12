@@ -50,4 +50,6 @@ public interface BoCustomerServiceMapper {
      * @mbggenerated Tue Apr 11 09:44:59 CST 2017
      */
     int updateByPrimaryKey(BoCustomerService record);
+
+	BoCustomerService selectBoCustomerServiceByLogId(Long logId);
 }

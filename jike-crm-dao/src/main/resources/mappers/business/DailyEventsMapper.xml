@@ -155,4 +155,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where daily_events_id = #{dailyEventsId,jdbcType=BIGINT}
   </update>
+   <select id="selectDailyEventsByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from daily_events
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

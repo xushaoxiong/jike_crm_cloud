@@ -179,4 +179,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where sign_id = #{signId,jdbcType=BIGINT}
   </update>
+  <select id="selectBoSignByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_sign
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

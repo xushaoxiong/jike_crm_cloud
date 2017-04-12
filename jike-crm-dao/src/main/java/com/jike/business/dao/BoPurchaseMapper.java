@@ -50,4 +50,6 @@ public interface BoPurchaseMapper {
      * @mbggenerated Mon Apr 10 18:28:04 CST 2017
      */
     int updateByPrimaryKey(BoPurchase record);
+
+	BoPurchase selectBoPurchaseByLogId(Long logId);
 }

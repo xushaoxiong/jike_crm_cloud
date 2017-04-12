@@ -50,4 +50,13 @@ public interface BoTrialReusltMapper {
      * @mbggenerated Mon Apr 10 15:51:57 CST 2017
      */
     int updateByPrimaryKey(BoTrialReuslt record);
+
+    /**
+     * 通过日志ID查询试用结果
+     * @param logId
+     * @return
+     * @created wangyb
+     * @createtime 2017年4月11日下午7:44:49
+     */
+	BoTrialReuslt selectTrialReusltByLogId(Long logId);
 }

@@ -50,4 +50,6 @@ public interface BoSupportMapper {
      * @mbggenerated Tue Apr 11 09:44:59 CST 2017
      */
     int updateByPrimaryKey(BoSupport record);
+
+	BoSupport selectBoSupportByLogId(Long logId);
 }
