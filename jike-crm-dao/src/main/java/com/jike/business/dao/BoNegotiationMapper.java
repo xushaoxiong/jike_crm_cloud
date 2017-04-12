@@ -50,4 +50,13 @@ public interface BoNegotiationMapper {
      * @createtime 2017年4月10日下午2:07:55
      */
 	List<BoVisitPlan> selecNegotiationByBusinessOpportunityId(Long businessOpportunityId);
+
+	/**
+	 * 通过日志ID查询谈判
+	 * @param logId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午7:20:26
+	 */
+	BoNegotiation selectNegotiationByLogId(Long logId);
 }

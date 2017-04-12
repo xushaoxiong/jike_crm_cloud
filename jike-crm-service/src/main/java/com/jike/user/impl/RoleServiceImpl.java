@@ -123,5 +123,10 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return roleList;
 	}
+	
+	public Role getRoleByUserId(JSONObject json){
+		Long userId = json.getLong("userId");
+		return roleMapper.getRoleByUserId(userId);
+	}
 
 }

@@ -47,7 +47,9 @@ import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.DailyEvents;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
+import com.jike.user.RoleService;
 import com.jike.user.UserService;
+import com.jike.user.model.Role;
 import com.jike.user.model.User;
 @Service("businessOpportunityLogService")
 @Transactional 
@@ -89,6 +91,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoCustomerServiceMapper  boCustomerServiceMapper;
 	@Autowired
 	private UserService  userService;
+	@Autowired
+	private RoleService  roleService;
+	
 	
 	
 	
@@ -993,33 +998,72 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		int totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
 		int startPosition = (start - 1) * pageSize;
-		List<Map<String,Object>> businessOpportunityList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
-		JSONArray businessOpportunityArr = new JSONArray();
-		if(!businessOpportunityList.isEmpty()){
-			for (Map<String, Object> businessOpportunityMap : businessOpportunityList) {
+		List<Map<String,Object>> businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		JSONArray businessOpportunityLogArr = new JSONArray();
+		if(!businessOpportunityLogList.isEmpty()){
+			for (Map<String, Object> businessOpportunityLogMap : businessOpportunityLogList) {
 				JSONObject businessOpportunityJson = new JSONObject();
-				businessOpportunityJson.put("createTime", businessOpportunityMap.get("create_time"));
-				businessOpportunityJson.put("businessOpportunityName", businessOpportunityMap.get("business_opportunity_name"));
-				businessOpportunityJson.put("businessOpportunityNum", businessOpportunityMap.get("business_opportunity_num"));
-				businessOpportunityJson.put("businessOpportunityType", businessOpportunityMap.get("business_opportunity_type"));
-				businessOpportunityJson.put("businessOpportunityProcess", businessOpportunityMap.get("business_opportunity_process"));
-				businessOpportunityJson.put("isClosed", businessOpportunityMap.get("is_closed"));
-				businessOpportunityJson.put("isCancellation", businessOpportunityMap.get("is_cancellation"));
-				Long createBy = (Long) businessOpportunityMap.get("create_by");
+				Date logDateLong = (Date) businessOpportunityLogMap.get("log_date");
+				businessOpportunityJson.put("logId", businessOpportunityLogMap.get("log_id"));
+				businessOpportunityJson.put("logDate", DateUtil.getDateFormat(logDateLong, "yyyy-MM-dd"));
+				businessOpportunityJson.put("businessOpportunityName", businessOpportunityLogMap.get("business_opportunity_name"));
+				businessOpportunityJson.put("eventType", businessOpportunityLogMap.get("event_type"));
+				businessOpportunityJson.put("specificEvent", businessOpportunityLogMap.get("specific_event"));
+				businessOpportunityJson.put("workingHours", businessOpportunityLogMap.get("working_hours"));
+				businessOpportunityJson.put("internalParticipant", businessOpportunityLogMap.get("internal_participant"));
+				businessOpportunityJson.put("externalParticipant", businessOpportunityLogMap.get("external_participant"));
+				//查询总费用
+				Object detailFeeIdObj =  businessOpportunityLogMap.get("detail_fee_id");
+				BigDecimal totalFee = new BigDecimal(0);
+				if(detailFeeIdObj!=null){
+					Long detailFeeId = (Long) detailFeeIdObj;
+					BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(detailFeeId);
+					BigDecimal trafficFee = boFeeDetail.getTrafficFee();
+					BigDecimal hotelFee = boFeeDetail.getHotelFee();
+					BigDecimal foodFee = boFeeDetail.getFoodFee();
+					BigDecimal entertainFee = boFeeDetail.getEntertainFee();
+					BigDecimal giftFee = boFeeDetail.getGiftFee();
+					BigDecimal otherFee = boFeeDetail.getOtherFee();
+					BigDecimal advanceFee = boFeeDetail.getAdvanceFee();
+					if(trafficFee!=null){
+						totalFee = totalFee.add(trafficFee);
+					}
+					if(hotelFee!=null){
+						totalFee = totalFee.add(hotelFee);
+					}
+					if(foodFee!=null){
+						totalFee = totalFee.add(foodFee);
+					}
+					if(entertainFee!=null){
+						totalFee = totalFee.add(entertainFee);
+					}
+					if(giftFee!=null){
+						totalFee = totalFee.add(giftFee);
+					}
+					if(otherFee!=null){
+						totalFee = totalFee.add(otherFee);
+					}
+					if(advanceFee!=null){
+						totalFee = totalFee.add(advanceFee);
+					}
+				}
+				businessOpportunityJson.put("totalFee", totalFee.doubleValue());
+				//查询创建人名字
+				Long createBy = (Long) businessOpportunityLogMap.get("create_by");
 				User user = userService.getUserById(createBy);
 				businessOpportunityJson.put("createUserName", user.getName());
-				Object userIdObj = businessOpportunityMap.get("user_id");
-				if(userIdObj!=null){
-					Long distributeUserId = (Long) userIdObj;
-					User distributeUser = userService.getUserById(distributeUserId);
-					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
-				}
+				//查询角色
+				JSONObject json = new JSONObject();
+				json.put("userId", createBy);
+				Role role = roleService.getRoleByUserId(json);
+				businessOpportunityJson.put("roleName", role.getRoleName());
+				
 				if(!queryJson.getLong("userId").equals(createBy)){
 					businessOpportunityJson.put("authority", 1);
 				}else{
 					businessOpportunityJson.put("authority", 0);
 				}
-				businessOpportunityArr.add(businessOpportunityJson);
+				businessOpportunityLogArr.add(businessOpportunityJson);
 			}
 		}
 		
@@ -1038,12 +1082,114 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("totalCount", totalCount);
 		resultJson.put("totalPage", totalPage);
 		resultJson.put("pageList", pageList);
-		resultJson.put("businessOpportunityList", businessOpportunityArr);
+		resultJson.put("businessOpportunityLogList", businessOpportunityLogArr);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
 	}
 	
 	
-
+	public JSONObject queryBOLog(JSONObject queryJson){
+		JSONObject resultJson = new JSONObject();
+		Long logId = queryJson.getLong("logId");
+		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
+		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
+		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
+		Object json  = null;
+		if("信息收集".equals(businessOpportunityLog.getEventType())){
+			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
+			 json = JSONObject.toJSON(boInformationCollect);
+		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
+			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectVisitPlanByLogId(logId);
+			json = JSONObject.toJSON(boVisitPlan);
+		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
+			BoVisit boVisit = boVisitMapper.selectVisitByLogId(logId);
+			json = JSONObject.toJSON(boVisit);
+		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
+			BoNegotiation boNegotiation = boNegotiationMapper.selectNegotiationByLogId(logId);
+			json = JSONObject.toJSON(boNegotiation);
+		}else if("试用准备".equals(businessOpportunityLog.getSpecificEvent())){
+			BoInTrial boInTrial = boInTrialMapper.selectInTrialByLogId(logId);
+			json = JSONObject.toJSON(boInTrial);
+		}else if(businessOpportunityLog.getSpecificEvent().startsWith("试用结果")){
+//			BoTrialReuslt boTrialReust = boTrialReusltMapper.selectTrialReusltByLogId(logId);//TODO
+			
+		}else if("招投标".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
+			
+		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
+			
+		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
+			
+		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
+			
+		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
+			
+		}
+		JSONObject commonJson = (JSONObject) json;
+		removeCommonAttribute(commonJson);
+		return resultJson;
+	}
+	
+	/**
+	 * 移除通用属性
+	 * @param json
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午4:40:01
+	 */
+	private void removeCommonAttribute(JSONObject json){
+		if(json.get("createBy")!=null){
+			json.remove("createBy");
+		}
+		if(json.get("createTime")!=null){
+			json.remove("createTime");
+		}
+		if(json.get("updateBy")!=null){
+			json.remove("updateBy");
+		}
+		if(json.get("updateTime")!=null){
+			json.remove("updateTime");
+		}
+	}
+	
+	
+	
+	
+	@Transactional
+	public JSONObject deleteBusinessOpportunityLog(JSONObject json){
+		Long logId = json.getLong("logId");
+		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
+		if("信息收集".equals(businessOpportunityLog.getEventType())){
+			boInformationCollectMapper.deleteByBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
+		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
+//			boInformationCollectMapper.deleteByLogId(logId);
+		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("试用中".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("招投标".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("签约".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("采购".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("售后".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("培训".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("支持".equals(businessOpportunityLog.getEventType())){
+			
+		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
+			
+		}
+		//删除费用
+//		boFeeDetailMapper.deleteByPrimaryKey(businessOpportunityLog.getDetailFeeId());
+//		//删除日志
+//		businessOpportunityLogMapper.deleteByPrimaryKey(logId);
+		return null;
+	}
+	
 }

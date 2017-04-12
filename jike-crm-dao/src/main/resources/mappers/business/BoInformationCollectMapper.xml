@@ -423,4 +423,8 @@
     from bo_information_collect
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
   </select>
+  <delete id="deleteByLogId"  parameterType="java.lang.Long">
+    delete from bo_information_collect
+    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+  </delete>
 </mapper>

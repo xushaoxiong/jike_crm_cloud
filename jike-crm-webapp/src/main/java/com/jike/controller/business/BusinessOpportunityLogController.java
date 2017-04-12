@@ -456,5 +456,31 @@ public class BusinessOpportunityLogController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	/**
+	 * 分页查询日志信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月11日下午2:13:10
+	 */
+	@RequestMapping(value = "/qeueryBusinessOpportunityLogByParams", method ={RequestMethod.POST})
+	public @ResponseBody String qeueryBusinessOpportunityLogByParams(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.qeueryBusinessOpportunityLogByParams(jsonData);
+		} catch (IOException e) {
+			logger.error("qeueryBusinessOpportunityLogByParams error", e);
+		}
+		return result.toJSONString();
+	}
+	
 
 }

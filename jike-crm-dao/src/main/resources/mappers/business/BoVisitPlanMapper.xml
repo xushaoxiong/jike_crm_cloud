@@ -405,4 +405,10 @@
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
     and in_planing = #{isPlaning,jdbcType=INTEGER}
   </select>
+  <select id="selectVisitPlanByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_visit_plan
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>
