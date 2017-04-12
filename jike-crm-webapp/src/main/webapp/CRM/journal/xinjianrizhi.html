@@ -74,6 +74,22 @@
 		.FillInfo .otherCont,.FillInfo .otherMaker{
 			display: none;
 		}
+		/*试用中样式*/
+		.trial-wap .gradeWap li,.disciplineWap li{
+			border: 1px solid #8C8C8C;
+			padding: 4px 19px;
+			margin-right: 10px;
+			margin-bottom:15px ;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.trial-wap .gradeWap li{
+			padding: 4px 12px;
+		}
+		.trial-wap .gradeWap .check,.trial-wap .disciplineWap .check{
+			background: #105598;
+			color: #fff;
+		}
 	</style>
 	<body>
 		<!--新建日志-->
@@ -138,7 +154,7 @@
 					<label class="col-md-1 col-ms-2" style="padding-top: 6px;">工时</label>
 					<div class="journalTime col-md-5 col-sm-8">
 						<span class="addTime cursor">+</span>
-						<input type="text" value="0.5" class="form-control timeVal" style="width: 20%;display: inline-block;" />
+						<input type="text" value="0" class="form-control timeVal" style="width: 20%;display: inline-block;" />
 						<span class="minusTime cursor">-</span>&nbsp;小时
 						<b style="padding-left: 10px;">(以0.5小时为单位)</b>
 					</div>

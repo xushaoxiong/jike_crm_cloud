@@ -161,7 +161,7 @@ function infodata(bInfoColet){
 			$('.schoolType').find('input[type=checkbox][value="'+item+'"]').prop('checked',true);
 		});
 		$('.contName').val(bInfoColet.contactName);
-		if(bInfoColet.contactTitleDetail==undefined){
+		if(bInfoColet.contactTitleDetail==""){
 			$('.otherCont').hide();
 			$('.contTitle').val(bInfoColet.contactTitle).prop('selected',true);
 		}else{
@@ -175,7 +175,7 @@ function infodata(bInfoColet){
 		$('.contactQq').val(bInfoColet.contactQq);
 		$('.contactWechat').val(bInfoColet.contactWechat);
 		$('.decisionMakerName').val(bInfoColet.decisionMakerName);
-		if(bInfoColet.decisionMakerTitleDetail==undefined){
+		if(bInfoColet.decisionMakerTitleDetail==""){
 			$('.otherMaker').hide();
 			$('.decisionMakerTitle').val(bInfoColet.decisionMakerTitle).prop('selected',true);
 		}else{
@@ -251,35 +251,83 @@ function infodata(bInfoColet){
 			dataJ.decisionMakerWechat=$.trim($('.decisionMakerWechat').val());
 			dataJ.ifIntention=$('.ifIntention').find('input[type=radio]:checked').attr('ifintion');
 			dataJ.ifInterested=$('.ifInterested').find('input[type=radio]:checked').attr('ifined');
+			
+			
+			return dataJ;
+		}
+		$('.FillInfo').on('click','.mesConfirm',function(){	
 			//收集信息必须至少填写一条才能提交判断
-			if(dataJ.contactTitle==""){
+			var contactTitle=$('.contTitle').find('option:selected').val();
+			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
+			var scolInfo=$('.scolInfo').find('option:selected').val();
+			var schoolScale=$('.scolPopleNumb').find('option:selected').val();
+			var schoolLevel=$('.schoolLevel').find('option:selected').val();
+			var schoolProperty=$('.schoolProperty').find('input[type=radio]:checked').attr('scpid');
+			var scolTypeArry=[];
+			$('.schoolType input[type="checkbox"]:checked').each(function(){ 
+				scolTypeArry.push($(this).val()); 
+			}); 
+			var contName=$.trim($('.contName').val());
+			var contactLandline=$.trim($('.contactLandline').val());
+			var contactPhone=$.trim($('.contactPhone').val());
+			var contactEmail=$.trim($('.contactEmail').val());
+			var contactQq=$.trim($('.contactQq').val());
+			var contactWechat=$.trim($('.contactWechat').val());
+			var decisionMakerName=$.trim($('.decisionMakerName').val());
+			var decisionMakerLandline=$.trim($('.decisionMakerLandline').val());
+			var decisionMakerPhone=$.trim($('.decisionMakerPhone').val());
+			var decisionMakerEmail=	$.trim($('.decisionMakerEmail').val());
+			var decisionMakerQq=$.trim($('.decisionMakerQq').val());
+			var decisionMakerWechat=$.trim($('.decisionMakerWechat').val());
+			var ifIntention=$('.ifIntention').find('input[type=radio]:checked').attr('ifintion');
+			var ifInterested=$('.ifInterested').find('input[type=radio]:checked').attr('ifined');
+			if(contactTitle==""){
 				$('.otherCont').hide();
 			}
-			if(dataJ.decisionMakerTitle==""){
+			if(decisionMakerTitle==""){
 				$('.otherMaker').hide();
 			}
-			if(dataJ.contactTitle=="其它" && $('.otherCont').val()==""){
+			if(contactTitle=="其它" && $('.otherCont').val()==""){
 				pub.Alt('请填写联系人职位',false);
 				return false;
 			}
-			if(dataJ.decisionMakerTitle=="其它" && $('.otherMaker').val()==""){
+			if(decisionMakerTitle=="其它" && $('.otherMaker').val()==""){
 				pub.Alt('请填写决策人职位',false);
 				return false;
 			}
-			if(dataJ.scolInfo=="" && dataJ.schoolScale=="" && dataJ.schoolLevel=="" && dataJ.schoolProperty==undefined && dataJ.schoolType=="" && dataJ.contName=="" && dataJ.contactTitle=="" && dataJ.contactLandline=="" && dataJ.contactPhone=="" && dataJ.contactEmail=="" && dataJ.contactQq=="" && dataJ.contactWechat=="" && dataJ.decisionMakerName=="" && dataJ.decisionMakerTitle=="" && dataJ.decisionMakerLandline=="" && dataJ.decisionMakerPhone=="" && dataJ.decisionMakerQq=="" && dataJ.decisionMakerEmail=="" && dataJ.decisionMakerWechat=="" && dataJ.ifIntention==undefined && dataJ.ifInterested==undefined){
+			if(scolInfo=="" && schoolScale=="" && schoolLevel=="" && schoolProperty==undefined && scolTypeArry.length==0 && contName=="" && contactTitle=="" && contactLandline=="" && contactPhone=="" && contactEmail=="" && contactQq=="" && contactWechat=="" && decisionMakerName=="" && decisionMakerTitle=="" && decisionMakerLandline=="" && decisionMakerPhone=="" && decisionMakerQq=="" && decisionMakerEmail=="" && decisionMakerWechat=="" && ifIntention==undefined && ifInterested==undefined){
 				pub.Alt('至少填写一项内容',false);
 				return false;
 			}
-			return true;
-			return dataJ;
-		}
-		
-		$('.FillInfo').on('click','.mesConfirm',function(){	
-			if(infodetail(boInformationCollect)){
-				$('.FillInfo').hide();
-				$('#addJournal').show();
-				$('.journaConfirm').prop('disabled',false);
+			if(!Landline(contactLandline)){
+				pub.Alt('请填写正确座机号',false);
+				return;
 			}
+			if(!phoneCheck(contactPhone)){
+				pub.Alt('请填写正确手机号',false);
+				return;
+			}
+			
+			if(!isEmail(contactEmail)){
+				pub.Alt('请填写正确邮箱',false);
+				return;
+			}
+			if(!QqCheck(contactQq)){
+				pub.Alt('请填写正确QQ号',false);
+				return;
+			}
+			if(!QqCheck(contactQq)){
+				pub.Alt('请填写正确QQ号',false);
+				return;
+			}
+			if(!WechatCheck(decisionMakerWechat)){
+				pub.Alt('请填写正确微信号',false);
+				return;
+			}
+			
+			$('.FillInfo').hide();
+			$('#addJournal').show();
+			$('.journaConfirm').prop('disabled',false);
 			
 		})
 	
@@ -295,6 +343,6 @@ function infodata(bInfoColet){
 		$ajax('post','businessOpportunityLog/addBOLogInformationCollection',jourInJ,function succF(jo){
 			console.log(jo)
 		},function errF(jo){
-			
+			alert(jo.message);
 		})
 	})
