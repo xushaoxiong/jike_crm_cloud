@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap-paginator.js" ></script>
+		<script type="text/javascript" src="../js/myDate/My97DatePicker/WdatePicker.js" ></script>
+		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>-->	
+		
+	</head>
+	<style>
+		.search-main{
+			margin: 25px 0;
+		}
+		.search-main .form-group{
+			width: 33%;
+		}
+		.list-business td{
+			line-height: 35px !important;
+		}
+		.list-business thead th{
+			text-align: center;
+		}
+		.cursor{cursor: pointer;}
+		.alertTitle{height: 20px;}
+		.operBtn-wap .btn{margin: 0 5px;}
+	</style>
+	<body>
+		<div class="container-fluid listContainer">
+			<h3>商机列表</h3>
+			<div class="addBusiness">
+				<button class="btn btn-primary newlist">新建商机+</button>
+			</div>
+			<p class="text-danger text-center alertTitle"></p>
+			<div class="search-main form-inline row">
+				<div class="form-group">
+					<label>商机名称&nbsp;</label>
+					<input type="text" class="form-control OpportunityName" placeholder="名称"/>
+				</div>
+				<div class="form-group">
+					
+	            	<label>日期&nbsp;</label>
+        			<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
+        				<span style="padding: 9px;">至</span>
+    				<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
+	            </div>
+	            <div class="form-group">
+	            	<label>商机进度&nbsp;</label>
+	            	<select class="form-control OpportunityProcess">
+	            		<option proid='1'>所有</option>
+	            		<option>信息收集</option>
+	            		<option>信息收集完成</option>
+	            		<option>准备拜访</option>
+	            		<option>拜访</option>
+	            		<option>谈判</option>
+	            		<option>待试用</option>
+	            		<option>试用中</option>
+	            		<option>待招投标</option>
+	            		<option>招标</option>
+	            		<option>签约准备</option>
+	            		<option>签约完成</option>
+	            		<option>采购完成</option>
+	            	</select>
+	            </div>
+			</div>
+			<div class="row text-center">
+				<button class="btn btn-primary searchBusiness" style="margin-right:15px;">查询</button>
+				<button class="btn btn-primary reset">重置</button>
+			</div>
+			<div class="list-wap">
+				<h3 class="pageTotal">当前共 <span></span>条记录</h3>
+				<table class="table table-bordered text-center table-responsive list-business">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>创建日期</th>
+							<th>商机创建者</th>
+							<th>商机类型</th>
+							<th>商机名称</th>
+							<th>商机流水号</th>
+							<th class="salesName">销售人员</th>
+							<!--<th>服务人员</th>-->
+							<th>商机进度</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody class="list-tr">
+						<tr>
+							<!--<td>1</td>
+							<td>2017-2-8</td>
+							<td>张三</td>
+							<td>学校</td>
+							<td>育英学校</td>
+							<td class="checkBusiness cursor"><a>查看</a></td>
+							<td>张三</td>-->
+							<!--<td>
+								<span class="serviceName">李四/王五/李四/王五</span>
+								<span class="glyphicon glyphicon-plus plusOppt cursor"></span>
+								<span class="glyphicon glyphicon-minus minusOppt cursor"></span>
+							</td>-->
+							<!--<td>试用中</td>
+							<td>
+								<button class="btn btn-primary edit">编辑</button>
+								<button class="btn btn-primary delBuiness">删除</button>
+								<button class="btn btn-primary closeBuiness">查看</button>
+							</td>
+						</tr>-->
+					</tbody>
+				</table>
+			</div>
+			<!--分页-->
+			<div class="Page-wap text-center">
+				<div class="pagination-wap row text-center" style="display: inline-block;">
+					<span class="totalNum pull-left" style="padding: 26px;"></span>
+					<ul class="pagination pull-left"></ul>
+				</div>	 
+			</div>
+		</div>
+		<!--添加服务人员弹框-->
+		<!--<div class="modal" id="opptModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>指派服务人员</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<p class="serviceTitle text-danger"></p>
+						<select class="form-control service-wap" style="width: 50%;">
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+						</select>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary opptConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<!--删除服务人员弹框-->
+		<!--<div class="modal" id="delopptModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>删除服务人员</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<select class="form-control" style="width: 50%;">
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+							<option>马驰</option>
+							<option>曾慧慧</option>
+						</select>
+						<p style="margin-top: 15px;">提醒：是否确认取消服务人员（<span class="delName">曾慧慧</span>），取消后无法恢复</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary delopptConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<!--商机删除弹框-->
+		<div class="modal" id="delbuinessModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>删除商机</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<p style="margin-top: 15px;">提醒：是否确删除（<span class="businessNum"></span>），删除后将不再显示</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary delConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--商机关闭-->
+		<div class="modal" id="closebuinessModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>关闭商机</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<p style="margin-top: 15px;">提醒：是否关闭商机（<span class="businessNum"></span>），关闭后商机将处于关闭状态</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary closeConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/businesoppt/BusinessOpportunityList.js" ></script>
+</html>

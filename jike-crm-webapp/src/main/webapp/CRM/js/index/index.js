@@ -1,5 +1,8 @@
 $(function(){
-	$('.L-wap').height($(window).height()-60)
+	$('.L-wap,.R-wap').height($(window).height()-60);
+	$(window).resize(function(){
+		$('.L-wap,.R-wap').height($(window).height()-60);
+	})
 		//列表
 	$.ajax({
 		type:"post",
@@ -50,8 +53,18 @@ $(function(){
 	});
 	
 	$('.L-list').on('click','.hide-menu li',function(){
+		
 		var url=$(this).attr('url');
-			$('.R-wap').load(url);
+		$('.R-wap').load(url);
+		if($(this).attr('menuid')==7){
+			$('.R-wap').load('journal/list.html');
+		}
+		if($(this).attr('menuid')==6){
+			$('.R-wap').load('journal/xinjianrizhi.html');
+		}
+		
+		
+
 			
 	})	
 	

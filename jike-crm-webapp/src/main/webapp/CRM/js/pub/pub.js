@@ -11,7 +11,7 @@ pub.Alt=function(text,flag,fun){
  	
  	html+='</div>';
  	$('body,html').append(html);
-	 	$(document).on('click','.concel',function(){
+	 	$('.concel').on('click',function(){
 	 		$('.alert-del').hide();
 	 	})
  	}else{
@@ -19,7 +19,7 @@ pub.Alt=function(text,flag,fun){
  		html+='</div>';
  	html+='</div>';
  	$('body,html').append(html);
-	 	$(document).on('click','.confirm',function(){
+	 	$('.confirm').on('click',function(){
 	 		$('.alert-del').hide();
  	})
  	}
@@ -36,32 +36,65 @@ pub.Alt=function(text,flag,fun){
 
 //手机验证
 function phoneCheck(phoneNum,selector){ 
-	console.log(1)
 	var phoneReg=/^1[34578]\d{9}$/;
-	if(phoneNum==''){
-		$(selector).html('请填写手机号！');
-		return false; 
-	}
+//	if(phoneNum==''){
+//		$(selector).html('请填写手机号！');
+//		return false; 
+//	}
     if(!phoneReg.test(phoneNum)){ 
         $(selector).html('手机号填写有误');
         return false; 
 	}
     return true;
 }
+//固话验证
+function Landline(LandlineNumb,selector){
+	var LandLineReg=/[\d]{3,4}-[\d]{7,8}/;
+	 if(!LandLineReg.test(LandlineNumb)){ 
+        $(selector).html('手机号填写有误');
+        return false; 
+	}
+	 return true;
+}
+//QQ验证
+function QqCheck(QqeNumb,selector){
+	var QqReg=/^\d{5,10}$/;
+	 if(!QqReg.test(QqeNumb)){ 
+        $(selector).html('QQ号填写有误');
+        return false; 
+	}
+	 return true;
+}
 //邮箱验证
 function isEmail(Email,selector){
-	 var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-	 if(Email==''){
-	 	$(selector).html('请填写邮箱！');
-	 	return false;
-	 }
-	 if(!reg.test(Email)){
+	 var Emailreg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+	 if(!Emailreg.test(Email)){
 	 	$(selector).html('请填写正确邮箱！');
 	 	return false;
 	 }
 	 return true;
 }
-
+//微信验证
+function WechatCheck(WechatNumb,selector){
+	var WechatReg=/^[a-zA-Z\d_]{5,}$/;
+	 if(!WechatReg.test(WechatNumb)){
+	 	$(selector).html('请填写正确微信号！');
+	 	return false;
+	 }
+	 return true;
+}
+//只能输入数字，小数点最多为两位
+function num(obj){
+	obj.value = obj.value.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
+	obj.value = obj.value.replace(/^\./g,""); //验证第一个字符是数字
+	obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个, 清除多余的
+	obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+	obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+}
+//验证正整数
+function PosiintegerNum(obj){
+	obj.value=obj.value.replace(/[^0-9]/g,'');
+}
 
 
 

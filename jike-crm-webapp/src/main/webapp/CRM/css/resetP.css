@@ -28,3 +28,4 @@ a:visited{text-decoration: none;color: #000;}
 .clear:after{display:block;  content:"clear"; height:0;  clear:both; overflow:hidden; visibility:hidden;}
 .clear{zoom:1;}
 i{font-style: normal;}
+.cursor{cursor: pointer;}
