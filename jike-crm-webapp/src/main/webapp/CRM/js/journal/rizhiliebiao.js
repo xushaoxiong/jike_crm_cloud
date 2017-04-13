@@ -94,18 +94,39 @@ $('.R-wap').css({'overflow-y':'scroll'})
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
-			$('.R-wap').load('journal/editlog.html');
-			
+			$('.R-wap').load('journal/editlog.html',function(){
+				$('')
+				editdata(jo.businessOpportunityLogJson);
+				freedata(jo.boFeeDetailJson);
+			});
+	
 		},function errF(jo){
-			alert(jo.message)
+			alert(jo.message);
 		})
 	})
 
 	//编辑页面赋值
-	function editdata(data){
-		$('#indate').val(data.logDate);
+	function editdata(editdata){
+		$('#indate').html(editdata.logDate);
+		$('.businessNameSp').val(editdata.businessOpportunityName);
+		$('.businesNumbspInp').val(editdata.businessOpportunityNum);
+		$('.eventType').val(editdata.eventType);
+		$('.specEvent').val(editdata.specificEvent);
+		$('.timeVal').val(editdata.workingHours);
+		$('.innerPerson').val(editdata.internalParticipant);
+		$('.outPerson').val(editdata.externalParticipant);
 	}
-
+	//费用赋值
+	function freedata(freedata){
+		$('.reachInp1').val(freedata.trafficFee);
+		$('.reachInp2').val(freedata.hotelFee);
+		$('.reachInp3').val(freedata.foodFee);
+		$('.reachInp4').val(freedata.entertainFee);
+		$('.reachInp5').val(freedata.giftFee);
+		$('.reachInp6').val(freedata.otherFee);
+		$('.reachInp7').val(freedata.advanceFee);
+		$('.reachInp8').val(freedata.advancePerson);
+	}
 
 
 
