@@ -14,9 +14,11 @@ import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
+import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BusinessOpportunity;
 import com.jike.business.model.SaleBusinessOpportunity;
+import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
 import com.jike.user.model.User;
@@ -30,10 +32,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Autowired
 	private SaleBusinessOpportunityMapper saleBusinessOpportunityMapper;
 	@Autowired
+	private ServiceBusinessOpportunityMapper serviceBusinessOpportunityMapper;
+	@Autowired
 	private UserService userService;
 	@Autowired
 	private BusinessOpportunityLogService businessOpportunityLogService;
 
+	@Transactional
 	public JSONObject addBusinessOpportunity(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
 		if(json!=null&&!json.isEmpty()){
@@ -101,6 +106,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		return resultJson;
 	}
 
+	@Transactional
 	public JSONObject updateBusinessOpportunity(JSONObject businessOpportunityJson) {
 			JSONObject resultJson = new JSONObject();
 			if (!businessOpportunityJson.isEmpty()) {
@@ -258,7 +264,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		return resultJson;
 	}
 
-	public JSONObject distributionBusinessOpportunity(JSONObject json) {
+	public JSONObject distributionBoToSale(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
 		BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(json.getString("businessOpportunityNum"));
 		if (businessOpportunityOld == null) {
@@ -360,8 +366,35 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			json.put("addressCounty", businessOpportunity.getAddressCounty());
 			json.put("addressDetail", businessOpportunity.getAddressDetail());
 			json.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
+			json.put("businessOpportunityNum", businessOpportunity.getBusinessOpportunityNum());
 		}
 		return json;
+	}
+
+	@Transactional
+	public JSONObject distributionBoToService(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(json.getString("businessOpportunityNum"));
+		if (businessOpportunityOld == null) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "未查到该商机");
+			return resultJson;
+		}
+		if(!json.getLong("userId").equals(businessOpportunityOld.getCreateBy())){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有操作权限");
+			return resultJson;
+		}
+		List<ServiceBusinessOpportunity> serviceBusinessOpportunityList = serviceBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
+		Date nowdate = new Date();
+		if (serviceBusinessOpportunityList.isEmpty()) {
+			//TODO
+		}else{
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "操作成功");
+		return resultJson;
 	}
 
 }

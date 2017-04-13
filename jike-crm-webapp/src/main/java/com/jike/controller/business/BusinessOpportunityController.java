@@ -127,15 +127,15 @@ public class BusinessOpportunityController extends BaseController{
 	}
 	
 	/**
-	 * 分配商机
+	 * 分配商机到销售
 	 * @param request
 	 * @param session
 	 * @return
 	 * @created wangyb
 	 * @createtime 2017年4月6日下午3:19:05
 	 */
-	@RequestMapping(value = "/distributionBusinessOpportunity", method ={RequestMethod.POST})
-	public @ResponseBody String distributionBusinessOpportunity(HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/distributionBoToSale", method ={RequestMethod.POST})
+	public @ResponseBody String distributionBoToSale(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
@@ -144,9 +144,33 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
-			result = businessOpportunityService.distributionBusinessOpportunity(json);
+			result = businessOpportunityService.distributionBoToSale(json);
 		} catch (IOException e) {
-			logger.error("distributionBusinessOpportunity error", e);
+			logger.error("distributionBoToSale error", e);
+		}
+		return result.toJSONString();
+	}
+	/**
+	 * 分配商机到服务
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月13日上午11:56:38
+	 */
+	@RequestMapping(value = "/distributionBoToService", method ={RequestMethod.POST})
+	public @ResponseBody String distributionBoToService(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			result = businessOpportunityService.distributionBoToService(json);
+		} catch (IOException e) {
+			logger.error("distributionBoToService error", e);
 		}
 		return result.toJSONString();
 	}
