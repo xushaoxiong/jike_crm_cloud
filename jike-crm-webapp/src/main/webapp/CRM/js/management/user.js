@@ -1,4 +1,4 @@
-$('.alert-del-wap').height($(window).height());
+
 	//初始用户列表
 	//设置每页数量开始页
 	var paginatorJ={"name":"","start":1,"pageSize":10};	
@@ -120,17 +120,24 @@ $('.alert-del-wap').height($(window).height());
 			$('.userModalAlt').html('请填写登录名');
 			return false;
 		}
-		if(userJ.password==''){
-			$('.userModalAlt').html('请填写密码');
-			return false;
-		}
 		if(userJ.name==''){
 			$('.userModalAlt').html('请填写姓名');
 			return false;
 		};
-
+		if(userJ.password==''){
+			$('.userModalAlt').html('请填写密码');
+			return false;
+		}
+		
+		if(userJ.phone==''){
+			$('.userModalAlt').html('请填写手机号');
+			return false;
+		};
+		if(userJ.email==''){
+			$('.userModalAlt').html('请填写邮箱');
+			return false;
+		};
 		if(!phoneCheck(userJ.phone,".userModalAlt")){
-			
 			return;
 		}
 		
@@ -264,11 +271,3 @@ $('.alert-del-wap').height($(window).height());
 			}
 		})
 	})
-    var H=$(window).height()-60;
-	$(".wapper").mCustomScrollbar({
-		set_height:H,
-		scrollButtons:{enable:true},
-		theme:"minimal-dark",
-		scrollbarPosition:"relative",
-
-	});
