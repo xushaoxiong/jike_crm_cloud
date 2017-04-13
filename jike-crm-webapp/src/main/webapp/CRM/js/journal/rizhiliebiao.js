@@ -89,15 +89,22 @@ $('.R-wap').css({'overflow-y':'scroll'})
 //	//操作设置
 
 	//编辑
-	$('.jourlist').on('click','.edit',function(){
+	$('.jourlist').on('click','.edit',function(){	
 		var logIdJ={};
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.R-wap').load('journal/editlog.html',function(){
-				$('')
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
+				commondetail(jo);
+				console.log(2222)
+				$('.editInfo').hide();
+				$('.addMessage').click(function(){
+					$('#addJournal').hide();
+					$('.editInfo').show();
+					
+				})
 			});
 	
 		},function errF(jo){
@@ -108,6 +115,7 @@ $('.R-wap').css({'overflow-y':'scroll'})
 	//编辑页面赋值
 	function editdata(editdata){
 		$('#indate').html(editdata.logDate);
+		$('#indate').attr('logId',editdata.logId)
 		$('.businessNameSp').val(editdata.businessOpportunityName);
 		$('.businesNumbspInp').val(editdata.businessOpportunityNum);
 		$('.eventType').val(editdata.eventType);
@@ -115,6 +123,7 @@ $('.R-wap').css({'overflow-y':'scroll'})
 		$('.timeVal').val(editdata.workingHours);
 		$('.innerPerson').val(editdata.internalParticipant);
 		$('.outPerson').val(editdata.externalParticipant);
+		$('.btnCost').html(editdata.totalFee);
 	}
 	//费用赋值
 	function freedata(freedata){
@@ -128,7 +137,22 @@ $('.R-wap').css({'overflow-y':'scroll'})
 		$('.reachInp8').val(freedata.advancePerson);
 	}
 
-
+	function commondetail(jo){
+		//传入详情json
+		
+		if($('.specEvent').val()=='信息收集'){
+			$.getScript("js/editjournal/xinxishoujiInfo.js",function(){
+				$('.editInfo').html(infoColle());
+				infodata(jo.commonJson)
+			})
+		}
+		if($('.specEvent').val()=='制定拜访计划'){
+			$.getScript("js/editjournal/editbaifangjihuaInfo.js",function(){
+				$('.editInfo').html(visitPlan());
+				VisitPlandata(jo.commonJson)
+			})
+		}
+	}
 
 
 
@@ -158,15 +182,16 @@ $('.R-wap').css({'overflow-y':'scroll'})
 	
 ////查询时间
 $('.searchBusiness').click(function(){	
+	$('.alertTitle').html('');
 	var indate=$.trim($('#indate').val());
 	var enddate=$.trim($('#enddate').val());
-	if(indate>enddate==""?endtime:enddate){
-		$('.alertTitle').html('开始时间不能大于结束时间');
-		return;
-	}else{
-		$('.alertTitle').html('');
-		
+	if(indate!=''&&enddate!=''){
+		if(indate>(enddate==""?endtime:enddate)){
+			$('.alertTitle').html('开始时间不能大于结束时间');
+			return;
+		}
 	}
+	
 })
 //新建日志按钮
 $('.newlist').click(function(){
