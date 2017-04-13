@@ -82,9 +82,19 @@ $('.FillInfo').on('click','.aftSealConfirm',function(){
 		pub.Alt('请填写一项信息',false);
 		return false;
 	}
+	var Inp1=Number($('.aftSelInp1').val())*0.25;
+	var Inp2=Number($('.aftSelInp2').val())*0.5;
+	var Inp3=Number((Number($('.aftSelInp3').val())/500).toFixed(2));
+	var Inp4=Number($('.aftSelInp4').val())*0.5;
+	var Inp5=Number((Number($('.aftSelInp5').val())/500).toFixed(2));
+	var Inp6=Number($('.aftSelInp6').val())*0.5;
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
+	//计算工时
+	$('.timeVal').val((Inp1+Inp2+Inp3+Inp4+Inp5+Inp6));
+	 
+	
 })
 
 //提交返回后台试用结果信息

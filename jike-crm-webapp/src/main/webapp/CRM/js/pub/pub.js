@@ -37,10 +37,10 @@ pub.Alt=function(text,flag,fun){
 //手机验证
 function phoneCheck(phoneNum,selector){ 
 	var phoneReg=/^1[34578]\d{9}$/;
-	if(phoneNum==''){
-		$(selector).html('请填写手机号！');
-		return false; 
-	}
+//	if(phoneNum==''){
+//		$(selector).html('请填写手机号！');
+//		return false; 
+//	}
     if(!phoneReg.test(phoneNum)){ 
         $(selector).html('手机号填写有误');
         return false; 
@@ -50,10 +50,6 @@ function phoneCheck(phoneNum,selector){
 //固话验证
 function Landline(LandlineNumb,selector){
 	var LandLineReg=/[\d]{3,4}-[\d]{7,8}/;
-	if(LandlineNumb==''){
-		$(selector).html('请填写手机号！');
-		return false;
-	}
 	 if(!LandLineReg.test(LandlineNumb)){ 
         $(selector).html('手机号填写有误');
         return false; 
@@ -63,10 +59,6 @@ function Landline(LandlineNumb,selector){
 //QQ验证
 function QqCheck(QqeNumb,selector){
 	var QqReg=/^\d{5,10}$/;
-	if(QqeNumb==''){
-		$(selector).html('请填写QQ号！');
-		return false;
-	}
 	 if(!QqReg.test(QqeNumb)){ 
         $(selector).html('QQ号填写有误');
         return false; 
@@ -76,10 +68,6 @@ function QqCheck(QqeNumb,selector){
 //邮箱验证
 function isEmail(Email,selector){
 	 var Emailreg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
-	 if(Email==''){
-	 	$(selector).html('请填写邮箱！');
-	 	return false;
-	 }
 	 if(!Emailreg.test(Email)){
 	 	$(selector).html('请填写正确邮箱！');
 	 	return false;
@@ -89,10 +77,6 @@ function isEmail(Email,selector){
 //微信验证
 function WechatCheck(WechatNumb,selector){
 	var WechatReg=/^[a-zA-Z\d_]{5,}$/;
-	if(WechatNumb==''){
-	 	$(selector).html('请填写微信号！');
-	 	return false;
-	 }
 	 if(!WechatReg.test(WechatNumb)){
 	 	$(selector).html('请填写正确微信号！');
 	 	return false;
@@ -109,7 +93,7 @@ function num(obj){
 }
 //验证正整数
 function PosiintegerNum(obj){
-	obj.value=obj.value.replace(/[^1-9]/g,'');
+	obj.value=obj.value.replace(/[^0-9]/g,'');
 }
 
 

@@ -208,6 +208,11 @@ $('.closeConfirm').click(function(){
 	var year=myDate.getFullYear();
 	var month=myDate.getMonth()+1;
 	var date=myDate.getDate();
+	if(month<10){
+		month='0'+(myDate.getMonth()+1)
+	}else{
+		month=myDate.getMonth()+1;
+	}
 	if(date<10){
 		date='0'+myDate.getDate()
 	}else{
@@ -220,7 +225,7 @@ $('.searchBusiness').click(function(){
 	
 	var indate=$.trim($('#indate').val());
 	var enddate=$.trim($('#enddate').val());
-	if(indate>enddate){
+	if(indate>enddate==""?endtime:enddate){
 		$('.alertTitle').html('开始时间不能大于结束时间');
 		return;
 	}else{
@@ -238,14 +243,6 @@ $('.reset').click(function(){
 	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
 })
 
-var H=$(window).height()-60;
-$(".listContainer").mCustomScrollbar({
-	set_height:H,
-	scrollButtons:{enable:true},
-	theme:"minimal-dark",
-	scrollbarPosition:"relative",
-
-});
 
 
 //})
