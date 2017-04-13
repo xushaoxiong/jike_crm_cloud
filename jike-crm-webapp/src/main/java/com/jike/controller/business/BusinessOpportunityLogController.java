@@ -464,8 +464,8 @@ public class BusinessOpportunityLogController extends BaseController{
 	 * @created wangyb
 	 * @createtime 2017年4月11日下午2:13:10
 	 */
-	@RequestMapping(value = "/qeueryBusinessOpportunityLogByParams", method ={RequestMethod.POST})
-	public @ResponseBody String qeueryBusinessOpportunityLogByParams(HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/queryBusinessOpportunityLogByParams", method ={RequestMethod.POST})
+	public @ResponseBody String queryBusinessOpportunityLogByParams(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
@@ -475,12 +475,62 @@ public class BusinessOpportunityLogController extends BaseController{
 			JSONObject jsonData = JSONObject.parseObject(requestJson);
 			jsonData.put("userId", session.getAttribute(userId));
 			jsonData.put("roleId", session.getAttribute(roleId));
-			result = businessOpportunityLogService.qeueryBusinessOpportunityLogByParams(jsonData);
+			result = businessOpportunityLogService.queryBusinessOpportunityLogByParams(jsonData);
 		} catch (IOException e) {
-			logger.error("qeueryBusinessOpportunityLogByParams error", e);
+			logger.error("queryBusinessOpportunityLogByParams error", e);
 		}
 		return result.toJSONString();
 	}
-	
+	/**
+	 * 通过日志ID查询日志信息
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月12日下午1:43:31
+	 */
+	@RequestMapping(value = "/queryBOLog", method ={RequestMethod.POST})
+	public @ResponseBody String queryBOLog(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.queryBOLog(jsonData);
+		} catch (IOException e) {
+			logger.error("queryBOLog error", e);
+		}
+		return result.toJSONString();
+	}
+	/**
+	 * 更新日志
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月12日下午3:37:08
+	 */
+	@RequestMapping(value = "/updateBOLog", method ={RequestMethod.POST})
+	public @ResponseBody String updateBOLog(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.updateBOLog(jsonData);
+		} catch (IOException e) {
+			logger.error("updateBOLog error", e);
+		}
+		return result.toJSONString();
+	}
+
 
 }

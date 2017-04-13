@@ -39,4 +39,6 @@ public interface BoBiddingResultMapper {
 	 * @mbggenerated  Tue Apr 11 19:30:49 CST 2017
 	 */
 	int updateByPrimaryKey(BoBiddingResult record);
+
+	BoBiddingResult selectBoBiddingResultByLogId(Long logId);
 }

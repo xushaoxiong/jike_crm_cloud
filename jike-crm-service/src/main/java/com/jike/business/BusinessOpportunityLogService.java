@@ -152,6 +152,32 @@ public interface BusinessOpportunityLogService {
 	 * @created wangyb
 	 * @createtime 2017年4月11日下午2:12:30
 	 */
-	public JSONObject qeueryBusinessOpportunityLogByParams(JSONObject queryJson);
+	public JSONObject queryBusinessOpportunityLogByParams(JSONObject queryJson);
+	
+	/**
+	 * 通过ID查询日志相关信息
+	 * @param queryJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月12日下午1:42:10
+	 */
+	public JSONObject queryBOLog(JSONObject queryJson);
+	/**
+	 * 更新日志相关信息
+	 * @param updateJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月12日下午3:36:26
+	 */
+	public JSONObject updateBOLog(JSONObject updateJson);
+	
+	/**
+	 * 通过商机ID查询信息收集相关信息
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月12日下午5:55:52
+	 */
+	public JSONObject queryBoInfoCollectionByBoId(Long businessOpportunityId);
 
 }

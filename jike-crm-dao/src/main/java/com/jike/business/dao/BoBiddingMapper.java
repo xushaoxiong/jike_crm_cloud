@@ -50,4 +50,13 @@ public interface BoBiddingMapper {
      * @mbggenerated Mon Apr 10 16:27:34 CST 2017
      */
     int updateByPrimaryKey(BoBidding record);
+
+    /**
+     * 通过日志ID查询
+     * @param logId
+     * @return
+     * @created wangyb
+     * @createtime 2017年4月12日上午11:55:06
+     */
+	BoBidding selectBoBiddingByLogId(Long logId);
 }

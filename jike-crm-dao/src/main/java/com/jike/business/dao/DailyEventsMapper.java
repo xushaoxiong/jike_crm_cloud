@@ -50,4 +50,6 @@ public interface DailyEventsMapper {
      * @mbggenerated Mon Apr 10 18:57:09 CST 2017
      */
     int updateByPrimaryKey(DailyEvents record);
+
+	DailyEvents selectDailyEventsByLogId(Long logId);
 }

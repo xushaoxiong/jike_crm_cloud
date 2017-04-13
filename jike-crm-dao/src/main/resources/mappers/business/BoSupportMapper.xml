@@ -179,4 +179,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where bo_support_id = #{boSupportId,jdbcType=BIGINT}
   </update>
+   <select id="selectBoSupportByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_support
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
@@ -30,6 +31,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private SaleBusinessOpportunityMapper saleBusinessOpportunityMapper;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BusinessOpportunityLogService businessOpportunityLogService;
 
 	public JSONObject addBusinessOpportunity(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
@@ -336,6 +339,16 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
 		}
 	}
+	
+	public JSONObject queryBusinessOpportunityInfoById(JSONObject json){
+		Long businessOpportunityId = json.getLong("businessOpportunityId");
+		JSONObject resultJson = queryByBusinessOpportunityId(businessOpportunityId);
+		JSONObject infoCollectionJson = businessOpportunityLogService.queryBoInfoCollectionByBoId(businessOpportunityId);
+		resultJson.putAll(infoCollectionJson);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 
 	public JSONObject queryByBusinessOpportunityId(Long businessOpportunityId) {
 		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
@@ -346,6 +359,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			json.put("addressCity", businessOpportunity.getAddressCity());
 			json.put("addressCounty", businessOpportunity.getAddressCounty());
 			json.put("addressDetail", businessOpportunity.getAddressDetail());
+			json.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
 		}
 		return json;
 	}

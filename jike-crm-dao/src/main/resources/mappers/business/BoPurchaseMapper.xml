@@ -179,4 +179,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where purchase_id = #{purchaseId,jdbcType=BIGINT}
   </update>
+   <select id="selectBoPurchaseByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_purchase
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>

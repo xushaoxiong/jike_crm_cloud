@@ -224,11 +224,12 @@
   <select id="getBusinessOpportunityLogCount" resultType="java.lang.Integer">
     select 
     count(1)
-    from business_opportunity_log bol,business_opportunity bo
-    where 
-     bol.business_opportunity_id = bo.business_opportunity_id
+    from business_opportunity_log bol left join business_opportunity bo
+    on 
+    bol.business_opportunity_id = bo.business_opportunity_id
+    <where>
     	<if test="businessOpportunityName != null">
-			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
 		<if test="startTime != null">
 			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}
@@ -242,6 +243,7 @@
 		<if test="userId != null">
 			and bol.create_by = #{userId,jdbcType=BIGINT}
 		</if>
+	</where>
   </select>
   <select id="getBusinessOpportunityLogByPage" resultType="java.util.Map">  
     select 
@@ -255,11 +257,12 @@
     bol.internal_participant,
     bol.external_participant,
     bol.detail_fee_id
-    from business_opportunity_log bol,business_opportunity bo
-    where 
-     bol.business_opportunity_id = bo.business_opportunity_id
+    from business_opportunity_log bol left join business_opportunity bo
+    on 
+    bol.business_opportunity_id = bo.business_opportunity_id
+    <where>
     	<if test="businessOpportunityName != null">
-			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
 		<if test="startTime != null">
 			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') >= #{startTime,jdbcType=VARCHAR}
@@ -273,6 +276,8 @@
 		<if test="userId != null">
 			and bol.create_by = #{userId,jdbcType=BIGINT}
 		</if>
+	</where>
+		ORDER BY bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>
 </mapper>

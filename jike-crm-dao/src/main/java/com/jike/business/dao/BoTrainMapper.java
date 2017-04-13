@@ -50,4 +50,6 @@ public interface BoTrainMapper {
      * @mbggenerated Tue Apr 11 09:44:59 CST 2017
      */
     int updateByPrimaryKey(BoTrain record);
+
+	BoTrain selectBoTrainByLogId(Long logId);
 }

@@ -28,6 +28,7 @@ import com.jike.business.dao.BoTrialReusltMapper;
 import com.jike.business.dao.BoVisitMapper;
 import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
+import com.jike.business.dao.CooperationDetailsMapper;
 import com.jike.business.dao.DailyEventsMapper;
 import com.jike.business.model.BoBidding;
 import com.jike.business.model.BoBiddingResult;
@@ -44,6 +45,7 @@ import com.jike.business.model.BoTrialReuslt;
 import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
+import com.jike.business.model.CooperationDetails;
 import com.jike.business.model.DailyEvents;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
@@ -93,10 +95,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private UserService  userService;
 	@Autowired
 	private RoleService  roleService;
-	
-	
-	
-	
+	@Autowired
+	private CooperationDetailsMapper cooperationDetailsMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -176,6 +176,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String decisionMakerWechat = boInformationCollectJson.getString("decisionMakerWechat");
 			Integer ifIntention = boInformationCollectJson.getInteger("ifIntention");
 			Integer ifInterested = boInformationCollectJson.getInteger("ifInterested");
+			String mainScope = boInformationCollectJson.getString("mainScope");
+			String expectedCooperationType = boInformationCollectJson.getString("expectedCooperationType");
 			
 			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
 			if(boInformationCollect == null){
@@ -204,6 +206,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boInformationCollect.setDecisionMakerWechat(decisionMakerWechat);
 				boInformationCollect.setIfIntention(ifIntention);
 				boInformationCollect.setIfInterested(ifInterested);
+				boInformationCollect.setMainScope(mainScope);
+				boInformationCollect.setExpectedCooperationType(expectedCooperationType);
 				boInformationCollect.setCreateTime(nowDate);
 				boInformationCollect.setCreateBy(jsonData.getLong("userId"));
 				boInformationCollectMapper.insert(boInformationCollect);
@@ -232,16 +236,32 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boInformationCollect.setIfInterested(ifInterested);
 				boInformationCollect.setUpdateTime(nowDate);
 				boInformationCollect.setUpdateBy(jsonData.getLong("userId"));
+				boInformationCollect.setMainScope(mainScope);
+				boInformationCollect.setExpectedCooperationType(expectedCooperationType);
+				boInformationCollect.setCreateTime(nowDate);
 				boInformationCollectMapper.updateByPrimaryKeySelective(boInformationCollect);
 			}
-			if(informationSources!=null&&schoolScale!=null&&schoolLevel!=null&&schoolProperty!=null
-					&&schoolType!=null&&contactName!=null&&contactTitle!=null&&
-					(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
-					&&decisionMakerName!=null&&decisionMakerTitle!=null
-					&&(decisionMakerPhone!=null||decisionMakerPhone!=null||decisionMakerEmail!=null||decisionMakerQq!=null||decisionMakerWechat!=null)){
-				//修改商机进度
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
+			JSONObject businessOpportunityJson= businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+			if(businessOpportunityJson.getInteger("businessOpportunityType")==0){//学校
+				if(informationSources!=null&&schoolScale!=null&&schoolLevel!=null&&schoolProperty!=null
+						&&schoolType!=null&&contactName!=null&&contactTitle!=null&&
+						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
+						&&decisionMakerName!=null&&decisionMakerTitle!=null
+						&&(decisionMakerPhone!=null||decisionMakerPhone!=null||decisionMakerEmail!=null||decisionMakerQq!=null||decisionMakerWechat!=null)){
+					//修改商机进度
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
+				}
+			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
+				if(informationSources!=null&&mainScope!=null
+						&&expectedCooperationType!=null&&contactName!=null&&contactTitle!=null&&
+						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
+						&&decisionMakerName!=null&&decisionMakerTitle!=null
+						&&(decisionMakerPhone!=null||decisionMakerPhone!=null||decisionMakerEmail!=null||decisionMakerQq!=null||decisionMakerWechat!=null)){
+					//修改商机进度
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
+				}
 			}
+			
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
@@ -379,7 +399,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
 			}
 			//保存日志
-			this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
 			
 			JSONObject boVisitJson = jsonData.getJSONObject("boVisit");
 			Long visitPlanId = boVisitJson.getLong("visitPlanId");//拜访计划ID
@@ -400,6 +420,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String visitDetail = boVisitJson.getString("visitDetail");
 			
 			BoVisit boVisit = new BoVisit();
+			boVisit.setLogId(logId);
 			boVisit.setVisitPlanId(visitPlanId);
 			boVisit.setVisitorName(visitorName);
 			boVisit.setVisitorTitle(visitorTitle);
@@ -427,13 +448,28 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boVisitPlan.setUpdateTime(nowDate);
 				boVisitPlanMapper.updateByPrimaryKeySelective(boVisitPlan);
 			}
-			//修改商机进度
-			String specificEvent = logData.getString("specificEvent");
-			if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
-			}else if("达成合作意向".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+			
+			JSONObject businessOpportunityJson= businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+			if(businessOpportunityJson.getInteger("businessOpportunityType")==0){//学校
+				//修改商机进度
+				String specificEvent = logData.getString("specificEvent");
+				if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
+				}else if("达成合作意向".equals(specificEvent)){
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+				}
+			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
+				//如果是达成合作意向，保存合作详情
+				if("达成合作意向".equals(logData.getString("specificEvent"))){
+					JSONObject cooperationDetailsJson = jsonData.getJSONObject("cooperationDetails");
+					CooperationDetails cooperationDetails = cooperationDetailsJson.toJavaObject(CooperationDetails.class);
+					cooperationDetails.setVisitId(boVisit.getVisitId());
+					cooperationDetails.setCreateTime(nowDate);
+					cooperationDetails.setCreateBy(jsonData.getLong("userId"));
+					cooperationDetailsMapper.insert(cooperationDetails);
+				}
 			}
+			
 			
 		}
 		resultJson.put("state", "success");
@@ -967,7 +1003,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return detailFeeId;
 	}
 	
-	public JSONObject qeueryBusinessOpportunityLogByParams(JSONObject queryJson) {
+	public JSONObject queryBusinessOpportunityLogByParams(JSONObject queryJson) {
 		JSONObject resultJson = new JSONObject();
 		//1、组件参数
 		String businessOpportunityName = queryJson.getString("businessOpportunityName");
@@ -1093,18 +1129,27 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		Long logId = queryJson.getLong("logId");
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
-		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
 		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
 		Object json  = null;
 		if("信息收集".equals(businessOpportunityLog.getEventType())){
 			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
-			 json = JSONObject.toJSON(boInformationCollect);
+			json = JSONObject.toJSON(boInformationCollect);
 		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
 			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectVisitPlanByLogId(logId);
 			json = JSONObject.toJSON(boVisitPlan);
 		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
 			BoVisit boVisit = boVisitMapper.selectVisitByLogId(logId);
 			json = JSONObject.toJSON(boVisit);
+				//如果是达成合作意向，保存合作详情
+				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
+					CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
+					Object json2 = JSONObject.toJSON(cooperationDetails);
+					JSONObject cooperationDetailsJson = (JSONObject) json2;
+					removeCommonAttribute(cooperationDetailsJson);
+					JSONObject comJson = (JSONObject)json;
+					comJson.put("cooperationDetailsJson", cooperationDetailsJson);
+					json = comJson;
+				}
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
 			BoNegotiation boNegotiation = boNegotiationMapper.selectNegotiationByLogId(logId);
 			json = JSONObject.toJSON(boNegotiation);
@@ -1112,24 +1157,119 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoInTrial boInTrial = boInTrialMapper.selectInTrialByLogId(logId);
 			json = JSONObject.toJSON(boInTrial);
 		}else if(businessOpportunityLog.getSpecificEvent().startsWith("试用结果")){
-//			BoTrialReuslt boTrialReust = boTrialReusltMapper.selectTrialReusltByLogId(logId);//TODO
-			
-		}else if("招投标".equals(businessOpportunityLog.getSpecificEvent())){
+			BoTrialReuslt boTrialReust = boTrialReusltMapper.selectTrialReusltByLogId(logId);
+			json = JSONObject.toJSON(boTrialReust);
+		}else if("投标准备".equals(businessOpportunityLog.getSpecificEvent())){
+			BoBidding boBidding = boBiddingMapper.selectBoBiddingByLogId(logId);
+			json = JSONObject.toJSON(boBidding);
+		}else if("投标成功".equals(businessOpportunityLog.getSpecificEvent())||"投标失败".equals(businessOpportunityLog.getSpecificEvent())){
+			BoBiddingResult boBiddingResult = boBiddingResultMapper.selectBoBiddingResultByLogId(logId);
+			json = JSONObject.toJSON(boBiddingResult);
 		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
+			BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
+			json = JSONObject.toJSON(boSign);
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
-			
+			BoPurchase boPurchase = boPurchaseMapper.selectBoPurchaseByLogId(logId);
+			json = JSONObject.toJSON(boPurchase);
 		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
-			
+			BoCustomerService boCustomerService = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
+			json = JSONObject.toJSON(boCustomerService);
 		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
-			
+			BoTrain boTrain = boTrainMapper.selectBoTrainByLogId(logId);
+			json = JSONObject.toJSON(boTrain);
 		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
-			
+			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
+			json = JSONObject.toJSON(boSupport);
 		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
-			
+			DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
+			json = JSONObject.toJSON(dailyEvents);
 		}
 		JSONObject commonJson = (JSONObject) json;
 		removeCommonAttribute(commonJson);
+		
+		JSONObject  businessOpportunityLogJson = (JSONObject) JSONObject.toJSON(businessOpportunityLog);
+		removeCommonAttribute(businessOpportunityLogJson);
+		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
+		JSONObject  boFeeDetailJson = (JSONObject) JSONObject.toJSON(boFeeDetail);
+		removeCommonAttribute(boFeeDetailJson);
+		resultJson.put("businessOpportunityLogJson", businessOpportunityLogJson);
+		resultJson.put("boFeeDetailJson", boFeeDetailJson);
+		resultJson.put("commonJson", commonJson);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
 		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject updateBOLog(JSONObject updateJson){
+		
+		JSONObject resultJson = new JSONObject();
+		JSONObject businessOpportunityLogJson = updateJson.getJSONObject("businessOpportunityLogJson");
+		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogJson.toJavaObject(BusinessOpportunityLog.class);
+		//查询创建者
+		BusinessOpportunityLog businessOpportunityLogOld = businessOpportunityLogMapper.selectByPrimaryKey(businessOpportunityLog.getLogId());
+		if(!updateJson.getLong("userId").equals(businessOpportunityLogOld.getCreateBy())){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有编辑权限");
+			return resultJson;
+		}
+		
+		//更新日志表
+		businessOpportunityLogMapper.updateByPrimaryKey(businessOpportunityLog);
+		//更新费用表
+		JSONObject boFeeDetailJson = updateJson.getJSONObject("boFeeDetailJson");
+		BoFeeDetail boFeeDetail = boFeeDetailJson.toJavaObject(BoFeeDetail.class);
+		boFeeDetailMapper.updateByPrimaryKey(boFeeDetail);
+		
+		//更新日志的对应信息表
+		JSONObject commonJson = updateJson.getJSONObject("commonJson");
+		if("信息收集".equals(businessOpportunityLog.getEventType())){
+			BoInformationCollect boInformationCollect = commonJson.toJavaObject(BoInformationCollect.class);
+			boInformationCollectMapper.updateByPrimaryKey(boInformationCollect);
+		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
+			BoVisitPlan boVisitPlan =  commonJson.toJavaObject(BoVisitPlan.class);
+			boVisitPlanMapper.updateByPrimaryKey(boVisitPlan);
+		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
+			BoVisit boVisit =  commonJson.toJavaObject(BoVisit.class);
+			boVisitMapper.updateByPrimaryKey(boVisit);
+		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
+			BoNegotiation boNegotiation =  commonJson.toJavaObject(BoNegotiation.class);
+			boNegotiationMapper.updateByPrimaryKey(boNegotiation);
+		}else if("试用准备".equals(businessOpportunityLog.getSpecificEvent())){
+			BoInTrial boInTrial = commonJson.toJavaObject(BoInTrial.class);
+			boInTrialMapper.updateByPrimaryKey(boInTrial);
+		}else if(businessOpportunityLog.getSpecificEvent().startsWith("试用结果")){
+			BoTrialReuslt boTrialReust = commonJson.toJavaObject(BoTrialReuslt.class);
+			boTrialReusltMapper.updateByPrimaryKey(boTrialReust);
+		}else if("投标准备".equals(businessOpportunityLog.getSpecificEvent())){
+			BoBidding boBidding = commonJson.toJavaObject(BoBidding.class);
+			boBiddingMapper.updateByPrimaryKey(boBidding);
+		}else if("投标成功".equals(businessOpportunityLog.getSpecificEvent())||"投标失败".equals(businessOpportunityLog.getSpecificEvent())){
+			BoBiddingResult boBiddingResult = commonJson.toJavaObject(BoBiddingResult.class);
+			boBiddingResultMapper.updateByPrimaryKey(boBiddingResult);
+		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
+			BoSign boSign = commonJson.toJavaObject(BoSign.class);
+			boSignMapper.updateByPrimaryKey(boSign);
+		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
+			BoPurchase boPurchase = commonJson.toJavaObject(BoPurchase.class);
+			boPurchaseMapper.updateByPrimaryKey(boPurchase);
+		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
+			BoCustomerService boCustomerService = commonJson.toJavaObject(BoCustomerService.class);
+			boCustomerServiceMapper.updateByPrimaryKey(boCustomerService);
+		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
+			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
+			boTrainMapper.updateByPrimaryKey(boTrain);
+		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
+			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
+			boSupportMapper.updateByPrimaryKey(boSupport);
+		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
+			DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
+			dailyEventsMapper.updateByPrimaryKey(dailyEvents);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "更新成功");
+		return resultJson;
+		
 	}
 	
 	/**
@@ -1151,6 +1291,23 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if(json.get("updateTime")!=null){
 			json.remove("updateTime");
 		}
+	}
+	
+	public JSONObject queryBoInfoCollectionByBoId(Long businessOpportunityId){
+		JSONObject resultJson = new JSONObject();
+		BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
+		resultJson.put("schoolLevel", boInformationCollect.getSchoolLevel());
+		resultJson.put("schoolProperty", boInformationCollect.getSchoolProperty());
+		resultJson.put("schoolType", boInformationCollect.getSchoolType());
+		resultJson.put("decisionMakerName", boInformationCollect.getDecisionMakerName());
+		resultJson.put("decisionMakerTitle", boInformationCollect.getDecisionMakerTitle());
+		resultJson.put("decisionMakerTitleDetail", boInformationCollect.getDecisionMakerTitleDetail());
+		resultJson.put("decisionMakerPhone", boInformationCollect.getDecisionMakerPhone());
+		resultJson.put("contactName", boInformationCollect.getContactName());
+		resultJson.put("contactTitle", boInformationCollect.getContactTitle());
+		resultJson.put("contactTitleDetail", boInformationCollect.getContactTitleDetail());
+		resultJson.put("contactPhone", boInformationCollect.getContactPhone());
+		return resultJson;
 	}
 	
 	

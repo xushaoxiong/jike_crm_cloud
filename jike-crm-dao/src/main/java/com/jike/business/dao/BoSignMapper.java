@@ -39,4 +39,6 @@ public interface BoSignMapper {
 	 * @mbggenerated  Mon Apr 10 18:05:07 CST 2017
 	 */
 	int updateByPrimaryKey(BoSign record);
+
+	BoSign selectBoSignByLogId(Long logId);
 }
