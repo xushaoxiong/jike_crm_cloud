@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		
+		<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/myDate/My97DatePicker/WdatePicker.js" ></script>
+		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>-->
+		<link rel="stylesheet" href="css/journal/baifangjiahua.css" />
+	</head>
+	<style>
+		.col{color: red;}
+		/*.journal-wap {margin-left: -7%;}*/
+		.journal-wap label{
+			/*width: 13%;*/
+			text-align: right;
+			padding-right: 0;
+			float: left;
+			padding-top: 6px;
+			margin-right: 15px;
+		}
+		.journal-wap .form-group{
+			margin: 10px 0;
+		}
+		.journalTime span{
+			display: inline-block;
+			width: 35px;
+			height:35px;
+			border-radius: 100%;
+			border: 1px solid #8C8C8C;
+			text-align: center;
+			line-height: 35px;
+			margin: 0 10px;
+		}
+		.journal-btn .btn{
+			padding:6px 18px;
+			margin: 0 10px;
+		}
+		.cursorm{
+			cursor: pointer;
+		}
+		
+		.totalCostwap .form-group div[class^="col-"],.journal-wap .form-group div[class^="col-"]{
+			padding: 0;
+		}
+		.totalCostwap label{
+			padding: 0;
+			text-align: right;
+			padding-right: 10px;
+			padding-top: 6px;
+		}
+		.totalCostwap .form-group span{
+			padding-top: 6px;
+			display: inline-block;
+			padding-left: 5px;
+		}
+		.message-wap{padding-bottom: 10px;}
+		.message-wap label{
+			text-align: right;
+			padding-top: 6px;
+			width: 10%;
+		}
+		.mesbtn-group{margin-left: 8%;margin-bottom: 10px;}
+		.mesbtn-group .btn{padding: 6px 25px;}
+		.contact-wap .form-control{margin-bottom: 15px;}
+		.contact-wap .nomarg{margin-bottom: 0;}
+
+		/*试用中样式*/
+		.trial-wap .gradeWap li,.disciplineWap li{
+			border: 1px solid #8C8C8C;
+			padding: 4px 19px;
+			margin-right: 10px;
+			margin-bottom:15px ;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.trial-wap .gradeWap li{
+			padding: 4px 12px;
+		}
+		.trial-wap .gradeWap .check,.trial-wap .disciplineWap .check{
+			background: #105598;
+			color: #fff;
+		}
+	</style>
+	<body>
+		<!--新建日志-->
+		<div class="container-fluid" id="addJournal">
+			<div>
+				<h4>商机列表>新建日志</h4>
+			</div>
+			<div class="journal-wap row">
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>日志日期</label>
+					<div class="col-md-3 col-sm-5">
+						<span class="form-control" id="indate" data-format="dd-mm-yyyy" ></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>事项类型</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control eventType" disabled="disabled"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>具体事项</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control specEvent" disabled="disabled"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>商机名称</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control businessNameSp" disabled="disabled" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>商机流水号</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control businesNumbspInp" disabled="disabled" />
+						<!--<input type="text" class="businesNumbspInp form-control" disabled="disabled" />-->
+					</div>					
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2" style="padding-top: 6px;">工时</label>
+					<div class="journalTime col-md-5 col-sm-8">
+						<span class="addTime cursor">+</span>
+						<input type="text" value="0" class="form-control timeVal" style="width: 20%;display: inline-block;" onkeyup="num(this)" />
+						<span class="minusTime cursor">-</span>&nbsp;小时
+						<b style="padding-left: 10px;">(以0.5小时为单位)</b>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2">内部参与人员</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control innerPerson" >
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2">外部参与人员</label>
+					<div class="col-md-3 col-sm-5">
+						<input type="text" class="form-control outPerson" >
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2">总费用</label>
+					<div class="col-md-1 col-sm-2">
+						<span class="form-control btnCost"></span>
+					</div>
+					<span style="display: inline-block;padding-top:6px;padding-left: 5px;">元</span>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-ms-2"><span class="col">*</span>补充信息</label>
+					<button class="btn addMessage">添加信息</button>
+				</div>
+			</div>
+			<div class="text-center col-md-3 col-sm-5 journal-btn">
+				<button class="btn btn-primary journaConfirm">提交</button>
+				<button class="btn btn-primary">重置</button>
+			</div>
+		</div>
+		<!--信息内容-->
+		<div class="editInfo"></div>
+		<!--总费用弹框-->
+		<div class="modal totalCostwap">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						<h4>费用明细</h4>
+					</div>
+					<div class="modal-body row">
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">交通费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp1 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">住宿费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp2 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">餐补费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp3 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">招待费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp4 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">礼品费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp5 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">其它</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp6 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">垫付费</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp7 ReachInp" onkeyup="num(this)"/>
+							</div>
+							<span>元</span>
+						</div>
+						<div class="form-group col-md-6 col-sm-6">
+							<label class="col-md-4 col-sm-6">垫付人</label>
+							<div class="col-md-6 col-sm-6">
+								<input type="text" class="form-control reachInp8"/>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="text-align: center;">
+						<button class="btn btn-primary reachConfirm" style="padding: 6px 25px;">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/editjournal/bianjirizhi.js" ></script>
+	<script type="text/javascript" src="js/editjournal/editPub.js" ></script>
+	
+	
+</html>
