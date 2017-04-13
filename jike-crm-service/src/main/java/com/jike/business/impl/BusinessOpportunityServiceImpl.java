@@ -359,6 +359,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			json.put("addressCity", businessOpportunity.getAddressCity());
 			json.put("addressCounty", businessOpportunity.getAddressCounty());
 			json.put("addressDetail", businessOpportunity.getAddressDetail());
+			json.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
 		}
 		return json;
 	}
