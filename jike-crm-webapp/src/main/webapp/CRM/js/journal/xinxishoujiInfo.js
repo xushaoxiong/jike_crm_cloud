@@ -321,17 +321,18 @@ function infodata(bInfoColet){
 				pub.Alt('请填写联系人正确微信号',false);
 				return;
 			}
-			if(!phoneCheck(decisionMakerLandline)&&decisionMakerLandline!=""){
-				pub.Alt('请填写决策人正确手机号',false);
+			if(!Landline(decisionMakerLandline)&&decisionMakerLandline!=""){
+				console.log(1)
+				pub.Alt('请填写决策人正确座机号',false);
 				return;
 			}
 			
-			if(!isEmail(decisionMakerPhone)&&decisionMakerPhone!=''){
+			if(!phoneCheck(decisionMakerPhone)&&decisionMakerPhone!=''){
 				pub.Alt('请填写决策人正确手机号',false);
 				return;
 			}
-			if(!QqCheck(decisionMakerEmail)&&decisionMakerEmail!=""){
-				pub.Alt('请填写决策人正确QQ号',false);
+			if(!isEmail(decisionMakerEmail)&&decisionMakerEmail!=""){
+				pub.Alt('请填写决策人正确邮箱号',false);
 				return;
 			}
 			if(!QqCheck(decisionMakerQq)&&decisionMakerQq!=""){
