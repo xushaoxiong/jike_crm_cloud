@@ -192,7 +192,7 @@ function infodata(bInfoColet){
 		$('.ifInterested').find('input[type=radio][ifined="'+bInfoColet.ifInterested+'"]').prop('checked',true);
 }
 	//联系人职务其他选框
-		$('.FillInfo').on('change','.contTitle',function(){
+		$('.editInfo').on('change','.contTitle',function(){
 			$('.otherCont').html("");
 			if($(this).find('option:selected').val()=="其它"){
 				$('.otherCont').show();
@@ -201,7 +201,7 @@ function infodata(bInfoColet){
 			}
 		})
 	//决策人职务其他选框
-		$('.FillInfo').on('change','.decisionMakerTitle',function(){
+		$('.editInfo').on('change','.decisionMakerTitle',function(){
 			$('.otherMaker').html("");
 			if($(this).find('option:selected').val()=="其它"){
 				$('.otherMaker').show();
@@ -211,7 +211,7 @@ function infodata(bInfoColet){
 		})
 	//信息收集页面内容
 		var jourInJ={};
-		var boInformationCollect={};
+		var commonJson={};
 		function infodetail(dataJ){
 			dataJ.informationSources=$('.scolInfo').find('option:selected').val();
 			dataJ.schoolScale=$('.scolPopleNumb').find('option:selected').val();
@@ -255,7 +255,7 @@ function infodata(bInfoColet){
 			
 			return dataJ;
 		}
-		$('.FillInfo').on('click','.mesConfirm',function(){	
+		$('.editInfo').on('click','.mesConfirm',function(){	
 			//收集信息必须至少填写一条才能提交判断
 			var contactTitle=$('.contTitle').find('option:selected').val();
 			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
@@ -343,24 +343,9 @@ function infodata(bInfoColet){
 				pub.Alt('请填写决策人正确微信号',false);
 				return;
 			}
-			$('.FillInfo').hide();
+			$('.editInfo').hide();
 			$('#addJournal').show();
-			$('.journaConfirm').prop('disabled',false);
 			
 		})
 	
-	//新建日志提交返回后台
-	$('.journaConfirm').click(function(){
-		infodetail(boInformationCollect);
-		logDateF(logData);
-		totalDetailF(totalDetail);
-		jourInJ.logData=logData;
-		jourInJ.totalDetail=totalDetail
-		jourInJ.boInformationCollect=boInformationCollect;
-		console.log(jourInJ)
-		$ajax('post','businessOpportunityLog/addBOLogInformationCollection',jourInJ,function succF(jo){
-			console.log(jo)
-		},function errF(jo){
-			alert(jo.message);
-		})
-	})
+	
