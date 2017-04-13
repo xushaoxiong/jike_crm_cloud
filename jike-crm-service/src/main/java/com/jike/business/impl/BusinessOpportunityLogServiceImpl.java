@@ -155,30 +155,105 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//保存信息收集
 			JSONObject boInformationCollectJson = jsonData.getJSONObject("boInformationCollect");
 			String informationSources = boInformationCollectJson.getString("informationSources");
+			if(StringUtils.isEmpty(informationSources)){
+				informationSources = null;
+			}
 			String schoolScale = boInformationCollectJson.getString("schoolScale");
+			if(StringUtils.isEmpty(schoolScale)){
+				schoolScale = null;
+			}
 			String schoolLevel = boInformationCollectJson.getString("schoolLevel");
+			if(StringUtils.isEmpty(schoolLevel)){
+				schoolLevel = null;
+			}
 			Integer schoolProperty = boInformationCollectJson.getInteger("schoolProperty");
+			if(StringUtils.isEmpty(schoolProperty)){
+				schoolProperty = null;
+			}
 			String schoolType = boInformationCollectJson.getString("schoolType");
+			if(StringUtils.isEmpty(schoolType)){
+				schoolType = null;
+			}
 			String contactName = boInformationCollectJson.getString("contactName");
+			if(StringUtils.isEmpty(contactName)){
+				contactName = null;
+			}
 			String contactTitle = boInformationCollectJson.getString("contactTitle");
+			if(StringUtils.isEmpty(contactTitle)){
+				contactTitle = null;
+			}
 			String contactTitleDetail = boInformationCollectJson.getString("contactTitleDetail");
+			if(StringUtils.isEmpty(contactTitleDetail)){
+				contactTitleDetail = null;
+			}
 			String contactLandline = boInformationCollectJson.getString("contactLandline");
+			if(StringUtils.isEmpty(contactLandline)){
+				contactLandline = null;
+			}
 			String contactPhone = boInformationCollectJson.getString("contactPhone");
+			if(StringUtils.isEmpty(contactPhone)){
+				contactPhone = null;
+			}
 			String contactEmail = boInformationCollectJson.getString("contactEmail");
+			if(StringUtils.isEmpty(contactEmail)){
+				contactEmail = null;
+			}
 			String contactQq = boInformationCollectJson.getString("contactQq");
+			if(StringUtils.isEmpty(contactQq)){
+				contactQq = null;
+			}
 			String contactWechat = boInformationCollectJson.getString("contactWechat");
+			if(StringUtils.isEmpty(contactWechat)){
+				contactWechat = null;
+			}
 			String decisionMakerName = boInformationCollectJson.getString("decisionMakerName");
+			if(StringUtils.isEmpty(decisionMakerName)){
+				decisionMakerName = null;
+			}
 			String decisionMakerTitle = boInformationCollectJson.getString("decisionMakerTitle");
+			if(StringUtils.isEmpty(decisionMakerTitle)){
+				decisionMakerTitle = null;
+			}
 			String decisionMakerTitleDetail = boInformationCollectJson.getString("decisionMakerTitleDetail");
+			if(StringUtils.isEmpty(decisionMakerTitleDetail)){
+				decisionMakerTitleDetail = null;
+			}
 			String decisionMakerLandline = boInformationCollectJson.getString("decisionMakerLandline");
+			if(StringUtils.isEmpty(decisionMakerLandline)){
+				decisionMakerLandline = null;
+			}
 			String decisionMakerPhone = boInformationCollectJson.getString("decisionMakerPhone");
+			if(StringUtils.isEmpty(decisionMakerPhone)){
+				decisionMakerPhone = null;
+			}
 			String decisionMakerEmail = boInformationCollectJson.getString("decisionMakerEmail");
+			if(StringUtils.isEmpty(decisionMakerEmail)){
+				decisionMakerEmail = null;
+			}
 			String decisionMakerQq = boInformationCollectJson.getString("decisionMakerQq");
+			if(StringUtils.isEmpty(decisionMakerQq)){
+				decisionMakerQq = null;
+			}
 			String decisionMakerWechat = boInformationCollectJson.getString("decisionMakerWechat");
+			if(StringUtils.isEmpty(decisionMakerWechat)){
+				decisionMakerWechat = null;
+			}
 			Integer ifIntention = boInformationCollectJson.getInteger("ifIntention");
+			if(StringUtils.isEmpty(ifIntention)){
+				ifIntention = null;
+			}
 			Integer ifInterested = boInformationCollectJson.getInteger("ifInterested");
+			if(StringUtils.isEmpty(ifInterested)){
+				ifInterested = null;
+			}
 			String mainScope = boInformationCollectJson.getString("mainScope");
+			if(StringUtils.isEmpty(mainScope)){
+				mainScope = null;
+			}
 			String expectedCooperationType = boInformationCollectJson.getString("expectedCooperationType");
+			if(StringUtils.isEmpty(expectedCooperationType)){
+				expectedCooperationType = null;
+			}
 			
 			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
 			if(boInformationCollect == null){
@@ -340,7 +415,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setInPlaning(0);//第一次添加处于激活状态
 			boVisitPlanMapper.insert(boVisitPlan);
 			//修改商机进度
-			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访状态");
+			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访");
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
@@ -1203,7 +1278,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityLogJson.put("businessOpportunityNum", businessOpportunityJson.getString("businessOpportunityNum"));
 		//费用
 		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
+		
 		JSONObject  boFeeDetailJson = (JSONObject) JSONObject.toJSON(boFeeDetail);
+		businessOpportunityLogJson.put("totalFee", caculateDetailFee(boFeeDetail));
 		removeCommonAttribute(boFeeDetailJson);
 		resultJson.put("businessOpportunityLogJson", businessOpportunityLogJson);
 		resultJson.put("boFeeDetailJson", boFeeDetailJson);
@@ -1211,6 +1288,40 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
+	}
+	
+	private double caculateDetailFee(BoFeeDetail boFeeDetail) {
+		BigDecimal totalFee = new BigDecimal(0);
+		BigDecimal trafficFee = boFeeDetail.getTrafficFee();
+		BigDecimal hotelFee = boFeeDetail.getHotelFee();
+		BigDecimal foodFee = boFeeDetail.getFoodFee();
+		BigDecimal entertainFee = boFeeDetail.getEntertainFee();
+		BigDecimal giftFee = boFeeDetail.getGiftFee();
+		BigDecimal otherFee = boFeeDetail.getOtherFee();
+		BigDecimal advanceFee = boFeeDetail.getAdvanceFee();
+		if (trafficFee != null) {
+			totalFee = totalFee.add(trafficFee);
+		}
+		if (hotelFee != null) {
+			totalFee = totalFee.add(hotelFee);
+		}
+		if (foodFee != null) {
+			totalFee = totalFee.add(foodFee);
+		}
+		if (entertainFee != null) {
+			totalFee = totalFee.add(entertainFee);
+		}
+		if (giftFee != null) {
+			totalFee = totalFee.add(giftFee);
+		}
+		if (otherFee != null) {
+			totalFee = totalFee.add(otherFee);
+		}
+		if (advanceFee != null) {
+			totalFee = totalFee.add(advanceFee);
+		}
+		return totalFee.doubleValue();
+
 	}
 	
 	@Transactional

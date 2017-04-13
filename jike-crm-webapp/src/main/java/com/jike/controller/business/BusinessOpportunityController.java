@@ -94,6 +94,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.updateBusinessOpportunity(json);
 		} catch (IOException e) {
 			logger.error("updateBusinessOpportunity error", e);
@@ -119,6 +120,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.operationBusinessOpportunity(json);
 		} catch (IOException e) {
 			logger.error("operationBusinessOpportunity error", e);
@@ -144,6 +146,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.distributionBoToSale(json);
 		} catch (IOException e) {
 			logger.error("distributionBoToSale error", e);
@@ -168,6 +171,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.distributionBoToService(json);
 		} catch (IOException e) {
 			logger.error("distributionBoToService error", e);
@@ -193,6 +197,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.queryBusinessOpportunityByBoNum(json);
 		} catch (IOException e) {
 			logger.error("queryBusinessOpportunityByBoNum error", e);
@@ -217,6 +222,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.queryBusinessOpportunityByName(json);
 		} catch (IOException e) {
 			logger.error("queryBusinessOpportunity error", e);
@@ -242,6 +248,7 @@ public class BusinessOpportunityController extends BaseController{
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
 			result = businessOpportunityService.queryBusinessOpportunityInfoById(json);
 		} catch (IOException e) {
 			logger.error("queryBusinessOpportunityInfoById error", e);

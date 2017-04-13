@@ -307,6 +307,9 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
 		Long userId = queryJson.getLong("userId");
+		if(queryJson.getLong("roleId")==2){
+			userId = null;
+		}
 		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
