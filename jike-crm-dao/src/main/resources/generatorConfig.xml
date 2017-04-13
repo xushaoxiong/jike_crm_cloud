@@ -31,7 +31,8 @@
          <!--生成对应表及类名-->
         <!--  <table tableName="business_opportunity_log" domainObjectName="BusinessOpportunityLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
           <table tableName="bo_fee_detail" domainObjectName="BoFeeDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
-    	<table tableName="cooperation_details" domainObjectName="CooperationDetails" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+    	<table tableName="bo_sign" domainObjectName="BoSign" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+     <table tableName="partner_agent_area" domainObjectName="PartnerAgentArea" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
      
      </context>
 </generatorConfiguration>

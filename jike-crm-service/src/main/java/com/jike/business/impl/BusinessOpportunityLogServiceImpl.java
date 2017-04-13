@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -728,12 +729,18 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject boSignJson = jsonData.getJSONObject("boSign");
 			Date signDate = boSignJson.getDate("signDate");
 			BigDecimal signAmonut = boSignJson.getBigDecimal("signAmonut");
+			String assessmentIndex = boSignJson.getString("assessmentIndex");
+			Date assessmentPeriodBeginTime = boSignJson.getDate("assessmentPeriodBeginTime");
+			Date assessmentPeriodEndTime = boSignJson.getDate("assessmentPeriodEndTime");
 			
 			BoSign boSign = new BoSign();
 			boSign.setBusinessOpportunityId(businessOpportunityId);
 			boSign.setLogId(logId);
 			boSign.setSignDate(signDate);
 			boSign.setSignAmonut(signAmonut);
+			boSign.setAssessmentIndex(assessmentIndex);
+			boSign.setAssessmentPeriodBeginTime(assessmentPeriodBeginTime);
+			boSign.setAssessmentPeriodEndTime(assessmentPeriodEndTime);
 			boSign.setCreateTime(nowDate);
 			boSign.setCreateBy(jsonData.getLong("userId"));
 			boSignMapper.insert(boSign);
@@ -1018,8 +1025,10 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if("".equals(endTime)){
 			endTime = null;
 		}
-		if (businessOpportunityName != null) {
+		if (!StringUtils.isEmpty(businessOpportunityName)) {
 			businessOpportunityName = "%" + businessOpportunityName + "%";
+		}else{
+			businessOpportunityName =null;
 		}
 		
 		if(eventType!=null&&"".equals(eventType.trim())){
@@ -1299,6 +1308,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("schoolLevel", boInformationCollect.getSchoolLevel());
 		resultJson.put("schoolProperty", boInformationCollect.getSchoolProperty());
 		resultJson.put("schoolType", boInformationCollect.getSchoolType());
+		resultJson.put("mainScope", boInformationCollect.getMainScope());
 		resultJson.put("decisionMakerName", boInformationCollect.getDecisionMakerName());
 		resultJson.put("decisionMakerTitle", boInformationCollect.getDecisionMakerTitle());
 		resultJson.put("decisionMakerTitleDetail", boInformationCollect.getDecisionMakerTitleDetail());
