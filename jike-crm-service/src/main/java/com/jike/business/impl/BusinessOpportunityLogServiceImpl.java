@@ -1229,50 +1229,79 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject boFeeDetailJson = updateJson.getJSONObject("boFeeDetailJson");
 		BoFeeDetail boFeeDetail = boFeeDetailJson.toJavaObject(BoFeeDetail.class);
 		boFeeDetailMapper.updateByPrimaryKey(boFeeDetail);
-		
+		Long userId = updateJson.getLong("userId");
+		Date nowDate = new Date();
 		//更新日志的对应信息表
 		JSONObject commonJson = updateJson.getJSONObject("commonJson");
 		if("信息收集".equals(businessOpportunityLog.getEventType())){
 			BoInformationCollect boInformationCollect = commonJson.toJavaObject(BoInformationCollect.class);
+			boInformationCollect.setUpdateBy(userId);
+			boInformationCollect.setUpdateTime(nowDate);
 			boInformationCollectMapper.updateByPrimaryKey(boInformationCollect);
 		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
 			BoVisitPlan boVisitPlan =  commonJson.toJavaObject(BoVisitPlan.class);
+			boVisitPlan.setUpdateBy(userId);
+			boVisitPlan.setUpdateTime(nowDate);
 			boVisitPlanMapper.updateByPrimaryKey(boVisitPlan);
 		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
 			BoVisit boVisit =  commonJson.toJavaObject(BoVisit.class);
+			boVisit.setUpdateBy(userId);
+			boVisit.setUpdateTime(nowDate);
 			boVisitMapper.updateByPrimaryKey(boVisit);
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
 			BoNegotiation boNegotiation =  commonJson.toJavaObject(BoNegotiation.class);
+			boNegotiation.setUpdateBy(userId);
+			boNegotiation.setUpdateTime(nowDate);
 			boNegotiationMapper.updateByPrimaryKey(boNegotiation);
 		}else if("试用准备".equals(businessOpportunityLog.getSpecificEvent())){
 			BoInTrial boInTrial = commonJson.toJavaObject(BoInTrial.class);
+			boInTrial.setUpdateBy(userId);
+			boInTrial.setUpdateTime(nowDate);
 			boInTrialMapper.updateByPrimaryKey(boInTrial);
 		}else if(businessOpportunityLog.getSpecificEvent().startsWith("试用结果")){
 			BoTrialReuslt boTrialReust = commonJson.toJavaObject(BoTrialReuslt.class);
+			boTrialReust.setUpdateBy(userId);
+			boTrialReust.setUpdateTime(nowDate);
 			boTrialReusltMapper.updateByPrimaryKey(boTrialReust);
 		}else if("投标准备".equals(businessOpportunityLog.getSpecificEvent())){
 			BoBidding boBidding = commonJson.toJavaObject(BoBidding.class);
+			boBidding.setUpdateBy(userId);
+			boBidding.setUpdateTime(nowDate);
 			boBiddingMapper.updateByPrimaryKey(boBidding);
 		}else if("投标成功".equals(businessOpportunityLog.getSpecificEvent())||"投标失败".equals(businessOpportunityLog.getSpecificEvent())){
 			BoBiddingResult boBiddingResult = commonJson.toJavaObject(BoBiddingResult.class);
+			boBiddingResult.setUpdateBy(userId);
+			boBiddingResult.setUpdateTime(nowDate);
 			boBiddingResultMapper.updateByPrimaryKey(boBiddingResult);
 		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSign boSign = commonJson.toJavaObject(BoSign.class);
+			boSign.setUpdateBy(userId);
+			boSign.setUpdateTime(nowDate);
 			boSignMapper.updateByPrimaryKey(boSign);
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
 			BoPurchase boPurchase = commonJson.toJavaObject(BoPurchase.class);
+			boPurchase.setUpdateBy(userId);
+			boPurchase.setUpdateTime(nowDate);
 			boPurchaseMapper.updateByPrimaryKey(boPurchase);
 		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
 			BoCustomerService boCustomerService = commonJson.toJavaObject(BoCustomerService.class);
+			boCustomerService.setUpdateBy(userId);
+			boCustomerService.setUpdateTime(nowDate);
 			boCustomerServiceMapper.updateByPrimaryKey(boCustomerService);
 		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
 			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
+			boTrain.setUpdateBy(userId);
+			boTrain.setUpdateTime(nowDate);
 			boTrainMapper.updateByPrimaryKey(boTrain);
 		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
+			boSupport.setUpdateBy(userId);
+			boSupport.setUpdateTime(nowDate);
 			boSupportMapper.updateByPrimaryKey(boSupport);
 		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
 			DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
+			dailyEvents.setUpdateBy(userId);
+			dailyEvents.setUpdateTime(nowDate);
 			dailyEventsMapper.updateByPrimaryKey(dailyEvents);
 		}
 		resultJson.put("state", "success");
