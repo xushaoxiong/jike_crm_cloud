@@ -121,7 +121,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 				businessOpportunity.setBusinessOpportunityType(businessOpportunityJson.getInteger("businessOpportunityType"));
 				businessOpportunity.setAddressProvince(businessOpportunityJson.getString("addressProvince"));
 				businessOpportunity.setAddressCity(businessOpportunityJson.getString("addressCity"));
-				businessOpportunity.setAddressCounty(businessOpportunityJson.getString("addressProvince"));
+				businessOpportunity.setAddressCounty(businessOpportunityJson.getString("addressCounty"));
 				businessOpportunity.setAddressDetail(businessOpportunityJson.getString("addressDetail"));
 				businessOpportunity.setUpdateBy(businessOpportunityJson.getLong("userId"));
 				businessOpportunity.setUpdateTime(new Date());

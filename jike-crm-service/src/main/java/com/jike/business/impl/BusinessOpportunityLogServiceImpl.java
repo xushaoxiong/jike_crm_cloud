@@ -1256,7 +1256,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
-		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
 			DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
 			json = JSONObject.toJSONString(dailyEvents,SerializerFeature.WriteNullStringAsEmpty);
 		}

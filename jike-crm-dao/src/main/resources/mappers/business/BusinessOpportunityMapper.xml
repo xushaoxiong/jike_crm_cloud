@@ -322,6 +322,7 @@
 		<if test="userId != null">
 			and sbo.user_id = #{userId,jdbcType=BIGINT}
 		</if>
+		order by bo.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>
   <select id="selectByBusinessOpportunityName" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -339,6 +340,7 @@
 		<if test="unBusinessOpportunityProcess != null">
 			and bo.business_opportunity_process != #{unBusinessOpportunityProcess,jdbcType=VARCHAR}
 		</if>
+		order by bo.create_time desc
 		
   </select>
 	
