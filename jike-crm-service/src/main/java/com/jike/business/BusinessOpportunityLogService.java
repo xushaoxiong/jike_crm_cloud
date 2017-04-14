@@ -179,5 +179,14 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月12日下午5:55:52
 	 */
 	public JSONObject queryBoInfoCollectionByBoId(Long businessOpportunityId);
+	
+	/**
+	 * 查询该商机是否建立了日志
+	 * @param businessOpportunityId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月14日下午3:37:52
+	 */
+	public boolean queryBoLogByBoId(Long businessOpportunityId);
 
 }

@@ -1524,5 +1524,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 //		businessOpportunityLogMapper.deleteByPrimaryKey(logId);
 		return null;
 	}
+
+	public boolean queryBoLogByBoId(Long businessOpportunityId) {
+		List<BusinessOpportunityLog>  businessOpportunityLogList = businessOpportunityLogMapper.selectByBusinessOpportunityId(businessOpportunityId);
+		if(!businessOpportunityLogList.isEmpty()){
+			return true;
+		}
+		return false;
+	}
 	
 }

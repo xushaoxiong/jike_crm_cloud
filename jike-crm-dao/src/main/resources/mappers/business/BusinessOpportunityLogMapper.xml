@@ -280,4 +280,10 @@
 		ORDER BY bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>
+  <select id="selectByBusinessOpportunityId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+      select 
+    <include refid="Base_Column_List" />
+    from business_opportunity_log
+    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+  </select>
 </mapper>
