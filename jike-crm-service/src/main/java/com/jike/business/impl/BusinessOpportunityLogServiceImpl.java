@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoBiddingMapper;
@@ -104,20 +106,10 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long businessOpportunityId = jsonData.getLong("businessOpportunityId");
 		BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
 		if(boInformationCollect!=null){
-			Object json = JSONObject.toJSON(boInformationCollect);
-			JSONObject informationCollectJson = (JSONObject) json;
-			if(informationCollectJson.get("createBy")!=null){
-				informationCollectJson.remove("createBy");
-			}
-			if(informationCollectJson.get("createTime")!=null){
-				informationCollectJson.remove("createTime");
-			}
-			if(informationCollectJson.get("updateBy")!=null){
-				informationCollectJson.remove("updateBy");
-			}
-			if(informationCollectJson.get("updateTime")!=null){
-				informationCollectJson.remove("updateTime");
-			}
+			String json = JSONObject.toJSONString(boInformationCollect,SerializerFeature.WriteNullStringAsEmpty);
+			JSONObject informationCollectJson = JSONObject.parseObject(json);
+			
+			removeCommonAttribute(informationCollectJson);
 			resultJson.put("boInformationCollect", informationCollectJson);
 		}
 		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
@@ -1214,64 +1206,64 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long logId = queryJson.getLong("logId");
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
 		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
-		Object json  = null;
+		String json  = null;
 		if("信息收集".equals(businessOpportunityLog.getEventType())){
 			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
-			json = JSONObject.toJSON(boInformationCollect);
+			json = JSONObject.toJSONString(boInformationCollect,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
 			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectVisitPlanByLogId(logId);
-			json = JSONObject.toJSON(boVisitPlan);
+			json = JSONObject.toJSONString(boVisitPlan,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
 			BoVisit boVisit = boVisitMapper.selectVisitByLogId(logId);
-			json = JSONObject.toJSON(boVisit);
+			json = JSONObject.toJSONString(boVisit,SerializerFeature.WriteNullStringAsEmpty);
 				//如果是达成合作意向，保存合作详情
 				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
 					CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
-					Object json2 = JSONObject.toJSON(cooperationDetails);
+					Object json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
 					JSONObject cooperationDetailsJson = (JSONObject) json2;
 					removeCommonAttribute(cooperationDetailsJson);
-					JSONObject comJson = (JSONObject)json;
+					JSONObject comJson = JSONObject.parseObject(json);
 					comJson.put("cooperationDetailsJson", cooperationDetailsJson);
-					json = comJson;
+					json = comJson.toJSONString();
 				}
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
 			BoNegotiation boNegotiation = boNegotiationMapper.selectNegotiationByLogId(logId);
-			json = JSONObject.toJSON(boNegotiation);
+			json = JSONObject.toJSONString(boNegotiation,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("试用准备".equals(businessOpportunityLog.getSpecificEvent())){
 			BoInTrial boInTrial = boInTrialMapper.selectInTrialByLogId(logId);
-			json = JSONObject.toJSON(boInTrial);
+			json = JSONObject.toJSONString(boInTrial,SerializerFeature.WriteNullStringAsEmpty);
 		}else if(businessOpportunityLog.getSpecificEvent().startsWith("试用结果")){
 			BoTrialReuslt boTrialReust = boTrialReusltMapper.selectTrialReusltByLogId(logId);
-			json = JSONObject.toJSON(boTrialReust);
+			json = JSONObject.toJSONString(boTrialReust,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("投标准备".equals(businessOpportunityLog.getSpecificEvent())){
 			BoBidding boBidding = boBiddingMapper.selectBoBiddingByLogId(logId);
-			json = JSONObject.toJSON(boBidding);
+			json = JSONObject.toJSONString(boBidding,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("投标成功".equals(businessOpportunityLog.getSpecificEvent())||"投标失败".equals(businessOpportunityLog.getSpecificEvent())){
 			BoBiddingResult boBiddingResult = boBiddingResultMapper.selectBoBiddingResultByLogId(logId);
-			json = JSONObject.toJSON(boBiddingResult);
+			json = JSONObject.toJSONString(boBiddingResult,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
-			json = JSONObject.toJSON(boSign);
+			json = JSONObject.toJSONString(boSign,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
 			BoPurchase boPurchase = boPurchaseMapper.selectBoPurchaseByLogId(logId);
-			json = JSONObject.toJSON(boPurchase);
+			json = JSONObject.toJSONString(boPurchase,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
 			BoCustomerService boCustomerService = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
-			json = JSONObject.toJSON(boCustomerService);
+			json = JSONObject.toJSONString(boCustomerService,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
 			BoTrain boTrain = boTrainMapper.selectBoTrainByLogId(logId);
-			json = JSONObject.toJSON(boTrain);
+			json = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
-			json = JSONObject.toJSON(boSupport);
+			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
 			DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
-			json = JSONObject.toJSON(dailyEvents);
+			json = JSONObject.toJSONString(dailyEvents,SerializerFeature.WriteNullStringAsEmpty);
 		}
-		JSONObject commonJson = (JSONObject) json;
+		JSONObject commonJson =JSON.parseObject(json);
 		removeCommonAttribute(commonJson);
 		//log
-		JSONObject  businessOpportunityLogJson = (JSONObject) JSONObject.toJSON(businessOpportunityLog);
+		JSONObject  businessOpportunityLogJson = JSONObject.parseObject(JSONObject.toJSONString(businessOpportunityLog,SerializerFeature.WriteNullStringAsEmpty));
 		removeCommonAttribute(businessOpportunityLogJson);
 		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
 		businessOpportunityLogJson.put("businessOpportunityName", businessOpportunityJson.getString("businessOpportunityName"));
@@ -1279,7 +1271,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		//费用
 		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
 		
-		JSONObject  boFeeDetailJson = (JSONObject) JSONObject.toJSON(boFeeDetail);
+		JSONObject  boFeeDetailJson = JSONObject.parseObject(JSONObject.toJSONString(boFeeDetail,SerializerFeature.WriteNullStringAsEmpty));
 		businessOpportunityLogJson.put("totalFee", caculateDetailFee(boFeeDetail));
 		removeCommonAttribute(boFeeDetailJson);
 		resultJson.put("businessOpportunityLogJson", businessOpportunityLogJson);
@@ -1462,16 +1454,16 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	 * @createtime 2017年4月11日下午4:40:01
 	 */
 	private void removeCommonAttribute(JSONObject json){
-		if(json.get("createBy")!=null){
+		if(StringUtils.isEmpty(json.get("createBy"))){
 			json.remove("createBy");
 		}
-		if(json.get("createTime")!=null){
+		if(StringUtils.isEmpty(json.get("createTime"))){
 			json.remove("createTime");
 		}
-		if(json.get("updateBy")!=null){
+		if(StringUtils.isEmpty(json.get("updateBy"))){
 			json.remove("updateBy");
 		}
-		if(json.get("updateTime")!=null){
+		if(StringUtils.isEmpty(json.get("updateTime"))){
 			json.remove("updateTime");
 		}
 	}

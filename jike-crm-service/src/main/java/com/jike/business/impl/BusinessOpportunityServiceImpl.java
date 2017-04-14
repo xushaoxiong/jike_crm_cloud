@@ -310,7 +310,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(queryJson.getLong("roleId")==2){
 			userId = null;
 		}
-		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId);
+		String unBusinessOpportunityProcess = null;
+		String eventType = queryJson.getString("eventType");
+		if(!"信息收集".equals(eventType)){
+			unBusinessOpportunityProcess = "信息收集";
+		}
+		
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
