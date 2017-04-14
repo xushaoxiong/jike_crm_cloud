@@ -1454,16 +1454,16 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	 * @createtime 2017年4月11日下午4:40:01
 	 */
 	private void removeCommonAttribute(JSONObject json){
-		if(StringUtils.isEmpty(json.get("createBy"))){
+		if(json.get("createBy")!=null){
 			json.remove("createBy");
 		}
-		if(StringUtils.isEmpty(json.get("createTime"))){
+		if(json.get("createTime")!=null){
 			json.remove("createTime");
 		}
-		if(StringUtils.isEmpty(json.get("updateBy"))){
+		if(json.get("updateBy")!=null){
 			json.remove("updateBy");
 		}
-		if(StringUtils.isEmpty(json.get("updateTime"))){
+		if(json.get("updateTime")!=null){
 			json.remove("updateTime");
 		}
 	}
