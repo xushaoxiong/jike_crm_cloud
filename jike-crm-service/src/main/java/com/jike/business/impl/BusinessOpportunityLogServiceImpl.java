@@ -681,9 +681,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boTrialReusltMapper.insert(boTrialReuslt);
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
-			if("承诺购买".equals(specificEvent)){
+			if("试用结果-承诺购买".equals(specificEvent)){
 				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
-			}else if("走招投标流程".equals(specificEvent)){
+			}else if("试用结果-招投标".equals(specificEvent)){
 				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标");
 			}
 			

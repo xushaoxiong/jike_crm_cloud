@@ -186,4 +186,10 @@
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
   
   </select>
+    <select id="selectNegotiationByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_negotiation
+    where  log_id = #{logId,jdbcType=BIGINT}
+  </select>
 </mapper>
