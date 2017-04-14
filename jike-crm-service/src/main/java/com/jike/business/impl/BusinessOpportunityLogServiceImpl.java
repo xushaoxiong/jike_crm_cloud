@@ -1247,13 +1247,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
 			BoPurchase boPurchase = boPurchaseMapper.selectBoPurchaseByLogId(logId);
 			json = JSONObject.toJSONString(boPurchase,SerializerFeature.WriteNullStringAsEmpty);
-		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("售后".equals(businessOpportunityLog.getEventType())){
 			BoCustomerService boCustomerService = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
 			json = JSONObject.toJSONString(boCustomerService,SerializerFeature.WriteNullStringAsEmpty);
-		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			BoTrain boTrain = boTrainMapper.selectBoTrainByLogId(logId);
 			json = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
-		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
