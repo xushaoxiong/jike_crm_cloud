@@ -23,12 +23,17 @@ $(function(){
 		
 	})
 	
+	//商机名称弹框状态如果事项类型未选择商机名称不能点击
+	if($('#eventType').val()==''){
+		$('.busnamState').removeClass('businessNameSp');
+	}
 	//商机名称弹框
-	$('.businessNameSp').click(function(){
-		
+	$('.busnamewap').on('click','.businessNameSp',function(){
 		var bussinesNameJ={};
-		var businessOpportunityName=$.trim($('#searchBusinessName').val());
+		var businessOpportunityName="";
+		var eventType=$('#eventType').find('option:selected').val();
 		bussinesNameJ.businessOpportunityName=businessOpportunityName;
+		bussinesNameJ.eventType=eventType;
 		$('.bussinesList').modal('toggle');
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
 			bussinesList(jo.businessOpportunityList,".bussinessItem")
@@ -77,8 +82,10 @@ $(function(){
 	//查询商机名称
 	$('#searchBtn').click(function(){
 		var bussinesNameJ={};
+		var eventType=$('#eventType').find('option:selected').val();
 		var businessOpportunityName=$.trim($('#searchBusinessName').val());
 		bussinesNameJ.businessOpportunityName=businessOpportunityName;
+		bussinesNameJ.eventType=eventType;
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
 			bussinesList(jo.businessOpportunityList,".bussinessItem");
 		},function errF(jo){
@@ -88,6 +95,11 @@ $(function(){
 	//事项类型选择二级联动
 
 	$('#eventType').change(function(){
+		if($('#eventType').val()==''){
+			$('.busnamState').removeClass('businessNameSp');
+		}else{
+			$('.busnamState').addClass('businessNameSp');
+		}
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		eventType('#SpecItem',eveid);
 		//判断如果选项为培训、售后、支持 工时不能编辑
@@ -259,22 +271,6 @@ $(function(){
 					})
 				});
 			}
-			$.getScript("js/journal/tanpanInfo.js",function(){
-				$ajax('post','businessOpportunityLog/generateNegotiationNameByBoId',busoptIdJ,function succF(jo){
-					if(Mesclic){
-						$('.FillInfo').show();
-					}else{
-						$('.FillInfo').html(negotiationsHtml());
-						negotiationsData(jo);
-						Mesclic=true;	
-					}
-				
-					
-				},function errF(jo){
-				
-				})
-			});
-			
 		}
 		//试用中-试用准备
 		if(spcid=='501'){
@@ -337,17 +333,17 @@ $(function(){
 			
 		}
 		//采购
-		if(spcid=='801'){
-			if(Mesclic){
-				$('.FillInfo').show();
-			}else{
-				$.getScript("js/journal/caigouInfo.js",function(){
-					$('.FillInfo').html(PurchHtml());
-					Mesclic=true;
-				})
-			}
-			
-		}
+//		if(spcid=='801'){
+//			if(Mesclic){
+//				$('.FillInfo').show();
+//			}else{
+//				$.getScript("js/journal/caigouInfo.js",function(){
+//					$('.FillInfo').html(PurchHtml());
+//					Mesclic=true;
+//				})
+//			}
+//			
+//		}
 		//日常
 		if(eveid=='9'){
 			if(Mesclic){

@@ -49,9 +49,9 @@ function phoneCheck(phoneNum,selector){
 }
 //固话验证
 function Landline(LandlineNumb,selector){
-	var LandLineReg=/[\d]{3,4}-[\d]{7,8}/;
+	var LandLineReg=/^([0-9]{3,4}-)?[0-9]{7,8}$/;
 	 if(!LandLineReg.test(LandlineNumb)){ 
-        $(selector).html('手机号填写有误');
+        $(selector).html('座机号填写有误');
         return false; 
 	}
 	 return true;

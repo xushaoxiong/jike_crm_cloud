@@ -17,37 +17,22 @@ function propreResultHtml(){
 	propRustHtml+='</div>';
 	return propRustHtml;
 }
-//获取结果信息
-function propRustInfo(boBiddingResult){
+//信息赋值
+function prpreResultdata(prdata){
+	$('.propRustTextare').val(prdata.biddingResultDetail);
+}
+//获取试用结果信息
+function infodetail(boBiddingResult){
 	boBiddingResult.biddingResultDetail=$.trim($('.propRustTextare').val());
 	
 }
-//信息详情提交
-$('.FillInfo').on('click','.propRustConfirm',function(){
+//试用结果详情提交
+$('.editInfo').on('click','.propRustConfirm',function(){
 	var detal=$.trim($('.propRustTextare').val());
 	if(detal==''){
 		pub.Alt('请填写招投标结果详情',false);
 		return false;
 	}
-	$('.FillInfo').hide();
+	$('.editInfo').hide();
 	$('#addJournal').show();
-	$('.journaConfirm').prop('disabled',false);
 })
-
-//提交返回后台试用结果信息
-	var propRustJ={};
-	var boBiddingResult={};
-	$('.journaConfirm').click(function(){
-		propRustInfo(boBiddingResult);
-		logDateF(logData);
-		totalDetailF(totalDetail);
-		propRustJ.logData=logData;
-		propRustJ.totalDetail=totalDetail
-		propRustJ.boBiddingResult=boBiddingResult;
-		
-		$ajax('post','businessOpportunityLog/addBOLogBoBiddingResult',propRustJ,function succF(jo){
-			console.log(jo)
-			},function errF(jo){
-				alert(jo.message);
-		})
-	})

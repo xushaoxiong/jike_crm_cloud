@@ -190,7 +190,7 @@ function visitPlan(){
 		boVisitPlan.visitAddressDetail=$.trim($('.detailadrs').val());
 		boVisitPlan.trafficTool=$.trim($('.traffic').val());
 		boVisitPlan.visitObjective=$('.VisPurp').find('option:selected').val();
-		boVisitPlan.estimateFee=$.trim($('.planCost').val());
+		boVisitPlan.estimateFee=$.trim($('.planCost').html());
 		var bomitemArry=[];
 		$('.bomlist .check').each(function(){ 
 			bomitemArry.push($(this).html()); 

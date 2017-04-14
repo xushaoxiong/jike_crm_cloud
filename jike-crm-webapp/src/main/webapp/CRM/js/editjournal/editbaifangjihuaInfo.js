@@ -1,5 +1,4 @@
 function visitPlan(){
-	console.log(1)
 	var vPhtml="";
 	vPhtml+='<div class="container-fluid" id="palnBox">';
 		vPhtml+='<h4><span>新建列表>新建日志>拜访计划</span></h4>';
@@ -126,22 +125,24 @@ function visitPlan(){
 }
 	
 	function VisitPlandata(jo){	
-//		var bInfoColet=jo.boInformationCollect;
 		$('.planName').html(jo.visitPlanName);
-		$('.contactName').val(jo.contactName);
-		if(jo.contactTitleDetail==""){
+		$('.contactName').val(jo.visitorName);	
+		$('.Plandate').html(jo.visitPlanDate);
+		if(jo.visitorTitleDetail==""){
 			$('.otherCont').hide();
-			$('.contTitle').val(jo.contactTitle).prop('selected',true);
+			$('.contTitle').val(jo.visitorTitle).prop('selected',true);
 		}else{
 			$('.contTitle').val('其它').prop('selected',true);
 			$('.otherCont').show();
-			$('.otherCont').val(jo.contactTitleDetail);
+			$('.otherCont').val(jo.visitorTitleDetail);
 		}
-		$('.contactLine').val(jo.contactLandline);
-		$('.contactPhone').val(jo.contactPhone);
-		$('.contactEmail').val(jo.contactEmail);
-		$('.contactQq').val(jo.contactQq);
-		$('.contactWechat').val(jo.contactWechat);
+		$('.contactLine').val(jo.visitorLandline);
+		$('.contactPhone').val(jo.visitorPhone);
+		$('.contactEmail').val(jo.visitorEmail);
+		$('.contactQq').val(jo.visitorQq);
+		$('.contactWechat').val(jo.visitorWechat);
+		$('.traffic').val(jo.trafficTool);
+		$('.VisPurp').val(jo.visitObjective).find('option').prop('selected',true);
 		$(".editInfo #city").citySelect({
 		    prov: jo.visitProvince,  
 		    city: jo.visitCity,  
@@ -149,6 +150,21 @@ function visitPlan(){
 		    nodata: "none"    
 		}) 
 		$('.detailadrs').val(jo.visitAddressDetail);
+		$('.purpTextare').val(jo.visitPlanReason);
+		var tools=(jo.tools).split('#');
+		for (var i=0;i<$('.bomlist li').length;i++) {
+			for(var j=0;j<tools.length;j++){
+				if($('.bomlist li').eq(i).html()==tools[j]){
+					$('.bomlist li').eq(i).addClass('check');
+				}
+			}
+		}
+		if(jo.estimateFee==undefined){
+			$('.planCost').val('');
+		}else{
+			$('.planCost').val(jo.estimateFee);
+		}
+		$('.planName').attr('planid',jo.visitPlanId);
 		
 	}
 	//新建日志时间
@@ -176,6 +192,7 @@ function visitPlan(){
 		
 	function infodetail(boVisitPlan){
 		boVisitPlan.visitPlanName=$('.planName').html();
+		boVisitPlan.visitPlanId=$('.planName').attr('planid');
 		boVisitPlan.visitorName=$.trim($('.contactName').val());	
 		boVisitPlan.visitorTitle=$('.contTitle').find('option:selected').val();	
 		boVisitPlan.visitorTitleDetail=$.trim($('.otherCont').val());	
