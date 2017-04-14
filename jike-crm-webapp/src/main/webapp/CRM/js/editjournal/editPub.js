@@ -7,8 +7,8 @@
 			logData.businessOpportunityName=$('.businessNameSp').val();
 			logData.businessOpportunityNum=$('.businesNumbspInp').val();
 			logData.workingHours=$.trim($('.timeVal').val());
-			logData.internalParticipant=$.trim($('.insetpeopName').val());
-			logData.externalParticipant=$.trim($('.outpeopName').val());
+			logData.internalParticipant=$.trim($('.innerPerson').val());
+			logData.externalParticipant=$.trim($('.outPerson').val());
 			logData.eventType=$('.eventType').val();
 			logData.specificEvent=$('.specEvent').val();
 		}

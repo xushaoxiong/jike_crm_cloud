@@ -76,7 +76,7 @@
 			if(item.authority==0){
 				Html+='<button class="btn btn-primary edit">编辑</button>';
 				Html+='<button class="btn btn-primary delBuiness">删除</button>';
-				if(item.isClosed==1){
+				if(item.isClosed==0){
 					Html+='<button class="btn btn-primary closeBuiness" isClosedip="'+item.isClosed+'">关闭</button>';
 				}else{
 					Html+='<button class="btn btn-info closeBuiness" isClosedip="'+item.isClosed+'">重启</button>';
@@ -85,7 +85,7 @@
 			}else{
 				Html+='<button class="btn" disabled="disabled">编辑</button>';
 				Html+='<button class="btn" disabled="disabled">删除</button>';
-				if(item.isClosed==1){
+				if(item.isClosed==0){
 					Html+='<button class="btn" disabled="disabled">关闭</button>';
 				}else{
 					Html+='<button class="btn" disabled="disabled">重启</button>';
@@ -105,7 +105,9 @@
 		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
 		list(jo.businessOpportunityList);
 		cartePage(jo);
-	},function errF(){})
+	},function errF(){
+		alert(jo.message);
+	})
 	}clickPage(paginatorJ)
 	
 	
@@ -157,42 +159,49 @@ $('.delConfirm').click(function(){
 //		clickPage(paginatorJ);
 	$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().remove();
 	},function errF(jo){
-		
+		$("#delbuinessModal").modal("hide");
+		alert(jo.message);
 	})
 })
 //关闭商机
-//isClosed=0重启
-//isClosed=1关闭
+//isClosed=0关闭
+//isClosed=1重启
 var closeBtnPart = "";
 var isClosedip=""
 $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
 	isClosedip=$(this).attr('isClosedip');
-	if(isClosedip==1){
+	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
+		$('.altcont').html('提醒：是否关闭商机（'+businessOpportunityNum+'），关闭后商机将处于关闭状态')
 	}else{
 		$('#closebuinessModal .modal-header h4').html('重启商机');
+		$('.altcont').html('提醒：是否重启商机（'+businessOpportunityNum+'）');
 	}
 	$("#closebuinessModal").modal("toggle");
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
-	$('.businessNum').html(businessOpportunityNum);
+
+	
 	
 })
 $('.closeConfirm').click(function(){
 	var colJ={};
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
 	colJ.businessOpportunityNum=businessOpportunityNum;
+	if(isClosedip==0){
+		isClosedip=1;
+	}else{
+		isClosedip=0;
+	}
 	colJ.isClosed=isClosedip;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',colJ,function succF(jo){
 		$("#closebuinessModal").modal("hide");
 		if(isClosedip== '0'){
-
 			closeBtnPart.find('.closeBuiness').html('关闭');
 			closeBtnPart.find('.closeBuiness').attr('isclosedip','1');
 			closeBtnPart.find('.closeBuiness').addClass('btn-primary');
 			closeBtnPart.find('.closeBuiness').removeClass('btn-info');
 		}else{
-
 			closeBtnPart.find('.closeBuiness').html('重启');
 			closeBtnPart.find('.closeBuiness').attr('isclosedip','0');
 			closeBtnPart.find('.closeBuiness').addClass('btn-info');
@@ -200,7 +209,7 @@ $('.closeConfirm').click(function(){
 		}
 				
 	},function errF(jo){
-		
+		alert(jo.message);
 	})
 })
 
@@ -222,15 +231,14 @@ $('.closeConfirm').click(function(){
 	$('#enddate').val(endtime);
 //查询时间
 $('.searchBusiness').click(function(){
-	
+	$('.alertTitle').html('');
 	var indate=$.trim($('#indate').val());
 	var enddate=$.trim($('#enddate').val());
-	if(indate>enddate==""?endtime:enddate){
-		$('.alertTitle').html('开始时间不能大于结束时间');
-		return;
-	}else{
-		$('.alertTitle').html('');
-		
+	if(indate!=''&&enddate!=''){
+		if(indate>(enddate==""?endtime:enddate)){
+			$('.alertTitle').html('开始时间不能大于结束时间');
+			return;
+		}
 	}
 })
 

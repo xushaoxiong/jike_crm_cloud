@@ -210,8 +210,8 @@ function infodata(bInfoColet){
 			}
 		})
 	//信息收集页面内容
-		var jourInJ={};
-		var commonJson={};
+//		var jourInJ={};
+//		var commonJson={};
 		function infodetail(dataJ){
 			dataJ.informationSources=$('.scolInfo').find('option:selected').val();
 			dataJ.schoolScale=$('.scolPopleNumb').find('option:selected').val();

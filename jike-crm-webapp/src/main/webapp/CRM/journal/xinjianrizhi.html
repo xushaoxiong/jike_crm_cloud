@@ -116,7 +116,7 @@
 							<option eveid='5'>试用中</option>
 							<option eveid='6'>招投标</option>
 							<option eveid='7'>签约</option>
-							<option eveid='8'>采购</option>
+							<!--<option eveid='8'>采购</option>-->
 							<option eveid='9'>日常事项</option>
 							<option eveid='10'>售后</option>
 							<option eveid='11'>支持</option>
@@ -137,10 +137,10 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-group row">
+				<div class="form-group row busnamewap">
 					<label class="col-md-1 col-ms-2"><span class="col">*</span>商机名称</label>
 					<div class="col-md-3 col-sm-5">
-						<span class="form-control cursorm businessNameSp"></span>
+						<span class="form-control cursorm businessNameSp busnamState"></span>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -154,7 +154,7 @@
 					<label class="col-md-1 col-ms-2" style="padding-top: 6px;">工时</label>
 					<div class="journalTime col-md-5 col-sm-8">
 						<span class="addTime cursor">+</span>
-						<input type="text" value="0" class="form-control timeVal" style="width: 20%;display: inline-block;" />
+						<input type="text" value="0" class="form-control timeVal" style="width: 20%;display: inline-block;" onkeyup="num(this)" />
 						<span class="minusTime cursor">-</span>&nbsp;小时
 						<b style="padding-left: 10px;">(以0.5小时为单位)</b>
 					</div>

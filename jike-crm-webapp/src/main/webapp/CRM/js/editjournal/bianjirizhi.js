@@ -29,6 +29,7 @@
 		
 	})
 	//新建日志提交返回后台
+	var jourInJ={};
 	var commonJson={};
 	$('.journaConfirm').click(function(){
 		infodetail(commonJson);
