@@ -1412,28 +1412,28 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boPurchase.setUpdateBy(userId);
 			boPurchase.setUpdateTime(nowDate);
 			boPurchaseMapper.updateByPrimaryKeySelective(boPurchase);
-		}else if("售后".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("售后".equals(businessOpportunityLog.getEventType())){
 			BoCustomerService boCustomerService = commonJson.toJavaObject(BoCustomerService.class);
 			BoCustomerService boCustomerServiceOld = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
 			boCustomerService.setBoCustomerService(boCustomerServiceOld.getBoCustomerService());
 			boCustomerService.setUpdateBy(userId);
 			boCustomerService.setUpdateTime(nowDate);
 			boCustomerServiceMapper.updateByPrimaryKeySelective(boCustomerService);
-		}else if("培训".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
 			BoTrain boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
 			boTrain.setBoTrainId(boTrainOld.getBoTrainId());
 			boTrain.setUpdateBy(userId);
 			boTrain.setUpdateTime(nowDate);
 			boTrainMapper.updateByPrimaryKeySelective(boTrain);
-		}else if("支持".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
 			BoSupport boSupportOld = boSupportMapper.selectBoSupportByLogId(logId);
 			boSupport.setBoSupportId(boSupportOld.getBoSupportId());
 			boSupport.setUpdateBy(userId);
 			boSupport.setUpdateTime(nowDate);
 			boSupportMapper.updateByPrimaryKeySelective(boSupport);
-		}else if("日常事项".equals(businessOpportunityLog.getSpecificEvent())){
+		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
 			DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
 			DailyEvents dailyEventsOld = dailyEventsMapper.selectDailyEventsByLogId(logId);
 			dailyEvents.setDailyEventsId(dailyEventsOld.getDailyEventsId());
