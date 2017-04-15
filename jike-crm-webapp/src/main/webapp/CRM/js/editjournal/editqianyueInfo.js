@@ -1,7 +1,7 @@
 function signHtml(){
 	var signHtml="";
 	signHtml+='<div class="container-fluid">';
-		signHtml+='<h4><span>新建列表>新建日志>招投标</span></h4>';
+//		signHtml+='<h4><span>新建列表>新建日志>招投标</span></h4>';
 		signHtml+='<div class="sign-wap">';
 			signHtml+='<div class="form-group row">';
 				signHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>签约时间</label>';

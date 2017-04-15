@@ -1,7 +1,6 @@
 function TryHtml(){
 	var tryHtml="";
 	tryHtml+='<div class="container-fluid">';
-		tryHtml+='<h4><span>新建列表>新建日志>试用结果</span></h4>';
 		tryHtml+='<div class="trial-wap">';
 			tryHtml+='<div class="form-group row">';
 				tryHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用结果详情</label>';

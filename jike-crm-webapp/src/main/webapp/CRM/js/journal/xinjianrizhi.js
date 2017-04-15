@@ -89,7 +89,7 @@ $(function(){
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
 			bussinesList(jo.businessOpportunityList,".bussinessItem");
 		},function errF(jo){
-			
+			pub.Alt(jo.message,false);
 		})
 	})
 	//事项类型选择二级联动
@@ -186,6 +186,10 @@ $(function(){
 		busoptIdJ.businessOpportunityId=busoptid;
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
+		var eventType=$('#eventType').find('option:selected').val();
+		//面包屑导航
+		breadnav(Fht,netht,eventType);
+		
 		$('#addJournal').hide();
 		$('.FillInfo').show();
 		//信息收集页面
@@ -196,7 +200,6 @@ $(function(){
 				$.getScript("js/journal/xinxishoujiInfo.js",function(){
 					$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
 					$('.FillInfo').html(infoColle());
-					
 					var bInfoColet=jo.boInformationCollect;
 					if(bInfoColet!=undefined){
 						infodata(bInfoColet);
@@ -204,7 +207,7 @@ $(function(){
 					Mesclic=true;
 						
 					},function errF(jo){
-						
+						pub.Alt(jo.message,false)
 					})
 				});
 			}
@@ -229,7 +232,7 @@ $(function(){
 					Mesclic=true;
 							
 					},function errF(jo){
-						
+						pub.Alt(jo.message,false);
 					})
 				});
 			}
@@ -248,7 +251,7 @@ $(function(){
 					visitordata(jo);
 					Mesclic=true;		
 					},function errF(jo){
-						pub.Alt('请先添加拜访计划',false);
+						pub.Alt(jo.message,false);
 					})
 				});
 			}
@@ -267,7 +270,7 @@ $(function(){
 						negotiationsData(jo);
 						Mesclic=true;	
 					},function errF(jo){
-					
+						pub.Alt(jo.message,false);
 					})
 				});
 			}

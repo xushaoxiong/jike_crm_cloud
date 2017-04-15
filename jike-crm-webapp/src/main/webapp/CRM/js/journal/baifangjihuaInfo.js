@@ -1,23 +1,22 @@
 function visitPlan(){
 	var vPhtml="";
 	vPhtml+='<div class="container-fluid" id="palnBox">';
-		vPhtml+='<h4><span>新建列表>新建日志>拜访计划</span></h4>';
 		vPhtml+='<div class="plan-wap">';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">计划名称</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2">计划名称</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
 					vPhtml+='<span class="form-control planName"/></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">拜访人姓名</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2">拜访人姓名</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
 					vPhtml+='<input type="text" value="" placeholder="默认为信息收集联系人姓名，可修改" class="form-control contactName"/>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">拜访人职位</label>';
-				vPhtml+='<div class="col-md-3 col-sm-5">';
+				vPhtml+='<label class="col-md-2 col-sm-2">拜访人职位</label>';
+				vPhtml+='<div class="col-md-2 col-sm-2">';
 					vPhtml+='	<select class="form-control contTitle">';
 						vPhtml+='	<option>校长</option>';
 						vPhtml+='	<option>教学副校长</option>';
@@ -36,8 +35,8 @@ function visitPlan(){
 				vPhtml+='	</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>拜访人联系方式</label>';
-				vPhtml+='<div class="form-inline col-md-6 col-ms-10 contact-wap">';
+				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>拜访人联系方式</label>';
+				vPhtml+='<div class="form-inline col-md-6 col-ms-10 contact-wap" style=padding:0;>';
 					vPhtml+='<input type="text" value="" placeholder="（座机）" class="form-control contactLine" />';
 					vPhtml+='<input type="text" value="" placeholder="（手机）" class="form-control contactPhone"/>';
 					vPhtml+='<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
@@ -47,14 +46,14 @@ function visitPlan(){
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>拜访计划日期</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>拜访计划日期</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
 					vPhtml+='<span class="form-control Plandate" data-format="dd-mm-yyyy"/></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">拜访地址</label>';
-				vPhtml+='<div id="city" class="form-inline col-md-6 col-ms-10">';
+				vPhtml+='<label class="col-md-2 col-sm-2">拜访地址</label>';
+				vPhtml+='<div id="city" class="form-inline col-md-6 col-ms-10" style=padding:0;>';
 	            	vPhtml+='<div class="col-md-2 col-sm-3">';
 	            		vPhtml+='<select class="prov form-control"></select>';
 	            	vPhtml+='</div>';
@@ -70,13 +69,13 @@ function visitPlan(){
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">交通方式</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2">交通方式</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
 					vPhtml+='<input type="text" value="" placeholder="" class="form-control traffic"/>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>拜访目的</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>拜访目的</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
 					vPhtml+='<select class="form-control VisPurp">';
 						vPhtml+='<option>找到决策人</option>';
@@ -85,14 +84,14 @@ function visitPlan(){
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2">预估费用</label>';
-				vPhtml+='<div class="col-md-3 col-sm-5">';
-					vPhtml+='<input type="text" value="" placeholder="" class="form-control planCost" onkeyup="num(this)"/>&nbsp;';
+				vPhtml+='<label class="col-md-2 col-sm-2">预估费用</label>';
+				vPhtml+='<div class="col-md-1 col-sm-1">';
+					vPhtml+='<input type="text" value="" placeholder="" class="form-control planCost" onkeyup="num(this)"/>';
 				vPhtml+='</div>';
-				vPhtml+='<span style="padding-top: 6px;display: inline-block;">元</span>';
+				vPhtml+='<span style="padding-top: 6px;display: inline-block;padding-left:5px">元</span>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
-				vPhtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>最小物料明细</label>';
+				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>最小物料明细</label>';
 				vPhtml+='<div class="col-md-5 col-sm-7">';
 					vPhtml+='<ul class="list-unstyled list-inline bomlist">';
 						vPhtml+='<li>折页</li>';
@@ -248,9 +247,9 @@ function visitPlan(){
 		VistPlanJ.boVisitPlan=boVisitPlan;
 		
 		$ajax('post','businessOpportunityLog/addBOVisitPlan',VistPlanJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message)
+				pub.Alt(jo.message,false);
 		})
 	})
 

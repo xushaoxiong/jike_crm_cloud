@@ -1,7 +1,6 @@
 function vistInformation(){
 	var vFhtml="";
 	vFhtml+='<div class="container-fluid">';
-		vFhtml+='	<h4><span>新建列表>新建日志>拜访</span></h4>';
 		vFhtml+='	<div class="plan-wap">';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">所属拜访计划</label>';
@@ -17,7 +16,7 @@ function vistInformation(){
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访人职位</label>';
-				vFhtml+='	<div class="col-md-3 col-sm-5">';
+				vFhtml+='	<div class="col-md-2 col-sm-2">';
 					vFhtml+='	<select class="form-control contTitle">';
 						vFhtml+='	<option>校长</option>';
 						vFhtml+='	<option>教学副校长</option>';
@@ -31,13 +30,13 @@ function vistInformation(){
 					vFhtml+='	</select>';
 //					vFhtml+='	<input type="text" value="" placeholder="" class="form-control visPosit"/>';
 				vFhtml+='	</div>';
-				vFhtml+='	<div class="col-md-2 col-sm-3" style="padding-left: 0;">';
+				vFhtml+='	<div class="col-md-2 col-sm-2" style="padding-left: 0;">';
 					vFhtml+='	<input type="text" placeholder="" class="form-control otherCont" />';
 				vFhtml+='	</div>';
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访人联系方式</label>';
-				vFhtml+='	<div class="form-inline col-md-6 col-ms-10 contact-wap">';
+				vFhtml+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
 					vFhtml+='	<input type="text" value="" placeholder="（座机）" class="form-control contactLine" />';
 					vFhtml+='	<input type="text" value="" placeholder="（手机）" class="form-control contactPhone"/>';
 					vFhtml+='	<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
@@ -48,7 +47,7 @@ function vistInformation(){
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访地址</label>';
-				vFhtml+='	<div id="city" class="form-inline col-md-6 col-ms-10">';
+				vFhtml+='	<div id="city" class="form-inline col-md-6 col-ms-10" style="padding:0;">';
 	            	vFhtml+='	<div class="col-md-2 col-sm-3">';
 	            		vFhtml+='	<select class="prov form-control"></select>';
 	            	vFhtml+='	</div>';
@@ -68,7 +67,7 @@ function vistInformation(){
 				vFhtml+='	<div class="col-md-3 col-sm-5">';
 					vFhtml+='	<input type="text" value="" placeholder="" class="form-control budget"/>&nbsp;';
 				vFhtml+='	</div>';
-				vFhtml+='	<span style="padding-top: 6px;display: inline-block;">元</span>';
+				vFhtml+='	<span style="padding-top: 6px;padding-left:5px;display: inline-block;">元</span>';
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访目的</label>';
@@ -188,8 +187,8 @@ function visitordata(jodata){
 		boVistPlanJ.boVisit=boVisit;
 		
 		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
-			console.log(jo)
+				$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})

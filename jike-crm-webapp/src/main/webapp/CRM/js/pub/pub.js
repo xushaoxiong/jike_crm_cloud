@@ -29,7 +29,19 @@ pub.Alt=function(text,flag,fun){
 	 	
 }
 
-	
+//面包屑导航
+	function breadnav(Fhtml,nexthtml,flag){
+		var breadcrumbhtml="";
+		breadcrumbhtml+='<li>'+Fhtml+'</li>';
+		
+		if(arguments[2]){
+			breadcrumbhtml+='<li class="cursorm curBack"><a>'+nexthtml+'</a></li>';
+			breadcrumbhtml+='<li>'+flag+'</li>';
+		}else{
+			breadcrumbhtml+='<li>'+nexthtml+'</li>';
+		}
+		$('.breadcrumb').html(breadcrumbhtml);
+	}	
 
 
 

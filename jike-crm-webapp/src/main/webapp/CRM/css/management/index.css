@@ -25,12 +25,21 @@ body,html{
 	float: none;
 }
 .L-wap{
+	width: 12%;
 	background: #ccc;
-	/*background: url(../img/bg.jpg) no-repeat;*/
+	padding: 0 !important;
 }
 .hide-menu{display: none;}
 .L-list li{
 	line-height: 40px;
+	text-align: center;
+	cursor: pointer;
+}
+.hide-menu .menuCheck{
+	background: #105598;
+}
+.hide-menu .menuCheck a{
+	color: #fff;
 }
 .img-icon{padding: 0 10px;}
 .L-list-item div{border-top: 1px solid #080808;}
@@ -38,6 +47,20 @@ label{
 	text-align: right;
 	padding-top: 6px;
 }
-.R-wap{
+.R-container{
+	width: 88%;
 	overflow-y: scroll;
+	padding-bottom: 20px;
 }
+.R-wap{width: 100%;}
+div[class^="col-"]{
+	padding:0 !important;
+}
+input[type=radio],input[type=checkbox]{
+	margin-top: -1px !important;
+	margin-left: 4px !important;
+}
+.R-wap label{padding-right: 10px;width: 150px !important;}
+.col{color: red;}
+.cursorm{cursor: pointer;}
+thead th{text-align: center;}

@@ -1,7 +1,6 @@
 function aftSealtHtml(){
 	var aftSealtHtml="";
 	aftSealtHtml+='<div class="container-fluid">';
-		aftSealtHtml+='<h4><span>新建列表>新建日志>售后</span></h4>';
 		aftSealtHtml+='<div class="sign-wap">';
 			aftSealtHtml+='<span class="col"><b>备注：至少填写一项</b></span>';
 			aftSealtHtml+='<div class="form-group row">';
@@ -109,8 +108,8 @@ $('.FillInfo').on('click','.aftSealConfirm',function(){
 		afterSealJ.boCustomerService=boCustomerService;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoCustomerService',afterSealJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})

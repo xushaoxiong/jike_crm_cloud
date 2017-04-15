@@ -16,76 +16,72 @@
 </head>
 <body>
 	<style>
-	.ZH-account button{
+	/*.ZH-account button{
 		margin-top: 20px;
-	}
+	}*/
 	.search-wap{
-		padding: 20px 0;
+		margin: 15px 0;
 	}
-	.tableAccnt tr th{text-align: center;}
-	.pagination-wap{
-		line-height: 80px;
+	.total-page span{
+		padding: 26px 5px;
 	}
-	.total-page{
-		padding-right: 15px;
-	}
-	.table tr td a{cursor: pointer;padding: 0 5px;}
-	#newAdd .form-group{display: block;margin-bottom: 8px;}
 	#newAdd label{
 		width: 30% !important;
 		text-align: right;
 	}
+	#newAdd .form-group{display: block;margin-bottom: 8px;}
 </style>
-<div class="wapper">
-	<div class="ZH-account clearfix" style="width: 95%;">
-	<h3 class="title pull-left">账户管理</h3>
-	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>新增账户</button>
-</div>
-<div class="search-wap form-inline clearfix">
-	<!--<div class="form-group">
-		<label>用户名：</label>
-		<input type="text" class="form-control" placeholder="用户名"/>
-	</div>-->
-	<div class="form-group">
-		<label>员工姓名：</label>
-		<input type="text" class="form-control userName" placeholder="员工姓名"/>
-	</div>
-	<button class="btn btn-default userSearch">
-		<span class="glyphicon glyphicon-search"></span>
-	</button>
-</div>
-<table class="table table-bordered text-center table-responsive tableAccnt">
-	<thead>
-		<tr>
-			<th>用户名</th>
-			<th>员工姓名</th>
-			<th>性别</th>
-			<th>手机号</th>
-			<th>邮箱</th>
-			<th>工号</th>
-			<th>是否在职</th>
-			<th>入职日期</th>
-			<th>角色分配</th>
-			<th>操作</th>
-		</tr>
-	</thead>
-	<tbody class="userList">
-
+<div class="container-fluid">
+	<div class="wapper">	
+		<button class="btn btn-primary addBtn"><span class="glyphicon glyphicon-plus"></span>新增账户</button>
 		
-	</tbody>
-	<!--搜索无数据-->
-
-</table>
-<div class="noUserSearch" style="display: none;font-size: 25px;"><b>无数据</b></div>
-<!--分页-->
-<div class="pagination-wap">
-	<div class="total-page pull-left">
-		<span class="totalPage"></span>
-		<span class="totalNum"></span>
+		<div class="search-wap form-inline clearfix">
+			<!--<div class="form-group">
+				<label>用户名：</label>
+				<input type="text" class="form-control" placeholder="用户名"/>
+			</div>-->
+			<div class="form-group">
+				<label>员工姓名：</label>
+				<input type="text" class="form-control userName" placeholder="员工姓名"/>
+			</div>
+			<button class="btn btn-default userSearch">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</div>
+		<table class="table table-bordered text-center table-responsive tableAccnt">
+			<thead>
+				<tr>
+					<th>用户名</th>
+					<th>员工姓名</th>
+					<th>性别</th>
+					<th>手机号</th>
+					<th>邮箱</th>
+					<th>工号</th>
+					<th>是否在职</th>
+					<th>入职日期</th>
+					<th>角色分配</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody class="userList">
+			
+			</tbody>
+		</table>
+		<!--搜索无数据-->
+		<div class="noUserSearch" style="display: none;font-size: 25px;"><b>无数据</b></div>
+		<!--分页-->
+		<div class="pagination-wap text-center">
+			<div class="total-page"  style="display: inline-block;">
+				<span class="totalPage pull-left"></span>
+				<span class="totalNum pull-left"></span>
+				
+			</div>
+			 <ul class="pagination">
+				</ul>
+		</div>
 	</div>
-	<ul class="pagination">
-	</ul> 
 </div>
+
 <!--新增弹框-->
 <div class="modal " id="newAdd">
 	<div class="modal-dialog modal-sm">
@@ -151,8 +147,7 @@
             </div>
         </div>
     </div>
-</div>
-</div>
+ </div>
 	</body>
 	<script type="text/javascript" src="js/management/user.js" ></script>
 </html>

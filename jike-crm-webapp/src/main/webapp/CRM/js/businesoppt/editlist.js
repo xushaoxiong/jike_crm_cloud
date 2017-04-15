@@ -15,7 +15,7 @@
 		$('.addrDetial').val(jo.addressDetail);
 		$('.scloType').find('option[Optype="'+jo.businessOpportunityType+'"]').prop('selected',true)
 	},function errF(jo){
-		
+		pub.Alt(jo.message,false);
 	})
 	
 	//返回上一级
@@ -31,7 +31,7 @@
 		var prov=$('.prov').find('option:selected').val();
 		var city=$('.city').find('option:selected').val();
 		var dist=$('.dist').find('option:selected').val();
-		var detailadrs=$('.detailadrs').val();
+		var detailadrs=$('.addrDetial').val();
 		var businessOpportunityNum=window.localStorage.getItem('opptNumb');
 		if(businessName==''){
 			$('.newlist-alert').html('请填写商机名称');
@@ -49,7 +49,9 @@
 		businessJ.addressDetail=detailadrs;
 		businessJ.businessOpportunityNum=businessOpportunityNum;
 			$ajax("post","businessOpportunity/updateBusinessOpportunity",businessJ,function succF(jo){
-					$('.R-wap').load('businesoppt/list.html');
+					$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+			},function errF(jo){
+				pub.Alt(jo.message,false);
 			})
 	})
 	

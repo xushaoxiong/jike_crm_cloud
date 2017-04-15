@@ -1,7 +1,6 @@
 function TrialHtml(){
 	var traHtml="";
 	traHtml+='<div class="container-fluid">';
-		traHtml+='<h4><span>新建列表>新建日志>试用中</span></h4>';
 		traHtml+='<div class="trial-wap">';
 			traHtml+='<div class="form-group row date-wap">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用周期</label>';

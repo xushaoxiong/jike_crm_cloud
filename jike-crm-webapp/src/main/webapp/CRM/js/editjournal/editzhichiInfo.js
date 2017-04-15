@@ -1,7 +1,6 @@
 function supportHtml(){
 	var suportHtml="";
 	suportHtml+='<div class="container-fluid">';
-		suportHtml+='<h4><span>新建列表>新建日志>支持</span></h4>';
 		suportHtml+='<div class="sign-wap">';
 			suportHtml+='<span class="col"><b>备注：至少填写一项</b></span>';
 			suportHtml+='<div class="form-group row">';

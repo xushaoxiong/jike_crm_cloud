@@ -170,11 +170,13 @@
 					return;
 				}
 				
+			},
+			error:function(jo){
+				pub.Alt(jo.message,false);
 			}
 
 		});
 	})
-	
 	
 	//修改
 	$('.userList').on('click','.userAmend',function(e){	
@@ -215,6 +217,9 @@
 				})
 				$('.RoleInp').html(roleList);
 				$('.RoleInp').find('option[roleid="'+roleId+'"]').prop('selected',true);
+			},
+			error:function(jo){
+				pub.Alt(jo.message,false);
 			}
 
 		});
@@ -268,6 +273,9 @@
 					return;
 				}
 				
+			},
+			error:function(jo){
+				pub.Alt(jo.message,false);
 			}
 		})
 	})
