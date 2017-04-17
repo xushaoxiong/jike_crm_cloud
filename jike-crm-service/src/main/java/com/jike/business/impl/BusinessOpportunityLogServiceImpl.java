@@ -23,6 +23,7 @@ import com.jike.business.dao.BoFeeDetailMapper;
 import com.jike.business.dao.BoInTrialMapper;
 import com.jike.business.dao.BoInformationCollectMapper;
 import com.jike.business.dao.BoNegotiationMapper;
+import com.jike.business.dao.BoPaymentMapper;
 import com.jike.business.dao.BoPurchaseMapper;
 import com.jike.business.dao.BoSignMapper;
 import com.jike.business.dao.BoSupportMapper;
@@ -33,6 +34,7 @@ import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.dao.CooperationDetailsMapper;
 import com.jike.business.dao.DailyEventsMapper;
+import com.jike.business.dao.PartnerAgentAreaMapper;
 import com.jike.business.model.BoBidding;
 import com.jike.business.model.BoBiddingResult;
 import com.jike.business.model.BoCustomerService;
@@ -40,6 +42,7 @@ import com.jike.business.model.BoFeeDetail;
 import com.jike.business.model.BoInTrial;
 import com.jike.business.model.BoInformationCollect;
 import com.jike.business.model.BoNegotiation;
+import com.jike.business.model.BoPayment;
 import com.jike.business.model.BoPurchase;
 import com.jike.business.model.BoSign;
 import com.jike.business.model.BoSupport;
@@ -50,6 +53,7 @@ import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperationDetails;
 import com.jike.business.model.DailyEvents;
+import com.jike.business.model.PartnerAgentArea;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.RoleService;
@@ -100,6 +104,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private RoleService  roleService;
 	@Autowired
 	private CooperationDetailsMapper cooperationDetailsMapper;
+	@Autowired
+	private BoPaymentMapper boPaymentMapper;
+	@Autowired
+	private PartnerAgentAreaMapper agentAreaMapper;
+	
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -529,7 +538,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
 				//如果是达成合作意向，保存合作详情
 				if("达成合作意向".equals(logData.getString("specificEvent"))){
-					JSONObject cooperationDetailsJson = jsonData.getJSONObject("cooperationDetails");
+					JSONObject cooperationDetailsJson = boVisitJson.getJSONObject("cooperationDetails");
 					CooperationDetails cooperationDetails = cooperationDetailsJson.toJavaObject(CooperationDetails.class);
 					cooperationDetails.setVisitId(boVisit.getVisitId());
 					cooperationDetails.setCreateTime(nowDate);
@@ -811,6 +820,23 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boSign.setCreateTime(nowDate);
 			boSign.setCreateBy(jsonData.getLong("userId"));
 			boSignMapper.insert(boSign);
+			JSONArray partnerAgentAreaList = boSignJson.getJSONArray("partnerAgentAreaList");
+			if(partnerAgentAreaList!=null&&!partnerAgentAreaList.isEmpty()){
+				Long signId = boSign.getSignId();
+				for (Object object : partnerAgentAreaList) {
+					JSONObject partnerAgentArea = JSONObject.parseObject(object.toString());
+					PartnerAgentArea agentArea = new PartnerAgentArea();
+					agentArea.setSignId(signId);
+					agentArea.setAddressProvince(partnerAgentArea.getString("addressProvince"));
+					agentArea.setAddressCity(partnerAgentArea.getString("addressCity"));
+					agentArea.setAddressCounty(partnerAgentArea.getString("addressCounty"));
+					agentArea.setCreateTime(nowDate);
+					agentArea.setCreateBy(jsonData.getLong("userId"));
+					agentAreaMapper.insert(agentArea);
+				}
+				
+			}
+			
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("签约".equals(specificEvent)){
@@ -1035,6 +1061,44 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return resultJson;
 	}
 	
+	@Transactional
+	public JSONObject addBOLogBoPayment(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			Long detailFeeId = null;
+			if (totalDetail != null) {
+				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
+			}
+			JSONObject logData = jsonData.getJSONObject("logData");
+			Long businessOpportunityId = logData.getLong("businessOpportunityId");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			
+			JSONObject boPaymentJson = jsonData.getJSONObject("boPayment");
+			Date paymentDate = boPaymentJson.getDate("paymentDate");
+			BigDecimal paymentAmount = boPaymentJson.getBigDecimal("paymentAmount");
+			Integer paymentType = boPaymentJson.getInteger("paymentType");
+			
+			BoPayment boPayment = new BoPayment();
+			boPayment.setBusinessOpportunityId(businessOpportunityId);
+			boPayment.setLogId(logId);
+			boPayment.setPaymentDate(paymentDate);
+			boPayment.setPaymentAmount(paymentAmount);
+			boPayment.setPaymentType(paymentType);
+			boPayment.setCreateTime(nowDate);
+			boPayment.setCreateBy(jsonData.getLong("userId"));
+			boPaymentMapper.insert(boPayment);
+			
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
+	
 
 	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
 		JSONObject json = new JSONObject();
@@ -1233,6 +1297,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
 		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
 		String json  = null;
+		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
 		if("信息收集".equals(businessOpportunityLog.getEventType())){
 			BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
 			json = JSONObject.toJSONString(boInformationCollect,SerializerFeature.WriteNullStringAsEmpty);
@@ -1268,8 +1333,24 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoBiddingResult boBiddingResult = boBiddingResultMapper.selectBoBiddingResultByLogId(logId);
 			json = JSONObject.toJSONString(boBiddingResult,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
-			BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
-			json = JSONObject.toJSONString(boSign,SerializerFeature.WriteNullStringAsEmpty);
+			if(businessOpportunityJson.getInteger("businessOpportunityType")==0){//学校
+				BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
+				json = JSONObject.toJSONString(boSign,SerializerFeature.WriteNullStringAsEmpty);
+			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
+				BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
+				json = JSONObject.toJSONString(boSign,SerializerFeature.WriteNullStringAsEmpty);
+				List<PartnerAgentArea> partnerAgentAreas = agentAreaMapper.selectBySignId(boSign.getSignId());
+				JSONArray partnerAgentAreaList = new JSONArray();
+				for (PartnerAgentArea partnerAgentArea : partnerAgentAreas) {
+					String partnerAgentAreaString = JSONObject.toJSONString(partnerAgentArea,SerializerFeature.WriteNullStringAsEmpty);
+					JSONObject partnerAgentAreaJson = JSONObject.parseObject(partnerAgentAreaString);
+					removeCommonAttribute(partnerAgentAreaJson);
+					partnerAgentAreaList.add(partnerAgentAreaJson);
+				}
+				json = JSONObject.parseObject(json).put("partnerAgentAreaList", partnerAgentAreaList).toString();
+			}
+			
+			
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
 			BoPurchase boPurchase = boPurchaseMapper.selectBoPurchaseByLogId(logId);
 			json = JSONObject.toJSONString(boPurchase,SerializerFeature.WriteNullStringAsEmpty);
@@ -1285,13 +1366,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
 			DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
 			json = JSONObject.toJSONString(dailyEvents,SerializerFeature.WriteNullStringAsEmpty);
+		}else if("回款".equals(businessOpportunityLog.getEventType())){
+			BoPayment boPayment = boPaymentMapper.selectBoPaymentByLogId(logId);
+			json = JSONObject.toJSONString(boPayment,SerializerFeature.WriteNullStringAsEmpty);
 		}
 		JSONObject commonJson =JSON.parseObject(json);
 		removeCommonAttribute(commonJson);
 		//log
 		JSONObject  businessOpportunityLogJson = JSONObject.parseObject(JSONObject.toJSONString(businessOpportunityLog,SerializerFeature.WriteNullStringAsEmpty));
 		removeCommonAttribute(businessOpportunityLogJson);
-		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
 		businessOpportunityLogJson.put("businessOpportunityName", businessOpportunityJson.getString("businessOpportunityName"));
 		businessOpportunityLogJson.put("businessOpportunityNum", businessOpportunityJson.getString("businessOpportunityNum"));
 		//费用
@@ -1427,10 +1510,30 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("签约".equals(businessOpportunityLog.getSpecificEvent())){
 			BoSign boSign = commonJson.toJavaObject(BoSign.class);
 			BoSign boSignOld = boSignMapper.selectBoSignByLogId(logId);
-			boSign.setSignId(boSignOld.getSignId());
+			Long signId = boSignOld.getSignId();
+			boSign.setSignId(signId);
 			boSign.setUpdateBy(userId);
 			boSign.setUpdateTime(nowDate);
 			boSignMapper.updateByPrimaryKeySelective(boSign);
+			//如果是合作伙伴签约更新合作详情
+			JSONObject businessOpportunityJson= businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
+			if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
+				List<PartnerAgentArea> partnerAgentAreas = agentAreaMapper.selectBySignId(boSign.getSignId());
+				for (PartnerAgentArea partnerAgentArea : partnerAgentAreas) {
+					agentAreaMapper.deleteByPrimaryKey(partnerAgentArea.getPartnerAgentAreaId());
+				}
+				JSONArray partnerAgentAreaList = commonJson.getJSONArray("partnerAgentAreaList");
+				if(partnerAgentAreaList!=null&&!partnerAgentAreaList.isEmpty()){
+					for (Object object : partnerAgentAreaList) {
+						JSONObject parseObject = JSONObject.parseObject(object.toString());
+						PartnerAgentArea partnerAgentArea = parseObject.toJavaObject(PartnerAgentArea.class);
+						partnerAgentArea.setSignId(signId);
+						partnerAgentArea.setCreateBy(userId);
+						partnerAgentArea.setCreateTime(nowDate);
+						agentAreaMapper.insert(partnerAgentArea);
+					}
+			}
+			}
 		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
 			BoPurchase boPurchase = commonJson.toJavaObject(BoPurchase.class);
 			BoPurchase boPurchaseOld = boPurchaseMapper.selectBoPurchaseByLogId(logId);
@@ -1466,6 +1569,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			dailyEvents.setUpdateBy(userId);
 			dailyEvents.setUpdateTime(nowDate);
 			dailyEventsMapper.updateByPrimaryKeySelective(dailyEvents);
+		}else if("回款".equals(businessOpportunityLog.getEventType())){
+			BoPayment boPayment =commonJson.toJavaObject(BoPayment.class);
+			BoPayment boPaymentOld = boPaymentMapper.selectBoPaymentByLogId(logId);
+			boPayment.setPaymentId(boPaymentOld.getPaymentId());
+			boPayment.setUpdateBy(userId);
+			boPayment.setUpdateTime(nowDate);
+			boPaymentMapper.updateByPrimaryKeySelective(boPayment);
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "更新成功");
@@ -1509,6 +1619,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		resultJson.put("contactTitle", boInformationCollect.getContactTitle());
 		resultJson.put("contactTitleDetail", boInformationCollect.getContactTitleDetail());
 		resultJson.put("contactPhone", boInformationCollect.getContactPhone());
+		resultJson.put("mainScope", boInformationCollect.getMainScope());
 		return resultJson;
 	}
 	

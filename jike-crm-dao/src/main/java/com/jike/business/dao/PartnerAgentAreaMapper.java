@@ -1,5 +1,7 @@
 package com.jike.business.dao;
 
+import java.util.List;
+
 import com.jike.business.model.PartnerAgentArea;
 
 public interface PartnerAgentAreaMapper {
@@ -50,4 +52,6 @@ public interface PartnerAgentAreaMapper {
      * @mbggenerated Thu Apr 13 10:14:44 CST 2017
      */
     int updateByPrimaryKey(PartnerAgentArea record);
+
+	List<PartnerAgentArea> selectBySignId(Long signId);
 }

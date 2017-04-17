@@ -457,6 +457,32 @@ public class BusinessOpportunityLogController extends BaseController{
 		return result.toJSONString();
 	}
 	/**
+	 * 添加商机回款
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月17日上午10:29:52
+	 */
+	@RequestMapping(value = "/addBOLogBoPayment", method ={RequestMethod.POST})
+	public @ResponseBody String addBOLogBoPayment(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject jsonData = JSONObject.parseObject(requestJson);
+			jsonData.put("userId", session.getAttribute(userId));
+			jsonData.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityLogService.addBOLogBoPayment(jsonData);
+		} catch (IOException e) {
+			logger.error("addBOLogBoPayment error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	/**
 	 * 分页查询日志信息
 	 * @param request
 	 * @param session

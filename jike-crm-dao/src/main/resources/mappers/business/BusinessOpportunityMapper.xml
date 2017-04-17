@@ -341,6 +341,9 @@
 		<if test="unBusinessOpportunityProcess != null">
 			and bo.business_opportunity_process != #{unBusinessOpportunityProcess,jdbcType=VARCHAR}
 		</if>
+		<if test="businessOpportunityType != null">
+			and bo.business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+		</if>
 		order by bo.create_time desc
 		
   </select>

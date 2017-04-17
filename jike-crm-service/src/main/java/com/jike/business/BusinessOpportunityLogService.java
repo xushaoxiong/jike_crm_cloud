@@ -146,6 +146,14 @@ public interface BusinessOpportunityLogService {
 	 */
 	public JSONObject addBOLogBoCustomerService(JSONObject jsonData);
 	/**
+	 * 添加回款
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月17日上午10:29:04
+	 */
+	public JSONObject addBOLogBoPayment(JSONObject jsonData);
+	/**
 	 * 分页查询日志信息
 	 * @param queryJson
 	 * @return
