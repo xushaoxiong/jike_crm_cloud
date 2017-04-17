@@ -195,4 +195,23 @@ public class UserController extends BaseController{
 		json.put("state", "success");
 		return json.toJSONString();
 	}
+	
+	@RequestMapping(value = "/addSalesLeader", method = {RequestMethod.POST})
+	public @ResponseBody String addSalesLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.addSalesLeader(parseObject);
+		} catch (IOException e) {
+			logger.error("addSalesLeader error", e);
+		}
+		return result.toString();
+	}
+	
+	
 }

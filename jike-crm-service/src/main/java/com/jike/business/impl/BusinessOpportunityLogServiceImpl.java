@@ -1379,6 +1379,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		removeCommonAttribute(businessOpportunityLogJson);
 		businessOpportunityLogJson.put("businessOpportunityName", businessOpportunityJson.getString("businessOpportunityName"));
 		businessOpportunityLogJson.put("businessOpportunityNum", businessOpportunityJson.getString("businessOpportunityNum"));
+		businessOpportunityLogJson.put("businessOpportunityType", businessOpportunityJson.getString("businessOpportunityType"));
 		//费用
 		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
 		

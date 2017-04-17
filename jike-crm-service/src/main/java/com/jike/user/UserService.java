@@ -68,5 +68,13 @@ public interface UserService {
 	 * @createtime 2017年4月6日上午9:31:25
 	 */
 	User getUserById(Long userId);
+	/**
+	 * 配置销售管理及销售关系
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月17日下午6:08:57
+	 */
+	public JSONObject addSalesLeader(JSONObject json);
 
 }
