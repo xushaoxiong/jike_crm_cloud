@@ -806,6 +806,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Date signDate = boSignJson.getDate("signDate");
 			BigDecimal signAmonut = boSignJson.getBigDecimal("signAmonut");
 			String assessmentIndex = boSignJson.getString("assessmentIndex");
+			String cooperativePartner = boSignJson.getString("cooperativePartner");
 			Date assessmentPeriodBeginTime = boSignJson.getDate("assessmentPeriodBeginTime");
 			Date assessmentPeriodEndTime = boSignJson.getDate("assessmentPeriodEndTime");
 			
@@ -814,6 +815,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boSign.setLogId(logId);
 			boSign.setSignDate(signDate);
 			boSign.setSignAmonut(signAmonut);
+			boSign.setCooperativePartner(cooperativePartner);
 			boSign.setAssessmentIndex(assessmentIndex);
 			boSign.setAssessmentPeriodBeginTime(assessmentPeriodBeginTime);
 			boSign.setAssessmentPeriodEndTime(assessmentPeriodEndTime);
@@ -1377,6 +1379,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		removeCommonAttribute(businessOpportunityLogJson);
 		businessOpportunityLogJson.put("businessOpportunityName", businessOpportunityJson.getString("businessOpportunityName"));
 		businessOpportunityLogJson.put("businessOpportunityNum", businessOpportunityJson.getString("businessOpportunityNum"));
+		businessOpportunityLogJson.put("businessOpportunityType", businessOpportunityJson.getString("businessOpportunityType"));
 		//费用
 		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
 		

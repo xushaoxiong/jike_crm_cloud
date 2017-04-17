@@ -13,8 +13,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
+import com.jike.user.dao.SalesLeaderMapper;
 import com.jike.user.dao.UserMapper;
 import com.jike.user.dao.UserRoleMapper;
+import com.jike.user.model.SalesLeader;
 import com.jike.user.model.User;
 import com.jike.user.model.UserRole;
 import com.jike.user.utils.security.Password;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	@Autowired
 	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private SalesLeaderMapper salesLeaderMapper;
 
 	private Password passwordenEcrypt = new ShaPasswordImplV1();
 
@@ -227,5 +231,33 @@ public class UserServiceImpl implements UserService {
 
 	public User getUserById(Long userId) {
 		return userMapper.selectByPrimaryKey(userId);
+	}
+	
+	
+	@Transactional
+	public JSONObject addSalesLeader(JSONObject json){
+		JSONObject resultJson = new JSONObject();
+		Long leaderId = json.getLong("leaderId");
+		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
+		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
+		if(!salesLeaderList.isEmpty()){
+			for (SalesLeader salesLeader : salesLeaderList) {
+				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
+			}
+		}
+		Date nowDate = new Date();
+		for (Object obj : managedUserIds) {
+			Long managedUserId = (Long) obj;
+			SalesLeader leader = new SalesLeader();
+			leader.setLeaderId(leaderId);
+			leader.setManagedUserId(managedUserId);
+			leader.setCreateBy(json.getLong("userId"));
+			leader.setCreateTime(nowDate);
+			salesLeaderMapper.insert(leader);
+		}
+		
+		resultJson.put("state", "success");
+		resultJson.put("message", "密码修改成功");
+		return resultJson;
 	}
 }
