@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.jike.user.model.Permission;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 
 public interface PermissionMapper {
 
