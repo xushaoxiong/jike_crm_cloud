@@ -331,6 +331,7 @@
 		from  business_opportunity bo , sale_business_opportunity sbo
 		where bo.business_opportunity_id = sbo.business_opportunity_id
 		and bo.is_cancellation = 0
+		and bo.is_closed = 0
 		<if test="userId != null">
 			and sbo.user_id = #{userId,jdbcType=BIGINT}
 		</if>
