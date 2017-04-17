@@ -11,9 +11,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.crm.utils.DateUtil;
 import com.jike.user.RoleService;
+import com.jike.user.dao.BoEventLabelMapper;
+import com.jike.user.dao.RoleEventMapper;
 import com.jike.user.dao.RoleMapper;
 import com.jike.user.dao.RolePermissionMapper;
+import com.jike.user.model.BoEventLabel;
 import com.jike.user.model.Role;
+import com.jike.user.model.RoleEvent;
 import com.jike.user.model.RolePermission;
 
 @Service("roleService")
@@ -24,6 +28,10 @@ public class RoleServiceImpl implements RoleService {
 	private RoleMapper roleMapper;
 	@Autowired
 	private RolePermissionMapper rolePermissionMapper;
+	@Autowired
+	private BoEventLabelMapper boEventLabelMapper;
+	@Autowired
+	private RoleEventMapper roleEventMapper;
 
 	public JSONObject addRole(JSONObject roleJson) {
 		JSONObject resultJson = new JSONObject();
@@ -129,4 +137,31 @@ public class RoleServiceImpl implements RoleService {
 		return roleMapper.getRoleByUserId(userId);
 	}
 
+	
+	public JSONObject queryRoleEventLabel(JSONObject json){
+		JSONObject resultJson = new JSONObject();
+		Long roleId = json.getLong("roleId");
+		List<BoEventLabel> roleEventList = boEventLabelMapper.selectByRoleId(roleId);
+		JSONArray evenList = new JSONArray();
+		for (BoEventLabel boEventLabel : roleEventList) {
+			JSONObject eventJson = new JSONObject();
+			eventJson.put("eveid", boEventLabel.getEveid());
+			eventJson.put("evename", boEventLabel.getEvename());
+			List<BoEventLabel> level2 = boEventLabelMapper.selectByRoleIdAndParentId(roleId, boEventLabel.getEveid());
+			JSONArray specIList = new JSONArray();
+			for (BoEventLabel boEventLabel2 : level2) {
+				JSONObject specJson = new JSONObject();
+				specJson.put("spcid", boEventLabel2.getEveid());
+				specJson.put("spcitem", boEventLabel2.getEvename());
+				specIList.add(specJson);
+			}
+			eventJson.put("specIList", specIList);
+			evenList.add(eventJson);
+		}
+		resultJson.put("evenList", evenList);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+		
+	}
 }

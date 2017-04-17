@@ -119,6 +119,17 @@ public class RoleController extends BaseController{
 		
 		return json.toString();
 	} 
+	@RequestMapping(value = "/queryRoleEventLabel", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody String queryRoleEventLabel(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		JSONObject json =new JSONObject();
+		json.put("userId", session.getAttribute(userId));
+		json.put("roleId", session.getAttribute(roleId));
+		return roleService.queryRoleEventLabel(json).toJSONString();
+	} 
 	
 	
 	

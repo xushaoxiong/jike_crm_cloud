@@ -59,4 +59,12 @@ public interface RoleService {
 	 */
 	public Role getRoleByUserId(JSONObject json);
 
+	/**
+	 * 查询角色创建日志事项
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月17日下午4:32:30
+	 */
+	public JSONObject queryRoleEventLabel(JSONObject json);
 }
