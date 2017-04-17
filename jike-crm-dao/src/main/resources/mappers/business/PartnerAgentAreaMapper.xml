@@ -179,4 +179,10 @@
       update_by = #{updateBy,jdbcType=BIGINT}
     where partner_agent_area_id = #{partnerAgentAreaId,jdbcType=BIGINT}
   </update>
+  <select id="selectBySignId"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+    <include refid="Base_Column_List" />
+    from partner_agent_area
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -323,8 +323,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(!"信息收集".equals(eventType)){
 			unBusinessOpportunityProcess = "信息收集";
 		}
+		Integer businessOpportunityType = null;
+		//下列三种情况只查学校类型
+		if("商业谈判".equals(eventType)||"试用中".equals(eventType)||"招投标中".equals(eventType)){
+			businessOpportunityType = 0;
+		}
 		
-		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess);
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess,businessOpportunityType);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
@@ -391,27 +396,52 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Transactional
 	public JSONObject distributionBoToService(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
-		BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(json.getString("businessOpportunityNum"));
-		if (businessOpportunityOld == null) {
+		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(json.getString("businessOpportunityNum"));
+		if (businessOpportunity == null) {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "未查到该商机");
 			return resultJson;
 		}
-		if(!json.getLong("userId").equals(businessOpportunityOld.getCreateBy())){
+		
+		if(!json.getLong("userId").equals(businessOpportunity.getCreateBy())){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有操作权限");
 			return resultJson;
 		}
-		List<ServiceBusinessOpportunity> serviceBusinessOpportunityList = serviceBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
-		Date nowdate = new Date();
+		
+		List<ServiceBusinessOpportunity> serviceBusinessOpportunityList = serviceBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
+	
+		JSONArray userIdList = json.getJSONArray("userIdList");
 		if (serviceBusinessOpportunityList.isEmpty()) {
-			//TODO
+			//添加新服务
+			this.addServiceBusinessOpportunity(userIdList,businessOpportunity.getBusinessOpportunityId(),json.getLong("userId"));
 		}else{
-			
+			//删除以前分配的服务
+			for (ServiceBusinessOpportunity serviceBusinessOpportunity : serviceBusinessOpportunityList) {
+				serviceBusinessOpportunityMapper.deleteByPrimaryKey(serviceBusinessOpportunity.getServiceBusinessOpportunityId());
+			}
+			//添加新服务
+			this.addServiceBusinessOpportunity(userIdList,businessOpportunity.getBusinessOpportunityId(),json.getLong("userId"));
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "操作成功");
 		return resultJson;
+	}
+
+	private void addServiceBusinessOpportunity(JSONArray userIdList, Long businessOpportunityId, Long ceateId) {
+		if(!userIdList.isEmpty()){
+			Date nowdate = new Date();
+			for (Object object : userIdList) {
+				Long userId = (Long) object;
+				ServiceBusinessOpportunity serviceBusinessOpportunity = new ServiceBusinessOpportunity();
+				serviceBusinessOpportunity.setBusinessOpportunityId(businessOpportunityId);
+				serviceBusinessOpportunity.setUserId(userId);
+				serviceBusinessOpportunity.setCreateBy(ceateId);
+				serviceBusinessOpportunity.setCreateTime(nowdate);
+				serviceBusinessOpportunityMapper.insert(serviceBusinessOpportunity);
+			}
+		}
+		
 	}
 
 }

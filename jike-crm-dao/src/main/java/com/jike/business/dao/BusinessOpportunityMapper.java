@@ -100,9 +100,10 @@ public interface BusinessOpportunityMapper {
 	 * @param businessOpportunityName
 	 * @param userId
 	 * @param unBusinessOpportunityProcess 
+	 * @param businessOpportunityType 
 	 * @return
 	 * @created wangyb
 	 * @createtime 2017年4月6日下午7:20:22
 	 */
-	List<BusinessOpportunity> selectByBusinessOpportunityName(@Param("businessOpportunityName")String businessOpportunityName,  @Param("userId")Long userId, @Param("unBusinessOpportunityProcess") String unBusinessOpportunityProcess);
+	List<BusinessOpportunity> selectByBusinessOpportunityName(@Param("businessOpportunityName")String businessOpportunityName,  @Param("userId")Long userId, @Param("unBusinessOpportunityProcess") String unBusinessOpportunityProcess, @Param("businessOpportunityType")Integer businessOpportunityType);
 }
