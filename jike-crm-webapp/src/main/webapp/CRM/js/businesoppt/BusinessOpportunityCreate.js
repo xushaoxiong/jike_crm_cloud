@@ -1,7 +1,7 @@
 $(function(){
 		$("#city").citySelect({
 		    prov: "北京",  
-		    city: "北京市",  
+		    city: "北京",  
 		    dist: "东城区",  
 		    nodata: "none"  
 		}); 
