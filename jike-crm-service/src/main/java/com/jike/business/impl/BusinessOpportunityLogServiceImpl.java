@@ -1484,6 +1484,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisit.setUpdateBy(userId);
 			boVisit.setUpdateTime(nowDate);
 			boVisitMapper.updateByPrimaryKeySelective(boVisit);
+			//如果是合作伙伴签约更新合作详情
+			JSONObject businessOpportunityJson= businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
+			if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())&&businessOpportunityJson.getInteger("businessOpportunityType")==1){
+				CooperationDetails cooperationDetails = commonJson.getObject("cooperationDetailsJson", CooperationDetails.class);
+				CooperationDetails cooperationDetailsOld =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
+				cooperationDetails.setCooperationDetailsId(cooperationDetailsOld.getCooperationDetailsId());
+				cooperationDetailsMapper.updateByPrimaryKeySelective(cooperationDetails);
+			}
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
 			BoNegotiation boNegotiation =  commonJson.toJavaObject(BoNegotiation.class);
 			BoNegotiation boNegotiationOld = boNegotiationMapper.selectNegotiationByLogId(logId);

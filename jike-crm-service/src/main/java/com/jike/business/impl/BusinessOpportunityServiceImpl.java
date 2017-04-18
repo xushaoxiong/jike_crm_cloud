@@ -13,10 +13,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BusinessOpportunityMapper;
+import com.jike.business.dao.CityAreaCodeMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BusinessOpportunity;
+import com.jike.business.model.CityAreaCode;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
@@ -37,6 +39,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private UserService userService;
 	@Autowired
 	private BusinessOpportunityLogService businessOpportunityLogService;
+	@Autowired
+	private CityAreaCodeMapper cityAreaCodeMapper;
 
 	@Transactional
 	public JSONObject addBusinessOpportunity(JSONObject json) {
@@ -104,6 +108,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("state", "fail");
 		resultJson.put("message", "添加内容为空");
 		return resultJson;
+	}
+	
+	private String generateBusinessOpportunityNum(String province,String city){
+		String businessOpportunityNum = null;
+		
+		String areaCode = cityAreaCodeMapper.selectByProvinceAndCity(province,city);
+		
+		return businessOpportunityNum;
 	}
 
 	@Transactional
