@@ -7,7 +7,7 @@ function infoColle(){
 				html+='	<label class="col-md-1 col-sm-2">信息来源</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control scolInfo">';
-					html+='	<option></option>';
+						html+='	<option></option>';
 						html+='	<option>学校官网</option>';
 						html+='	<option>教育局网站</option>';
 						html+='	<option>政府采购网站</option>';
@@ -28,42 +28,9 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校规模</label>';
+				html+='	<label class="col-md-1 col-sm-2">主营范围</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control scolPopleNumb">';
-						html+='	<option></option>';
-						html+='	<option>0-500</option>';
-						html+='	<option>501-1000</option>';
-						html+='	<option>1001-2000</option>';
-						html+='	<option>2000以上</option>';
-					html+='	</select>';
-				html+='	</div>';
-			html+='	</div>';
-			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校等级</label>';
-				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control schoolLevel">';
-						html+='	<option></option>';
-						html+='	<option>普通</option>';
-						html+='	<option>区重点</option>';
-						html+='	<option>市重点</option>';
-						html+='	<option>省重点</option>';
-					html+='	</select>';
-				html+='	</div>';
-			html+='	</div>';
-			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校性质</label>';
-				html+='	<div class="col-md-3 col-sm-5 schoolProperty inpHeight">';
-					html+='	<input type="radio"  name="optionsRadios" scpid="0">公立&nbsp;&nbsp;&nbsp;';
-					html+='	<input type="radio"  name="optionsRadios" scpid="1">私立&nbsp;&nbsp;&nbsp;';
-				html+='	</div>';
-			html+='	</div>';
-			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校类别</label>';
-				html+='	<div class="col-md-3 col-sm-5 schoolType inpHeight">';
-					html+='	<input type="checkbox" value="小学"/>小学&nbsp;&nbsp;&nbsp;';
-					html+='	<input type="checkbox" value="初中" />初中&nbsp;&nbsp;&nbsp;';
-					html+='	<input type="checkbox" value="高中"/>高中&nbsp;&nbsp;&nbsp;';
+					html+='	<input type="text" value="" placeholder="" class="form-control mainscope"/>';
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
@@ -77,14 +44,9 @@ function infoColle(){
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control contTitle">';
 						html+='	<option></option>';
-						html+='	<option>校长</option>';
-						html+='	<option>教学副校长</option>';
-						html+='	<option>教务主任</option>';
-						html+='	<option>信息主任</option>';
-						html+='	<option>总务主任</option>';
-						html+='	<option>学科组长</option>';
-						html+='	<option>任课教师</option>';
-						html+='	<option>学校职工</option>';
+						html+='	<option>总经理</option>';
+						html+='	<option>经理</option>';
+						html+='	<option>销售</option>';
 						html+='	<option>其它</option>';
 					html+='	</select>';
 				html+='	</div>';
@@ -113,14 +75,9 @@ function infoColle(){
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control decisionMakerTitle">';
 						html+='	<option></option>';
-						html+='	<option>校长</option>';
-						html+='	<option>教学副校长</option>';
-						html+='	<option>教务主任</option>';
-						html+='	<option>信息主任</option>';
-						html+='	<option>总务主任</option>';
-						html+='	<option>学科组长</option>';
-						html+='	<option>任课教师</option>';
-						html+='	<option>学校职工</option>';
+						html+='	<option>总经理</option>';
+						html+='	<option>经理</option>';
+						html+='	<option>销售</option>';
 						html+='	<option>其它</option>';
 					html+='	</select>';
 				html+='	</div>';
@@ -139,10 +96,17 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">是否有意向</label>';
-				html+='	<div class="col-md-3 col-sm-5  ifIntention inpHeight">';
-					html+='	<input type="radio" name="intentionradio" ifintion="0" />是&nbsp;&nbsp;&nbsp;';
-					html+='	<input type="radio" name="intentionradio" ifintion="1" />否&nbsp;&nbsp;&nbsp;';
+				html+='	<label class="col-md-1 col-sm-2">预计合作方式</label>';
+				html+='	<div class="col-md-3 col-sm-5">';
+					html+='	<select class="form-control cooperatType">';
+						html+='	<option>经销商</option>';
+						html+='	<option>代理商</option>';
+						html+='	<option>服务商</option>';
+						html+='	<option>单次授权经销商</option>';
+						html+='	<option>二级代理商</option>';
+						html+='	<option>二级经销商</option>';
+						html+='	<option>战略合作商</option>';
+					html+='	</select>';
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
@@ -162,13 +126,15 @@ function infoColle(){
 }
 function infodata(bInfoColet){
 	$('.scolInfo').val(bInfoColet.informationSources).prop('selected',true);
-		$('.scolPopleNumb').val(bInfoColet.schoolScale).prop('selected',true);
-		$('.schoolLevel').val(bInfoColet.schoolLevel).prop('selected',true);
-		$('.schoolProperty').find('input[type=radio][scpid="'+bInfoColet.schoolProperty+'"]').prop('checked',true);
-		var schoolType=bInfoColet.schoolType.split('#');
-		$.each(schoolType, function(i,item) {
-			$('.schoolType').find('input[type=checkbox][value="'+item+'"]').prop('checked',true);
-		});
+//		$('.scolPopleNumb').val(bInfoColet.schoolScale).prop('selected',true);
+//		$('.schoolLevel').val(bInfoColet.schoolLevel).prop('selected',true);
+//		$('.schoolProperty').find('input[type=radio][scpid="'+bInfoColet.schoolProperty+'"]').prop('checked',true);
+//		var schoolType=bInfoColet.schoolType.split('#');
+//		$.each(schoolType, function(i,item) {
+//			$('.schoolType').find('input[type=checkbox][value="'+item+'"]').prop('checked',true);
+//		});
+		$('.mainscope').val(bInfoColet.mainScope);
+		$('.cooperatType').val(bInfoColet.expectedCooperationType).prop('selected',true);
 		$('.contName').val(bInfoColet.contactName);
 		if(bInfoColet.contactTitleDetail==""){
 			$('.otherCont').hide();
@@ -197,7 +163,7 @@ function infodata(bInfoColet){
 		$('.decisionMakerEmail').val(bInfoColet.decisionMakerEmail);
 		$('.decisionMakerQq').val(bInfoColet.decisionMakerQq);
 		$('.decisionMakerWechat').val(bInfoColet.decisionMakerWechat);
-		$('.ifIntention').find('input[type=radio][ifintion="'+bInfoColet.ifIntention+'"]').prop('checked',true);
+//		$('.ifIntention').find('input[type=radio][ifintion="'+bInfoColet.ifIntention+'"]').prop('checked',true);
 		$('.ifInterested').find('input[type=radio][ifined="'+bInfoColet.ifInterested+'"]').prop('checked',true);
 }
 	//联系人职务其他选框
@@ -219,19 +185,13 @@ function infodata(bInfoColet){
 			}
 		})
 	//信息收集页面内容
-//		var jourInJ={};
-//		var commonJson={};
+		var jourInJ={};
+		var boInformationCollect={};
 		function infodetail(dataJ){
 			dataJ.informationSources=$('.scolInfo').find('option:selected').val();
-			dataJ.schoolScale=$('.scolPopleNumb').find('option:selected').val();
-			dataJ.schoolLevel=$('.schoolLevel').find('option:selected').val();
-			dataJ.schoolProperty=$('.schoolProperty').find('input[type=radio]:checked').attr('scpid');
-			var scolTypeArry=[];
-			$('.schoolType input[type="checkbox"]:checked').each(function(){ 
-				scolTypeArry.push($(this).val()); 
-			}); 
-			dataJ.schoolType= scolTypeArry.join('#');
 			dataJ.contactName=$.trim($('.contName').val());
+			dataJ.mainScope=$.trim($('.mainscope').val());
+			dataJ.expectedCooperationType=$('.cooperatType').find('option:selected').val();
 			if($('.otherCont').show()){
 					dataJ.contactTitle=$('.contTitle').find('option:selected').val();
 					dataJ.contactTitleDetail=$.trim($('.otherCont').val());
@@ -258,7 +218,6 @@ function infodata(bInfoColet){
 			dataJ.decisionMakerEmail=	$.trim($('.decisionMakerEmail').val());
 			dataJ.decisionMakerQq=$.trim($('.decisionMakerQq').val());
 			dataJ.decisionMakerWechat=$.trim($('.decisionMakerWechat').val());
-			dataJ.ifIntention=$('.ifIntention').find('input[type=radio]:checked').attr('ifintion');
 			dataJ.ifInterested=$('.ifInterested').find('input[type=radio]:checked').attr('ifined');
 			
 			
@@ -269,13 +228,8 @@ function infodata(bInfoColet){
 			var contactTitle=$('.contTitle').find('option:selected').val();
 			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
 			var scolInfo=$('.scolInfo').find('option:selected').val();
-			var schoolScale=$('.scolPopleNumb').find('option:selected').val();
-			var schoolLevel=$('.schoolLevel').find('option:selected').val();
-			var schoolProperty=$('.schoolProperty').find('input[type=radio]:checked').attr('scpid');
-			var scolTypeArry=[];
-			$('.schoolType input[type="checkbox"]:checked').each(function(){ 
-				scolTypeArry.push($(this).val()); 
-			}); 
+			var mainScope=$.trim($('.mainscope').val());
+			var expectedCooperationType=$('.cooperatType').find('option:selected').val();
 			var contName=$.trim($('.contName').val());
 			var contactLandline=$.trim($('.contactLandline').val());
 			var contactPhone=$.trim($('.contactPhone').val());
@@ -288,7 +242,6 @@ function infodata(bInfoColet){
 			var decisionMakerEmail=	$.trim($('.decisionMakerEmail').val());
 			var decisionMakerQq=$.trim($('.decisionMakerQq').val());
 			var decisionMakerWechat=$.trim($('.decisionMakerWechat').val());
-			var ifIntention=$('.ifIntention').find('input[type=radio]:checked').attr('ifintion');
 			var ifInterested=$('.ifInterested').find('input[type=radio]:checked').attr('ifined');
 			if(contactTitle==""){
 				$('.otherCont').hide();
@@ -304,7 +257,7 @@ function infodata(bInfoColet){
 				pub.Alt('请填写决策人职位',false);
 				return false;
 			}
-			if(scolInfo=="" && schoolScale=="" && schoolLevel=="" && schoolProperty==undefined && scolTypeArry.length==0 && contName=="" && contactTitle=="" && contactLandline=="" && contactPhone=="" && contactEmail=="" && contactQq=="" && contactWechat=="" && decisionMakerName=="" && decisionMakerTitle=="" && decisionMakerLandline=="" && decisionMakerPhone=="" && decisionMakerQq=="" && decisionMakerEmail=="" && decisionMakerWechat=="" && ifIntention==undefined && ifInterested==undefined){
+			if(scolInfo=="" && mainScope=="" && expectedCooperationType=="" && contName=="" && contactTitle=="" && contactLandline=="" && contactPhone=="" && contactEmail=="" && contactQq=="" && contactWechat=="" && decisionMakerName=="" && decisionMakerTitle=="" && decisionMakerLandline=="" && decisionMakerPhone=="" && decisionMakerQq=="" && decisionMakerEmail=="" && decisionMakerWechat=="" && ifInterested==undefined){
 				pub.Alt('至少填写一项内容',false);
 				return false;
 			}

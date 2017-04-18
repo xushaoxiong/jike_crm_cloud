@@ -122,6 +122,7 @@ $('.delJournal').click(function(){
 		$('#indate').html(editdata.logDate);
 		$('#indate').attr('logId',editdata.logId)
 		$('.businessNameSp').val(editdata.businessOpportunityName);
+		$('.businessNameSp').attr('oppttypeid',editdata.businessOpportunityType);
 		$('.businesNumbspInp').val(editdata.businessOpportunityNum);
 		$('.eventType').val(editdata.eventType);
 		$('.specEvent').val(editdata.specificEvent);
@@ -143,13 +144,23 @@ $('.delJournal').click(function(){
 	}
 
 	function commondetail(jo){
+		var opptypeid=$('.businessNameSp').attr('oppttypeid');
+		var eventType=$('.eventType').val();
 		//传入详情json
 		//信息收集
-		if($('.eventType').val()=='信息收集'){
-			$.getScript("js/editjournal/xinxishoujiInfo.js",function(){
-				$('.editInfo').html(infoColle());
-				infodata(jo.commonJson)
-			})
+		if(eventType=='信息收集'){
+			if(opptypeid==1){
+				$.getScript("js/editjournalpartner/editPxinxishoujiInfo.js",function(){
+					$('.editInfo').html(infoColle());
+					infodata(jo.commonJson)
+				})
+			}else{
+				$.getScript("js/editjournal/xinxishoujiInfo.js",function(){
+					$('.editInfo').html(infoColle());
+					infodata(jo.commonJson)
+				})
+			}
+//			
 		}
 		//制定拜访计划
 		if($('.eventType').val()=='制定拜访计划'){
@@ -159,12 +170,21 @@ $('.delJournal').click(function(){
 			})
 		}
 		//拜访客户
-		if($('.eventType').val()=='拜访客户'){
-			$.getScript("js/editjournal/editbaifangInfo.js",function(){
-				$('.editInfo').html(vistInformation());
-				visitordata(jo.commonJson)
-			})
+		if(eventType=='拜访客户'){
+			if($('.specEvent').val()=='达成合作意向'&&opptypeid==1){
+				$.getScript("js/editjournalpartner/editPbaifangInfo.js",function(){
+					$('.editInfo').html(vistInformation());
+					visitordata(jo.commonJson)
+				})
+			}else{
+				$.getScript("js/editjournal/editbaifangInfo.js",function(){
+					$('.editInfo').html(vistInformation());
+					visitordata(jo.commonJson)
+				})
+			}
+			
 		}
+		//谈判
 		if($('.eventType').val()=='商业谈判'){
 			$.getScript("js/editjournal/edittanpanInfo.js",function(){
 				$('.editInfo').html(negotiationsHtml());
@@ -206,10 +226,18 @@ $('.delJournal').click(function(){
 		}
 		//签约
 		if($('.eventType').val()=='签约'){
-			$.getScript("js/editjournal/editqianyueInfo.js",function(){
-				$('.editInfo').html(signHtml());
-				signdata(jo.commonJson);
-			})
+			if(opptypeid==1){
+				$.getScript("js/editjournalpartner/editPqianyueInfo.js",function(){
+					$('.editInfo').html(signHtml());
+					signdata(jo.commonJson);
+				})
+			}else{
+				$.getScript("js/editjournal/editqianyueInfo.js",function(){
+					$('.editInfo').html(signHtml());
+					signdata(jo.commonJson);
+				})
+			}
+			
 			
 		}
 		//日常
@@ -234,20 +262,33 @@ $('.delJournal').click(function(){
 		if($('.eventType').val()=='支持'){
 			$('.addTime,.minusTime').hide();
 			$('.timeVal').prop('disabled',true);
-			$.getScript("js/editjournal/editzhichiInfo.js",function(){
-				$('.editInfo').html(supportHtml());
-				supportdata(jo.commonJson);
-			})
-			
+			if(opptypeid==1){
+				$.getScript("js/editjournalpartner/editPzhichiInfo.js",function(){
+					$('.editInfo').html(supportHtml());
+					supportdata(jo.commonJson);
+				})
+			}else{
+				$.getScript("js/editjournal/editzhichiInfo.js",function(){
+					$('.editInfo').html(supportHtml());
+					supportdata(jo.commonJson);
+				})
+			}
 		}
 		//培训
 		if($('.eventType').val()=='培训'){
 			$('.addTime,.minusTime').hide();
 			$('.timeVal').prop('disabled',true);
-			$.getScript("js/editjournal/editpeixunInfo.js",function(){
-				$('.editInfo').html(trainiHtml());
-				traindata(jo.commonJson);
-			})
+			if(opptypeid==1){
+				$.getScript("js/editjournalpartner/editPpeixunInfo.js",function(){
+					$('.editInfo').html(trainiHtml());
+					traindata(jo.commonJson);
+				})
+			}else{
+				$.getScript("js/editjournal/editpeixunInfo.js",function(){
+					$('.editInfo').html(trainiHtml());
+					traindata(jo.commonJson);
+				})
+			}
 			
 		}
 	}

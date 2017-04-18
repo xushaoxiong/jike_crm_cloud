@@ -107,9 +107,9 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">注册资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost" onkeyup="num(this)"/>';
 				vFhtml+='	</div>';
-				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">从事教育行业案例</label>';
@@ -126,9 +126,9 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">启动资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost" onkeyup="num(this)"/>';
 				vFhtml+='	</div>';
-				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
 		vFhtml+='	</div>';
 		vFhtml+='	</div>';
@@ -151,21 +151,31 @@ function visitordata(jodata){
 		$('.otherCont').show();
 		$('.otherCont').val(jodata.visitorTitleDetail);
 	}
-	$('.contactLine').val(jodata.visitorLandline);
-	$('.contactPhone').val(jodata.visitorPhone);
-	$('.contactEmail').val(jodata.visitorEmail);
-	$('.contactQq').val(jodata.visitorQq);
-	$('.contactWatch').val(jodata.visitorWechat);
-	$(".FillInfo #city").citySelect({
+	$('.contactLine').val(jodata.visitLandline);
+	$('.contactPhone').val(jodata.visitPhone);
+	$('.contactEmail').val(jodata.visitEmail);
+	$('.contactQq').val(jodata.visitQq);
+	$('.contactWatch').val(jodata.visitWechat);
+	$(".editInfo #city").citySelect({
 	    prov: jodata.visitProvince,  
 	    city: jodata.visitCity,  
 	    dist: jodata.visitCountry,
 	    nodata: "none"    
 	}) ;
+	$('.budget').val(jodata.procurementBudget)
+	$('.vispopuse').find('option[decMarkid="'+jodata.decisionMakerAdvice+'"]').val();
 	$('.detailadrs').val(jodata.visitAddressDetail);
+	$('.purpTextare').val(jodata.visitDetail);
+	var cooperationDetailsJson=jodata.cooperationDetailsJson;
+//	console.log(cooperationDetailsJson);
+	$('.coptype').val(cooperationDetailsJson.cooperationMode);
+	$('.registCost').val(cooperationDetailsJson.registeredCapital);
+	$('.edctCase').val(cooperationDetailsJson.educationCase);
+	$('.servNum').val(cooperationDetailsJson.servicePersonnelQuantity);
+	$('.startCost').val(cooperationDetailsJson.startCapital);
 }
 //收集拜访信息
-	function VistInfo(boVisit){
+	function infodetail(boVisit){
 		boVisit.visitPlanId=$('.visPlan').attr('visitPlanId');
 		boVisit.visitPlanName=$('.visPlan').html();
 		boVisit.visitorName=$.trim($('.visName').val());	
@@ -195,7 +205,7 @@ function visitordata(jodata){
 		
 	}
 	//联系人职务其他选框
-		$('.FillInfo').on('change','.contTitle',function(){
+		$('.editInfo').on('change','.contTitle',function(){
 			$('.otherCont').html("");
 			if($(this).find('option:selected').val()=="其它"){
 				$('.otherCont').show();
@@ -204,7 +214,7 @@ function visitordata(jodata){
 			}
 		})
 //拜访提交
-	$('.FillInfo').on('click','.visConfirm',function(){
+	$('.editInfo').on('click','.visConfirm',function(){
 		var visitorLandline=$.trim($('.contactLine').val());
 		var visitorPhone=$.trim($('.contactPhone').val());
 		var visitorEmail=$.trim($('.visitorEmail').val());
@@ -244,27 +254,7 @@ function visitordata(jodata){
 			pub.Alt('请填写启动资金',false);
 			return false;
 		}
-		$('.FillInfo').hide();
+		$('.editInfo').hide();
 		$('#addJournal').show();
-		$('.journaConfirm').prop('disabled',false);
 		
-	})
-	var boVistPlanJ={};
-	var boVisit={};
-	var cooperationDetails={};
-	$('.journaConfirm').click(function(){
-		VistInfo(boVisit);
-		logDateF(logData);
-		totalDetailF(totalDetail);
-		copratInfo(cooperationDetails);
-		boVistPlanJ.logData=logData;
-		boVistPlanJ.totalDetail=totalDetail
-		boVistPlanJ.boVisit=boVisit;
-		boVistPlanJ.boVisit.cooperationDetails=cooperationDetails;
-		
-		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
-				$('.R-wap').load('journal/list.html');
-			},function errF(jo){
-				pub.Alt(jo.message,false);
-		})
 	})

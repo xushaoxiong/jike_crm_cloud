@@ -28,20 +28,20 @@ function signHtml(){
 				signHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>代理区域</label>';
 				signHtml+='<div class="col-md-6 col-sm-6">';
 					signHtml+='<div class="area-wap">';
-						signHtml+='<div class="areaitem">';
-							signHtml+='<div class="col-md-9 col-sm-9 earelist" ty="0" style="padding:0;">';
-							    signHtml+='<div class="col-md-4 col-sm-4">';
-			            			signHtml+='<select class="prov form-control"></select>';
-				            	signHtml+='</div>';
-								signHtml+='<div class="col-md-4 col-sm-4">';
-								    signHtml+='<select class="city form-control" disabled="disabled"></select>';
-								signHtml+='</div>';
-							    signHtml+='<div class="col-md-4 col-sm-4">';
-								    signHtml+='<select class="dist form-control" disabled="disabled"></select>'; 
-								 signHtml+='</div>';   
-							signHtml+='</div>';
-							signHtml+='<button class="btn btn-primary addeare" style="margin-left:5px;">添加代理区域</button>';
-						signHtml+='</div>';
+//						signHtml+='<div class="areaitem">';
+//							signHtml+='<div class="assmentaddr col-md-9 col-sm-9 earelist" ty="0">';
+//							    signHtml+='<div class="col-md-4 col-sm-4">';
+//			            			signHtml+='<select class="prov form-control"></select>';
+//				            	signHtml+='</div>';
+//								signHtml+='<div class="col-md-4 col-sm-4">';
+//								    signHtml+='<select class="city form-control" disabled="disabled"></select>';
+//								signHtml+='</div>';
+//							    signHtml+='<div class="col-md-4 col-sm-4">';
+//								    signHtml+='<select class="dist form-control" disabled="disabled"></select>'; 
+//								 signHtml+='</div>';   
+//							signHtml+='</div>';
+//							signHtml+='<button class="btn btn-primary addeare">添加代理区域</button>';
+//						signHtml+='</div>';
 					signHtml+='</div>';
 				signHtml+='</div>';
 			signHtml+='</div>';
@@ -53,14 +53,50 @@ function signHtml(){
 	signHtml+='</div>';
 	return signHtml;
 }
-
+//信息赋值
+function signdata(sdata){
+	$('.Signdate').html(sdata.signDate);
+	$('.Asseinde').val(sdata.assessmentIndex);
+	$('.startdate').html(sdata.assessmentPeriodBeginTime);
+	$('.enddate').html(sdata.assessmentPeriodEndTime);
+	$.each(sdata.partnerAgentAreaList, function(i,item) {
+		var earedataHtml="";
+		
+		earedataHtml+='<div class="areaitem">';
+			earedataHtml+='<div class="col-md-9 col-sm-9 earelist" ty='+i+'>';
+			    earedataHtml+='<div class="col-md-4 col-sm-4">';
+					earedataHtml+='<select class="prov form-control"></select>';
+		    	earedataHtml+='</div>';
+				earedataHtml+='<div class="col-md-4 col-sm-4">';
+				    earedataHtml+='<select class="city form-control"></select>';
+				earedataHtml+='</div>';
+			    earedataHtml+='<div class="col-md-4 col-sm-4">';
+				    earedataHtml+='<select class="dist form-control"></select>'; 
+				 earedataHtml+='</div>';   		      
+			earedataHtml+='</div>';
+			if(i==0){
+				earedataHtml+='<button class="btn btn-primary addeare">添加代理区域</button>';
+			}else{
+				earedataHtml+='<button class="btn btn-primary deleare" style="maragin-top:15px;">删除此区域</button>';
+			}
+			
+		earedataHtml+='</div>';
+		$('.area-wap').append(earedataHtml);
+		$(".earelist[ty="+i+"]").addcitySelect({  
+		    prov: item.addressProvince,  
+		    city: item.addressCity,  
+		    dist: item.addressCounty,  
+		    nodata: "none" 
+		});
+	});
+}
 //添加代理区域
 
-$('.FillInfo').on('click','.addeare',function(){
+$('.editInfo').on('click','.addeare',function(){
 	var earaN=($('.areaitem').length)-1;
 	earaN++;
 	var eareHtml="";
-	eareHtml+='<div class="areaitem" style="margin-bottom:15px;">';
+	eareHtml+='<div class="areaitem" style="margin-bottom:15px">';
 		eareHtml+='<div class="col-md-9 col-sm-9 earelist" ty='+earaN+'>';
 		    eareHtml+='<div class="col-md-4 col-sm-4">';
 				eareHtml+='<select class="prov form-control"></select>';
@@ -72,7 +108,7 @@ $('.FillInfo').on('click','.addeare',function(){
 			    eareHtml+='<select class="dist form-control" disabled="disabled"></select>'; 
 			 eareHtml+='</div>';   
 		eareHtml+='</div>';
-		eareHtml+='<button class="btn btn-primary deleare" style="margin-left:5px;">删除此区域</button>';  	
+		eareHtml+='<button class="btn btn-primary deleare" style="margin-left:5px;">删除此区域</button>'; 
 	eareHtml+='</div>';
 	$('.area-wap').append(eareHtml);
 	$(".earelist[ty="+earaN+"]").addcitySelect({  
@@ -82,15 +118,16 @@ $('.FillInfo').on('click','.addeare',function(){
 	    nodata: "none" 
 	});
 })
+
 //删除区域
-$('.FillInfo').on('click','.deleare',function(){
+$('.editInfo').on('click','.deleare',function(){
 	$(this).parent().remove();
 	$.each($('.earelist'), function(i) {
 		$(this).attr('ty',i);
 	});
 })
 //获取签约信息
-function signInfo(boSign){
+function infodetail(boSign){
 	var partnerAgentAreaList=[];
 	boSign.signDate=$('.Signdate').html();
 	boSign.assessmentIndex=$.trim($('.Asseinde').val());
@@ -103,12 +140,13 @@ function signInfo(boSign){
 		citylist.addressCity=$(this).find('.city').val();
 		citylist.addressCounty=$(this).find('.dist').val();
 		partnerAgentAreaList.push(citylist);
+		console.log(citylist);
 	});
 	boSign.partnerAgentAreaList=partnerAgentAreaList;
 	
 }
 //签约详情提交
-$('.FillInfo').on('click','.SignConfirm',function(){
+$('.editInfo').on('click','.SignConfirm',function(){
 	var signtime=$('.Signdate').html();
 	var assessmentIndex=$.trim($('.Asseinde').val());
 	var assessmentPeriodBeginTime=$('.startdate').html();
@@ -129,26 +167,6 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 		pub.Alt('请填写合同期限结束时间',false);
 		return false;
 	}
-	$('.FillInfo').hide();
+	$('.editInfo').hide();
 	$('#addJournal').show();
-	$('.journaConfirm').prop('disabled',false);
 })
-
-//提交返回后台签约信息
-	var signJ={};
-	var boSign={};
-	$('.journaConfirm').click(function(){
-		
-		signInfo(boSign);
-		logDateF(logData);
-		totalDetailF(totalDetail);
-		signJ.logData=logData;
-		signJ.totalDetail=totalDetail
-		signJ.boSign=boSign;
-		
-		$ajax('post','businessOpportunityLog/addBOLogBoSign',signJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
-			},function errF(jo){
-				pub.Alt(jo.message,false);
-		})
-	})

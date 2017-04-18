@@ -3,6 +3,8 @@ $(function(){
 	$(window).resize(function(){
 		$('.L-wap,.R-container').height($(window).height()-60);
 	})
+	
+	
 		//列表
 	$.ajax({
 		type:"post",
@@ -53,6 +55,7 @@ $(function(){
 	});
 	
 	$('.L-list').on('click','.hide-menu li',function(){
+		
 		$('.hide-menu li').removeClass('menuCheck');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
