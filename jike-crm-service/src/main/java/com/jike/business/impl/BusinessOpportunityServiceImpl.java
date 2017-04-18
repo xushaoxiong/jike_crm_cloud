@@ -250,7 +250,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 				return resultJson;
 			}
 			//删除时判断该商机是否建立日志，建立日志的不能删除
-			if(businessOpportunityJson.getInteger("isCancellation")==1){
+			if(businessOpportunityJson.getInteger("isCancellation")!=null&&businessOpportunityJson.getInteger("isCancellation")==1){
 				if(businessOpportunityLogService.queryBoLogByBoId(businessOpportunity.getBusinessOpportunityId())){
 					resultJson.put("state", "fail");
 					resultJson.put("message", "该商机已建立日志不能删除");

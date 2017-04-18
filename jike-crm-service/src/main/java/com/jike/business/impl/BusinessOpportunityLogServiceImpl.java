@@ -728,7 +728,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boBidding.setBusinessOpportunityId(businessOpportunityId);
 			boBidding.setLogId(logId);
 			boBidding.setBiddingMode(biddingMode);
-			boBidding.setCooperativePartner(cooperativePartner);
+			boBidding.setCooperativePartner(cooperativePartner);//合作伙伴
 			boBidding.setNetworkLink(networkLink);
 			boBidding.setIfHaveBusinessFee(ifHaveBusinessFee);
 			boBidding.setCreateTime(nowDate);
