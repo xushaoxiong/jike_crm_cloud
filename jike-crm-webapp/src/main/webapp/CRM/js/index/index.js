@@ -55,7 +55,8 @@ $(function(){
 	});
 	
 	$('.L-list').on('click','.hide-menu li',function(){
-		
+		//跳转链接是面包屑导航出现breadcrumb
+		$('.breadcrumb').show();
 		$('.hide-menu li').removeClass('menuCheck');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
