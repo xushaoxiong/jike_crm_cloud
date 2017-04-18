@@ -46,7 +46,7 @@ $('.FillInfo').on('click','.tryConfirm',function(){
 		TryJ.boTrialReuslt=boTrialReuslt;
 		
 		$ajax('post','businessOpportunityLog/addBOLogTrialReuslt',TryJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

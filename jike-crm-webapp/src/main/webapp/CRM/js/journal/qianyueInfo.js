@@ -65,7 +65,7 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 		signJ.boSign=boSign;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoSign',signJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

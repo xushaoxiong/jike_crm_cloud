@@ -45,7 +45,7 @@ $('.FillInfo').on('click','.propRustConfirm',function(){
 		propRustJ.boBiddingResult=boBiddingResult;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoBiddingResult',propRustJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

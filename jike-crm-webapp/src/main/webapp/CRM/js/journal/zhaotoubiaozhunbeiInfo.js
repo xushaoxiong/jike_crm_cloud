@@ -71,7 +71,7 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 		propreJ.totalDetail=totalDetail
 		propreJ.boBidding=boBidding;
 		$ajax('post','businessOpportunityLog/addBOLogBoBidding',propreJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
