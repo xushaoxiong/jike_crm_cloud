@@ -13,8 +13,11 @@
 		})
 		$('.businessName').val(jo.businessOpportunityName);
 		$('.addrDetial').val(jo.addressDetail);
-		if()
-		$('.scloType').find('option[Optype="'+jo.businessOpportunityType+'"]').prop('selected',true)
+		if(jo.businessOpportunityType==0){
+			$('.scloType').val('学校');
+		}else{
+			$('.scloType').val('合作伙伴');
+		}
 	},function errF(jo){
 		pub.Alt(jo.message,false);
 	})
