@@ -1312,8 +1312,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				//如果是达成合作意向，保存合作详情
 				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
 					CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
-					Object json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
-					JSONObject cooperationDetailsJson = (JSONObject) json2;
+					String json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
+					JSONObject cooperationDetailsJson = JSONObject.parseObject(json2);
 					removeCommonAttribute(cooperationDetailsJson);
 					JSONObject comJson = JSONObject.parseObject(json);
 					comJson.put("cooperationDetailsJson", cooperationDetailsJson);
@@ -1461,6 +1461,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boInformationCollect.setUpdateBy(userId);
 			boInformationCollect.setUpdateTime(nowDate);
 			boInformationCollectMapper.updateByPrimaryKeySelective(boInformationCollect);
+			updateBoProcessByInfoCollection(businessOpportunityLogOld.getBusinessOpportunityId(),commonJson,userId);
+		
 		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
 			BoVisitPlan boVisitPlan =  commonJson.toJavaObject(BoVisitPlan.class);
 			BoVisitPlan boVisitPlanOld = boVisitPlanMapper.selectVisitPlanByLogId(logId);
@@ -1586,6 +1588,137 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 	}
 	
+	private void updateBoProcessByInfoCollection(Long businessOpportunityId, JSONObject boInformationCollectJson,Long userId) {
+		String informationSources = boInformationCollectJson.getString("informationSources");
+		if(StringUtils.isEmpty(informationSources)){
+			informationSources = null;
+		}
+		String schoolScale = boInformationCollectJson.getString("schoolScale");
+		if(StringUtils.isEmpty(schoolScale)){
+			schoolScale = null;
+		}
+		String schoolLevel = boInformationCollectJson.getString("schoolLevel");
+		if(StringUtils.isEmpty(schoolLevel)){
+			schoolLevel = null;
+		}
+		Integer schoolProperty = boInformationCollectJson.getInteger("schoolProperty");
+		if(StringUtils.isEmpty(schoolProperty)){
+			schoolProperty = null;
+		}
+		String schoolType = boInformationCollectJson.getString("schoolType");
+		if(StringUtils.isEmpty(schoolType)){
+			schoolType = null;
+		}
+		String contactName = boInformationCollectJson.getString("contactName");
+		if(StringUtils.isEmpty(contactName)){
+			contactName = null;
+		}
+		String contactTitle = boInformationCollectJson.getString("contactTitle");
+		if(StringUtils.isEmpty(contactTitle)){
+			contactTitle = null;
+		}
+		String contactTitleDetail = boInformationCollectJson.getString("contactTitleDetail");
+		if(StringUtils.isEmpty(contactTitleDetail)){
+			contactTitleDetail = null;
+		}
+		String contactLandline = boInformationCollectJson.getString("contactLandline");
+		if(StringUtils.isEmpty(contactLandline)){
+			contactLandline = null;
+		}
+		String contactPhone = boInformationCollectJson.getString("contactPhone");
+		if(StringUtils.isEmpty(contactPhone)){
+			contactPhone = null;
+		}
+		String contactEmail = boInformationCollectJson.getString("contactEmail");
+		if(StringUtils.isEmpty(contactEmail)){
+			contactEmail = null;
+		}
+		String contactQq = boInformationCollectJson.getString("contactQq");
+		if(StringUtils.isEmpty(contactQq)){
+			contactQq = null;
+		}
+		String contactWechat = boInformationCollectJson.getString("contactWechat");
+		if(StringUtils.isEmpty(contactWechat)){
+			contactWechat = null;
+		}
+		String decisionMakerName = boInformationCollectJson.getString("decisionMakerName");
+		if(StringUtils.isEmpty(decisionMakerName)){
+			decisionMakerName = null;
+		}
+		String decisionMakerTitle = boInformationCollectJson.getString("decisionMakerTitle");
+		if(StringUtils.isEmpty(decisionMakerTitle)){
+			decisionMakerTitle = null;
+		}
+		String decisionMakerTitleDetail = boInformationCollectJson.getString("decisionMakerTitleDetail");
+		if(StringUtils.isEmpty(decisionMakerTitleDetail)){
+			decisionMakerTitleDetail = null;
+		}
+		String decisionMakerLandline = boInformationCollectJson.getString("decisionMakerLandline");
+		if(StringUtils.isEmpty(decisionMakerLandline)){
+			decisionMakerLandline = null;
+		}
+		String decisionMakerPhone = boInformationCollectJson.getString("decisionMakerPhone");
+		if(StringUtils.isEmpty(decisionMakerPhone)){
+			decisionMakerPhone = null;
+		}
+		String decisionMakerEmail = boInformationCollectJson.getString("decisionMakerEmail");
+		if(StringUtils.isEmpty(decisionMakerEmail)){
+			decisionMakerEmail = null;
+		}
+		String decisionMakerQq = boInformationCollectJson.getString("decisionMakerQq");
+		if(StringUtils.isEmpty(decisionMakerQq)){
+			decisionMakerQq = null;
+		}
+		String decisionMakerWechat = boInformationCollectJson.getString("decisionMakerWechat");
+		if(StringUtils.isEmpty(decisionMakerWechat)){
+			decisionMakerWechat = null;
+		}
+		Integer ifIntention = boInformationCollectJson.getInteger("ifIntention");
+		if(StringUtils.isEmpty(ifIntention)){
+			ifIntention = null;
+		}
+		Integer ifInterested = boInformationCollectJson.getInteger("ifInterested");
+		if(StringUtils.isEmpty(ifInterested)){
+			ifInterested = null;
+		}
+		String mainScope = boInformationCollectJson.getString("mainScope");
+		if(StringUtils.isEmpty(mainScope)){
+			mainScope = null;
+		}
+		String expectedCooperationType = boInformationCollectJson.getString("expectedCooperationType");
+		if(StringUtils.isEmpty(expectedCooperationType)){
+			expectedCooperationType = null;
+		}
+		
+		JSONObject businessOpportunityJson= businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
+		JSONObject jsonData = new JSONObject();
+		jsonData.put("userId", userId);
+		if (businessOpportunityJson.getInteger("businessOpportunityType") == 0) {// 学校
+			if (informationSources != null && schoolScale != null && schoolLevel != null && schoolProperty != null
+					&& schoolType != null && contactName != null && contactTitle != null
+					&& (contactLandline != null || contactPhone != null || contactEmail != null || contactQq != null
+							|| contactWechat != null)
+					&& decisionMakerName != null && decisionMakerTitle != null
+					&& (decisionMakerPhone != null || decisionMakerPhone != null || decisionMakerEmail != null
+							|| decisionMakerQq != null || decisionMakerWechat != null)) {
+				// 修改商机进度
+				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
+			}
+		} else if (businessOpportunityJson.getInteger("businessOpportunityType") == 1) {// 合作伙伴
+			if (informationSources != null && mainScope != null && expectedCooperationType != null
+					&& contactName != null && contactTitle != null
+					&& (contactLandline != null || contactPhone != null || contactEmail != null || contactQq != null
+							|| contactWechat != null)
+					&& decisionMakerName != null && decisionMakerTitle != null
+					&& (decisionMakerPhone != null || decisionMakerPhone != null || decisionMakerEmail != null
+							|| decisionMakerQq != null || decisionMakerWechat != null)) {
+				// 修改商机进度
+				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
+			}
+		}
+
+	}
+
 	/**
 	 * 移除通用属性
 	 * @param json
