@@ -174,6 +174,9 @@ var closeBtnPart = "";
 var isClosedip=""
 $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
+	console.log(closeBtnPart)
+	var businessOpportunityNum=$(this).parents('tr').find('.opptNumb').attr('numb');
+	console.log(businessOpportunityNum)
 	isClosedip=$(this).attr('isClosedip');
 	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
@@ -248,7 +251,6 @@ $('.searchBusiness').click(function(){
 
 //重置
 $('.reset').click(function(){
-	console.log(1)
 	$('.OpportunityName').val('');
 	$('#indate').val('');
 	$('#enddate').val('');
