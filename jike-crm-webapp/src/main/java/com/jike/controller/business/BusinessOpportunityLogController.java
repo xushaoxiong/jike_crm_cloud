@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityLogService;
-import com.jike.business.BusinessOpportunityService;
 import com.jike.controller.base.BaseController;
 import com.jike.controller.utils.RequestUtils;
 
