@@ -1308,7 +1308,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			json = JSONObject.toJSONString(boVisitPlan,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("拜访客户".equals(businessOpportunityLog.getEventType())){
 			BoVisit boVisit = boVisitMapper.selectVisitByLogId(logId);
-			json = JSONObject.toJSONString(boVisit,SerializerFeature.WriteNullStringAsEmpty);
+			String vistJsonString = JSONObject.toJSONString(boVisit,SerializerFeature.WriteNullStringAsEmpty);
+			
+			//添加拜访计划名称
+			JSONObject vistJson = JSONObject.parseObject(vistJsonString);
+			Long visitPlanId = boVisit.getVisitPlanId();
+			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectByPrimaryKey(visitPlanId);
+			vistJson.put("visitPlanName", boVisitPlan.getVisitPlanName());
+			json = vistJson.toJSONString();
 				//如果是达成合作意向，保存合作详情
 				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
 					CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
