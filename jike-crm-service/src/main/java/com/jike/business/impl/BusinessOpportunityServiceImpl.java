@@ -18,7 +18,6 @@ import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BusinessOpportunity;
-import com.jike.business.model.CityAreaCode;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
@@ -43,37 +42,18 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private CityAreaCodeMapper cityAreaCodeMapper;
 
 	@Transactional
-	public JSONObject addBusinessOpportunity(JSONObject json) {
+	public synchronized JSONObject addBusinessOpportunity(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
 		if(json!=null&&!json.isEmpty()){
+			
+			Integer businessOpportunityType = json.getInteger("businessOpportunityType");
+			String province = json.getString("addressProvince");
+			String city = json.getString("addressCity");
+			String businessOpportunityName = json.getString("businessOpportunityName");
+			String businessOpportunityNum =generateBusinessOpportunityNum(province, city, businessOpportunityType, businessOpportunityName);
+			
 			BusinessOpportunity businessOpportunity = new BusinessOpportunity();
 			businessOpportunity.setBusinessOpportunityName(json.getString("businessOpportunityName"));
-			Integer businessOpportunityType = json.getInteger("businessOpportunityType");
-			String businessOpportunityNum =null;
-			if (businessOpportunityType == 0) {
-				businessOpportunityNum = "S"+new Date().getTime();
-				boolean flag = true ;
-				while(flag){
-					BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityNum);
-					if(businessOpportunityOld==null){
-						 flag = false; 
-					}else{
-						businessOpportunityNum = "S"+new Date().getTime();
-					}
-				}
-				
-			} else if (businessOpportunityType == 1) {
-				businessOpportunityNum = "P"+new Date().getTime();
-				boolean flag = true ;
-				while(flag){
-					BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityNum);
-					if(businessOpportunityOld==null){
-						 flag = false; 
-					}else{
-						businessOpportunityNum = "P"+new Date().getTime();
-					}
-				}
-			}
 			businessOpportunity.setBusinessOpportunityNum(businessOpportunityNum); //商机流水号
 			businessOpportunity.setBusinessOpportunityType(businessOpportunityType);
 			businessOpportunity.setAddressProvince(json.getString("addressProvince"));
@@ -110,10 +90,33 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		return resultJson;
 	}
 	
-	private String generateBusinessOpportunityNum(String province,String city){
+	private String generateBusinessOpportunityNum(String province,String city,int businessOpportunityType,String businessOpportunityName){
 		String businessOpportunityNum = null;
+		if(businessOpportunityType == 0){
+			businessOpportunityNum = "S";
+		}else{
+			businessOpportunityNum = "P";
+		}
 		
 		String areaCode = cityAreaCodeMapper.selectByProvinceAndCity(province,city);
+		businessOpportunityNum+=areaCode;
+		int cityCount = businessOpportunityMapper.selectCountByAreaAndBoType(province,city,businessOpportunityType);
+		int boNameCount = businessOpportunityMapper.selectCountByAreaAndBoName(province,city,businessOpportunityType,businessOpportunityName);
+		if(cityCount<9){
+			cityCount++;
+			businessOpportunityNum+="000"+cityCount;
+		}else{
+			cityCount++;
+			businessOpportunityNum+="00"+cityCount;
+		}
+		
+		if(boNameCount<9){
+			boNameCount++;
+			businessOpportunityNum+="-0"+boNameCount;
+		}else{
+			boNameCount++;
+			businessOpportunityNum+="-"+boNameCount;
+		}
 		
 		return businessOpportunityNum;
 	}

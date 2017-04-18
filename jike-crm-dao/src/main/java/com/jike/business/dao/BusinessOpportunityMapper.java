@@ -106,4 +106,26 @@ public interface BusinessOpportunityMapper {
 	 * @createtime 2017年4月6日下午7:20:22
 	 */
 	List<BusinessOpportunity> selectByBusinessOpportunityName(@Param("businessOpportunityName")String businessOpportunityName,  @Param("userId")Long userId, @Param("unBusinessOpportunityProcess") String unBusinessOpportunityProcess, @Param("businessOpportunityType")Integer businessOpportunityType);
+
+	/**
+	 * 查询某市商机数
+	 * @param province
+	 * @param city
+	 * @param businessOpportunityType
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日上午11:53:26
+	 */
+	int selectCountByAreaAndBoType(@Param("province")String province, @Param("city")String city, @Param("businessOpportunityType")int businessOpportunityType);
+
+	/**
+	 * 查询某市某商机录入次数
+	 * @param province
+	 * @param city
+	 * @param businessOpportunityType
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日上午11:53:26
+	 */
+	int selectCountByAreaAndBoName(@Param("province")String province, @Param("city")String city, @Param("businessOpportunityType")int businessOpportunityType, @Param("businessOpportunityName")String businessOpportunityName);
 }

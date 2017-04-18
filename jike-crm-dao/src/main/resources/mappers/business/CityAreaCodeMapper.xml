@@ -124,7 +124,7 @@
      num
     from city_area_code
     where  
-    city = #{city,jdbcType=VARCHAR},
-    province = #{province,jdbcType=VARCHAR}
+    city = #{city,jdbcType=VARCHAR}
+    and province = #{province,jdbcType=VARCHAR}
   </select>
 </mapper>

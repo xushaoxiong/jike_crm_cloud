@@ -347,5 +347,24 @@
 		order by bo.create_time desc
 		
   </select>
+  <select id="selectCountByAreaAndBoType" resultType = "java.lang.Integer">
+  select
+  count(1)
+  from  business_opportunity
+  where 
+   address_province = #{province,jdbcType=VARCHAR}
+   and address_city = #{city,jdbcType=VARCHAR}
+   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+  </select>
+  <select id="selectCountByAreaAndBoName" resultType = "java.lang.Integer">
+  select
+  count(1)
+  from  business_opportunity
+  where 
+   address_province = #{province,jdbcType=VARCHAR}
+   and address_city = #{city,jdbcType=VARCHAR}
+   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+   and business_opportunity_name = #{businessOpportunityName,jdbcType=VARCHAR}
+  </select>
 	
 </mapper>
