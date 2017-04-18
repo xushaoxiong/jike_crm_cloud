@@ -1,7 +1,6 @@
 function propreResultHtml(){
 	var propRustHtml="";
 	propRustHtml+='<div class="container-fluid">';
-		propRustHtml+='<h4><span>新建列表>新建日志>招投标结果</span></h4>';
 		propRustHtml+='<div class="trial-wap">';
 			propRustHtml+='<div class="form-group row">';
 				propRustHtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>招投标结果详情</label>';

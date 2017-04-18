@@ -1,7 +1,6 @@
 function PropPreionHtml(){
 	var propHtml="";
 	propHtml+='<div class="container-fluid">';
-		propHtml+='<h4><span>新建列表>新建日志>招投标</span></h4>';
 		propHtml+='<div class="propre-wap" style="width:85%;">';
 			propHtml+='<div class="form-group row">';
 				propHtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>形式</label>';
@@ -72,8 +71,8 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 		propreJ.totalDetail=totalDetail
 		propreJ.boBidding=boBidding;
 		$ajax('post','businessOpportunityLog/addBOLogBoBidding',propreJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})

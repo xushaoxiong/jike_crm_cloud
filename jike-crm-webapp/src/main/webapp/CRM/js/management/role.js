@@ -17,7 +17,7 @@ function roleList(){
 		
 	},
 	error:function(jo){
-		alert('服务器忙')
+		pub.Alt(jo.message,false);
 	}
 });
 }roleList()

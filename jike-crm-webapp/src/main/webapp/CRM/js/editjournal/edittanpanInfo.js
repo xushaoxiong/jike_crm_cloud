@@ -1,7 +1,6 @@
 function negotiationsHtml(){
 	var negtionHtml="";
 	negtionHtml+='<div class="container-fluid">';
-		negtionHtml+='	<h4><span>新建列表>新建日志>谈判</span></h4>';
 		negtionHtml+='	<div class="plan-wap">';
 			negtionHtml+='	<div class="form-group row">';
 				negtionHtml+='	<label class="col-md-1 col-sm-2">谈判名称</label>';

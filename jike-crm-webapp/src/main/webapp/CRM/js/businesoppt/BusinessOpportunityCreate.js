@@ -1,9 +1,9 @@
 $(function(){
 		$("#city").citySelect({
-	    prov: "北京",  
-	    city: "北京市",  
-	    dist: "东城区",  
-	    nodata: "none"  
+		    prov: "北京",  
+		    city: "北京市",  
+		    dist: "东城区",  
+		    nodata: "none"  
 		}); 
 		//确定
 		$('.businesConfirm').click(function(){
@@ -31,6 +31,8 @@ $(function(){
 			businessJ.addressDetail=detailadrs;
 				$ajax("post","businessOpportunity/addBusinessOpportunity",businessJ,function succF(jo){
 					$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+				},function errF(jo){
+					pub.Alt(jo.message,false);
 				})
 		})
 		

@@ -1,7 +1,7 @@
 function dailytHtml(){
 	var dailytHtml="";
 	dailytHtml+='<div class="container-fluid">';
-		dailytHtml+='<h4><span>新建列表>新建日志>日常事项</span></h4>';
+//		dailytHtml+='<h4><span>新建列表>新建日志>日常事项</span></h4>';
 		dailytHtml+='<div class="trial-wap">';
 			dailytHtml+='<div class="form-group row">';
 				dailytHtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>填写详细信息</label>';

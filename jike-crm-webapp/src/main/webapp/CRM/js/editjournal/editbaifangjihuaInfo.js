@@ -1,7 +1,7 @@
 function visitPlan(){
 	var vPhtml="";
 	vPhtml+='<div class="container-fluid" id="palnBox">';
-		vPhtml+='<h4><span>新建列表>新建日志>拜访计划</span></h4>';
+//		vPhtml+='<h4><span>新建列表>新建日志>拜访计划</span></h4>';
 		vPhtml+='<div class="plan-wap">';
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-1 col-sm-2">计划名称</label>';
@@ -252,27 +252,6 @@ function visitPlan(){
 		
 	})
 
-
-	
-//	var VistPlanJ={};
-//	var commonJson={};
-//	$('.journaConfirm').click(function(){
-//		VistPlanInfo(commonJson);
-//		editLogDateF(businessOpportunityLogJson);
-//		editTotalDetailF(boFeeDetailJson);
-//		VistPlanJ.businessOpportunityLogJson=businessOpportunityLogJson;
-//		VistPlanJ.boFeeDetailJson=boFeeDetailJson;
-//		VistPlanJ.commonJson=commonJson;
-//		
-//		$ajax('post','businessOpportunityLog/addBOVisitPlan',VistPlanJ,function succF(jo){
-//			console.log(jo)
-//			},function errF(jo){
-//				alert(jo.message)
-//		})
-//	})
-//
-
-	
 
 
 

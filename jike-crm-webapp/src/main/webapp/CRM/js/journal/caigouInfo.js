@@ -1,7 +1,6 @@
 function PurchHtml(){
 	var PurchHtml="";
 	PurchHtml+='<div class="container-fluid">';
-		PurchHtml+='<h4><span>新建列表>新建日志>招投标</span></h4>';
 		PurchHtml+='<div class="sign-wap">';
 			PurchHtml+='<div class="form-group row">';
 				PurchHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>硬件到货时间</label>';
@@ -58,8 +57,8 @@ $('.FillInfo').on('click','.purchConfirm',function(){
 		PurchaseJ.boPurchase=boPurchase;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoPurchase',PurchaseJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})

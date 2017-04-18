@@ -50,7 +50,7 @@
 		success:function(jo){
 			var perHtml='';
 			$.each(jo.menu1,function(i,item){
-				perHtml+='<ul class="check2 list-unstyled col-md-3 col-xs-4 col-sm-3">';
+				perHtml+='<ul class="check2 list-unstyled col-md-3 col-sm-3">';
 				perHtml+='<li class="checkList"><span menuId="'+item.menuId+'">'+item.menuName+'</span></li>';
 				if(item.menu2==undefined){
 					perHtml+='</ul>';

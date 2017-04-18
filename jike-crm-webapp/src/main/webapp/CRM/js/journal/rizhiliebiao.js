@@ -1,8 +1,6 @@
 $('.delJournal').click(function(){
 	$('#deljalModal').modal('toggle');
 })
-$('.R-wap').height($(window).height()-80);
-$('.R-wap').css({'overflow-y':'scroll'})
 //列表查询
 	var paginatorJ={"businessOpportunityName":"","start":1,"pageSize":10};
 	//分页
@@ -67,7 +65,7 @@ $('.R-wap').css({'overflow-y':'scroll'})
 			jourItem(jo.businessOpportunityLogList)
 			cartePage(jo);
 	},function errF(){
-		alert(jo.message);
+		pub.Alt(jo.message,false);
 	})
 	}clickPage(paginatorJ)
 	
@@ -97,13 +95,17 @@ $('.R-wap').css({'overflow-y':'scroll'})
 		var logIdJ={};
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
+		var netht="编辑日志";
+		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.R-wap').load('journal/editlog.html',function(){
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
 				commondetail(jo);
 				$('.editInfo').hide();
+				var lastht=$('.eventType').val();
 				$('.addMessage').click(function(){
+					breadnav(Fht,netht,lastht);
 					$('#addJournal').hide();
 					$('.editInfo').show();
 					
@@ -111,7 +113,7 @@ $('.R-wap').css({'overflow-y':'scroll'})
 			});
 	
 		},function errF(jo){
-			alert(jo.message);
+			pub.Alt(jo.message,false);
 		})
 	})
 
@@ -172,7 +174,6 @@ $('.R-wap').css({'overflow-y':'scroll'})
 		
 		//试用中-试用准备
 		if($('.specEvent').val()=='试用准备'){
-			console.log(111)
 			$.getScript("js/editjournal/editshiyongzhongInfo.js",function(){
 				$('.editInfo').html(TrialHtml());
 				traildata(jo.commonJson);
@@ -284,7 +285,12 @@ $('.searchBusiness').click(function(){
 })
 //新建日志按钮
 $('.newlist').click(function(){
-	$('.R-wap').load('journal/xinjianrizhi.html')
+	$('.R-wap').load('journal/xinjianrizhi.html',function(){
+		$('.hide-menu li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=6]').addClass('menuCheck');
+		var netht=$('.menuCheck').find('a').html();
+		breadnav(Fht,netht);
+	})
 })
 ////重置
 $('.reset').click(function(){

@@ -28,42 +28,44 @@
 		padding: 0 2px;
 	}
 </style>
-
-<div class="ZH-account clearfix" style="width: 95%;">
-	<h3 class="title pull-left">权限管理</h3>
-</div>
-<div class="search-wap form-inline clearfix">
-	<div class="form-group">
-		<label>权限组选择：</label>
-		<select class="form-control roleList">
-			<!--<option>财务人员</option>
-			<option>运营人员</option>
-			<option>大boss</option>-->
-		</select>
+<div class="container-fluid">
+	<div class="search-wap form-inline clearfix">
+		<div class="form-group">
+			<label>权限组选择：</label>
+			<select class="form-control roleList">
+				<!--<option>财务人员</option>
+				<option>运营人员</option>
+				<option>大boss</option>-->
+			</select>
+		</div>
+		
+	</div>
+	<div class="form-group checkAll">
+		<label>权限选择：</label>
+		<input type="checkbox" value="checkAll" uid='0'/>全选
+	</div>
+	<div class="checkItem row">
+		<!--<ul class="check1 list-unstyled pull-left">
+			<li><input type="checkbox"/>概括
+				<ul class="check2 list-unstyled">
+					<li><input type="checkbox" />整体概括</li>
+					<li class="check3-item"><input type="checkbox" />账户与权限
+						<ul class="check3 list-unstyled">
+							<li><input type="checkbox" />账户管理</li>
+							<li><input type="checkbox" />账户管理</li>
+							<li><input type="checkbox" />账户管理</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>-->
+	</div>
+	<div class="col-sm-9 text-center">
+		<button class="btn btn-primary rolePerConfirm" style="padding: 6px 26px;">确定</button>
 	</div>
 	
 </div>
-<div class="form-group checkAll">
-	<label>权限选择：</label>
-	<input type="checkbox" value="checkAll" uid='0'/>全选
-</div>
-<div class="checkItem row">
-	<!--<ul class="check1 list-unstyled pull-left">
-		<li><input type="checkbox"/>概括
-			<ul class="check2 list-unstyled">
-				<li><input type="checkbox" />整体概括</li>
-				<li class="check3-item"><input type="checkbox" />账户与权限
-					<ul class="check3 list-unstyled">
-						<li><input type="checkbox" />账户管理</li>
-						<li><input type="checkbox" />账户管理</li>
-						<li><input type="checkbox" />账户管理</li>
-					</ul>
-				</li>
-			</ul>
-		</li>
-	</ul>-->
-</div>
-<button class="btn btn-primary rolePerConfirm">确定</button>
+
 </body>
 <script type="text/javascript" src="js/management/rolePermission.js" ></script>	
 </html>

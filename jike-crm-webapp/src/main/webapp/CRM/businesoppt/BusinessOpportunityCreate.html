@@ -9,27 +9,9 @@
 		<script type="text/javascript" src="../js/city/city.js" ></script>
 		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>-->
 	</head>
-	<style>
-		.newlist-wap{
-			margin: 25px 0;
-		}
-		.newlist-wap label{text-align: center;padding: 5px;}
-		.newlist-wap .inp-list,.inp-list div{padding:0;}
-		.newBtn-wap{
-			margin-top: 25px;
-		}
-		.col{color: red;}
-		#city .form-control{
-			width: 100%;
-		}
-		.newlist-alert{line-height: 20px;height: 20px;}
-	</style>
 	<body>
 		<div class="container-fluid">
-			<h3>
-				<span>商机列表>新建商机</span>
-				<button class="btn btn-primary pull-right goBack">返回上一级</button>
-			</h3>
+			<!--<button class="btn btn-primary pull-right goBack">返回上一级</button>-->
 			<div class="newlist-wap">
 				<!--<div class="form-group row">
 					<label class="col-md-1 col-sm-2"><span class="col">*</span>客户名称</label>
@@ -46,7 +28,7 @@
 	            </div>
 	            <div class="form-group row">
 	            	<label class="col-md-1 col-sm-2"><span class="col">*</span>客户类型</label>
-	            	<div class=" col-md-5 col-sm-6 inp-list">
+	            	<div class=" col-md-5 col-sm-6 inp-list" style="padding: 0;">
 	            		<select class="form-control opptName">
 		            		<option Optype="0">学校</option>
 		            		<option Optype="1">合作伙伴</option>
@@ -56,7 +38,7 @@
 	            </div>
 	            <div class="form-group row">
 	            	<label class="col-md-1 col-sm-2"><span class="col">*</span>商机地址</label>
-	            	<div id="city" class="form-inline col-md-6 col-sm-8 inp-list">
+	            	<div id="city" class="col-md-6 col-sm-8 inp-list">
 	            		<div class="col-md-2 col-sm-3">
 	            			<select class="prov form-control">
 					    		<!--<option>北京</option>-->

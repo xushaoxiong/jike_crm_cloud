@@ -1,7 +1,7 @@
 function trainiHtml(){
 	var trainiHtml="";
 	trainiHtml+='<div class="container-fluid">';
-		trainiHtml+='<h4><span>新建列表>新建日志>支持</span></h4>';
+//		trainiHtml+='<h4><span>新建列表>新建日志>支持</span></h4>';
 		trainiHtml+='<div class="sign-wap">';
 			trainiHtml+='<span class="col"><b>备注：至少填写一项</b></span>';
 			trainiHtml+='<div class="form-group row">';

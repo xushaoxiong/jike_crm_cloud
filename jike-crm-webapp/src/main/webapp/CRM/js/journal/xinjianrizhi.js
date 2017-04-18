@@ -50,9 +50,9 @@ $(function(){
 					html+='	<td class=" businesName" businessOpptunityId="'+item.businessOpportunityId+'">'+item.businessOpportunityName+'</td>';
 					html+='	<td class=" businesNumb">'+item.businessOpportunityNum+'</td>';
 					if(item.businessOpportunityType==0){
-						html+='	<td>学校</td>';
+						html+='	<td oppridtype="0" class="opprtype">学校</td>';
 					}else{
-						html+='	<td>合作伙伴</td>';
+						html+='	<td oppridtype="1" class="opprtype">合作伙伴</td>';
 					}
 					
 					html+='	<td>'+item.businessOpportunityProcess+'</td>';
@@ -72,10 +72,12 @@ $(function(){
 		var bussinesName=$('.businesscheck').parent('tr').find('.businesName').html();
 		var businessOpptunityId=$('.businesscheck').parent('tr').find('.businesName').attr('businessOpptunityId');
 		var bussinesNumb=$('.businesscheck').parent('tr').find('.businesNumb').html();
+		var opprtype=$('.businesscheck').parent('tr').find('.opprtype').attr('oppridtype');
 		$('.bussinesList').modal('hide');
 		$('.businessNameSp').html(bussinesName);
 		$('.businesNumbspInp').html(bussinesNumb);
 		$('.businessNameSp').attr('businessOpptunityId',businessOpptunityId);
+		$('.businesNumbspInp').attr('OpptunityId',opprtype);
 		messbtnType();
 		
 	})
@@ -89,7 +91,7 @@ $(function(){
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
 			bussinesList(jo.businessOpportunityList,".bussinessItem");
 		},function errF(jo){
-			
+			pub.Alt(jo.message,false);
 		})
 	})
 	//事项类型选择二级联动
@@ -183,9 +185,15 @@ $(function(){
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
+//		OpptunityId=0学校 1合作伙伴
+		var OpptunityId=$('.businesNumbspInp').attr('OpptunityId');
 		busoptIdJ.businessOpportunityId=busoptid;
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
+		var eventType=$('#eventType').find('option:selected').val();
+		//面包屑导航
+		breadnav(Fht,netht,eventType);
+		
 		$('#addJournal').hide();
 		$('.FillInfo').show();
 		//信息收集页面
@@ -193,20 +201,35 @@ $(function(){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/xinxishoujiInfo.js",function(){
-					$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
-					$('.FillInfo').html(infoColle());
-					
-					var bInfoColet=jo.boInformationCollect;
-					if(bInfoColet!=undefined){
-						infodata(bInfoColet);
-					}
-					Mesclic=true;
-						
-					},function errF(jo){
-						
-					})
-				});
+				if(OpptunityId==0){
+					$.getScript("js/journal/xinxishoujiInfo.js",function(){
+						$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
+							$('.FillInfo').html(infoColle());
+							var bInfoColet=jo.boInformationCollect;
+							if(bInfoColet!=undefined){
+								infodata(bInfoColet);
+							}
+							Mesclic=true;
+							
+						},function errF(jo){
+							pub.Alt(jo.message,false)
+						})
+					});
+				}else{
+					$.getScript("js/journalpartners/PxinxishoujiInfo.js",function(){
+						$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
+							$('.FillInfo').html(infoColle());
+							var bInfoColet=jo.boInformationCollect;
+							if(bInfoColet!=undefined){
+								infodata(bInfoColet);
+							}
+							Mesclic=true;
+							
+						},function errF(jo){
+							pub.Alt(jo.message,false)
+						})
+					});
+				}
 			}
 			
 			
@@ -229,7 +252,7 @@ $(function(){
 					Mesclic=true;
 							
 					},function errF(jo){
-						
+						pub.Alt(jo.message,false);
 					})
 				});
 			}
@@ -241,16 +264,31 @@ $(function(){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/baifangInfo.js",function(){
-					$ajax('post','businessOpportunityLog/queryVisitPlanByBoId',busoptIdJ,function succF(jo){
-					var bInfoColet=jo.boInformationCollect;
-					$('.FillInfo').html(vistInformation());
-					visitordata(jo);
-					Mesclic=true;		
-					},function errF(jo){
-						pub.Alt('请先添加拜访计划',false);
-					})
-				});
+				//达成合作意向
+				if(spcid=='303'&& OpptunityId==1){
+					$.getScript("js/journalpartners/PbaifangInfo.js",function(){
+						$ajax('post','businessOpportunityLog/queryVisitPlanByBoId',busoptIdJ,function succF(jo){
+							var bInfoColet=jo.boInformationCollect;
+							$('.FillInfo').html(vistInformation());
+							visitordata(jo);
+							Mesclic=true;		
+						},function errF(jo){
+							pub.Alt(jo.message,false);
+						})
+					});
+				}else{
+					$.getScript("js/journal/baifangInfo.js",function(){
+						$ajax('post','businessOpportunityLog/queryVisitPlanByBoId',busoptIdJ,function succF(jo){
+							var bInfoColet=jo.boInformationCollect;
+							$('.FillInfo').html(vistInformation());
+							visitordata(jo);
+							Mesclic=true;		
+						},function errF(jo){
+							pub.Alt(jo.message,false);
+						})
+					});
+				}
+				
 			}
 			
 			
@@ -267,7 +305,7 @@ $(function(){
 						negotiationsData(jo);
 						Mesclic=true;	
 					},function errF(jo){
-					
+						pub.Alt(jo.message,false);
 					})
 				});
 			}
@@ -322,13 +360,28 @@ $(function(){
 		}
 		//签约
 		if(spcid=='701'){
+			
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/qianyueInfo.js",function(){
+				if(OpptunityId==0){
+					$.getScript("js/journal/qianyueInfo.js",function(){
+						$('.FillInfo').html(signHtml());
+						Mesclic=true;
+					})
+			}else{
+				$.getScript("js/journalpartners/PqianyueInfo.js",function(){
 					$('.FillInfo').html(signHtml());
+					$(".FillInfo .assmentaddr").addcitySelect({  
+					    prov: "北京",  
+					    city: "北京市",  
+					    dist: "东城区",  
+					    nodata: "none"  
+					});
 					Mesclic=true;
 				})
+			}
+				
 			}
 			
 		}
@@ -373,10 +426,18 @@ $(function(){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/zhichiInfo.js",function(){
-					$('.FillInfo').html(supportHtml());
-					Mesclic=true;
-				})
+				if(OpptunityId==0){
+					$.getScript("js/journal/zhichiInfo.js",function(){
+						$('.FillInfo').html(supportHtml());
+						Mesclic=true;
+					})
+				}else{
+					$.getScript("js/journalpartners/PzhichiInfo.js",function(){
+						$('.FillInfo').html(supportHtml());
+						Mesclic=true;
+					})
+				}
+				
 			}
 			
 		}
@@ -385,10 +446,18 @@ $(function(){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/peixunInfo.js",function(){
-					$('.FillInfo').html(trainiHtml());
-					Mesclic=true;
-				})
+				if(OpptunityId==0){
+					$.getScript("js/journal/peixunInfo.js",function(){
+						$('.FillInfo').html(trainiHtml());
+						Mesclic=true;
+					})
+				}else{
+					$.getScript("js/journalpartners/PpeixunInfo.js",function(){
+						$('.FillInfo').html(trainiHtml());
+						Mesclic=true;
+					})
+				}
+				
 			}
 			
 		}

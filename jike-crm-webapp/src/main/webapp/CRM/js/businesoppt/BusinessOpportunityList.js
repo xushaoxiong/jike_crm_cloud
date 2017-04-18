@@ -1,8 +1,14 @@
 //新建商机
 //$(function(){
 	$('.newlist').click(function(){
-		$('.R-wap').load('businesoppt/BusinessOpportunityCreate.html');
-})
+		$('.R-wap').load('businesoppt/BusinessOpportunityCreate.html',function(){
+			$('.hide-menu li').removeClass('menuCheck');
+			$('.L-list-item').find('li[menuid=4]').addClass('menuCheck');
+			var netht=$('.menuCheck').find('a').html();
+			breadnav(Fht,netht);
+		});
+		
+	})
 //添加服务人员
 //$('.plusOppt').click(function(){
 //	$('.serviceTitle').html('');
@@ -29,7 +35,6 @@
 	var paginatorJ={"businessOpportunityProcess":"","start":1,"pageSize":10};
 	//分页
 	var cartePage=function(jo){
-		console.log(jo)
 		var options={
 			alignment:"center",
 	        bootstrapMajorVersion:1,    //版本
@@ -47,7 +52,7 @@
 	    }
 		$(".pagination").bootstrapPaginator(options);
 		$('.totalNum').html('共'+jo.totalCount+'条');
-		$('.pageTotal span').html(jo.businessOpportunityList.length);
+//		$('.pageTotal span').html(jo.businessOpportunityList.length);
 	}
 	//列表内容
 	function list(List){
@@ -106,7 +111,7 @@
 		list(jo.businessOpportunityList);
 		cartePage(jo);
 	},function errF(){
-		alert(jo.message);
+		pub.Alt(jo.message,false);
 	})
 	}clickPage(paginatorJ)
 	
@@ -149,18 +154,17 @@ $('.list-tr').on('click','.delBuiness',function(){
 	
 })
 $('.delConfirm').click(function(){
+	$("#delbuinessModal").modal("hide");
 	var delJ={};
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
 	var isCancellation=1;
 	delJ.businessOpportunityNum=businessOpportunityNum;
 	delJ.isCancellation=isCancellation;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',delJ,function succF(jo){
-		$("#delbuinessModal").modal("hide");
 //		clickPage(paginatorJ);
 	$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().remove();
 	},function errF(jo){
-		$("#delbuinessModal").modal("hide");
-		alert(jo.message);
+		pub.Alt(jo.message,false)
 	})
 })
 //关闭商机
@@ -170,6 +174,9 @@ var closeBtnPart = "";
 var isClosedip=""
 $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
+	console.log(closeBtnPart)
+	var businessOpportunityNum=$(this).parents('tr').find('.opptNumb').attr('numb');
+	console.log(businessOpportunityNum)
 	isClosedip=$(this).attr('isClosedip');
 	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
@@ -209,7 +216,7 @@ $('.closeConfirm').click(function(){
 		}
 				
 	},function errF(jo){
-		alert(jo.message);
+		pub.Alt(jo.message,false);
 	})
 })
 
@@ -228,7 +235,7 @@ $('.closeConfirm').click(function(){
 		date=myDate.getDate()
 	}
 	var endtime=year+'-'+month+'-'+date;
-	$('#enddate').val(endtime);
+//	$('#enddate').val(endtime);
 //查询时间
 $('.searchBusiness').click(function(){
 	$('.alertTitle').html('');
@@ -244,7 +251,6 @@ $('.searchBusiness').click(function(){
 
 //重置
 $('.reset').click(function(){
-	console.log(1)
 	$('.OpportunityName').val('');
 	$('#indate').val('');
 	$('#enddate').val('');

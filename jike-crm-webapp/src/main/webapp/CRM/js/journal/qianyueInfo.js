@@ -1,7 +1,6 @@
 function signHtml(){
 	var signHtml="";
 	signHtml+='<div class="container-fluid">';
-		signHtml+='<h4><span>新建列表>新建日志>招投标</span></h4>';
 		signHtml+='<div class="sign-wap">';
 			signHtml+='<div class="form-group row">';
 				signHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>签约时间</label>';
@@ -16,6 +15,12 @@ function signHtml(){
 				signHtml+='</div>';
 				signHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;元</span>';
 			signHtml+='</div>';
+			signHtml+='<div class="form-group row ">';
+				signHtml+='<label class="col-md-1 col-sm-2">合同伙伴</label>';
+				signHtml+='<div class="col-md-2 col-sm-4">';
+					signHtml+='<input type="text" class="form-control cooppanter"/>';
+				signHtml+='</div>';
+			signHtml+='</div>';
 		signHtml+='</div>';
 		signHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			signHtml+='<button class="btn btn-primary SignConfirm" style="margin-right: 15px;">提交</button>';
@@ -28,6 +33,7 @@ function signHtml(){
 function signInfo(boSign){
 	boSign.signDate=$('.Signdate').html();
 	boSign.signAmonut=$.trim($('.anmontCost').val());
+	boSign.cooperativePartner=$.trim($('.cooppanter').val());
 	
 }
 //签约详情提交
@@ -59,8 +65,8 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 		signJ.boSign=boSign;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoSign',signJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})

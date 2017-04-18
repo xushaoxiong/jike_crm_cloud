@@ -86,6 +86,51 @@ function vistInformation(){
 					vFhtml+='	<textarea class="form-control purpTextare" ></textarea>';
 				vFhtml+='	</div>';
 			vFhtml+='	</div>';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2"><span class="col">*</span>合作详情</label>';
+			vFhtml+='	</div>';
+			vFhtml+='	<div class="row" style="margin-left:150px;">';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2">合作方式</label>';
+				vFhtml+='	<div class="col-md-4 col-sm-6">';
+					vFhtml+='	<select class="form-control coptype">';
+						vFhtml+='	<option>总代理三星</option>';
+						vFhtml+='	<option>总代理二星</option>';
+						vFhtml+='	<option>总代理一星</option>';
+						vFhtml+='	<option>市代理三星</option>';
+						vFhtml+='	<option>市代理二星</option>';
+						vFhtml+='	<option>市代理一星</option>';
+						vFhtml+='	<option>经销商</option>';
+					vFhtml+='	</select>';
+				vFhtml+='	</div>';
+			vFhtml+='	</div>';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2">注册资金</label>';
+				vFhtml+='	<div class="col-md-4 col-sm-6">';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost"/>';
+				vFhtml+='	</div>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+			vFhtml+='	</div>';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2">从事教育行业案例</label>';
+				vFhtml+='	<div class="col-md-4 col-sm-6">';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control edctCase"/>';
+				vFhtml+='	</div>';
+			vFhtml+='	</div>';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2">服务人员数量</label>';
+				vFhtml+='	<div class="col-md-4 col-sm-6">';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control servNum"/>';
+				vFhtml+='	</div>';
+			vFhtml+='	</div>';
+			vFhtml+='	<div class="form-group row">';
+				vFhtml+='	<label class="col-md-1 col-sm-2">启动资金</label>';
+				vFhtml+='	<div class="col-md-4 col-sm-6">';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"/>';
+				vFhtml+='	</div>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+			vFhtml+='	</div>';
+		vFhtml+='	</div>';
 		vFhtml+='	</div>';
 		vFhtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;">提交</button>';
@@ -124,7 +169,6 @@ function visitordata(jodata){
 		boVisit.visitPlanId=$('.visPlan').attr('visitPlanId');
 		boVisit.visitPlanName=$('.visPlan').html();
 		boVisit.visitorName=$.trim($('.visName').val());	
-//		boVisit.visitorTitle=$.trim($('.visPosit').val());	
 		boVisit.visitorTitle=$('.contTitle').find('option:selected').val();	
 		boVisit.visitorTitleDetail=$.trim($('.otherCont').val());	
 		boVisit.visitorTitleDetail=$.trim($('.visPosit').val());	
@@ -140,6 +184,15 @@ function visitordata(jodata){
 		boVisit.procurementBudget=$.trim($('.budget').val());
 		boVisit.decisionMakerAdvice=$('.vispopuse').find('option:selected').attr('decMarkid');
 		boVisit.visitDetail=$.trim($('.purpTextare').val());
+	}
+	//收集合作详情信息
+	function copratInfo(codata){
+		codata.cooperationMode=$('.coptype').find('option:selected').val();	
+		codata.registeredCapital=$.trim($('.registCost').val());	
+		codata.educationCase=$.trim($('.edctCase').val());	
+		codata.servicePersonnelQuantity=$.trim($('.servNum').val());	
+		codata.startCapital=$.trim($('.startCost').val());	
+		
 	}
 	//联系人职务其他选框
 		$('.FillInfo').on('change','.contTitle',function(){
@@ -159,6 +212,10 @@ function visitordata(jodata){
 		var visitorWechat=$.trim($('.contactWatch').val());
 		var visitDetail=$.trim($('.purpTextare').val());
 		var contactTitle=$('.contTitle').find('option:selected').val();
+		var registeredCapital=$.trim($('.registCost').val());	
+		var educationCase=$.trim($('.edctCase').val());	
+		var servicePersonnelQuantity=$.trim($('.servNum').val());	
+		var startCapital=$.trim($('.startCost').val());	
 		if(contactTitle=="其它" && $('.otherCont').val()==""){
 			pub.Alt('请填写联系人职位',false);
 			return false;
@@ -171,6 +228,22 @@ function visitordata(jodata){
 			pub.Alt('请填写拜访详情',false);
 			return false;
 		}
+		if(registeredCapital==""){
+			pub.Alt('请填写注册资金',false);
+			return false;
+		}
+		if(educationCase==""){
+			pub.Alt('请填写从事教育行业案例',false);
+			return false;
+		}
+		if(servicePersonnelQuantity==""){
+			pub.Alt('请填写服务人员数量',false);
+			return false;
+		}
+		if(startCapital==""){
+			pub.Alt('请填写启动资金',false);
+			return false;
+		}
 		$('.FillInfo').hide();
 		$('#addJournal').show();
 		$('.journaConfirm').prop('disabled',false);
@@ -178,13 +251,16 @@ function visitordata(jodata){
 	})
 	var boVistPlanJ={};
 	var boVisit={};
+	var cooperationDetails={};
 	$('.journaConfirm').click(function(){
 		VistInfo(boVisit);
 		logDateF(logData);
 		totalDetailF(totalDetail);
+		copratInfo(cooperationDetails)
 		boVistPlanJ.logData=logData;
 		boVistPlanJ.totalDetail=totalDetail
 		boVistPlanJ.boVisit=boVisit;
+		boVistPlanJ.boVisit.cooperationDetails=cooperationDetails;
 		
 		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
 				$('.R-wap').load('journal/list.html');

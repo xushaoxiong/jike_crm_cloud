@@ -1,7 +1,7 @@
 function vistInformation(){
 	var vFhtml="";
 	vFhtml+='<div class="container-fluid">';
-		vFhtml+='	<h4><span>新建列表>新建日志>拜访</span></h4>';
+//		vFhtml+='	<h4><span>新建列表>新建日志>拜访</span></h4>';
 		vFhtml+='	<div class="plan-wap">';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">所属拜访计划</label>';

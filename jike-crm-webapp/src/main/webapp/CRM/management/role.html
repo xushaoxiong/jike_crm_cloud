@@ -6,27 +6,25 @@
 </head>
 <body>
 	<style>
-	.ZH-account button{
+	/*.ZH-account button{
 		margin-top: 20px;
 	}
 	.search-wap{
 		padding: 20px 0;
 	}
-	.tableAccnt tr th{text-align: center;}
 	.pagination-wap{
 		line-height: 80px;
 	}
 	.total-page{
 		padding-right: 15px;
-	}
+	}*/
 	#MRole input{
 		margin-bottom: 8px;
 	}
 </style>
-
-<div class="ZH-account clearfix" style="width: 95%;">
-	<h3 class="title pull-left">角色管理</h3>
-	<button class="btn btn-primary pull-right addBtn"><span class="glyphicon glyphicon-plus"></span>创建角色</button>
+<div class="container-fluid">
+	<div class="ZH-account clearfix">
+	<button class="btn btn-primary addBtn" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-plus"></span>创建角色</button>
 </div>
 <table class="table table-bordered text-center table-responsive tableAccnt">
 	<thead>
@@ -40,7 +38,7 @@
 	</tbody>
 </table>
 	<!--新增、修改弹框-->
-<div class="modal fade" id="MRole">
+<div class="modal" id="MRole">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content form-inline">
 			<div class="modal-header">
@@ -65,6 +63,8 @@
 		</div>
 	</div>
 </div>
+</div>
+
 
 </body>
 <script type="text/javascript" src="js/management/role.js" ></script>

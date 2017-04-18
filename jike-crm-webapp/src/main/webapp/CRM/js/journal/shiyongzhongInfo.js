@@ -1,14 +1,13 @@
 function TrialHtml(){
 	var traHtml="";
 	traHtml+='<div class="container-fluid">';
-		traHtml+='<h4><span>新建列表>新建日志>试用中</span></h4>';
 		traHtml+='<div class="trial-wap">';
 			traHtml+='<div class="form-group row date-wap">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用周期</label>';
 				traHtml+='<div class="col-md-1 col-sm-2">';
 					traHtml+='<span class="form-control startTime" data-format="dd-mm-yyyy" onclick="WdatePicker()"/></span>';
 				traHtml+='</div>';
-				traHtml+='<span class="pull-left" style="line-height: 34px;">到</span>';
+				traHtml+='<span class="pull-left" style="line-height: 34px;padding:0 5px;">到</span>';
 				traHtml+='<div class="col-md-1 col-sm-2">';
 					traHtml+='<span class="form-control endTime" data-format="dd-mm-yyyy" onclick="WdatePicker()"/></span>';
 				traHtml+='</div>';
@@ -53,7 +52,7 @@ function TrialHtml(){
 				traHtml+='<div class="col-md-1 col-sm-2">';
 					traHtml+='<input type="text" class="form-control triamModalNumb" onkeyup="PosiintegerNum(this)"/>&nbsp;';
 				traHtml+='</div>';
-				traHtml+='<span style="line-height: 34px;">台</span>';
+				traHtml+='<span style="line-height: 34px;padding-left:5px;">台</span>';
 			traHtml+='</div>';
 		traHtml+='</div>';
 		traHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
@@ -147,9 +146,9 @@ $('.FillInfo').on('click','.trialConfirm',function(){
 		trialJ.boInTrial=boInTrial;
 		
 		$ajax('post','businessOpportunityLog/addBOLogInTrial',trialJ,function succF(jo){
-			console.log(jo)
+			$('.R-wap').load('journal/list.html');
 			},function errF(jo){
-				alert(jo.message);
+				pub.Alt(jo.message,false);
 		})
 	})
 

@@ -41,7 +41,7 @@
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
 			$('.R-wap').load('journal/list.html');
 		},function errF(jo){
-			alert(jo.message);
+			pub.Alt(jo.message,false);
 		})
 	})
 

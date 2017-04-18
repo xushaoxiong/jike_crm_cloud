@@ -1,7 +1,7 @@
 $(function(){
-	$('.L-wap,.R-wap').height($(window).height()-60);
+	$('.L-wap,.R-container').height($(window).height()-60);
 	$(window).resize(function(){
-		$('.L-wap,.R-wap').height($(window).height()-60);
+		$('.L-wap,.R-container').height($(window).height()-60);
 	})
 		//列表
 	$.ajax({
@@ -24,7 +24,7 @@ $(function(){
 				NavHtml+='<li class="L-list-item">';
 				NavHtml+='<div class="navTitle" menuId="'+item.menuId+'">';
 					NavHtml+='<span class="glyphicon glyphicon-wrench img-icon"></span>';
-					NavHtml+='<span>'+item.menuName+'</span>';
+					NavHtml+='<span class="menuname">'+item.menuName+'</span>';
 				if(item.menu2==undefined){
 					NavHtml+='</div>';
 					NavHtml+='</li>';
@@ -53,20 +53,40 @@ $(function(){
 	});
 	
 	$('.L-list').on('click','.hide-menu li',function(){
-		
+		$('.hide-menu li').removeClass('menuCheck');
+		$(this).addClass('menuCheck');
+		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
+		var thisHtml=$('.menuCheck').find('a').html();
 		var url=$(this).attr('url');
-		$('.R-wap').load(url);
+		$('.R-wap').load(url,function(){
+			Fht=menuname
+			netht=thisHtml;
+		});
+		breadnav(menuname,thisHtml);
 		if($(this).attr('menuid')==7){
 			$('.R-wap').load('journal/list.html');
+			$('.breadcrumb').on('click','.curBack',function(){
+				breadnav(menuname,'编辑日志');
+				$('#addJournal').show();
+				$('.editInfo').hide();
+			})	
 		}
 		if($(this).attr('menuid')==6){
-			$('.R-wap').load('journal/xinjianrizhi.html');
-		}
-		
-		
-
+			$('.R-wap').load('journal/xinjianrizhi.html',function(){
+				Fht=menuname
+				netht=thisHtml;
+				$('.breadcrumb').on('click','.curBack',function(){
+					breadnav(menuname,thisHtml);
+					$('#addJournal').show();
+					$('.FillInfo').hide();
+				})	
+			});
+//			
 			
+		}
+	
 	})	
+	
 	
 	//退出
 	$('.loginOut').click(function(){
