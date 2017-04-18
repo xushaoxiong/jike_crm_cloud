@@ -23,6 +23,7 @@ $(function(){
 		
 	})
 	
+	
 	//商机名称弹框状态如果事项类型未选择商机名称不能点击
 	if($('#eventType').val()==''){
 		$('.busnamState').removeClass('businessNameSp');
@@ -95,7 +96,7 @@ $(function(){
 		})
 	})
 	//事项类型选择二级联动
-
+	
 	$('#eventType').change(function(){
 		if($('#eventType').val()==''){
 			$('.busnamState').removeClass('businessNameSp');
@@ -103,9 +104,9 @@ $(function(){
 			$('.busnamState').addClass('businessNameSp');
 		}
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
-		eventType('#SpecItem',eveid);
+		spictype('#SpecItem',eveid);
 		//判断如果选项为培训、售后、支持 工时不能编辑
-		if(eveid=='10'||eveid=='11'||eveid=='12'){
+		if(eveid=='9'||eveid=='10'||eveid=='11'){
 			$('.journalTime span').hide();
 			$('.timeVal').prop('disabled',true);
 		}else{
@@ -113,7 +114,7 @@ $(function(){
 			$('.timeVal').prop('disabled',false);
 		}
 		//判断日常事项统一商机名称和流水号
-		if(eveid=='9'){
+		if(eveid=='8'){
 			$('.businessNameSp').html('日常商机名称');
 			$('.businesNumbspInp').html('S1000000000000');
 		}else{
@@ -274,6 +275,7 @@ $(function(){
 							Mesclic=true;		
 						},function errF(jo){
 							pub.Alt(jo.message,false);
+							console.log(jo.message)
 						})
 					});
 				}else{
@@ -374,7 +376,7 @@ $(function(){
 					$('.FillInfo').html(signHtml());
 					$(".FillInfo .assmentaddr").addcitySelect({  
 					    prov: "北京",  
-					    city: "北京市",  
+					    city: "北京",  
 					    dist: "东城区",  
 					    nodata: "none"  
 					});
@@ -398,7 +400,7 @@ $(function(){
 //			
 //		}
 		//日常
-		if(eveid=='9'){
+		if(eveid=='8'){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
@@ -410,7 +412,7 @@ $(function(){
 			
 		}
 		//售后
-		if(eveid=='10'){
+		if(eveid=='9'){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
@@ -422,7 +424,7 @@ $(function(){
 			
 		}
 		//支持
-		if(eveid=='11'){
+		if(eveid=='10'){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{
@@ -442,7 +444,7 @@ $(function(){
 			
 		}
 		//培训
-		if(eveid=='12'){
+		if(eveid=='11'){
 			if(Mesclic){
 				$('.FillInfo').show();
 			}else{

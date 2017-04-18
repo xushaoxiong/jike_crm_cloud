@@ -19,7 +19,6 @@
 	})
 	//提交费用
 	$('.reachConfirm').click(function(){
-		console.log(1)
 		var totalReach=0;
 		for (var i=0;i<$('.ReachInp').length;i++) {
 			totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
@@ -32,12 +31,22 @@
 	var jourInJ={};
 	var commonJson={};
 	$('.journaConfirm').click(function(){
+		var opptypeid=$('.businessNameSp').attr('oppttypeid');
+		var specEvent=$('.specEvent').val();
 		infodetail(commonJson);
 		editLogDateF(businessOpportunityLogJson);
 		editTotalDetailF(boFeeDetailJson);
 		jourInJ.businessOpportunityLogJson=businessOpportunityLogJson;
 		jourInJ.boFeeDetailJson=boFeeDetailJson;
-		jourInJ.commonJson=commonJson;
+		if(opptypeid==1&&specEvent=="达成合作意向"){
+			var cooperationDetails={};
+			copratInfo(cooperationDetails)
+			jourInJ.commonJson=commonJson;
+			jourInJ.commonJson.cooperationDetails=cooperationDetails;
+		}else{
+			jourInJ.commonJson=commonJson;
+		}
+		
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
 			$('.R-wap').load('journal/list.html');
 		},function errF(jo){
