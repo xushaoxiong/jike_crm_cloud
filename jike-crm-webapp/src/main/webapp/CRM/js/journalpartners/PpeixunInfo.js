@@ -144,7 +144,7 @@ $('.FillInfo').on('click','.trainConfirm',function(){
 		trainJ.boTrain=boTrain;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoTrain',trainJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

@@ -59,7 +59,7 @@ $('.FillInfo').on('click','.suprtConfirm',function(){
 		supportJ.boSupport=boSupport;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoSupport',supportJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

@@ -29,15 +29,15 @@ function signHtml(){
 				signHtml+='<div class="col-md-6 col-sm-6">';
 					signHtml+='<div class="area-wap">';
 						signHtml+='<div class="areaitem">';
-							signHtml+='<div class="col-md-9 col-sm-9 earelist" ty="0" style="padding:0;">';
-							    signHtml+='<div class="col-md-4 col-sm-4">';
+							signHtml+='<div class="col-md-9 col-sm-9 earelist assmentaddr" ty="0" style="padding:0;">';
+							    signHtml+='<div class="col-md-4 col-sm-4 ">';
 			            			signHtml+='<select class="prov form-control"></select>';
 				            	signHtml+='</div>';
 								signHtml+='<div class="col-md-4 col-sm-4">';
-								    signHtml+='<select class="city form-control" disabled="disabled"></select>';
+								    signHtml+='<select class="city form-control"></select>';
 								signHtml+='</div>';
 							    signHtml+='<div class="col-md-4 col-sm-4">';
-								    signHtml+='<select class="dist form-control" disabled="disabled"></select>'; 
+								    signHtml+='<select class="dist form-control"></select>'; 
 								 signHtml+='</div>';   
 							signHtml+='</div>';
 							signHtml+='<button class="btn btn-primary addeare" style="margin-left:5px;">添加代理区域</button>';
@@ -147,7 +147,7 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 		signJ.boSign=boSign;
 		
 		$ajax('post','businessOpportunityLog/addBOLogBoSign',signJ,function succF(jo){
-			$('.R-wap').load('journal/list.html');
+			$('.R-wap').load('journal/journalList.html');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

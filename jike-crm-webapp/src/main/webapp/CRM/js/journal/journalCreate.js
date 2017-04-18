@@ -131,7 +131,7 @@ $(function(){
 	
 	
 	//工时添加按钮
-	var timeN=1
+	var timeN=0;
 	$('.addTime').click(function(){
 		timeN++;
 		$('.timeVal').val(timeN*0.5);
@@ -213,7 +213,7 @@ $(function(){
 							Mesclic=true;
 							
 						},function errF(jo){
-							pub.Alt(jo.message,false)
+							pub.Alt(jo.message,false);
 						})
 					});
 				}else{
@@ -375,9 +375,9 @@ $(function(){
 				$.getScript("js/journalpartners/PqianyueInfo.js",function(){
 					$('.FillInfo').html(signHtml());
 					$(".FillInfo .assmentaddr").addcitySelect({  
-					    prov: "北京",  
-					    city: "北京",  
-					    dist: "东城区",  
+					    prov: "所有",  
+					    city: "所有",  
+					    dist: "所有",  
 					    nodata: "none"  
 					});
 					Mesclic=true;
