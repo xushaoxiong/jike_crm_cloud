@@ -82,4 +82,13 @@ public interface UserMapper {
 	 * @createtime 2017年3月30日下午2:55:56
 	 */
 	int getUserCount(String name);
+
+	/**
+	 * 查询某个角色用户
+	 * @param roleId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:29:33
+	 */
+	List<User> selectByRoleId(Long roleId);
 }

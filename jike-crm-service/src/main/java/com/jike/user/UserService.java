@@ -76,5 +76,22 @@ public interface UserService {
 	 * @createtime 2017年4月17日下午6:08:57
 	 */
 	public JSONObject addSalesLeader(JSONObject json);
+	
+	/**
+	 * 查询销售集合
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:39:31
+	 */
+	public JSONObject querySaleList(JSONObject json);
+	/**
+	 * 查询服务集合
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:39:44
+	 */
+	public JSONObject queryServiceList(JSONObject json);
 
 }

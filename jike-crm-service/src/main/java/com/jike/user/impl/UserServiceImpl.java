@@ -260,4 +260,35 @@ public class UserServiceImpl implements UserService {
 		resultJson.put("message", "密码修改成功");
 		return resultJson;
 	}
+	
+	public JSONObject querySaleList(JSONObject json){
+		JSONObject resultJson = new JSONObject();
+		Long roleId = 3L;
+		this.queryUserList(resultJson, roleId);
+		return resultJson;
+	}
+	
+	public JSONObject queryServiceList(JSONObject json){
+		JSONObject resultJson = new JSONObject();
+		Long roleId = 4L;
+		this.queryUserList(resultJson, roleId);
+		return resultJson;
+	}
+	
+	private void queryUserList(JSONObject resultJson, Long roleId) {
+		List<User> userList = userMapper.selectByRoleId(roleId);
+		JSONArray userArr = new JSONArray();
+		for (User user : userList) {
+			JSONObject userJson = new JSONObject();
+			userJson.put("name", user.getName());
+			userJson.put("loginName", user.getLoginName());
+			userJson.put("userId", user.getUserId());
+			userArr.add(userJson);
+		}
+		resultJson.put("userList", userArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+	}
+	
+	
 }

@@ -239,4 +239,11 @@
    where name like #{name,jdbcType=VARCHAR}
    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
+  <select id="selectByRoleId"  parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    u.*
+    from user u,user_role r
+    where u.user_id = r.user_id
+    and r.role_id = #{roleId,jdbcType=BIGINT}
+  </select>
 </mapper>

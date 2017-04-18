@@ -196,6 +196,14 @@ public class UserController extends BaseController{
 		return json.toJSONString();
 	}
 	
+	/**
+	 * 添加销售leader
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:40:13
+	 */
 	@RequestMapping(value = "/addSalesLeader", method = {RequestMethod.POST})
 	public @ResponseBody String addSalesLeader(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -209,6 +217,54 @@ public class UserController extends BaseController{
 		    result = userService.addSalesLeader(parseObject);
 		} catch (IOException e) {
 			logger.error("addSalesLeader error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 查询销售集合
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:40:45
+	 */
+	@RequestMapping(value = "/querySaleList", method = {RequestMethod.POST})
+	public @ResponseBody String querySaleList(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.querySaleList(parseObject);
+		} catch (IOException e) {
+			logger.error("querySaleList error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 查询服务集合
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午3:42:40
+	 */
+	@RequestMapping(value = "/queryServiceList", method = {RequestMethod.POST})
+	public @ResponseBody String queryServiceList(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.queryServiceList(parseObject);
+		} catch (IOException e) {
+			logger.error("queryServiceList error", e);
 		}
 		return result.toString();
 	}
