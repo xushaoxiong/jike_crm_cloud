@@ -65,3 +65,6 @@ input[type=radio],input[type=checkbox]{
 .cursorm{cursor: pointer;}
 thead th{text-align: center;}
 textarea{resize: none;height: 100px !important;}
+.breadcrumb{
+	display: none;
+}

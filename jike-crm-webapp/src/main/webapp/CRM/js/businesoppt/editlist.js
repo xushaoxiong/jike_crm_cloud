@@ -13,6 +13,7 @@
 		})
 		$('.businessName').val(jo.businessOpportunityName);
 		$('.addrDetial').val(jo.addressDetail);
+		if()
 		$('.scloType').find('option[Optype="'+jo.businessOpportunityType+'"]').prop('selected',true)
 	},function errF(jo){
 		pub.Alt(jo.message,false);
