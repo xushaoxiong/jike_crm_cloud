@@ -1356,7 +1356,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					removeCommonAttribute(partnerAgentAreaJson);
 					partnerAgentAreaList.add(partnerAgentAreaJson);
 				}
-				json = JSONObject.parseObject(json).put("partnerAgentAreaList", partnerAgentAreaList).toString();
+				JSONObject newJson = JSONObject.parseObject(json);
+				newJson.put("partnerAgentAreaList", partnerAgentAreaList);
+				json = newJson.toString();
 			}
 			
 			
