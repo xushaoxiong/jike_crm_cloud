@@ -20,6 +20,12 @@
 		}
 		.operBtn-wap .btn{margin: 0 5px;}
 		.newlist{margin-bottom: 15px;}
+		.checked{
+			background:url('img/checked.png') no-repeat center;
+			background-size: 15px;
+		}
+		.serverPeople tr td{text-align: center;}
+		.serviceNamewap{display: inline-block !important;}
 	</style>
 	<body>
 		<div class="container-fluid listContainer">
@@ -74,7 +80,7 @@
 							<th>商机名称</th>
 							<th>商机流水号</th>
 							<th class="salesName">销售人员</th>
-							<!--<th>服务人员</th>-->
+							<th class="serviceName">服务人员</th>
 							<th>商机进度</th>
 							<th>操作</th>
 						</tr>
@@ -111,25 +117,78 @@
 				</div>	 
 			</div>
 		</div>
+		<!--修改销售人员弹框-->
+		<div class="modal" id="editsaletModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>修改销售人员</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>选择</th>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>邮箱</th>
+								</tr>
+							</thead>
+							<tbody class="salesPeople">
+								<!--<tr class="cursorm">
+									<td class="salesimg"></td>
+									<td>曾慧慧 </td>
+									<td>女</td>
+									<td>456456@qq.com</td>
+								</tr>
+								<tr class="cursorm">
+									<td class="salesimg"></td>
+									<td>曾慧慧 </td>
+									<td>女</td>
+									<td>456456@qq.com</td>
+								</tr>-->
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary salesConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--添加服务人员弹框-->
-		<!--<div class="modal" id="opptModal">
+		<div class="modal" id="opptModal">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4>指派服务人员</h4>
 					</div>
 					<div class="modal-body clearfix">
-						<p class="serviceTitle text-danger"></p>
-						<select class="form-control service-wap" style="width: 50%;">
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-						</select>
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>选择</th>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>邮箱</th>
+								</tr>
+							</thead>
+							<tbody class="serverPeople">
+								<!--<tr class="cursorm">
+									<td class="bussinessimg"></td>
+									<td>曾慧慧 </td>
+									<td>女</td>
+									<td>456456@qq.com</td>
+								</tr>
+								<tr class="cursorm">
+									<td class="bussinessimg"></td>
+									<td>曾慧慧 </td>
+									<td>女</td>
+									<td>456456@qq.com</td>
+								</tr>-->
+							</tbody>
+						</table>
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary opptConfirm">确定</button>
@@ -137,34 +196,7 @@
 					</div>
 				</div>
 			</div>
-		</div>-->
-		<!--删除服务人员弹框-->
-		<!--<div class="modal" id="delopptModal">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4>删除服务人员</h4>
-					</div>
-					<div class="modal-body clearfix">
-						<select class="form-control" style="width: 50%;">
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-							<option>马驰</option>
-							<option>曾慧慧</option>
-						</select>
-						<p style="margin-top: 15px;">提醒：是否确认取消服务人员（<span class="delName">曾慧慧</span>），取消后无法恢复</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary delopptConfirm">确定</button>
-						<button class="btn btn-default" data-dismiss="modal">取消</button>
-					</div>
-				</div>
-			</div>
-		</div>-->
+		</div>
 		<!--商机删除弹框-->
 		<div class="modal" id="delbuinessModal">
 			<div class="modal-dialog modal-sm">
