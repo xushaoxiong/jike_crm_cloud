@@ -3,6 +3,7 @@ package com.jike.business.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -186,6 +187,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			for (Map<String, Object> businessOpportunityMap : businessOpportunityList) {
 				JSONObject businessOpportunityJson = new JSONObject();
 				businessOpportunityJson.put("createTime", businessOpportunityMap.get("create_time"));
+				businessOpportunityJson.put("businessOpportunityId", businessOpportunityMap.get("business_opportunity_id"));
 				businessOpportunityJson.put("businessOpportunityName", businessOpportunityMap.get("business_opportunity_name"));
 				businessOpportunityJson.put("businessOpportunityNum", businessOpportunityMap.get("business_opportunity_num"));
 				businessOpportunityJson.put("businessOpportunityType", businessOpportunityMap.get("business_opportunity_type"));
@@ -343,11 +345,27 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if("商业谈判".equals(eventType)||"试用中".equals(eventType)||"招投标中".equals(eventType)){
 			businessOpportunityType = 0;
 		}
+		Set<Long> isPlaningIds = null;
+		if("制定拜访计划".equals(eventType)||"拜访客户".equals(eventType)){
+			 //查询已添加拜访计划的商机
+			 isPlaningIds = businessOpportunityLogService.queryIsPlaningBusiness(userId,0);
+		}
 		
 		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess,businessOpportunityType);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
+				if(isPlaningIds!=null&&!isPlaningIds.isEmpty()){
+					if ("制定拜访计划".equals(eventType)) {
+						if (isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
+							continue;
+						}
+					} else if ("拜访客户".equals(eventType)) {
+						if (!isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
+							continue;
+						}
+					}
+				}
 				JSONObject json = new JSONObject();
 				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
 				json.put("businessOpportunityNum", businessOpportunity.getBusinessOpportunityNum());

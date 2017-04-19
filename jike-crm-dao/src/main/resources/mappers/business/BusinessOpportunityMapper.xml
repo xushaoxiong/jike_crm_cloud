@@ -296,6 +296,7 @@
   <select id="getBusinessOpportunityByPage" resultType="java.util.Map">
     select
 	DATE_FORMAT(bo.create_time,'%Y-%m-%d') create_time,
+	bo.business_opportunity_id,
 	bo.business_opportunity_name,
 	bo.business_opportunity_num,
 	bo.business_opportunity_type,

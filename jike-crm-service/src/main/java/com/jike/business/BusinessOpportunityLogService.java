@@ -1,5 +1,8 @@
 package com.jike.business;
 
+import java.util.List;
+import java.util.Set;
+
 import com.alibaba.fastjson.JSONObject;
 
 public interface BusinessOpportunityLogService {
@@ -196,5 +199,13 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月14日下午3:37:52
 	 */
 	public boolean queryBoLogByBoId(Long businessOpportunityId);
+	/**
+	 * 查询正在进行的拜访计划
+	 * @param userId 
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月18日下午6:17:59
+	 */
+	public Set<Long> queryIsPlaningBusiness(Long userId, Integer inPlaning);
 
 }
