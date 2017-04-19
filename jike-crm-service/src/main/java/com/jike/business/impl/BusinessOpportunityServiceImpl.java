@@ -211,6 +211,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 						businessOpportunityJson.put("assignService", false);//指派服务权限
 					}
 				}
+				Long businessOpportunityId = (Long) businessOpportunityMap.get("business_opportunity_id");
+				businessOpportunityJson.put("serviceList", queryServiceByBoId(businessOpportunityId));
 				if(!queryJson.getLong("userId").equals(createBy)){
 					businessOpportunityJson.put("authority", 1);
 				}else{
@@ -239,6 +241,21 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
+	}
+	
+	private JSONArray queryServiceByBoId(Long businessOpportunityId) {
+		List<ServiceBusinessOpportunity> serviceBusinessOpportunityList = serviceBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityId);
+		JSONArray userList = new JSONArray();
+		if(!serviceBusinessOpportunityList.isEmpty()){
+			for (ServiceBusinessOpportunity serviceBusinessOpportunity : serviceBusinessOpportunityList) {
+				JSONObject userJson = new JSONObject();
+				User user = userService.getUserById(serviceBusinessOpportunity.getUserId());
+				userJson.put("userId", user.getUserId());
+				userJson.put("userName", user.getName());
+				userList.add(userJson);
+			}
+		}
+		return userList;
 	}
 	
 	public JSONObject queryBusinessOpportunityByBoNum(JSONObject queryJson){

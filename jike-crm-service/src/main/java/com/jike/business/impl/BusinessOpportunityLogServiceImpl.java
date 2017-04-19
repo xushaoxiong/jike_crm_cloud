@@ -326,8 +326,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				if(informationSources!=null&&schoolScale!=null&&schoolLevel!=null&&schoolProperty!=null
 						&&schoolType!=null&&contactName!=null&&contactTitle!=null&&
 						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
-						&&decisionMakerName!=null&&decisionMakerTitle!=null
-						&&(decisionMakerLandline!=null||decisionMakerPhone!=null||decisionMakerEmail!=null||decisionMakerQq!=null||decisionMakerWechat!=null)){
+						&&decisionMakerName!=null&&decisionMakerTitle!=null){
 					//修改商机进度
 					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
 				}
@@ -335,8 +334,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				if(informationSources!=null&&mainScope!=null
 						&&expectedCooperationType!=null&&contactName!=null&&contactTitle!=null&&
 						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
-						&&decisionMakerName!=null&&decisionMakerTitle!=null
-						&&(decisionMakerLandline!=null||decisionMakerPhone!=null||decisionMakerEmail!=null||decisionMakerQq!=null||decisionMakerWechat!=null)){
+						&&decisionMakerName!=null&&decisionMakerTitle!=null){
 					//修改商机进度
 					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
 				}
@@ -1718,9 +1716,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					&& schoolType != null && contactName != null && contactTitle != null
 					&& (contactLandline != null || contactPhone != null || contactEmail != null || contactQq != null
 							|| contactWechat != null)
-					&& decisionMakerName != null && decisionMakerTitle != null
-					&& (decisionMakerPhone != null || decisionMakerPhone != null || decisionMakerEmail != null
-							|| decisionMakerQq != null || decisionMakerWechat != null)) {
+					&& decisionMakerName != null && decisionMakerTitle != null) {
 				// 修改商机进度
 				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
 			}
@@ -1729,9 +1725,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					&& contactName != null && contactTitle != null
 					&& (contactLandline != null || contactPhone != null || contactEmail != null || contactQq != null
 							|| contactWechat != null)
-					&& decisionMakerName != null && decisionMakerTitle != null
-					&& (decisionMakerPhone != null || decisionMakerPhone != null || decisionMakerEmail != null
-							|| decisionMakerQq != null || decisionMakerWechat != null)) {
+					&& decisionMakerName != null && decisionMakerTitle != null) {
 				// 修改商机进度
 				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
 			}
