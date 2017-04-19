@@ -491,7 +491,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(!userIdList.isEmpty()){
 			Date nowdate = new Date();
 			for (Object object : userIdList) {
-				Long userId = (Long) object;
+				Long userId = Long.parseLong(object.toString()) ;
 				ServiceBusinessOpportunity serviceBusinessOpportunity = new ServiceBusinessOpportunity();
 				serviceBusinessOpportunity.setBusinessOpportunityId(businessOpportunityId);
 				serviceBusinessOpportunity.setUserId(userId);
