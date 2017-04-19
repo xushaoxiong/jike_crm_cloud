@@ -1,6 +1,7 @@
 package com.jike.business;
 
 import java.util.List;
+import java.util.Set;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -205,6 +206,6 @@ public interface BusinessOpportunityLogService {
 	 * @created wangyb
 	 * @createtime 2017年4月18日下午6:17:59
 	 */
-	public List<Long> queryIsPlaningBusiness(Long userId);
+	public Set<Long> queryIsPlaningBusiness(Long userId, Integer inPlaning);
 
 }

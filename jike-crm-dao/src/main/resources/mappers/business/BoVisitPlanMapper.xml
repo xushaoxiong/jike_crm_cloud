@@ -421,7 +421,7 @@
 		and bv.business_opportunity_id = bo.business_opportunity_id
 		and bo.is_cancellation = 0
 		and bo.is_closed = 0
-		and  sbo.user_id = = #{userId,jdbcType=BIGINT}
-        and bv.in_planing =#{inPlaning,jdbcType=INTEGER} 
+		and  sbo.user_id = #{userId,jdbcType=BIGINT}
+        and bv.in_planing = #{inPlaning,jdbcType=INTEGER} 
   </select>
 </mapper>

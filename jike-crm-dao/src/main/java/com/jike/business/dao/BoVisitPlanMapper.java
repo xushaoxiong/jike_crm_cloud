@@ -72,5 +72,5 @@ public interface BoVisitPlanMapper {
 	 */
 	BoVisitPlan selectVisitPlanByLogId(Long logId);
 
-	List<BoVisitPlan> selectVisitPlaningByUserId(@Param("businessOpportunityId")Long userId, @Param("inPlaning")int inPlaning);
+	List<BoVisitPlan> selectVisitPlaningByUserId(@Param("userId")Long userId, @Param("inPlaning")int inPlaning);
 }
