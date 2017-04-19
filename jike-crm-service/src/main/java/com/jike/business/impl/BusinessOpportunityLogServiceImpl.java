@@ -538,13 +538,20 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				}
 			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
 				//如果是达成合作意向，保存合作详情
-				if("达成合作意向".equals(logData.getString("specificEvent"))){
+				String specificEvent = logData.getString("specificEvent");
+				if("达成合作意向".equals(specificEvent)){
 					JSONObject cooperationDetailsJson = boVisitJson.getJSONObject("cooperationDetails");
 					CooperationDetails cooperationDetails = cooperationDetailsJson.toJavaObject(CooperationDetails.class);
 					cooperationDetails.setVisitId(boVisit.getVisitId());
 					cooperationDetails.setCreateTime(nowDate);
 					cooperationDetails.setCreateBy(jsonData.getLong("userId"));
 					cooperationDetailsMapper.insert(cooperationDetails);
+				}
+				//修改商机进度
+				if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
+				}else if("达成合作意向".equals(specificEvent)){
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
 				}
 			}
 			
