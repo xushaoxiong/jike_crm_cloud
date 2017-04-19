@@ -146,7 +146,10 @@ $('.FillInfo').on('click','.trialConfirm',function(){
 		trialJ.boInTrial=boInTrial;
 		
 		$ajax('post','businessOpportunityLog/addBOLogInTrial',trialJ,function succF(jo){
-			$('.R-wap').load('journal/journalList.html');
+			$('.R-wap').load('journal/journalList.html',function(){
+				$('.hide-menu li').removeClass('menuCheck');
+				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

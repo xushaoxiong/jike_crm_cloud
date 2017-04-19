@@ -275,7 +275,6 @@ $(function(){
 							Mesclic=true;		
 						},function errF(jo){
 							pub.Alt(jo.message,false);
-							console.log(jo.message)
 						})
 					});
 				}else{
