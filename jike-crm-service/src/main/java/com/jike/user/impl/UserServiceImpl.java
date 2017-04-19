@@ -282,6 +282,8 @@ public class UserServiceImpl implements UserService {
 			JSONObject userJson = new JSONObject();
 			userJson.put("name", user.getName());
 			userJson.put("loginName", user.getLoginName());
+			userJson.put("gender", user.getGender());
+			userJson.put("email", user.getEmail());
 			userJson.put("userId", user.getUserId());
 			userArr.add(userJson);
 		}

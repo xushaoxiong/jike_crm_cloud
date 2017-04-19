@@ -177,6 +177,10 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		Long roleId = queryJson.getLong("roleId");
 		if (roleId == 2) {// 商务查看所有角色
 			userId = null;
+			resultJson.put("assignSale", true);//指派销售权限
+			resultJson.put("assignService", true);//指派服务权限
+		}else{
+			resultJson.put("assignSale", false);////指派权限
 		}
 		
 		int totalCount = businessOpportunityMapper.getBusinessOpportunityCount(businessOpportunityName,startTime,endTime,businessOpportunityProcess,userId);
@@ -202,6 +206,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					Long distributeUserId = (Long) userIdObj;
 					User distributeUser = userService.getUserById(distributeUserId);
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
+					if(distributeUserId.equals(queryJson.getLong("userId"))){
+						resultJson.put("saleAssignService", true);//指派服务权限
+					}else{
+						resultJson.put("saleAssignService", false);//指派服务权限
+					}
 				}
 				if(!queryJson.getLong("userId").equals(createBy)){
 					businessOpportunityJson.put("authority", 1);
@@ -297,7 +306,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "未查到该商机");
 			return resultJson;
 		}
-		if(!json.getLong("userId").equals(businessOpportunityOld.getCreateBy())){
+		if(!json.getLong("roleId").equals(2L)){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有操作权限");
 			return resultJson;
@@ -435,8 +444,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "未查到该商机");
 			return resultJson;
 		}
-		
-		if(!json.getLong("userId").equals(businessOpportunity.getCreateBy())){
+		SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
+		if(!json.getLong("roleId").equals(2L)&&!json.getLong("userId").equals(saleBusinessOpportunity.getUserId())){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有操作权限");
 			return resultJson;
