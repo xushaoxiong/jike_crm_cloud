@@ -205,6 +205,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					Long distributeUserId = (Long) userIdObj;
 					User distributeUser = userService.getUserById(distributeUserId);
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
+					businessOpportunityJson.put("distributeUserId", distributeUser.getUserId());
 					if(distributeUserId.equals(queryJson.getLong("userId"))){
 						businessOpportunityJson.put("assignService", true);//指派服务权限
 					}else{
