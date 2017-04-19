@@ -178,7 +178,6 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if (roleId == 2) {// 商务查看所有角色
 			userId = null;
 			resultJson.put("assignSale", true);//指派销售权限
-			resultJson.put("assignService", true);//指派服务权限
 		}else{
 			resultJson.put("assignSale", false);////指派权限
 		}
@@ -207,9 +206,9 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					User distributeUser = userService.getUserById(distributeUserId);
 					businessOpportunityJson.put("distributeUserName", distributeUser.getName());
 					if(distributeUserId.equals(queryJson.getLong("userId"))){
-						resultJson.put("saleAssignService", true);//指派服务权限
+						businessOpportunityJson.put("assignService", true);//指派服务权限
 					}else{
-						resultJson.put("saleAssignService", false);//指派服务权限
+						businessOpportunityJson.put("assignService", false);//指派服务权限
 					}
 				}
 				if(!queryJson.getLong("userId").equals(createBy)){
