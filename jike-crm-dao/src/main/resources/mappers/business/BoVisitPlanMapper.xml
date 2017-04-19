@@ -402,13 +402,26 @@
   	select 
     <include refid="Base_Column_List" />
     from bo_visit_plan
-    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
-    and in_planing = #{isPlaning,jdbcType=INTEGER}
+    where in_planing = #{inPlaning,jdbcType=INTEGER} 
+    <if test="businessOpportunityId != null">
+    and business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+    </if>
   </select>
   <select id="selectVisitPlanByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from bo_visit_plan
     where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+  <select id="selectVisitPlaningByUserId" resultMap="BaseResultMap">
+     select
+		bv.*
+		from bo_visit_plan bv , business_opportunity bo , sale_business_opportunity sbo
+		where bo.business_opportunity_id = sbo.business_opportunity_id
+		and bv.business_opportunity_id = bo.business_opportunity_id
+		and bo.is_cancellation = 0
+		and bo.is_closed = 0
+		and  sbo.user_id = = #{userId,jdbcType=BIGINT}
+        and bv.in_planing =#{inPlaning,jdbcType=INTEGER} 
   </select>
 </mapper>

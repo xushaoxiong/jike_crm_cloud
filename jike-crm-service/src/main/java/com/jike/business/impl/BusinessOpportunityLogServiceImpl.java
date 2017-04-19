@@ -1,6 +1,7 @@
 package com.jike.business.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -1823,4 +1824,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return false;
 	}
 	
+	public List<Long> queryIsPlaningBusiness(Long userId) {
+		List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByUserId(userId, 0);
+		List<Long> list = new ArrayList<Long>();
+		if (!boVisitPlaning.isEmpty()) {
+			for (BoVisitPlan boVisitPlan : boVisitPlaning) {
+				list.add(boVisitPlan.getBusinessOpportunityId());
+			}
+		}
+		return list;
+	}
+ 	
 }

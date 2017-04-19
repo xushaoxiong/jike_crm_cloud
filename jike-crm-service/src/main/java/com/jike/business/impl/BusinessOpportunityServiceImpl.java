@@ -343,11 +343,20 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if("商业谈判".equals(eventType)||"试用中".equals(eventType)||"招投标中".equals(eventType)){
 			businessOpportunityType = 0;
 		}
+		List<Long> isPlaningIds = null;
+		if("制定拜访计划".equals(eventType)){
+			 isPlaningIds = businessOpportunityLogService.queryIsPlaningBusiness(userId);
+		}
 		
 		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess,businessOpportunityType);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
+				if(isPlaningIds!=null&&!isPlaningIds.isEmpty()){
+					if(isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())){
+						continue;
+					}
+				}
 				JSONObject json = new JSONObject();
 				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
 				json.put("businessOpportunityNum", businessOpportunity.getBusinessOpportunityNum());
