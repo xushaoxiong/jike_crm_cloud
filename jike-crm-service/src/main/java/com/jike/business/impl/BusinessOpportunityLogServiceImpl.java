@@ -1,7 +1,6 @@
 package com.jike.business.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -144,17 +143,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
+			
 			//保存日志
 			JSONObject logData = jsonData.getJSONObject("logData");
-			
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
-			this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			//保存信息收集
 			JSONObject boInformationCollectJson = jsonData.getJSONObject("boInformationCollect");
@@ -360,14 +356,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				return resultJson;
 			}
 			Date nowDate = new Date();
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
-			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boVisitPlanJson = jsonData.getJSONObject("boVisitPlan");
 			String visitPlanName = boVisitPlanJson.getString("visitPlanName");
@@ -470,14 +463,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				return resultJson;
 			}
 			Date nowDate = new Date();
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
-			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boVisitJson = jsonData.getJSONObject("boVisit");
 			Long visitPlanId = boVisitJson.getLong("visitPlanId");//拜访计划ID
@@ -568,16 +558,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boNegotiationJson = jsonData.getJSONObject("boNegotiation");
 			String negotiationName = boNegotiationJson.getString("negotiationName");
@@ -628,16 +616,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boInTrialJson = jsonData.getJSONObject("boInTrial");
 			Date trialStartDate = boInTrialJson.getDate("trialStartDate");
@@ -675,16 +661,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boTrialReusltJson = jsonData.getJSONObject("boTrialReuslt");
 			String trialResultDetail = boTrialReusltJson.getString("trialResultDetail");
@@ -716,15 +699,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
 			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boBiddingJson = jsonData.getJSONObject("boBidding");
 			String biddingMode = boBiddingJson.getString("biddingMode");
@@ -761,16 +742,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boBiddingResultJson = jsonData.getJSONObject("boBiddingResult");
 			String biddingResultDetail = boBiddingResultJson.getString("biddingResultDetail");
@@ -799,17 +777,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
-			
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONObject boSignJson = jsonData.getJSONObject("boSign");
 			Date signDate = boSignJson.getDate("signDate");
 			BigDecimal signAmonut = boSignJson.getBigDecimal("signAmonut");
@@ -864,16 +838,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boPurchaseJson = jsonData.getJSONObject("boPurchase");
 			Date hardwareArrivalDate = boPurchaseJson.getDate("hardwareArrivalDate");
@@ -904,16 +875,12 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, null);
-			
+			Long logId = this.createLogData(jsonData, nowDate, logData, null);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONObject dailyEventsJson = jsonData.getJSONObject("dailyEvents");
 			String dailyEventsDetail = dailyEventsJson.getString("dailyEventsDetail");
 			
@@ -935,17 +902,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
-			
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONObject boSupportJson = jsonData.getJSONObject("boSupport");
 			Integer accountOpenCount = boSupportJson.getInteger("accountOpenCount");
 			Integer informationConfirmationCount = boSupportJson.getInteger("informationConfirmationCount");
@@ -977,17 +940,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
-			
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONObject boTrainJson = jsonData.getJSONObject("boTrain");
 			Integer operationTrainingCount = boTrainJson.getInteger("operationTrainingCount");
 			Integer correctingTrainingCount = boTrainJson.getInteger("correctingTrainingCount");
@@ -1033,17 +992,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
-			
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
+			//保存售后
 			JSONObject boCustomerServiceJson = jsonData.getJSONObject("boCustomerService");
 			Integer installationDebuggingCount = boCustomerServiceJson.getInteger("installationDebuggingCount");
 			Integer homeworkVolumeCount = boCustomerServiceJson.getInteger("homeworkVolumeCount");
@@ -1076,16 +1032,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		if (jsonData != null && !jsonData.isEmpty()) {
 			Date nowDate = new Date();
-			//保存费用
-			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
-			Long detailFeeId = null;
-			if (totalDetail != null) {
-				detailFeeId = this.createBoFeeDatail(jsonData, nowDate, totalDetail);
-			}
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
-			Long logId = this.createLogData(jsonData, nowDate, detailFeeId, logData, businessOpportunityId);
+			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			
 			JSONObject boPaymentJson = jsonData.getJSONObject("boPayment");
 			Date paymentDate = boPaymentJson.getDate("paymentDate");
@@ -1119,7 +1072,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityService.updateBusinessOpportunityProcess(json);
 	}
 
-	private Long createLogData(JSONObject jsonData, Date nowDate, Long detailFeeId, JSONObject logData,Long businessOpportunityId) {
+	private Long createLogData(JSONObject jsonData, Date nowDate, JSONObject logData,Long businessOpportunityId) {
 		Date logDate = logData.getDate("logDate");
 		String eventType = logData.getString("eventType");
 		String specificEvent = logData.getString("specificEvent");
@@ -1135,7 +1088,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityLog.setWorkingHours(workingHours);
 		businessOpportunityLog.setInternalParticipant(internalParticipant);
 		businessOpportunityLog.setExternalParticipant(externalParticipant);
-		businessOpportunityLog.setDetailFeeId(detailFeeId);
 		businessOpportunityLog.setCreateTime(nowDate);
 		businessOpportunityLog.setCreateBy(jsonData.getLong("userId"));
 		businessOpportunityLogMapper.insert(businessOpportunityLog);
@@ -1151,7 +1103,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	 * @created wangyb
 	 * @createtime 2017年4月7日下午2:37:50
 	 */
-	private Long createBoFeeDatail(JSONObject jsonData, Date nowDate, JSONObject totalDetail) {
+	private Long createBoFeeDatail(Long logId , JSONObject jsonData, Date nowDate, JSONObject totalDetail) {
 		Long detailFeeId;
 		BoFeeDetail boFeeDetail = new BoFeeDetail();
 		BigDecimal trafficFee = totalDetail.getBigDecimal("trafficFee");
@@ -1162,6 +1114,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		BigDecimal otherFee = totalDetail.getBigDecimal("otherFee");
 		BigDecimal advanceFee = totalDetail.getBigDecimal("advanceFee");
 		String advancePerson = totalDetail.getString("advancePerson");
+		boFeeDetail.setLogId(logId);
 		boFeeDetail.setTrafficFee(trafficFee);
 		boFeeDetail.setHotelFee(hotelFee);
 		boFeeDetail.setFoodFee(foodFee);
@@ -1398,7 +1351,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		businessOpportunityLogJson.put("businessOpportunityNum", businessOpportunityJson.getString("businessOpportunityNum"));
 		businessOpportunityLogJson.put("businessOpportunityType", businessOpportunityJson.getString("businessOpportunityType"));
 		//费用
-		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(businessOpportunityLog.getDetailFeeId());
+		BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByLogId(businessOpportunityLog.getLogId());
 		
 		JSONObject  boFeeDetailJson = JSONObject.parseObject(JSONObject.toJSONString(boFeeDetail,SerializerFeature.WriteNullStringAsEmpty));
 		businessOpportunityLogJson.put("totalFee", caculateDetailFee(boFeeDetail));
@@ -1464,7 +1417,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		//更新费用表
 		JSONObject boFeeDetailJson = updateJson.getJSONObject("boFeeDetailJson");
 		BoFeeDetail boFeeDetail = boFeeDetailJson.toJavaObject(BoFeeDetail.class);
-		boFeeDetail.setDetailFeeId(businessOpportunityLogOld.getDetailFeeId());
+		BoFeeDetail boFeeDetailOld = boFeeDetailMapper.selectByLogId(businessOpportunityLogOld.getLogId());
+		boFeeDetail.setDetailFeeId(boFeeDetailOld.getDetailFeeId());
 		boFeeDetailMapper.updateByPrimaryKeySelective(boFeeDetail);
 		Long userId = updateJson.getLong("userId");
 		Date nowDate = new Date();
