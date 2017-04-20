@@ -1718,19 +1718,21 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	public JSONObject queryBoInfoCollectionByBoId(Long businessOpportunityId){
 		JSONObject resultJson = new JSONObject();
 		BoInformationCollect boInformationCollect = boInformationCollectMapper.selectByBusinessOpportunityId(businessOpportunityId);
-		resultJson.put("schoolLevel", boInformationCollect.getSchoolLevel());
-		resultJson.put("schoolProperty", boInformationCollect.getSchoolProperty());
-		resultJson.put("schoolType", boInformationCollect.getSchoolType());
-		resultJson.put("mainScope", boInformationCollect.getMainScope());
-		resultJson.put("decisionMakerName", boInformationCollect.getDecisionMakerName());
-		resultJson.put("decisionMakerTitle", boInformationCollect.getDecisionMakerTitle());
-		resultJson.put("decisionMakerTitleDetail", boInformationCollect.getDecisionMakerTitleDetail());
-		resultJson.put("decisionMakerPhone", boInformationCollect.getDecisionMakerPhone());
-		resultJson.put("contactName", boInformationCollect.getContactName());
-		resultJson.put("contactTitle", boInformationCollect.getContactTitle());
-		resultJson.put("contactTitleDetail", boInformationCollect.getContactTitleDetail());
-		resultJson.put("contactPhone", boInformationCollect.getContactPhone());
-		resultJson.put("mainScope", boInformationCollect.getMainScope());
+		if(boInformationCollect != null){
+			resultJson.put("schoolLevel", boInformationCollect.getSchoolLevel());
+			resultJson.put("schoolProperty", boInformationCollect.getSchoolProperty());
+			resultJson.put("schoolType", boInformationCollect.getSchoolType());
+			resultJson.put("mainScope", boInformationCollect.getMainScope());
+			resultJson.put("decisionMakerName", boInformationCollect.getDecisionMakerName());
+			resultJson.put("decisionMakerTitle", boInformationCollect.getDecisionMakerTitle());
+			resultJson.put("decisionMakerTitleDetail", boInformationCollect.getDecisionMakerTitleDetail());
+			resultJson.put("decisionMakerPhone", boInformationCollect.getDecisionMakerPhone());
+			resultJson.put("contactName", boInformationCollect.getContactName());
+			resultJson.put("contactTitle", boInformationCollect.getContactTitle());
+			resultJson.put("contactTitleDetail", boInformationCollect.getContactTitleDetail());
+			resultJson.put("contactPhone", boInformationCollect.getContactPhone());
+			resultJson.put("mainScope", boInformationCollect.getMainScope());
+		}
 		return resultJson;
 	}
 	
