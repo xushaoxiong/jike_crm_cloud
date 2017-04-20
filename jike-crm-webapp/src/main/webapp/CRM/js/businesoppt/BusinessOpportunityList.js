@@ -53,7 +53,8 @@
 				Html+='<td class="serviceName">';
 				if(item.serviceList==""){
 					Html+='<div class="serviceNamewap"></div>';
-					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 					Html+='</td>';
 				}else{
 					Html+='<div class="serviceNamewap">';
@@ -62,11 +63,13 @@
 					});
 					Html+='</div>';
 					if(assignSale){
-						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 					Html+='</td>';
 					}else{
 						if(item.assignService){
-							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 						Html+='</td>';
 						}else{
 							Html+='</td>';
@@ -77,7 +80,8 @@
 			}else{
 				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
 					if(assignSale){
-						Html+='<span class="glyphicon glyphicon-pencil cursor editserver"></span>';
+//						Html+='<span class="glyphicon glyphicon-pencil cursor editserver"></span>';
+						Html+='<img src="img/busimg1.png" class="editserver cursor"/>';
 					Html+='</td>';
 					}else{
 						Html+='</td>';
@@ -85,7 +89,8 @@
 				Html+='<td>';
 				if(item.serviceList==""){
 					Html+='<div class="serviceNamewap"></div>';
-					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 					Html+='</td>';
 				}else{
 					Html+='<div class="serviceNamewap">';
@@ -94,11 +99,13 @@
 					});
 					Html+='</div>';;
 					if(assignSale){
-						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 					Html+='</td>';
 					}else{
 						if(item.assignService){
-							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 						Html+='</td>';
 						}else{
 							Html+='</td>';

@@ -291,9 +291,14 @@ $('.delJournal').click(function(){
 			}
 			
 		}
+		//回款
+		if($('.eventType').val()=='回款'){
+			$.getScript("js/editjournal/editreceivmoneyInfo.js",function(){
+				$('.editInfo').html(receiveHtml());
+				receivedata(jo.commonJson);
+			})
+		}
 	}
-
-
 
 	var myDate = new Date();
 	var year=myDate.getFullYear();

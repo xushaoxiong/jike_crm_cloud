@@ -144,12 +144,25 @@ $(function(){
 			timeN=0;
 		}
 	})
-	
-	
-	
-	
-	
-	
+	$('.timeVal').blur(function(){
+		worktimeNum($(this).val())
+	})
+	function worktimeNum(obj){
+	console.log((obj.value)*10%5)
+		obj = obj.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
+		obj = obj.replace(/^\./g,""); //验证第一个字符是数字
+		obj = obj.replace(/\.{2,}/g,"."); //只保留第一个, 清除多余的
+		obj = obj.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+		obj = obj.replace(/^(\-)*(\d+)\.(\d).*$/,'$1$2.$3'); //只能输入一个小数
+		if(obj*10%5>0){
+			$('.timeVal').val('');
+			$('.timedanger').css('color','red');
+		}else{
+			$('.timedanger').css('color','#000');
+		}
+		
+		
+	}
 	//总费用弹框
 	$('.btnCost').click(function(){
 		$('.totalCost').modal('toggle');
@@ -463,7 +476,18 @@ $(function(){
 			
 		}
 		
-		
+		//回款
+		if(eveid=='12'){
+			if(Mesclic){
+				$('.FillInfo').show();
+			}else{
+				$.getScript("js/journal/receivmoneyInfo.js",function(){
+					$('.FillInfo').html(receiveHtml());
+					Mesclic=true;
+				})
+			}
+			
+		}
 		
 	})
 
