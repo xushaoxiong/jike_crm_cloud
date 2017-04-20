@@ -64,10 +64,10 @@ select{
 	appearance:none !important;   
   	-moz-appearance:none !important;   
   	-webkit-appearance: none !important; /*for chrome*/
-  	background: url(img/checked.png) no-repeat center right;
+  	background: url('img/checked.png') no-repeat center right;
   	background-size: 15px;
 }
-.R-wap label{padding-right: 10px;min-width: 105px !important;}
+.R-wap label{padding-right: 10px;min-width: 125px !important;}
 .col{color: red;}
 .cursorm{cursor: pointer;}
 a{text-underline:none ;}

@@ -49,7 +49,9 @@
 			Html+='<td class="opptNumb cursorm" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';
 			Html+='<td class="checkBusiness cursor">'+item.businessOpportunityNum+'</td>';
 			if(item.distributeUserName==undefined){
-				Html+='<td></td>';
+				Html+='<td class="salesuserName" userid=""><span class="username"></span>&nbsp;&nbsp;';
+					Html+='<img src="img/busimg1.png" class="editserver cursor"/></td>';
+				Html+='</td>';
 				Html+='<td class="serviceName">';
 				if(item.serviceList==""){
 					Html+='<div class="serviceNamewap"></div>';
