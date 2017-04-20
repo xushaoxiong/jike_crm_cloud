@@ -60,6 +60,13 @@ input[type=radio],input[type=checkbox]{
 	margin-top: -1px !important;
 	margin-left: 4px !important;
 }
+select{
+	appearance:none !important;   
+  	-moz-appearance:none !important;   
+  	-webkit-appearance: none !important; /*for chrome*/
+  	background: url(img/checked.png) no-repeat center right;
+  	background-size: 15px;
+}
 .R-wap label{padding-right: 10px;min-width: 105px !important;}
 .col{color: red;}
 .cursorm{cursor: pointer;}
@@ -68,4 +75,11 @@ thead th{text-align: center;}
 textarea{resize: none;height: 100px !important;}
 .breadcrumb{
 	display: none;
+}
+/*分页*/
+.pagination-wap .totalNum{
+	margin:26px 10px;
+}
+.pagination{
+	float: left !important;
 }
