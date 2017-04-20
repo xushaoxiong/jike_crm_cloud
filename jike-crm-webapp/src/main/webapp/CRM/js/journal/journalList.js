@@ -40,10 +40,19 @@ $('.delJournal').click(function(){
 				html+='<td>'+item.specificEvent+'</td>';
 				html+='<td>'+item.workingHours+'</td>';
 				html+='<td>';
-					html+='<span class="serviceName">'+item.internalParticipant+'</span>';
+					if(item.internalParticipant==undefined){
+						html+='<span class="serviceName"></span>';
+					}else{
+						html+='<span class="serviceName">'+item.internalParticipant+'</span>';
+					}
+					
 				html+='</td>';
 				html+='<td>';
+				if(item.externalParticipant==undefined){
+					html+='<span class="serviceName"></span>';
+				}else{
 					html+='<span class="serviceName">'+item.externalParticipant+'</span>';
+				}	
 				html+='</td>';
 				html+='<td>'+item.totalFee+'</td>';
 				html+='<td logId="'+item.logId+'">';
@@ -291,9 +300,14 @@ $('.delJournal').click(function(){
 			}
 			
 		}
+		//回款
+		if($('.eventType').val()=='回款'){
+			$.getScript("js/editjournal/editreceivmoneyInfo.js",function(){
+				$('.editInfo').html(receiveHtml());
+				receivedata(jo.commonJson);
+			})
+		}
 	}
-
-
 
 	var myDate = new Date();
 	var year=myDate.getFullYear();
