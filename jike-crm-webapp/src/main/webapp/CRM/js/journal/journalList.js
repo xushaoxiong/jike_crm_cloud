@@ -326,7 +326,7 @@ $('.searchBusiness').click(function(){
 })
 //新建日志按钮
 $('.newlist').click(function(){
-	$('.R-wap').load('journal/xinjianrizhi.html',function(){
+	$('.R-wap').load('journal/journalCreate.html',function(){
 		$('.hide-menu li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=6]').addClass('menuCheck');
 		var netht=$('.menuCheck').find('a').html();

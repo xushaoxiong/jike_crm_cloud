@@ -164,7 +164,7 @@
 				if(jo.state=='success'){
 					$('.userModalAlt').html('');
 					$("#newAdd").modal("hide");
-					userpage();
+//					userpage();
 				}else{
 					$('.userModalAlt').html(jo.message);
 					return;
@@ -267,7 +267,7 @@
 			success:function(jo){
 				if(jo.state=='success'){
 					$("#newAdd").modal("hide");
-					userpage();
+//					userpage();
 				}else{
 					$('.userModalAlt').html(jo.message);
 					return;

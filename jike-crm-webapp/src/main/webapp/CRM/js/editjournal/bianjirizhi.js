@@ -48,7 +48,10 @@
 		}
 		
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
-			$('.R-wap').load('journal/journalList.html');
+			$('.R-wap').load('journal/journalList.html',function(){
+				$('.hide-menu li').removeClass('menuCheck');
+				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+			});
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})

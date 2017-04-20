@@ -63,6 +63,7 @@ input[type=radio],input[type=checkbox]{
 .R-wap label{padding-right: 10px;min-width: 150px !important;}
 .col{color: red;}
 .cursorm{cursor: pointer;}
+a{text-underline:none ;}
 thead th{text-align: center;}
 textarea{resize: none;height: 100px !important;}
 .breadcrumb{

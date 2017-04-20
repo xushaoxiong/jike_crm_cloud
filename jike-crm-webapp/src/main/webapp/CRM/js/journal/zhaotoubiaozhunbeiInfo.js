@@ -28,7 +28,7 @@ function PropPreionHtml(){
 			propHtml+='</div>';
 			propHtml+='<div class="form-group row">';
 				propHtml+='<label class="col-md-2 col-sm-2">是否有商务费用</label>';
-				propHtml+='<div class="col-md-4 col-sm-6 businesCost">';
+				propHtml+='<div class="col-md-4 col-sm-6 businesCost" style="line-height:34px">';
 					propHtml+='<input type="radio" value="是" name="radname" busFid="0"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;';
 					propHtml+='<input type="radio" value="否" name="radname" busFid="1"/>&nbsp;&nbsp;否';
 				propHtml+='</div>';
@@ -71,7 +71,10 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 		propreJ.totalDetail=totalDetail
 		propreJ.boBidding=boBidding;
 		$ajax('post','businessOpportunityLog/addBOLogBoBidding',propreJ,function succF(jo){
-			$('.R-wap').load('journal/journalList.html');
+			$('.R-wap').load('journal/journalList.html',function(){
+				$('.hide-menu li').removeClass('menuCheck');
+				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})

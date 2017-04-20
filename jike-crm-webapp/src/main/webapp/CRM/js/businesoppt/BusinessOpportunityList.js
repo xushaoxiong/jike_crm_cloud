@@ -9,28 +9,6 @@
 		});
 		
 	})
-//添加服务人员
-//$('.plusOppt').click(function(){
-//	$('.serviceTitle').html('');
-//	$("#opptModal").modal("toggle");
-//	
-//})
-//$('.opptConfirm').click(function(){
-//	var serviceName=$('.service-wap').find('option:selected').val();
-//	
-//	if($('.serviceName').html().indexOf(serviceName)<0){
-//		$('.serviceName').append('/'+serviceName);
-//		$('#opptModal').modal('hide');
-//	}else{
-//		$('.serviceTitle').html('已添加！');
-//	}
-//	
-//})
-//删除服务人员
-//$('.minusOppt').click(function(){
-//	$("#delopptModal").modal("toggle");
-//})
-
 //列表查询
 	var paginatorJ={"businessOpportunityProcess":"","start":1,"pageSize":10};
 	//分页
@@ -55,7 +33,7 @@
 //		$('.pageTotal span').html(jo.businessOpportunityList.length);
 	}
 	//列表内容
-	function list(List){
+	function list(List,assignSale){
 		var Html="";
 		$.each(List, function(i,item) {
 			Html+='<tr>';
@@ -63,18 +41,70 @@
 			Html+='<td>'+item.createTime+'</td>';
 			Html+='<td>'+item.createUserName+'</td>';
 			if(item.businessOpportunityType=='0'){
-				Html+='<td>学校</td>';
+				Html+='<td opptype="0">学校</td>';
 			}else{
-				Html+='<td>合作伙伴</td>';
+				Html+='<td opptype="1">合作伙伴</td>';
 			}
 			
-			Html+='<td class="opptNumb" numb="'+item.businessOpportunityNum+'">'+item.businessOpportunityName+'</td>';
+			Html+='<td class="opptNumb cursorm" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';
 			Html+='<td class="checkBusiness cursor">'+item.businessOpportunityNum+'</td>';
 			if(item.distributeUserName==undefined){
 				Html+='<td></td>';
+				Html+='<td class="serviceName">';
+				if(item.serviceList==""){
+					Html+='<div class="serviceNamewap"></div>';
+					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='</td>';
+				}else{
+					Html+='<div class="serviceNamewap">';
+					$.each(item.serviceList, function(i2,item2) {
+						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
+					});
+					Html+='</div>';
+					if(assignSale){
+						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='</td>';
+					}else{
+						if(item.assignService){
+							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+						Html+='</td>';
+						}else{
+							Html+='</td>';
+						}
+					}	
+				}					
 				Html+='<td>'+item.businessOpportunityProcess+'</td>';
 			}else{
-				Html+='<td>'+item.distributeUserName+'</td>';
+				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
+					if(assignSale){
+						Html+='<span class="glyphicon glyphicon-pencil cursor editserver"></span>';
+					Html+='</td>';
+					}else{
+						Html+='</td>';
+					}
+				Html+='<td>';
+				if(item.serviceList==""){
+					Html+='<div class="serviceNamewap"></div>';
+					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='</td>';
+				}else{
+					Html+='<div class="serviceNamewap">';
+					$.each(item.serviceList, function(i2,item2) {
+						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
+					});
+					Html+='</div>';;
+					if(assignSale){
+						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='</td>';
+					}else{
+						if(item.assignService){
+							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+						Html+='</td>';
+						}else{
+							Html+='</td>';
+						}
+					}
+				}	
 				Html+='<td>'+item.businessOpportunityProcess+'</td>';
 			}
 			Html+='<td class="operBtn-wap">';
@@ -108,7 +138,7 @@
 	
 	function clickPage(PJson){
 		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
-		list(jo.businessOpportunityList);
+		list(jo.businessOpportunityList,jo.assignSale);
 		cartePage(jo);
 	},function errF(){
 		pub.Alt(jo.message,false);
@@ -145,7 +175,137 @@
 	$('.list-tr').on('click','.operBtn-wap .edit',function(){
 		$('.R-wap').load('businesoppt/editlist.html');
 	})
+	//服务人员列表
+	function serverlist(sdata,servnumb){
+		var saleHtml="";
+		$.each(sdata, function(i,item) {
+			saleHtml+='<tr class="cursorm">';
+				saleHtml+='<td class="bussinessimg"></td>';
+				saleHtml+='<td class="servname" userid="'+item.userId+'">'+item.name+'</td>';
+				if(item.gender==1){
+					saleHtml+='<td>男 </td>';
+				}else{
+					saleHtml+='<td>女 </td>';
+				}
+				saleHtml+='<td>'+item.email+'</td>';
+			saleHtml+='</tr>';
+		});
+		$('.serverPeople').html(saleHtml);
+		
+	}
+	//添加服务人员
+	$('.list-tr').on('click','.plusOppt',function(){
+		$("#opptModal").modal("toggle");
+		var servnumb=$(this).parent().prev().prev().html();
+		$("#opptModal").attr('servopptnum',servnumb);
+		var servnamelistArry=[];
+		$(this).parent().find('span[userid]').each(function(i){
+			servnamelistArry.push($(this).attr('userid'))
+		})	
+		var serverlistJ={};
+		$ajax('post','user/queryServiceList',serverlistJ,function succF(jo){
+			serverlist(jo.userList);
+			$.each(jo.userList, function(i1,item1) {
+				$.each(servnamelistArry, function(i2,item2) {
+					if(item1.userId==item2){
+						$('.servname').eq(i1).prev().addClass('checked');
+					}
+					
+				});
+			})
+			
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	})
+	//选择服务人员
+	$('.serverPeople').on('click','tr',function(){
+		$(this).find('.bussinessimg').toggleClass('checked');
+	})
+	$('.opptConfirm').click(function(){
+		$("#opptModal").modal("hide");
+		var servuseridJ={};
+		var userIdList=[];
+		var businessOpportunityNum=$("#opptModal").attr('servopptnum')
+		$('.serverPeople .checked').each(function(){
+			var userid=$(this).next().attr('userid');
+			userIdList.push(userid);
+		})
+		servuseridJ.userIdList=userIdList;
+		servuseridJ.businessOpportunityNum=businessOpportunityNum;
+		$ajax('post','businessOpportunity/distributionBoToService',servuseridJ,function succF(jo){
+			var srevnamelist=[];
+			$('.serverPeople .checked').each(function(){			
+				var serveruserJ={};
+				serveruserJ.name=$(this).next().html();
+				serveruserJ.userid=$(this).next().attr('userid');
+				srevnamelist.push(serveruserJ);
+			})
+			var serversp="";
+			$.each(srevnamelist, function(i,item) {
+				serversp+='<span userid="'+item.userid+'">'+item.name+'/</span>';
+			});
+			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.serviceNamewap').html(serversp);
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+		
+	})
 
+	//销售人员列表
+	function saleslist(sdata,checkeduser,opptnum){
+		var saleHtml="";
+		$.each(sdata, function(i,item) {
+			saleHtml+='<tr class="cursorm">';
+				if(item.userId==checkeduser){
+					saleHtml+='<td class="salesimg checked" opptnum="'+opptnum+'"></td>';
+				}else{
+					saleHtml+='<td class="salesimg" opptnum="'+opptnum+'"></td>';
+				}
+				saleHtml+='<td userid="'+item.userId+'">'+item.name+'</td>';
+				if(item.gender==1){
+					saleHtml+='<td>男 </td>';
+				}else{
+					saleHtml+='<td>女 </td>';
+				}
+				saleHtml+='<td>'+item.email+'</td>';
+			saleHtml+='</tr>';
+		});
+		$('.salesPeople').html(saleHtml);
+		
+	}
+	//修改销售人员
+	$('.list-tr').on('click','.editserver',function(){
+		$("#editsaletModal").modal("toggle");
+		var userid=$(this).parent().attr('userid');
+		var opptnum=$(this).parent().prev().html();
+		var saleslistJ={};
+		$ajax('post','user/querySaleList',saleslistJ,function succF(jo){
+			saleslist(jo.userList,userid,opptnum);
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	})
+	$('.salesPeople').on('click','tr',function(){
+		$('.salesimg').removeClass('checked');
+		$(this).find('.salesimg').addClass('checked');
+		
+	})
+	//确定选择销售人员
+	$('.salesConfirm').click(function(){
+		$("#editsaletModal").modal("hide");
+		var salseJ={};
+		var distributionId=$('.salesPeople .checked').next().attr('userid');
+		var businessOpportunityNum=$('.salesPeople').find('.checked').attr('opptnum');
+		$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.salesuserName').attr('userid',distributionId);
+		salseJ.distributionId=distributionId;
+		salseJ.businessOpportunityNum=businessOpportunityNum;
+		$ajax('post','businessOpportunity/distributionBoToSale',salseJ,function succF(jo){
+			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.salesuserName .username').html($('.salesPeople').find('td[userid='+distributionId+']').html());
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	})
 //删除商机
 $('.list-tr').on('click','.delBuiness',function(){
 	$("#delbuinessModal").modal("toggle");
@@ -174,9 +334,7 @@ var closeBtnPart = "";
 var isClosedip=""
 $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
-	console.log(closeBtnPart)
 	var businessOpportunityNum=$(this).parents('tr').find('.opptNumb').attr('numb');
-	console.log(businessOpportunityNum)
 	isClosedip=$(this).attr('isClosedip');
 	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
@@ -256,7 +414,28 @@ $('.reset').click(function(){
 	$('#enddate').val('');
 	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
 })
+//商机预览
+var opptIdJ={};
+$('.list-tr').on('click','.opptNumb',function(){
+	var pdata='';
+	opptIdJ.businessOpportunityId=$(this).attr('oppid');
+	var opptype=$(this).prev().attr('opptype');
+	$ajax('post','businessOpportunity/queryBusinessOpportunityInfoById',opptIdJ,function succF(jo){
+		if(opptype==0){
+			$('.R-wap').load('businesoppt/scolpreviewlist.html',function(){
+				previewdata(jo)
+			})
+		}else{
+			$('.R-wap').load('businesoppt/panerpreviewlist.html',function(){
+				previewdata(jo)
+			})
+		}
+	
+	},function errF(jo){
+		pub.Alt(jo.message,false);
+	})
+	
+
+})
 
 
-
-//})

@@ -109,7 +109,7 @@ function vistInformation(){
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
 					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost"/>';
 				vFhtml+='	</div>';
-				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">从事教育行业案例</label>';
@@ -128,7 +128,7 @@ function vistInformation(){
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
 					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"/>';
 				vFhtml+='	</div>';
-				vFhtml+='	<span style="line-height:34px;padding-left:5px;">元</span>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
 		vFhtml+='	</div>';
 		vFhtml+='	</div>';
@@ -263,7 +263,10 @@ function visitordata(jodata){
 		boVistPlanJ.boVisit.cooperationDetails=cooperationDetails;
 		
 		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
-				$('.R-wap').load('journal/journalList.html');
+				$('.R-wap').load('journal/journalList.html',function(){
+				$('.hide-menu li').removeClass('menuCheck');
+				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
