@@ -381,18 +381,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
-				if(isPlaningIds!=null&&!isPlaningIds.isEmpty()){
-					if ("制定拜访计划".equals(eventType)) {
-						if (isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
-							continue;
-						}
-					} else if ("拜访客户".equals(eventType)) {
-						if (!isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
-							continue;
-						}
+				if ("制定拜访计划".equals(eventType)) {
+					if (isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
+						continue;
 					}
-				}else{
-					continue;
+				} else if ("拜访客户".equals(eventType)) {
+					if (!isPlaningIds.contains(businessOpportunity.getBusinessOpportunityId())) {
+						continue;
+					}
 				}
 				JSONObject json = new JSONObject();
 				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
