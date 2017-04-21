@@ -78,7 +78,9 @@ $(function(){
 			$('.breadcrumb').on('click','.curBack',function(){
 				breadnav(menuname,thisHtml);
 				$('#addJournal').show();
-				$('.FillInfo').hide();
+				$('.FillInfo').hide(function(){
+					begineveid=$('#eventType').find('option:selected').attr('eveid');
+				});
 			})	
 		}
 	
