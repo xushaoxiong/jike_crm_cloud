@@ -346,7 +346,24 @@
 			and bo.business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
 		</if>
 		order by bo.create_time desc
-		
+  </select>
+  <select id="selectByServiceBusinessOpportunityName" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select
+		bo.*
+		from  business_opportunity bo , service_business_opportunity sbo
+		where bo.business_opportunity_id = sbo.business_opportunity_id
+		and bo.is_cancellation = 0
+		and bo.is_closed = 0
+		<if test="userId != null">
+			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		</if>
+		<if test="businessOpportunityName != null">
+			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="unBusinessOpportunityProcess != null">
+			and bo.business_opportunity_process != #{unBusinessOpportunityProcess,jdbcType=VARCHAR}
+		</if>
+		order by bo.create_time desc
   </select>
   <select id="selectCountByAreaAndBoType" resultType = "java.lang.Integer">
   select

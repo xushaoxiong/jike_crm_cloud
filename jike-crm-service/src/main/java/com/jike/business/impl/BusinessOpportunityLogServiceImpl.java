@@ -1,6 +1,7 @@
 package com.jike.business.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1241,10 +1242,20 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if (roleId == 2) {// 商务查看所有角色
 			userId = null;
 		}
-		
-		int totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+		int totalCount =0;
+		if(roleId == 3){
+			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+		}else{
+			totalCount = businessOpportunityLogMapper.getServiceBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+		}
 		int startPosition = (start - 1) * pageSize;
-		List<Map<String,Object>> businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		
+		List<Map<String,Object>> businessOpportunityLogList = new ArrayList<Map<String,Object>>();
+		if(roleId == 3){
+			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		}else{
+			businessOpportunityLogList = businessOpportunityLogMapper.getServiceBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+		}
 		JSONArray businessOpportunityLogArr = new JSONArray();
 		if(!businessOpportunityLogList.isEmpty()){
 			for (Map<String, Object> businessOpportunityLogMap : businessOpportunityLogList) {
@@ -1308,14 +1319,25 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				}else{
 					businessOpportunityJson.put("roleName", "");
 				}
-				//查询指派人ID
-				Long distributedUserId = (Long) businessOpportunityLogMap.get("user_id");
-				//如果创建人和登录人ID不相同，或者创建人和被指派商机人不同 没有编辑权限，但是都有查看权限。
-				if(!queryJson.getLong("userId").equals(createBy)||(distributedUserId!=null&&!createBy.equals(distributedUserId))){
-					businessOpportunityJson.put("authority", 1);
+				
+				if(roleId == 3){//销售编辑权限
+					//查询指派人ID
+					Long distributedUserId = (Long) businessOpportunityLogMap.get("user_id");
+					//如果创建人和登录人ID不相同，或者创建人和被指派商机人不同 没有编辑权限，但是都有查看权限。
+					if(!queryJson.getLong("userId").equals(createBy)||(distributedUserId!=null&&!createBy.equals(distributedUserId))){
+						businessOpportunityJson.put("authority", 1);
+					}else{
+						businessOpportunityJson.put("authority", 0);
+					}
 				}else{
-					businessOpportunityJson.put("authority", 0);
+					//服务日志谁创建谁修改
+					if(!queryJson.getLong("userId").equals(createBy)){
+						businessOpportunityJson.put("authority", 1);
+					}else{
+						businessOpportunityJson.put("authority", 0);
+					}
 				}
+				
 				businessOpportunityLogArr.add(businessOpportunityJson);
 			}
 		}

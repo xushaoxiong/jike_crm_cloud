@@ -1,6 +1,7 @@
 package com.jike.business.impl;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -358,26 +359,36 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
 		Long userId = queryJson.getLong("userId");
-		if(queryJson.getLong("roleId")==2){
-			userId = null;
-		}
-		String unBusinessOpportunityProcess = null;
+		List<BusinessOpportunity> businessOpportunityList = null;
+		Set<Long> isPlaningIds = new HashSet<Long>();
 		String eventType = queryJson.getString("eventType");
-		if(!"信息收集".equals(eventType)){
+		String unBusinessOpportunityProcess = null;
+		if (!"信息收集".equals(eventType)) {
 			unBusinessOpportunityProcess = "信息收集";
 		}
-		Integer businessOpportunityType = null;
-		//下列三种情况只查学校类型
-		if("商业谈判".equals(eventType)||"试用中".equals(eventType)||"招投标中".equals(eventType)){
-			businessOpportunityType = 0;
-		}
-		Set<Long> isPlaningIds = null;
-		if("制定拜访计划".equals(eventType)||"拜访客户".equals(eventType)){
-			 //查询已添加拜访计划的商机
-			 isPlaningIds = businessOpportunityLogService.queryIsPlaningBusiness(userId,0);
+		//如果是服务，查询服务商机
+		if (queryJson.getLong("roleId") == 4) {
+			businessOpportunityList = businessOpportunityMapper.selectByServiceBusinessOpportunityName(businessOpportunityName,
+					userId, unBusinessOpportunityProcess);
+		} else {
+			// 如果是商务查询所有商机
+			if (queryJson.getLong("roleId") == 2) {
+				userId = null;
+			}
+			Integer businessOpportunityType = null;
+			// 下列三种情况只查学校类型
+			if ("商业谈判".equals(eventType) || "试用中".equals(eventType) || "招投标中".equals(eventType)) {
+				businessOpportunityType = 0;
+			}
+			if ("制定拜访计划".equals(eventType) || "拜访客户".equals(eventType)) {
+				// 查询已添加拜访计划的商机
+				isPlaningIds = businessOpportunityLogService.queryIsPlaningBusiness(userId, 0);
+			}
+			businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,
+					userId, unBusinessOpportunityProcess, businessOpportunityType);
 		}
 		
-		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.selectByBusinessOpportunityName(businessOpportunityName,userId,unBusinessOpportunityProcess,businessOpportunityType);
+	
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
