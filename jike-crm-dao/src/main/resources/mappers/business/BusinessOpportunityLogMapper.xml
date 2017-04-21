@@ -216,6 +216,9 @@
     from business_opportunity_log bol left join business_opportunity bo
     on 
     bol.business_opportunity_id = bo.business_opportunity_id
+    left join sale_business_opportunity sbo     
+    on 
+    bol.business_opportunity_id = sbo.business_opportunity_id
     <where>
     	<if test="businessOpportunityName != null">
 			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
@@ -230,7 +233,7 @@
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
 		<if test="userId != null">
-			and bol.create_by = #{userId,jdbcType=BIGINT}
+			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
 		</if>
 	</where>
   </select>
@@ -244,10 +247,14 @@
     bol.specific_event,
     bol.working_hours,
     bol.internal_participant,
-    bol.external_participant
+    bol.external_participant,
+    sbo.user_id
     from business_opportunity_log bol left join business_opportunity bo
     on 
     bol.business_opportunity_id = bo.business_opportunity_id
+    left join sale_business_opportunity sbo     
+    on 
+    bol.business_opportunity_id = sbo.business_opportunity_id
     <where>
     	<if test="businessOpportunityName != null">
 			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
@@ -262,7 +269,7 @@
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
 		<if test="userId != null">
-			and bol.create_by = #{userId,jdbcType=BIGINT}
+			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
 		</if>
 	</where>
 		ORDER BY bol.create_time desc
