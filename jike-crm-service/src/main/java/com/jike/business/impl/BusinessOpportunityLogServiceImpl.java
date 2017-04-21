@@ -1307,7 +1307,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				//查询指派人ID
 				Long distributedUserId = (Long) businessOpportunityLogMap.get("user_id");
 				//如果创建人和登录人ID不相同，或者创建人和被指派商机人不同 没有编辑权限，但是都有查看权限。
-				if(!queryJson.getLong("userId").equals(createBy)||createBy.equals(distributedUserId)){
+				if(!queryJson.getLong("userId").equals(createBy)||!createBy.equals(distributedUserId)){
 					businessOpportunityJson.put("authority", 1);
 				}else{
 					businessOpportunityJson.put("authority", 0);
