@@ -391,6 +391,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 							continue;
 						}
 					}
+				}else{
+					continue;
 				}
 				JSONObject json = new JSONObject();
 				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
