@@ -148,6 +148,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject logData = jsonData.getJSONObject("logData");
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -358,6 +363,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Date nowDate = new Date();
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -465,6 +475,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Date nowDate = new Date();
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -562,7 +577,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
-			
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -620,7 +639,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
-			
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -665,6 +688,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -703,6 +731,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -746,6 +779,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -781,6 +819,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -842,6 +885,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -878,6 +926,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject logData = jsonData.getJSONObject("logData");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, null);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -906,6 +959,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -944,6 +1002,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -996,6 +1059,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -1036,6 +1104,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Long businessOpportunityId = logData.getLong("businessOpportunityId");
 			//保存日志
 			Long logId = this.createLogData(jsonData, nowDate, logData, businessOpportunityId);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
@@ -1080,6 +1153,10 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		String internalParticipant = logData.getString("internalParticipant");
 		String externalParticipant = logData.getString("externalParticipant");
 		
+		List<String> evenTypeList = roleService.queryRoleEvenTypeList(jsonData.getLong("roleId"));
+		if(!evenTypeList.contains(eventType)){
+			return -1L;
+		}
 		BusinessOpportunityLog businessOpportunityLog = new BusinessOpportunityLog();
 		businessOpportunityLog.setLogDate(logDate);
 		businessOpportunityLog.setBusinessOpportunityId(businessOpportunityId);
@@ -1172,6 +1249,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				businessOpportunityJson.put("logId", businessOpportunityLogMap.get("log_id"));
 				businessOpportunityJson.put("logDate", DateUtil.getDateFormat(logDateLong, "yyyy-MM-dd"));
 				businessOpportunityJson.put("businessOpportunityName", businessOpportunityLogMap.get("business_opportunity_name"));
+				businessOpportunityJson.put("businessOpportunityType", businessOpportunityLogMap.get("business_opportunity_type"));
 				businessOpportunityJson.put("eventType", businessOpportunityLogMap.get("event_type"));
 				businessOpportunityJson.put("specificEvent", businessOpportunityLogMap.get("specific_event"));
 				businessOpportunityJson.put("workingHours", businessOpportunityLogMap.get("working_hours"));

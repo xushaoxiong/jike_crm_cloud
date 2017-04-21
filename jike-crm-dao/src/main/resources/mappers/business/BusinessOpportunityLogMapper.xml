@@ -242,6 +242,7 @@
     bol.log_id,
     bol.log_date,
     bo.business_opportunity_name,
+    bo.business_opportunity_type,
     bol.create_by,
     bol.event_type,
     bol.specific_event,

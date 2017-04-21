@@ -1,5 +1,6 @@
 package com.jike.user.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -163,5 +164,14 @@ public class RoleServiceImpl implements RoleService {
 		resultJson.put("message", "查询成功");
 		return resultJson;
 		
+	}
+	
+	public List<String> queryRoleEvenTypeList(Long roleId){
+		List<BoEventLabel> roleEventList = boEventLabelMapper.selectByRoleId(roleId);
+		List<String> list = new ArrayList<String>();
+		for (BoEventLabel boEventLabel : roleEventList) {
+			list.add(boEventLabel.getEvename());
+		}
+		return list;
 	}
 }
