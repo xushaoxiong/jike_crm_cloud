@@ -11,7 +11,7 @@ function propreResultHtml(){
 		propRustHtml+='</div>';
 		propRustHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			propRustHtml+='<button class="btn btn-primary propRustConfirm" style="margin-right: 15px;">提交</button>';
-			propRustHtml+='<button class="btn btn-primary">重置</button>';
+//			propRustHtml+='<button class="btn btn-primary">重置</button>';
 		propRustHtml+='</div>';
 	propRustHtml+='</div>';
 	return propRustHtml;

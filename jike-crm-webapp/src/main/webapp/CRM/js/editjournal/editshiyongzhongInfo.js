@@ -57,7 +57,7 @@ function TrialHtml(){
 		traHtml+='</div>';
 		traHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			traHtml+='<button class="btn btn-primary trialConfirm" style="margin-right: 15px;">提交</button>';
-			traHtml+='<button class="btn btn-primary">重置</button>';
+//			traHtml+='<button class="btn btn-primary">重置</button>';
 		traHtml+='</div>';
 	traHtml+='</div>';
 	return traHtml;

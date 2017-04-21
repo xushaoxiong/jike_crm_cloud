@@ -17,7 +17,7 @@ function PurchHtml(){
 		PurchHtml+='</div>';
 		PurchHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			PurchHtml+='<button class="btn btn-primary purchConfirm" style="margin-right: 15px;">提交</button>';
-			PurchHtml+='<button class="btn btn-primary">重置</button>';
+//			PurchHtml+='<button class="btn btn-primary">重置</button>';
 		PurchHtml+='</div>';
 	PurchHtml+='</div>';
 	return PurchHtml;

@@ -20,7 +20,7 @@ function supportHtml(){
 		suportHtml+='</div>';
 		suportHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			suportHtml+='<button class="btn btn-primary suprtConfirm" style="margin-right: 15px;">提交</button>';
-			suportHtml+='<button class="btn btn-primary">重置</button>';
+//			suportHtml+='<button class="btn btn-primary">重置</button>';
 		suportHtml+='</div>';
 	suportHtml+='</div>';
 	return suportHtml;

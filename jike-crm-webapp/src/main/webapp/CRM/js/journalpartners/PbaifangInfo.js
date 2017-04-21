@@ -107,7 +107,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">注册资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost" onkeyup="num(this)"/>';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
@@ -126,7 +126,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">启动资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"  onkeyup="num(this)"/>';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
@@ -134,7 +134,7 @@ function vistInformation(){
 		vFhtml+='	</div>';
 		vFhtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;">提交</button>';
-			vFhtml+='	<button class="btn btn-primary">重置</button>';
+//			vFhtml+='	<button class="btn btn-primary">重置</button>';
 		vFhtml+='	</div>';
 	vFhtml+='	</div>';
 	return vFhtml;

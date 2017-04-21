@@ -26,7 +26,7 @@ function receiveHtml(){
 		receiveHtml+='</div>';
 		receiveHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			receiveHtml+='<button class="btn btn-primary payConfirm" style="margin-right: 15px;">提交</button>';
-			receiveHtml+='<button class="btn btn-primary">重置</button>';
+//			receiveHtml+='<button class="btn btn-primary">重置</button>';
 		receiveHtml+='</div>';
 	receiveHtml+='</div>';
 	return receiveHtml;

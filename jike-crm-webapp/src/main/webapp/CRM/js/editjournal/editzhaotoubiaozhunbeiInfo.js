@@ -36,7 +36,7 @@ function PropPreionHtml(){
 		propHtml+='</div>';
 		propHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			propHtml+='<button class="btn btn-primary propreConfirm" style="margin-right: 15px;">提交</button>';
-			propHtml+='<button class="btn btn-primary">重置</button>';
+//			propHtml+='<button class="btn btn-primary">重置</button>';
 		propHtml+='</div>';
 	propHtml+='</div>';
 	return propHtml;

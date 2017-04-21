@@ -11,7 +11,7 @@ function TryHtml(){
 		tryHtml+='</div>';
 		tryHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			tryHtml+='<button class="btn btn-primary tryConfirm" style="margin-right: 15px;">提交</button>';
-			tryHtml+='<button class="btn btn-primary">重置</button>';
+//			tryHtml+='<button class="btn btn-primary">重置</button>';
 		tryHtml+='</div>';
 	tryHtml+='</div>';
 	return tryHtml;
