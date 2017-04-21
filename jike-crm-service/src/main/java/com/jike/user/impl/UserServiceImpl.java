@@ -116,9 +116,17 @@ public class UserServiceImpl implements UserService {
 			userMapper.updateByPrimaryKeySelective(user);
 			
 			UserRole userRole = userRoleMapper.selectByUserId(user.getUserId());
-			userRole.setRoleId(userJson.getLong("roleId"));
-			user.setUpdateTime(new Date());
-			userRoleMapper.updateByPrimaryKeySelective(userRole);
+			if(userRole == null){
+				userRole = new UserRole();
+				userRole.setRoleId(userJson.getLong("roleId"));
+				userRole.setUserId(user.getUserId());
+				userRole.setCreateTime(new Date());
+				userRoleMapper.insert(userRole);
+			}else{
+				userRole.setRoleId(userJson.getLong("roleId"));
+				user.setUpdateTime(new Date());
+				userRoleMapper.updateByPrimaryKeySelective(userRole);
+			}
 			}
 			resultJson.put("state", "success");
 			resultJson.put("message", "更新成功");
@@ -178,8 +186,8 @@ public class UserServiceImpl implements UserService {
 					userJson.put("phone", user.getPhone());
 					userJson.put("email", user.getEmail());
 					userJson.put("employeeNum", user.getEmployeeNum());
-					userJson.put("isEmployment", user.getIsEmployment()==0?"在职":"离职");
-					userJson.put("entryDate", DateUtil.getDateFormat(user.getEntryDate()));
+//					userJson.put("isEmployment", user.getIsEmployment()==0?"在职":"离职");
+//					userJson.put("entryDate", DateUtil.getDateFormat(user.getEntryDate()));
 					userArr.add(userJson);
 				}
 			}

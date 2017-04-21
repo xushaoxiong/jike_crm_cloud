@@ -1178,11 +1178,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				businessOpportunityJson.put("internalParticipant", businessOpportunityLogMap.get("internal_participant"));
 				businessOpportunityJson.put("externalParticipant", businessOpportunityLogMap.get("external_participant"));
 				//查询总费用
-				Object detailFeeIdObj =  businessOpportunityLogMap.get("detail_fee_id");
 				BigDecimal totalFee = new BigDecimal(0);
-				if(detailFeeIdObj!=null){
-					Long detailFeeId = (Long) detailFeeIdObj;
-					BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByPrimaryKey(detailFeeId);
+				
+				Long logId = Long.parseLong(businessOpportunityLogMap.get("log_id").toString());
+				BoFeeDetail boFeeDetail = boFeeDetailMapper.selectByLogId(logId);
+				if (boFeeDetail != null) {
 					BigDecimal trafficFee = boFeeDetail.getTrafficFee();
 					BigDecimal hotelFee = boFeeDetail.getHotelFee();
 					BigDecimal foodFee = boFeeDetail.getFoodFee();
@@ -1190,25 +1190,25 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					BigDecimal giftFee = boFeeDetail.getGiftFee();
 					BigDecimal otherFee = boFeeDetail.getOtherFee();
 					BigDecimal advanceFee = boFeeDetail.getAdvanceFee();
-					if(trafficFee!=null){
+					if (trafficFee != null) {
 						totalFee = totalFee.add(trafficFee);
 					}
-					if(hotelFee!=null){
+					if (hotelFee != null) {
 						totalFee = totalFee.add(hotelFee);
 					}
-					if(foodFee!=null){
+					if (foodFee != null) {
 						totalFee = totalFee.add(foodFee);
 					}
-					if(entertainFee!=null){
+					if (entertainFee != null) {
 						totalFee = totalFee.add(entertainFee);
 					}
-					if(giftFee!=null){
+					if (giftFee != null) {
 						totalFee = totalFee.add(giftFee);
 					}
-					if(otherFee!=null){
+					if (otherFee != null) {
 						totalFee = totalFee.add(otherFee);
 					}
-					if(advanceFee!=null){
+					if (advanceFee != null) {
 						totalFee = totalFee.add(advanceFee);
 					}
 				}
@@ -1221,7 +1221,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				JSONObject json = new JSONObject();
 				json.put("userId", createBy);
 				Role role = roleService.getRoleByUserId(json);
-				businessOpportunityJson.put("roleName", role.getRoleName());
+				if(role!=null){
+					businessOpportunityJson.put("roleName", role.getRoleName());
+				}else{
+					businessOpportunityJson.put("roleName", "");
+				}
 				
 				if(!queryJson.getLong("userId").equals(createBy)){
 					businessOpportunityJson.put("authority", 1);
@@ -1275,7 +1279,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject vistJson = JSONObject.parseObject(vistJsonString);
 			Long visitPlanId = boVisit.getVisitPlanId();
 			BoVisitPlan boVisitPlan = boVisitPlanMapper.selectByPrimaryKey(visitPlanId);
-			vistJson.put("visitPlanName", boVisitPlan.getVisitPlanName());
+			if(boVisitPlan!=null){
+				vistJson.put("visitPlanName", boVisitPlan.getVisitPlanName());
+			}else{
+				vistJson.put("visitPlanName", "");
+			}
 			json = vistJson.toJSONString();
 				//如果是达成合作意向，保存合作详情
 				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
