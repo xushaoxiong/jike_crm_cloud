@@ -118,7 +118,7 @@ function visitPlan(){
 		vPhtml+='</div>';
 		vPhtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			vPhtml+='<button class="btn btn-primary planConfirm" style="margin-right: 15px;">提交</button>';
-			vPhtml+='<button class="btn btn-primary">重置</button>';
+//			vPhtml+='<button class="btn btn-primary">重置</button>';
 		vPhtml+='</div>';
 	vPhtml+='</div>';
 	return vPhtml;

@@ -64,9 +64,13 @@ select{
 	appearance:none !important;   
   	-moz-appearance:none !important;   
   	-webkit-appearance: none !important; /*for chrome*/
-  	background: url('img/checked.png') no-repeat center right;
-  	background-size: 15px;
+  	background-image: url('../../img/select.png') !important;
+  	background-position: center right !important;
+  	background-repeat: no-repeat !important;
+  	background-size: 20px;
 }
+/*ie中去除三角形*/
+select::-ms-expand { display: none; } 
 .R-wap label{padding-right: 10px;min-width: 125px !important;}
 .col{color: red;}
 .cursorm{cursor: pointer;}
@@ -77,6 +81,9 @@ textarea{resize: none;height: 100px !important;}
 	display: none;
 }
 /*分页*/
+.pagination-wap{
+	width: 50% !important;
+}
 .pagination-wap .totalNum{
 	margin:26px 10px;
 }

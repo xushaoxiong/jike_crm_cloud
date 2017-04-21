@@ -134,7 +134,7 @@ function vistInformation(){
 		vFhtml+='	</div>';
 		vFhtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;">提交</button>';
-			vFhtml+='	<button class="btn btn-primary">重置</button>';
+//			vFhtml+='	<button class="btn btn-primary">重置</button>';
 		vFhtml+='	</div>';
 	vFhtml+='	</div>';
 	return vFhtml;

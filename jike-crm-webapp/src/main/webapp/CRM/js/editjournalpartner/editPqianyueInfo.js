@@ -48,7 +48,7 @@ function signHtml(){
 		signHtml+='</div>';
 		signHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			signHtml+='<button class="btn btn-primary SignConfirm" style="margin-right: 15px;">提交</button>';
-			signHtml+='<button class="btn btn-primary">重置</button>';
+//			signHtml+='<button class="btn btn-primary">重置</button>';
 		signHtml+='</div>';
 	signHtml+='</div>';
 	return signHtml;

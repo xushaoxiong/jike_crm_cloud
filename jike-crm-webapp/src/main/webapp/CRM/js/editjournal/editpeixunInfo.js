@@ -21,7 +21,7 @@ function trainiHtml(){
 		trainiHtml+='</div>';
 		trainiHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			trainiHtml+='<button class="btn btn-primary trainConfirm" style="margin-right: 15px;">提交</button>';
-			trainiHtml+='<button class="btn btn-primary">重置</button>';
+//			trainiHtml+='<button class="btn btn-primary">重置</button>';
 		trainiHtml+='</div>';
 	trainiHtml+='</div>';
 	return trainiHtml;

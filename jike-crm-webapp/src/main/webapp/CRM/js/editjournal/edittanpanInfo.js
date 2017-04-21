@@ -17,7 +17,7 @@ function negotiationsHtml(){
 		negtionHtml+='	</div>';
 		negtionHtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			negtionHtml+='	<button class="btn btn-primary negoConfirm" style="margin-right: 15px;">提交</button>';
-			negtionHtml+='	<button class="btn btn-primary">重置</button>';
+//			negtionHtml+='	<button class="btn btn-primary">重置</button>';
 		negtionHtml+='	</div>';
 	negtionHtml+='	</div>';
 	return negtionHtml;

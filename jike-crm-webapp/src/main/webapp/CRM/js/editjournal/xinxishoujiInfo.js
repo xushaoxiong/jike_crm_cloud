@@ -155,7 +155,7 @@ function infoColle(){
 		html+='	</div>';
 		html+='	<div class="mesbtn-group col-md-4 col-sm-6 text-center">';
 			html+='	<button class="btn btn-primary mesConfirm" style="margin-right: 15px;">提交</button>';
-			html+='	<button class="btn btn-primary">重置</button>';
+//			html+='	<button class="btn btn-primary">重置</button>';
 		html+='	</div>';
 	html+='	</div>';
 	return html;

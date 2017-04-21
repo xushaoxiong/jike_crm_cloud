@@ -32,12 +32,12 @@ $('.delJournal').click(function(){
 				if(item.businessOpportunityName==undefined){
 					html+='<td>日常商机</td>';
 				}else{
-					html+='<td>'+item.businessOpportunityName+'</td>';
+					html+='<td class="bussname" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
 				}
 				html+='<td>'+item.roleName+'</td>';
 				html+='<td>'+item.createUserName+'</td>';
-				html+='<td>'+item.eventType+'</td>';
-				html+='<td>'+item.specificEvent+'</td>';
+				html+='<td class="evtype">'+item.eventType+'</td>';
+				html+='<td class="spetype">'+item.specificEvent+'</td>';
 				html+='<td>'+item.workingHours+'</td>';
 				html+='<td>';
 					if(item.internalParticipant==undefined){
@@ -73,7 +73,7 @@ $('.delJournal').click(function(){
 		$ajax("post","businessOpportunityLog/queryBusinessOpportunityLogByParams",PJson,function succF(jo){
 			jourItem(jo.businessOpportunityLogList)
 			cartePage(jo);
-	},function errF(){
+	},function errF(jo){
 		pub.Alt(jo.message,false);
 	})
 	}clickPage(paginatorJ)

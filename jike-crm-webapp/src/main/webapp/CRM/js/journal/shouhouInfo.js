@@ -48,7 +48,7 @@ function aftSealtHtml(){
 		aftSealtHtml+='</div>';
 		aftSealtHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			aftSealtHtml+='<button class="btn btn-primary aftSealConfirm" style="margin-right: 15px;">提交</button>';
-			aftSealtHtml+='<button class="btn btn-primary">重置</button>';
+//			aftSealtHtml+='<button class="btn btn-primary">重置</button>';
 		aftSealtHtml+='</div>';
 	aftSealtHtml+='</div>';
 	return aftSealtHtml;

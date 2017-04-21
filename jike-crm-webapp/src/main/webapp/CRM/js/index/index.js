@@ -68,7 +68,6 @@ $(function(){
 		});
 		breadnav(menuname,thisHtml);
 		if($(this).attr('menuid')==7){
-			$('.R-wap').load('journal/journalList.html');
 			$('.breadcrumb').on('click','.curBack',function(){
 				breadnav(menuname,'编辑日志');
 				$('#addJournal').show();
@@ -76,17 +75,11 @@ $(function(){
 			})	
 		}
 		if($(this).attr('menuid')==6){
-			$('.R-wap').load('journal/journalCreate.html',function(){
-				Fht=menuname
-				netht=thisHtml;
-				$('.breadcrumb').on('click','.curBack',function(){
-					breadnav(menuname,thisHtml);
-					$('#addJournal').show();
-					$('.FillInfo').hide();
-				})	
-			});
-//			
-			
+			$('.breadcrumb').on('click','.curBack',function(){
+				breadnav(menuname,thisHtml);
+				$('#addJournal').show();
+				$('.FillInfo').hide();
+			})	
 		}
 	
 	})	

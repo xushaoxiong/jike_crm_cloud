@@ -89,7 +89,7 @@ function vistInformation(){
 		vFhtml+='	</div>';
 		vFhtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
 			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;">提交</button>';
-			vFhtml+='	<button class="btn btn-primary">重置</button>';
+//			vFhtml+='	<button class="btn btn-primary">重置</button>';
 		vFhtml+='	</div>';
 	vFhtml+='	</div>';
 	return vFhtml;
@@ -184,12 +184,12 @@ function visitordata(jodata){
 		totalDetailF(totalDetail);
 		boVistPlanJ.logData=logData;
 		boVistPlanJ.totalDetail=totalDetail
-		boVistPlanJ.boVisit=boVisit;
-		
+		boVistPlanJ.boVisit=boVisit;		
 		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
-				$('.R-wap').load('journal/journalList.html',function(){
+			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');
 				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+				
 			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
