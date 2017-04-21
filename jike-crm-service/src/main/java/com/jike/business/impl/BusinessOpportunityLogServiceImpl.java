@@ -971,6 +971,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Integer accountOpenCount = boSupportJson.getInteger("accountOpenCount");
 			Integer informationConfirmationCount = boSupportJson.getInteger("informationConfirmationCount");
 			Integer modifyStudentInformationCount = boSupportJson.getInteger("modifyStudentInformationCount");
+			Integer productDemonstration = boSupportJson.getInteger("productDemonstration");
+			Integer productIntroduce = boSupportJson.getInteger("productIntroduce");
 			BigDecimal salesSupportCount = boSupportJson.getBigDecimal("salesSupportCount");
 			String salesSupportDetail = boSupportJson.getString("salesSupportDetail");
 			
@@ -982,6 +984,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boSupport.setModifyStudentInformationCount(modifyStudentInformationCount);
 			boSupport.setSalesSupportCount(salesSupportCount);
 			boSupport.setSalesSupportDetail(salesSupportDetail);
+			boSupport.setProductDemonstration(productDemonstration);
+			boSupport.setProductIntroduce(productIntroduce);
 			boSupport.setCreateTime(nowDate);
 			boSupport.setCreateBy(jsonData.getLong("userId"));
 			boSupportMapper.insert(boSupport);
@@ -1824,9 +1828,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return resultJson;
 	}
 	
-	
-	
-	
 	@Transactional
 	public JSONObject deleteBusinessOpportunityLog(JSONObject json){
 		Long logId = json.getLong("logId");
@@ -1870,7 +1871,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}
 		return false;
 	}
-	
 	public Set<Long> queryIsPlaningBusiness(Long userId, Integer inPlaning) {
 		List<BoVisitPlan> boVisitPlaning = boVisitPlanMapper.selectVisitPlaningByUserId(userId, inPlaning);
 		Set<Long> list = new HashSet<Long>();
