@@ -260,11 +260,17 @@ $(function(){
 				$('.FillInfo').show();
 			}else{
 				$('.FillInfo').html('');
+				
 				$.getScript("js/journal/baifangjihuaInfo.js",function(){
+					
 					$ajax('post','businessOpportunityLog/queryInformationCollectionByBoId',busoptIdJ,function succF(jo){
 					var bInfoColet=jo.boInformationCollect;
 					$('.FillInfo').html(visitPlan());
-					var bInfoColet=jo.boInformationCollect;
+					if(OpptunityId==0){
+						scolcontTile();
+					}else{
+						pantercontTile();
+					}
 					if(bInfoColet!=undefined){
 						VisitPlandata(jo)
 					}

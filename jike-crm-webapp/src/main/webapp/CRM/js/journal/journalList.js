@@ -120,7 +120,7 @@ function businesnamestrb(){
 //获取商机类型搜索
 //eventJson为pub/eventTypeList返回数据内容
 //var eventlist=eventJson;
-$.each(eventJson.evenList, function(i,item) {
+$.each(eventJson2.evenList, function(i,item) {
 	var eventhtml="";
 	eventhtml+='<option>'+item.evename+'</option>';
 	$('.OpportunityProcess').append(eventhtml);
@@ -130,15 +130,17 @@ $.each(eventJson.evenList, function(i,item) {
 
 //	//操作设置
 
-	//编辑
 	$('.jourlist').on('click','.edit',function(){	
 		var logIdJ={};
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
+		var businestype=$(this).parents('tr').find('.bussname').attr('busintype');
+		console.log(businestype)
 		var netht="编辑日志";
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.R-wap').load('journal/editlog.html',function(){
+				$('.eventType').attr('businestype',businestype);
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
 				commondetail(jo);
@@ -186,6 +188,7 @@ $.each(eventJson.evenList, function(i,item) {
 	function commondetail(jo){
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var eventType=$('.eventType').val();
+		var businestype=$('.eventType').attr('businestype');
 		//传入详情json
 		//信息收集
 		if(eventType=='信息收集'){
@@ -206,6 +209,11 @@ $.each(eventJson.evenList, function(i,item) {
 		if($('.eventType').val()=='制定拜访计划'){
 			$.getScript("js/editjournal/editbaifangjihuaInfo.js",function(){
 				$('.editInfo').html(visitPlan());
+				if(businestype==0){
+					scolcontTile();
+				}else{
+					pantercontTile();
+				}
 				VisitPlandata(jo.commonJson)
 			})
 		}

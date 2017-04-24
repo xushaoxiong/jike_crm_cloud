@@ -18,15 +18,15 @@ function visitPlan(){
 				vPhtml+='<label class="col-md-2 col-sm-2">拜访人职位</label>';
 				vPhtml+='<div class="col-md-2 col-sm-2">';
 					vPhtml+='	<select class="form-control contTitle">';
-						vPhtml+='	<option>校长</option>';
-						vPhtml+='	<option>教学副校长</option>';
-						vPhtml+='	<option>教务主任</option>';
-						vPhtml+='	<option>信息主任</option>';
-						vPhtml+='	<option>总务主任</option>';
-						vPhtml+='	<option>学科组长</option>';
-						vPhtml+='	<option>任课教师</option>';
-						vPhtml+='	<option>学校职工</option>';
-						vPhtml+='	<option>其它</option>';
+//						vPhtml+='	<option>校长</option>';
+//						vPhtml+='	<option>教学副校长</option>';
+//						vPhtml+='	<option>教务主任</option>';
+//						vPhtml+='	<option>信息主任</option>';
+//						vPhtml+='	<option>总务主任</option>';
+//						vPhtml+='	<option>学科组长</option>';
+//						vPhtml+='	<option>任课教师</option>';
+//						vPhtml+='	<option>学校职工</option>';
+//						vPhtml+='	<option>其它</option>';
 					vPhtml+='	</select>';
 //					vPhtml+='<input type="text" value="" placeholder="默认为信息收集联系人职位，可修改" class="form-control contactPosit"/>';
 				vPhtml+='</div>';
@@ -123,6 +123,8 @@ function visitPlan(){
 	return vPhtml;
 }
 	
+	
+	
 	function VisitPlandata(jo){	
 		var bInfoColet=jo.boInformationCollect;
 		$('.planName').html(jo.visitPlanName);
@@ -176,7 +178,11 @@ function visitPlan(){
 		boVisitPlan.visitPlanName=$('.planName').html();
 		boVisitPlan.visitorName=$.trim($('.contactName').val());	
 		boVisitPlan.visitorTitle=$('.contTitle').find('option:selected').val();	
-		boVisitPlan.visitorTitleDetail=$.trim($('.otherCont').val());	
+		if(boVisitPlan.visitorTitle=='其它'){
+			boVisitPlan.visitorTitleDetail=$.trim($('.otherCont').val());	
+		}else{
+			boVisitPlan.visitorTitleDetail='';	
+		}
 		boVisitPlan.visitorLandline=$.trim($('.contactLine').val());
 		boVisitPlan.visitorPhone=$.trim($('.contactPhone').val());
 		boVisitPlan.visitorEmail=$.trim($('.visitorEmail').val());
@@ -234,7 +240,29 @@ function visitPlan(){
 		
 	})
 
-
+//学校伙伴职位列表
+	function scolcontTile(){
+		var contHtml='';
+		contHtml+='<option>校长</option>';
+		contHtml+='<option>教学副校长</option>';
+		contHtml+='<option>教务主任</option>';
+		contHtml+='<option>信息主任</option>';
+		contHtml+='<option>总务主任</option>';
+		contHtml+='<option>学科组长</option>';
+		contHtml+='<option>任课教师</option>';
+		contHtml+='<option>学校职工</option>';
+		contHtml+='<option>其它</option>';
+		$('.contTitle').html(contHtml);
+	}
+	//合作伙伴
+	function pantercontTile(){
+		var pcontHtml='';
+		pcontHtml+='<option>总经理</option>';
+		pcontHtml+='<option>经理</option>';
+		pcontHtml+='<option>销售</option>';
+		pcontHtml+='<option>其它</option>';
+		$('.contTitle').html(pcontHtml);
+	}
 	
 	var VistPlanJ={};
 	var boVisitPlan={};
