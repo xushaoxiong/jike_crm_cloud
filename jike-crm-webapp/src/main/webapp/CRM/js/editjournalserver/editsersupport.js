@@ -25,17 +25,18 @@ function supportHtml(){
 				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
 			suportHtml+='</div>';
 			suportHtml+='<div class="form-group row">';
-				suportHtml+='<label class="col-md-2 col-sm-2">销售支持</label>';
+				suportHtml+='<label class="col-md-2 col-sm-2">产品演示介绍</label>';
 				suportHtml+='<div class="col-md-1 col-sm-1">';
-					suportHtml+='<input type="text" class="form-control inp4 inpitem" onkeyup="num(this)" />';
+					suportHtml+='<input type="text" class="form-control inp4 inpitem" onkeyup="PosiintegerNum(this)" />';
 				suportHtml+='</div>';
-				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;小时</span>';
+				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
 			suportHtml+='</div>';
-			suportHtml+='<div class="form-group row suppotrDetail" style="display:none;">';
-				suportHtml+='<label class="col-md-2 col-sm-2">销售支持详情</label>';
-				suportHtml+='<div class="col-md-3 col-sm-3">';
-					suportHtml+='<textarea class="form-control inp5"></textarea>';
+			suportHtml+='<div class="form-group row">';
+				suportHtml+='<label class="col-md-2 col-sm-2">产品介绍讲解，简单操作演示</label>';
+				suportHtml+='<div class="col-md-1 col-sm-1">';
+					suportHtml+='<input type="text" class="form-control inp5 inpitem" onkeyup="PosiintegerNum(this)" />';
 				suportHtml+='</div>';
+				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
 			suportHtml+='</div>';
 		suportHtml+='</div>';
 		suportHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
@@ -45,24 +46,25 @@ function supportHtml(){
 	suportHtml+='</div>';
 	return suportHtml;
 }
-//获取试用结果信息
-function supportInfo(boSupport){
+//信息赋值
+function supportdata(supdata){
+	$('.inp1').val(supdata.accountOpenCount);
+	$('.inp2').val(supdata.informationConfirmationCount);
+	$('.inp3').val(supdata.modifyStudentInformationCount);
+	$('.inp4').val(supdata.productDemonstration);
+	$('.inp5').val(supdata.productIntroduce);
+}
+//获取服务人员支持结果信息
+function infodetail(boSupport){
 	boSupport.accountOpenCount=$('.inp1').val();
 	boSupport.informationConfirmationCount=$('.inp2').val();
 	boSupport.modifyStudentInformationCount=$('.inp3').val();
-	boSupport.salesSupportCount =$('.inp4').val();
-	boSupport.salesSupportDetail=$('.inp5').val();
+	boSupport.productDemonstration =$('.inp4').val();
+	boSupport.productIntroduce=$('.inp5').val();
 	
 }
-$('.FillInfo').on('keyup','.inp4',function(){
-	if($(this).val()==""){
-		$('.suppotrDetail').hide();
-	}else{
-		$('.suppotrDetail').show();
-	}
-})
-//试用结果详情提交
-$('.FillInfo').on('click','.suprtConfirm',function(){
+//支持提交
+$('.editInfo').on('click','.suprtConfirm',function(){
 	var inparry=[];
 	var totaltime=0;
 	$.each($('.inpitem'),function(){
@@ -75,35 +77,9 @@ $('.FillInfo').on('click','.suprtConfirm',function(){
 		pub.Alt('请填写一项信息',false);
 		return false;
 	}
-	if($('.inp4').val()!="" && $.trim($('.inp5').val())==""){
-		pub.Alt('请填写销售支持详情',false);
-		return false;
-	}
-	$('.FillInfo').hide();
+	$('.editInfo').hide();
 	$('#addJournal').show();
-	$('.journaConfirm').prop('disabled',false);
 	//计算工时
-	var timeVal=(Number(totaltime)+Number($('.inp4').val()))*0.5;
-	$('.timeVal').val(timeVal)
+	var timeVal=(Number(totaltime)+Number($('.inp4').val())+Number($('.inp5').val()))*0.5;
+	$('.timeVal').val(timeVal);
 })
-
-//提交返回后台试用结果信息
-	var supportJ={};
-	var boSupport={};
-	$('.journaConfirm').click(function(){
-		supportInfo(boSupport);
-		logDateF(logData);
-		totalDetailF(totalDetail);
-		supportJ.logData=logData;
-		supportJ.totalDetail=totalDetail
-		supportJ.boSupport=boSupport;
-		
-		$ajax('post','businessOpportunityLog/addBOLogBoSupport',supportJ,function succF(jo){
-			$('.R-wap').load('journal/journalList.html',function(){
-				$('.hide-menu li').removeClass('menuCheck');
-				$('.hide-menu li[menuid=7]').addClass('menuCheck');
-			});
-			},function errF(jo){
-				pub.Alt(jo.message,false);
-		})
-	})

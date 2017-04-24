@@ -198,7 +198,6 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
-		console.log(beginid)
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
@@ -416,10 +415,20 @@ $(function(){
 			if(Mesclic&& beginid==(eveid+spcid)){
 				$('.FillInfo').show();
 			}else{
-				$.getScript("js/journal/richangInfo.js",function(){
-					$('.FillInfo').html(dailytHtml());
-					Mesclic=true;
-				})
+				if(sessionStorage.server=='true'){
+					$.getScript("js/journalserver/serverdaily.js",function(){
+						$('.FillInfo').html(dailytHtml());
+						Mesclic=true;
+						beginid=eveid+spcid;
+					})
+				}else{
+					$.getScript("js/journal/richangInfo.js",function(){
+						$('.FillInfo').html(dailytHtml());
+						Mesclic=true;
+						beginid=eveid+spcid;
+					})
+				}
+				
 			}
 			
 		}
@@ -431,6 +440,7 @@ $(function(){
 				$.getScript("js/journal/shouhouInfo.js",function(){
 					$('.FillInfo').html(aftSealtHtml());
 					Mesclic=true;
+					beginid=eveid+spcid;
 				})
 			}
 			
@@ -440,15 +450,23 @@ $(function(){
 			if(Mesclic&& beginid==(eveid+spcid)){
 				$('.FillInfo').show();
 			}else{
-				if(OpptunityId==0){
+				if(OpptunityId==0&&sessionStorage.server=='false'){
 					$.getScript("js/journal/zhichiInfo.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
+						beginid=eveid+spcid;
+					})
+				}else if(sessionStorage.server=='true'){
+					$.getScript("js/journalserver/serversupport.js",function(){
+						$('.FillInfo').html(supportHtml());
+						Mesclic=true;
+						beginid=eveid+spcid;
 					})
 				}else{
 					$.getScript("js/journalpartners/PzhichiInfo.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
+						beginid=eveid+spcid;
 					})
 				}
 				
@@ -464,11 +482,13 @@ $(function(){
 					$.getScript("js/journal/peixunInfo.js",function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
+						beginid=eveid+spcid;
 					})
 				}else{
 					$.getScript("js/journalpartners/PpeixunInfo.js",function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
+						beginid=eveid+spcid;
 					})
 				}
 				
@@ -484,6 +504,7 @@ $(function(){
 				$.getScript("js/journal/receivmoneyInfo.js",function(){
 					$('.FillInfo').html(receiveHtml());
 					Mesclic=true;
+					beginid=eveid+spcid;
 				})
 			}
 			
