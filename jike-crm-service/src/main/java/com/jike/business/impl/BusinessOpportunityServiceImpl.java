@@ -292,7 +292,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		JSONObject resultJson = new JSONObject();
 		if (!businessOpportunityJson.isEmpty()) {
 			BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
-			if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
+			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
+			if(!businessOpportunityJson.getLong("userId").equals(saleBusinessOpportunity.getUserId())){
 				resultJson.put("state", "fail");
 				resultJson.put("message", "没有操作权限");
 				return resultJson;

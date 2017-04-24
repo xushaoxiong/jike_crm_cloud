@@ -252,6 +252,6 @@
     from user u,user_role r
     where u.user_id = r.user_id
     and (r.role_id =3 or r.role_id =4)
-    and u.name like #{name,jdbcType=VARCHAR}
+    and u.name like #{userName,jdbcType=VARCHAR}
     </select>
 </mapper>

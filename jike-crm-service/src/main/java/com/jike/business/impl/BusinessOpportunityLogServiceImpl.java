@@ -1294,24 +1294,24 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
-		List<Long> userIds = null;
+		List<Long> userIds = new ArrayList<Long>();
 		if (roleId == 2) {// 商务查看所有角色
 			String userName = queryJson.getString("userName");
 			if(userName!=null){
-				userName = "%"+userName+"% ";
+				userName = "%"+userName+"%";
 				List<User> userList = userService.querySaleAndServiceByUserName(userName);
 				if(!userList.isEmpty()){
-					userIds =new ArrayList<Long>();
 					for (User user : userList) {
 						userIds.add(user.getUserId());
 					}
+				}else{
+					userIds.add(-1L);
 				}
 			}else{
 				userIds = null;	
 			}
 			
 		}else{
-			userIds =new ArrayList<Long>();
 			userIds.add(userId);
 		}
 		int totalCount =0;
