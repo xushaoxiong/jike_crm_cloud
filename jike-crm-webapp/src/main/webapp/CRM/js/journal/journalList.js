@@ -293,10 +293,6 @@ $.each(eventJson.evenList, function(i,item) {
 					dailydata(jo.commonJson);
 				})
 			}
-			$.getScript("js/editjournal/editrichangInfo.js",function(){
-				$('.editInfo').html(dailytHtml());
-				dailydata(jo.commonJson);
-			})
 			
 		}
 	//售后
