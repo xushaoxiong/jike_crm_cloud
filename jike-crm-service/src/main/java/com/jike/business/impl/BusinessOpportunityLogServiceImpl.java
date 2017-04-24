@@ -1294,14 +1294,31 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
+		List<Long> userIds = null;
 		if (roleId == 2) {// 商务查看所有角色
-			userId = null;
+			String userName = queryJson.getString("userName");
+			if(userName!=null){
+				userName = "%"+userName+"% ";
+				List<User> userList = userService.querySaleAndServiceByUserName(userName);
+				if(!userList.isEmpty()){
+					userIds =new ArrayList<Long>();
+					for (User user : userList) {
+						userIds.add(user.getUserId());
+					}
+				}
+			}else{
+				userIds = null;	
+			}
+			
+		}else{
+			userIds =new ArrayList<Long>();
+			userIds.add(userId);
 		}
 		int totalCount =0;
 		if(roleId == 3){
 			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
 		}else{
-			totalCount = businessOpportunityLogMapper.getServiceBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+			totalCount = businessOpportunityLogMapper.getServiceBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userIds);
 		}
 		int startPosition = (start - 1) * pageSize;
 		
@@ -1309,7 +1326,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		if(roleId == 3){
 			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
 		}else{
-			businessOpportunityLogList = businessOpportunityLogMapper.getServiceBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+			businessOpportunityLogList = businessOpportunityLogMapper.getServiceBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userIds,startPosition,pageSize);
 		}
 		JSONArray businessOpportunityLogArr = new JSONArray();
 		if(!businessOpportunityLogList.isEmpty()){

@@ -1,5 +1,7 @@
 package com.jike.user;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.model.User;
 
@@ -93,5 +95,13 @@ public interface UserService {
 	 * @createtime 2017年4月18日下午3:39:44
 	 */
 	public JSONObject queryServiceList(JSONObject json);
+    /**
+     * 模糊查询用户
+     * @param userName
+     * @return
+     * @created wangyb
+     * @createtime 2017年4月24日下午12:01:30
+     */
+    public List<User> querySaleAndServiceByUserName(String userName);
 
 }

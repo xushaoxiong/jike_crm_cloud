@@ -301,8 +301,12 @@
 		<if test="eventType != null">
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and bol.create_by = #{userId,jdbcType=BIGINT}
+		<if test="userIds != null">
+			and bol.create_by in 
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
 	</where>
   </select>
@@ -334,8 +338,12 @@
 		<if test="eventType != null">
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and bol.create_by = #{userId,jdbcType=BIGINT}
+		<if test="userIds != null">
+			and bol.create_by in 
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
 	</where>
 		ORDER BY bol.create_time desc

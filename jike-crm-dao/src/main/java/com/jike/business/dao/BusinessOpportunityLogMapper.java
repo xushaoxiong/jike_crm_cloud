@@ -96,7 +96,7 @@ public interface BusinessOpportunityLogMapper {
 	 * @createtime 2017年4月21日下午3:52:06
 	 */
 	int getServiceBusinessOpportunityLogCount(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime,
-	          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId);
+	          @Param("endTime")String endTime, @Param("eventType")String eventType,  @Param("userIds")List<Long> userIds);
 
 	/**
 	 * 分页查询服务日志
@@ -112,5 +112,5 @@ public interface BusinessOpportunityLogMapper {
 	 * @createtime 2017年4月21日下午3:56:07
 	 */
 	List<Map<String, Object>> getServiceBusinessOpportunityLogByPage(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime,
-			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId, @Param("start")int start, @Param("pageSize")Integer pageSize);
+			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userIds")List<Long> userIds, @Param("start")int start, @Param("pageSize")Integer pageSize);
 }

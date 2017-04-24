@@ -299,6 +299,9 @@ public class UserServiceImpl implements UserService {
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 	}
+	public List<User> querySaleAndServiceByUserName(String userName) {
+		return userMapper.querySaleAndServiceByUserName(userName);
+	}
 	
 	
 }

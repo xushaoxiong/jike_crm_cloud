@@ -91,4 +91,13 @@ public interface UserMapper {
 	 * @createtime 2017年4月18日下午3:29:33
 	 */
 	List<User> selectByRoleId(Long roleId);
+
+	/**
+	 * 通过名称模糊查询用户
+	 * @param userName
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月24日下午12:03:03
+	 */
+	List<User> querySaleAndServiceByUserName(String userName);
 }
