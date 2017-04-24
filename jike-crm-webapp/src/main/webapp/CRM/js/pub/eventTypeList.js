@@ -3,7 +3,6 @@
 	function event(jo){
 		var eventHtml='';
 		$.each(jo, function(i,item) {
-			console.log(jo)
 			eventHtml+='<option eveid="'+item.eveid+'">'+item.evename+'</option>';
 		});
 		$('#eventType').append(eventHtml);

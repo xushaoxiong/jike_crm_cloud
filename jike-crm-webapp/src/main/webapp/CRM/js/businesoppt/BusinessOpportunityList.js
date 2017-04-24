@@ -124,23 +124,28 @@
 			if(item.authority==0){
 				Html+='<button class="btn btn-primary edit">编辑</button>';
 				Html+='<button class="btn btn-primary delBuiness">删除</button>';
-				if(item.isClosed==0){
-					Html+='<button class="btn btn-primary closeBuiness" isClosedip="'+item.isClosed+'">关闭</button>';
-				}else{
-					Html+='<button class="btn btn-info closeBuiness" isClosedip="'+item.isClosed+'">重启</button>';
-				}
+				
 				
 			}else{
 				Html+='<button class="btn" disabled="disabled">编辑</button>';
 				Html+='<button class="btn" disabled="disabled">删除</button>';
+				
+				
+			}
+			if(item.closeAuthority==false){
 				if(item.isClosed==0){
 					Html+='<button class="btn" disabled="disabled">关闭</button>';
 				}else{
 					Html+='<button class="btn" disabled="disabled">重启</button>';
 				}
 				
+			}else{
+				if(item.isClosed==0){
+					Html+='<button class="btn btn-primary closeBuiness" isClosedip="'+item.isClosed+'">关闭</button>';
+				}else{
+					Html+='<button class="btn btn-info closeBuiness" isClosedip="'+item.isClosed+'">重启</button>';
+				}
 			}
-				
 			Html+='</td>';
 		Html+='</tr>';
 		});
@@ -301,10 +306,12 @@
 		
 	}
 	//修改销售人员
+	var salesbusinesnum='';
 	$('.list-tr').on('click','.editserver',function(){
 		$("#editsaletModal").modal("toggle");
 		var userid=$(this).parent().attr('userid');
 		var opptnum=$(this).parent().prev().html();
+		salesbusinesnum=opptnum;
 		var saleslistJ={};
 		$ajax('post','user/querySaleList',saleslistJ,function succF(jo){
 			saleslist(jo.userList,userid,opptnum);
@@ -313,8 +320,13 @@
 		})
 	})
 	$('.salesPeople').on('click','tr',function(){
-		$('.salesimg').removeClass('checked');
-		$(this).find('.salesimg').addClass('checked');
+		var thischeck=$(this).find('.salesimg');
+		if(thischeck.hasClass('checked')){
+			thischeck.removeClass('checked');
+		}else{
+			$('.salesimg').removeClass('checked');
+			thischeck.addClass('checked');
+		}
 		
 	})
 	//确定选择销售人员
@@ -325,9 +337,17 @@
 		var businessOpportunityNum=$('.salesPeople').find('.checked').attr('opptnum');
 		$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.salesuserName').attr('userid',distributionId);
 		salseJ.distributionId=distributionId;
-		salseJ.businessOpportunityNum=businessOpportunityNum;
+		salseJ.businessOpportunityNum=salesbusinesnum;
 		$ajax('post','businessOpportunity/distributionBoToSale',salseJ,function succF(jo){
-			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.salesuserName .username').html($('.salesPeople').find('td[userid='+distributionId+']').html());
+			
+			if(distributionId==undefined){
+				$('.opptNumb[numb="'+salesbusinesnum+'"]').parent().find('.salesuserName .username').html('');
+				$('.opptNumb[numb="'+salesbusinesnum+'"]').parent().find('.salesuserName').attr('userid','');
+			}else{
+				$('.opptNumb[numb="'+salesbusinesnum+'"]').parent().find('.salesuserName .username').html($('.salesPeople').find('td[userid='+distributionId+']').html());
+				$('.opptNumb[numb="'+salesbusinesnum+'"]').parent().find('.salesuserName').attr('userid',distributionId);
+			}
+			
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
