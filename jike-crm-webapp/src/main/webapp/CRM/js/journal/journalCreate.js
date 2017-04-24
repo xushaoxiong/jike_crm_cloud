@@ -22,7 +22,10 @@ $(function(){
 		WdatePicker();
 		
 	})
-	
+	//返回上一级
+	$('.goBack').click(function(){
+		$('.R-wap').load('journal/journalList.html');
+	})
 	
 	//商机名称弹框状态如果事项类型未选择商机名称不能点击
 	if($('#eventType').val()==''){
