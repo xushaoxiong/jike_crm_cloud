@@ -180,4 +180,9 @@
 	and r.role_id = #{roleId,jdbcType=BIGINT}
 	and bl.patent_id = #{eveid,jdbcType=INTEGER}
   </select>
+  <select id="selectDistinctAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_event_label
+  </select>
 </mapper>

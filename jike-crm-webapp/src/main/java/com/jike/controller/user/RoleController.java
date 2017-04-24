@@ -119,6 +119,14 @@ public class RoleController extends BaseController{
 		
 		return json.toString();
 	} 
+	/**
+	 * 查询角色创建日志标签
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月24日下午4:49:03
+	 */
 	@RequestMapping(value = "/queryRoleEventLabel", method = {RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String queryRoleEventLabel(HttpServletRequest request, HttpSession session) {
 		JSONObject result = super.checkLogin(session);
@@ -129,6 +137,25 @@ public class RoleController extends BaseController{
 		json.put("userId", session.getAttribute(userId));
 		json.put("roleId", session.getAttribute(roleId));
 		return roleService.queryRoleEventLabel(json).toJSONString();
+	} 
+	/**
+	 * 查询角色查询日志标签
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月24日下午4:49:46
+	 */
+	@RequestMapping(value = "/queryRoleQureryEventLabel", method = {RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody String queryRoleEventQureryLabel(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		JSONObject json =new JSONObject();
+		json.put("userId", session.getAttribute(userId));
+		json.put("roleId", session.getAttribute(roleId));
+		return roleService.queryRoleQureryEventLabel(json).toJSONString();
 	} 
 	
 	

@@ -48,4 +48,6 @@ public interface BoEventLabelMapper {
 	List<BoEventLabel> selectByRoleId(Long roleId);
 	
 	List<BoEventLabel> selectByRoleIdAndParentId(@Param("roleId")Long roleId,@Param("eveid")Integer parentId);
+
+	List<BoEventLabel> selectDistinctAll();
 }

@@ -2,6 +2,7 @@ package com.jike.user;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.user.model.Role;
@@ -77,4 +78,13 @@ public interface RoleService {
 	 * @createtime 2017年4月21日上午10:27:59
 	 */
 	public List<String> queryRoleEvenTypeList(Long roleId);
+
+	/**
+	 * 查询角色查询日志标签
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月24日下午4:50:33
+	 */
+	JSONObject queryRoleQureryEventLabel(JSONObject json);
 }

@@ -174,4 +174,40 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return list;
 	}
+
+	public JSONObject queryRoleQureryEventLabel(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = json.getLong("roleId");
+		List<BoEventLabel> roleEventList = null;
+		if(roleId==2L){
+			roleEventList = boEventLabelMapper.selectDistinctAll();
+		}else{
+			roleEventList = boEventLabelMapper.selectByRoleId(roleId);
+		}
+		JSONArray evenList = new JSONArray();
+		List<Integer> list = new ArrayList<Integer>();
+		for (BoEventLabel boEventLabel : roleEventList) {
+			if(list.contains(boEventLabel.getEveid())){
+				continue;
+			}
+			list.add(boEventLabel.getEveid());	
+			JSONObject eventJson = new JSONObject();
+			eventJson.put("eveid", boEventLabel.getEveid());
+			eventJson.put("evename", boEventLabel.getEvename());
+			List<BoEventLabel> level2 = boEventLabelMapper.selectByRoleIdAndParentId(roleId, boEventLabel.getEveid());
+			JSONArray specIList = new JSONArray();
+			for (BoEventLabel boEventLabel2 : level2) {
+				JSONObject specJson = new JSONObject();
+				specJson.put("spcid", boEventLabel2.getEveid());
+				specJson.put("spcitem", boEventLabel2.getEvename());
+				specIList.add(specJson);
+			}
+			eventJson.put("specIList", specIList);
+			evenList.add(eventJson);
+		}
+		resultJson.put("evenList", evenList);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 }
