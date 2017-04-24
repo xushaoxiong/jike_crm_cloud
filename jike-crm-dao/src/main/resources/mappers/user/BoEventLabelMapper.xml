@@ -182,7 +182,8 @@
   </select>
   <select id="selectDistinctAll" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    distinct 
+    eveid, evename
     from bo_event_label
   </select>
 </mapper>
