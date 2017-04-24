@@ -38,6 +38,7 @@ import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.dao.CooperationDetailsMapper;
 import com.jike.business.dao.DailyEventsMapper;
 import com.jike.business.dao.PartnerAgentAreaMapper;
+import com.jike.business.dao.ServiceDailyEventMapper;
 import com.jike.business.model.BoBidding;
 import com.jike.business.model.BoBiddingResult;
 import com.jike.business.model.BoCustomerService;
@@ -57,6 +58,7 @@ import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperationDetails;
 import com.jike.business.model.DailyEvents;
 import com.jike.business.model.PartnerAgentArea;
+import com.jike.business.model.ServiceDailyEvent;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.RoleService;
@@ -111,6 +113,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoPaymentMapper boPaymentMapper;
 	@Autowired
 	private PartnerAgentAreaMapper agentAreaMapper;
+	@Autowired
+	private ServiceDailyEventMapper serviceDailyEventMapper;
 	
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
@@ -950,6 +954,57 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		return resultJson;
 	}
 	
+	@Transactional
+	public JSONObject addServiceDailyEvent(JSONObject jsonData) {
+		JSONObject resultJson = new JSONObject();
+		if (jsonData != null && !jsonData.isEmpty()) {
+			Date nowDate = new Date();
+			JSONObject logData = jsonData.getJSONObject("logData");
+			//保存日志
+			Long logId = this.createLogData(jsonData, nowDate, logData, null);
+			if(logId.equals(-1L)){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "无权限创建该事项类型日志");
+				return resultJson;
+			}
+			//保存费用
+			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
+			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
+			JSONObject serviceDailyEventsJson = jsonData.getJSONObject("serviceDailyEvents");
+			Integer documentWriteModify = serviceDailyEventsJson.getInteger("documentWriteModify");
+			Integer pptDemonstratedCount = serviceDailyEventsJson.getInteger("pptDemonstratedCount");
+			Integer volumeDemonstratedCount = serviceDailyEventsJson.getInteger("volumeDemonstratedCount");
+			Integer markingTrainCount = serviceDailyEventsJson.getInteger("markingTrainCount");
+			Integer introductionLeanCount = serviceDailyEventsJson.getInteger("introductionLeanCount");
+			Integer studentParentIntroductionCount = serviceDailyEventsJson.getInteger("studentParentIntroductionCount");
+			Integer examinationTrainCount = serviceDailyEventsJson.getInteger("examinationTrainCount");
+			Integer sopProcessExplanationCount = serviceDailyEventsJson.getInteger("sopProcessExplanationCount");
+			Integer productsIntroductionCount = serviceDailyEventsJson.getInteger("productsIntroductionCount");
+			Integer operationGuidanceCount = serviceDailyEventsJson.getInteger("operationGuidanceCount");
+			Integer testCoachCount = serviceDailyEventsJson.getInteger("testCoachCount");
+			
+			ServiceDailyEvent dailyEvent = new ServiceDailyEvent();
+			dailyEvent.setLogId(logId);
+			dailyEvent.setDocumentWriteModify(documentWriteModify);
+			dailyEvent.setPptDemonstratedCount(pptDemonstratedCount);
+			dailyEvent.setVolumeDemonstratedCount(volumeDemonstratedCount);
+			dailyEvent.setMarkingTrainCount(markingTrainCount);
+			dailyEvent.setIntroductionLeanCount(introductionLeanCount);
+			dailyEvent.setStudentParentIntroductionCount(studentParentIntroductionCount);
+			dailyEvent.setExaminationTrainCount(examinationTrainCount);
+			dailyEvent.setSopProcessExplanationCount(sopProcessExplanationCount);
+			dailyEvent.setProductsIntroductionCount(productsIntroductionCount);
+			dailyEvent.setOperationGuidanceCount(operationGuidanceCount);
+			dailyEvent.setTestCoachCount(testCoachCount);
+			dailyEvent.setCreateTime(nowDate);
+			dailyEvent.setCreateBy(jsonData.getLong("userId"));
+			serviceDailyEventMapper.insert(dailyEvent);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	
 	
 	@Transactional
 	public JSONObject addBOLogBoSupport(JSONObject jsonData) {
@@ -1450,8 +1505,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
-			DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
-			json = JSONObject.toJSONString(dailyEvents,SerializerFeature.WriteNullStringAsEmpty);
+			if("日常".equals(businessOpportunityLog.getSpecificEvent())){
+				ServiceDailyEvent serviceDailyEvent = serviceDailyEventMapper.selectByLogId(logId);
+				json = JSONObject.toJSONString(serviceDailyEvent,SerializerFeature.WriteNullStringAsEmpty);
+			}else{
+				DailyEvents dailyEvents = dailyEventsMapper.selectDailyEventsByLogId(logId);
+				json = JSONObject.toJSONString(dailyEvents,SerializerFeature.WriteNullStringAsEmpty);
+			}
+			
 		}else if("回款".equals(businessOpportunityLog.getEventType())){
 			BoPayment boPayment = boPaymentMapper.selectBoPaymentByLogId(logId);
 			json = JSONObject.toJSONString(boPayment,SerializerFeature.WriteNullStringAsEmpty);
@@ -1661,14 +1722,25 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boSupport.setUpdateTime(nowDate);
 			boSupportMapper.updateByPrimaryKeySelective(boSupport);
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
-			DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
-			DailyEvents dailyEventsOld = dailyEventsMapper.selectDailyEventsByLogId(logId);
-			dailyEvents.setDailyEventsId(dailyEventsOld.getDailyEventsId());
-			dailyEvents.setCreateTime(dailyEvents.getCreateTime());
-			dailyEvents.setCreateBy(dailyEvents.getCreateBy());
-			dailyEvents.setUpdateBy(userId);
-			dailyEvents.setUpdateTime(nowDate);
-			dailyEventsMapper.updateByPrimaryKey(dailyEvents);
+			if("日常".equals(businessOpportunityLog.getSpecificEvent())){
+				ServiceDailyEvent serviceDailyEvent =  commonJson.toJavaObject(ServiceDailyEvent.class);
+				ServiceDailyEvent serviceDailyEventOld = serviceDailyEventMapper.selectByLogId(logId);
+				serviceDailyEvent.setSeviceDailyEventId(serviceDailyEventOld.getSeviceDailyEventId());
+				serviceDailyEvent.setCreateTime(serviceDailyEventOld.getCreateTime());
+				serviceDailyEvent.setCreateBy(serviceDailyEventOld.getCreateBy());
+				serviceDailyEvent.setUpdateBy(userId);
+				serviceDailyEvent.setUpdateTime(nowDate);
+				serviceDailyEventMapper.updateByPrimaryKey(serviceDailyEvent);
+			}else{
+				DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
+				DailyEvents dailyEventsOld = dailyEventsMapper.selectDailyEventsByLogId(logId);
+				dailyEvents.setDailyEventsId(dailyEventsOld.getDailyEventsId());
+				dailyEvents.setCreateTime(dailyEvents.getCreateTime());
+				dailyEvents.setCreateBy(dailyEvents.getCreateBy());
+				dailyEvents.setUpdateBy(userId);
+				dailyEvents.setUpdateTime(nowDate);
+				dailyEventsMapper.updateByPrimaryKey(dailyEvents);
+			}
 		}else if("回款".equals(businessOpportunityLog.getEventType())){
 			BoPayment boPayment =commonJson.toJavaObject(BoPayment.class);
 			BoPayment boPaymentOld = boPaymentMapper.selectBoPaymentByLogId(logId);

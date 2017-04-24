@@ -207,5 +207,13 @@ public interface BusinessOpportunityLogService {
 	 * @createtime 2017年4月18日下午6:17:59
 	 */
 	public Set<Long> queryIsPlaningBusiness(Long userId, Integer inPlaning);
+	/**
+	 * 添加服务日常
+	 * @param jsonData
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月24日上午10:36:05
+	 */
+	public JSONObject addServiceDailyEvent(JSONObject jsonData);
 
 }
