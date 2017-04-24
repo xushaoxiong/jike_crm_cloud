@@ -45,8 +45,12 @@
 			}else{
 				Html+='<td opptype="1">合作伙伴</td>';
 			}
+			if((item.businessOpportunityName).length>10){
+				Html+='<td class="opptNumb cursorm" data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';	
+			}else{
+				Html+='<td class="opptNumb cursorm" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';	
+			}
 			
-			Html+='<td class="opptNumb cursorm" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';
 			Html+='<td class="checkBusiness cursor">'+item.businessOpportunityNum+'</td>';
 			if(item.distributeUserName==undefined){
 				Html+='<td class="salesuserName" userid=""><span class="username"></span>&nbsp;&nbsp;';
@@ -148,12 +152,25 @@
 	function clickPage(PJson){
 		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
 		list(jo.businessOpportunityList,jo.assignSale);
+		businesnamestrb();
 		cartePage(jo);
 	},function errF(){
 		pub.Alt(jo.message,false);
 	})
 	}clickPage(paginatorJ)
 	
+	//商机名称字数限制
+	function businesnamestrb(){
+		for (var i=0;i<$('.opptNumb').length;i++) {
+			var businessplit=$('.opptNumb a').eq(i).html().substring(0,11);
+			if($('.opptNumb a').eq(i).html().length>10){
+				$('.opptNumb a').eq(i).html(businessplit+'...');
+				businesnameall=businessplit+'...';
+			}
+			
+		}
+		
+	}
 	
 	//搜索
 	$('.searchBusiness').click(function(){

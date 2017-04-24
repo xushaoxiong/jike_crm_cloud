@@ -12,6 +12,7 @@ $(function(){
 		url:ajaxUrl+"permission/queryLoginPermission",
 		dataType:'json',
 		success:function(jo){
+			server();
 			if(jo.state=='unLogin'){
 				pub.Alt(jo.message,true,function(){
 					$('.confirm').click(function(){
@@ -49,7 +50,7 @@ $(function(){
 			alert('服务器忙！')
 		}
 	});
-
+	
 	$('.L-list').on('click','.navTitle',function(){
 		$(this).next().slideToggle()
 	});
@@ -78,7 +79,9 @@ $(function(){
 			$('.breadcrumb').on('click','.curBack',function(){
 				breadnav(menuname,thisHtml);
 				$('#addJournal').show();
-				$('.FillInfo').hide();
+				$('.FillInfo').hide(function(){
+					begineveid=$('#eventType').find('option:selected').attr('eveid');
+				});
 			})	
 		}
 	
@@ -99,5 +102,23 @@ $(function(){
 			}
 		});
 	})
+	
+	
+	//判断登录人是否是服务人员
+	function server(){
+		var userJ={};
+		$ajax('post','user/ifServiceRole',userJ,function succF(jo){
+			sessionStorage.server=jo.ifService;
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 })

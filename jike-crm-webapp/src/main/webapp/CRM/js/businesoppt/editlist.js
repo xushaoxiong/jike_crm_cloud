@@ -10,7 +10,10 @@
 		    dist: jo.addressCounty,
 		    nodata: "none"    
 	
-		})
+		});
+		if(jo.addressCity!=undefined){
+			$('.citywap').html('<span class="form-control" disabled>'+jo.addressCity+'</span>')
+		}
 		$('.businessName').val(jo.businessOpportunityName);
 		$('.addrDetial').val(jo.addressDetail);
 		if(jo.businessOpportunityType==0){
@@ -33,7 +36,7 @@
 		var businessName=$('.businessName').val();
 		var Optype=$('.opptName').find('option:selected').attr('Optype');
 		var prov=$('.prov').find('option:selected').val();
-		var city=$('.city').find('option:selected').val();
+		var city=$('.citywap').find('span').html();
 		var dist=$('.dist').find('option:selected').val();
 		var detailadrs=$('.addrDetial').val();
 		var businessOpportunityNum=window.localStorage.getItem('opptNumb');

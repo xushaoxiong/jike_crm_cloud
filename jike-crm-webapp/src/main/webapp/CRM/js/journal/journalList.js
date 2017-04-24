@@ -25,6 +25,7 @@ $('.delJournal').click(function(){
 	function jourItem(datalist){
 		var html="";
 		$.each(datalist, function(i,item) {
+			
 			$('.showNumb').html(datalist.length)
 			html+='<tr>';
 				html+='<td>'+(i+1)+'</td>';
@@ -32,7 +33,12 @@ $('.delJournal').click(function(){
 				if(item.businessOpportunityName==undefined){
 					html+='<td>日常商机</td>';
 				}else{
-					html+='<td class="bussname" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
+					if((item.businessOpportunityName).length>10){
+						html+='<td class="bussname cursorm" data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
+					}else{
+						html+='<td class="bussname cursorm" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
+					}
+					
 				}
 				html+='<td>'+item.roleName+'</td>';
 				html+='<td>'+item.createUserName+'</td>';
@@ -71,8 +77,9 @@ $('.delJournal').click(function(){
 	
 	function clickPage(PJson){
 		$ajax("post","businessOpportunityLog/queryBusinessOpportunityLogByParams",PJson,function succF(jo){
-			jourItem(jo.businessOpportunityLogList)
+			jourItem(jo.businessOpportunityLogList);
 			cartePage(jo);
+			businesnamestrb();
 	},function errF(jo){
 		pub.Alt(jo.message,false);
 	})
@@ -96,7 +103,20 @@ $('.delJournal').click(function(){
 		paginatorJ.start=1;
 		clickPage(paginatorJ);
 	})
-//
+//商机名称字数限制
+function businesnamestrb(){
+	for (var i=0;i<$('.bussname').length;i++) {
+		var businessplit=$('.bussname').eq(i).html().substring(0,11);
+		if($('.bussname').eq(i).html().length>10){
+			$('.bussname').eq(i).html(businessplit+'...');
+			businesnameall=businessplit+'...';
+		}
+		
+	}
+	
+}
+
+
 //	//操作设置
 
 	//编辑
@@ -251,6 +271,17 @@ $('.delJournal').click(function(){
 		}
 		//日常
 		if($('.eventType').val()=='日常事项'){
+			if(sessionStorage.server=='true'){
+				$.getScript("js/editjournalserver/editdaily.js",function(){
+					$('.editInfo').html(dailytHtml());
+					dailydata(jo.commonJson);
+				})
+			}else{
+				$.getScript("js/editjournal/editrichangInfo.js",function(){
+					$('.editInfo').html(dailytHtml());
+					dailydata(jo.commonJson);
+				})
+			}
 			$.getScript("js/editjournal/editrichangInfo.js",function(){
 				$('.editInfo').html(dailytHtml());
 				dailydata(jo.commonJson);
@@ -271,8 +302,13 @@ $('.delJournal').click(function(){
 		if($('.eventType').val()=='支持'){
 			$('.addTime,.minusTime').hide();
 			$('.timeVal').prop('disabled',true);
-			if(opptypeid==1){
+			if(opptypeid==1&&sessionStorage.server=='false'){
 				$.getScript("js/editjournalpartner/editPzhichiInfo.js",function(){
+					$('.editInfo').html(supportHtml());
+					supportdata(jo.commonJson);
+				})
+			}else if(sessionStorage.server=='true'){
+				$.getScript("js/editjournalserver/editsersupport.js",function(){
 					$('.editInfo').html(supportHtml());
 					supportdata(jo.commonJson);
 				})
@@ -353,4 +389,13 @@ $('.reset').click(function(){
 	$('#indate').val('');
 	$('#enddate').val('');
 	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
+})
+
+//商机名称字数限制鼠标浮上显示全部内容
+
+//var businesnamesp='';
+$(document).load(function(){
+	for (var i=0;i<$('.bussname').length;i++) {
+		console.log($('.bussname').eq(i).html())
+	}	
 })
