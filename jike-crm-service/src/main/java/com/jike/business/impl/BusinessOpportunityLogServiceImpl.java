@@ -1943,10 +1943,18 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			resultJson.put("decisionMakerTitle", boInformationCollect.getDecisionMakerTitle());
 			resultJson.put("decisionMakerTitleDetail", boInformationCollect.getDecisionMakerTitleDetail());
 			resultJson.put("decisionMakerPhone", boInformationCollect.getDecisionMakerPhone());
+			resultJson.put("decisionMakerLandline", boInformationCollect.getDecisionMakerLandline());
+			resultJson.put("decisionMakerEmail", boInformationCollect.getDecisionMakerEmail());
+			resultJson.put("decisionMakerQq", boInformationCollect.getDecisionMakerQq());
+			resultJson.put("decisionMakerWechat", boInformationCollect.getDecisionMakerWechat());
 			resultJson.put("contactName", boInformationCollect.getContactName());
 			resultJson.put("contactTitle", boInformationCollect.getContactTitle());
 			resultJson.put("contactTitleDetail", boInformationCollect.getContactTitleDetail());
 			resultJson.put("contactPhone", boInformationCollect.getContactPhone());
+			resultJson.put("contactLandline", boInformationCollect.getContactLandline());
+			resultJson.put("contactEmail", boInformationCollect.getContactEmail());
+			resultJson.put("contactQq", boInformationCollect.getContactQq());
+			resultJson.put("contactWechat", boInformationCollect.getContactWechat());
 			resultJson.put("mainScope", boInformationCollect.getMainScope());
 		}
 		return resultJson;
