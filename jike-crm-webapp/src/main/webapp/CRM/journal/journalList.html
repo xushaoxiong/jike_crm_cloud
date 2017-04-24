@@ -11,6 +11,9 @@
 		.list-journal td{
 			line-height: 35px !important;
 		}
+		.search-main label{
+			min-width: 0 !important;
+		}
 	</style>
 	<body>
 		<div class="container-fluid">
@@ -19,35 +22,48 @@
 				<button class="btn btn-primary newlist">新建日志+</button>
 			</div>
 			<p class="text-danger text-center alertTitle"></p>
-			<div class="search-main form-inline row">
-				<div class="form-group">
-					<label>商机名称&nbsp;</label>
-					<input type="text" class="form-control OpportunityName" placeholder="名称"/>
+			<div class="search-main row">
+				<div class="col-sm-3">
+					<label class="pull-left">商机名称&nbsp;</label>
+					<div class="col-sm-5"><input type="text" class="form-control OpportunityName" placeholder="名称"/></div>
 				</div>
-				<div class="form-group">
+				<div class="col-sm-3">
 					
-	            	<label>日期&nbsp;</label>
-        			<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
-        				<span style="padding: 9px;">至</span>
-    				<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
+	            	<label class="pull-left">日期&nbsp;</label>
+	            	<div class="col-sm-4">
+	            		<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+	            	</div>
+        			
+        			<span style="padding: 9px;float: left;">至</span>
+        			<div class="col-sm-4">
+        				<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+        			</div>
+    				
 	            </div>
-	            <div class="form-group">
-	            	<label>事项类型&nbsp;</label>
-	            	<select class="form-control OpportunityProcess">
-	            		<option proid="1">所有</option>
-	            		<option>信息收集</option>
-						<option>制定拜访计划</option>
-						<option>拜访客户</option>
-						<option>商业谈判</option>
-						<option>试用中</option>
-						<option>招投标中</option>
-						<option>签约</option>
-						<!--<option>采购</option>-->
-						<option>日常事项</option>
-						<option>售后</option>
-						<option>支持</option>
-						<option>培训</option>
-	            	</select>
+	            <div class="col-sm-3">
+	            	<label class="pull-left">事项类型&nbsp;</label>
+	            	<div class="col-sm-6">
+	            		<select class="form-control OpportunityProcess">
+		            		<option proid="1">所有</option>
+		            		<!--<option>信息收集</option>
+							<option>制定拜访计划</option>
+							<option>拜访客户</option>
+							<option>商业谈判</option>
+							<option>试用中</option>
+							<option>招投标中</option>
+							<option>签约</option>
+							<option>日常事项</option>
+							<option>售后</option>
+							<option>支持</option>
+							<option>培训</option>-->
+	            		</select>
+	            	</div>
+	            </div>
+	            <div class="col-sm-3">
+	            	<label class="pull-left">日志创建者</label>
+	            	<div class="col-sm-6">
+	            		<input type="text" class="form-control creatName">
+	            	</div>
 	            </div>
 			</div>
 			<div class="row text-center" style="margin: 15px 0;">

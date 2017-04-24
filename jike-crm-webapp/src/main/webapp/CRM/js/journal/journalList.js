@@ -92,6 +92,7 @@ $('.delJournal').click(function(){
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());
 		var OpportunityProcess=$('.OpportunityProcess').find('option:selected').val();
+		var userName=$.trim($('.creatName').val());
 		if(OpportunityProcess=="所有"){
 			paginatorJ.eventType="";
 		}else{
@@ -100,6 +101,7 @@ $('.delJournal').click(function(){
 		paginatorJ.businessOpportunityName=OpportunityName;
 		paginatorJ.startTime=startTime;
 		paginatorJ.endTime=endTime;
+		paginatorJ.userName=userName;
 		paginatorJ.start=1;
 		clickPage(paginatorJ);
 	})
@@ -115,6 +117,15 @@ function businesnamestrb(){
 	}
 	
 }
+//获取商机类型搜索
+//eventJson为pub/eventTypeList返回数据内容
+//var eventlist=eventJson;
+$.each(eventJson.evenList, function(i,item) {
+	var eventhtml="";
+	eventhtml+='<option>'+item.evename+'</option>';
+	$('.OpportunityProcess').append(eventhtml);
+});
+
 
 
 //	//操作设置
