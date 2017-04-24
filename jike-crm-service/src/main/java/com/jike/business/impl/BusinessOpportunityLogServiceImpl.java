@@ -1693,19 +1693,11 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					}
 			}
 			}
-		}else if("采购".equals(businessOpportunityLog.getSpecificEvent())){
-			BoPurchase boPurchase = commonJson.toJavaObject(BoPurchase.class);
-			BoPurchase boPurchaseOld = boPurchaseMapper.selectBoPurchaseByLogId(logId);
-			boPurchase.setPurchaseId(boPurchaseOld.getPurchaseId());
-			boPurchase.setCreateBy(boPurchaseOld.getCreateBy());
-			boPurchase.setCreateTime(boPurchaseOld.getCreateTime());
-			boPurchase.setUpdateBy(userId);
-			boPurchase.setUpdateTime(nowDate);
-			boPurchaseMapper.updateByPrimaryKeySelective(boPurchase);
 		}else if("售后".equals(businessOpportunityLog.getEventType())){
 			BoCustomerService boCustomerService = commonJson.toJavaObject(BoCustomerService.class);
 			BoCustomerService boCustomerServiceOld = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
 			boCustomerService.setLogId(logId);
+			boCustomerService.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
 			boCustomerService.setBoCustomerService(boCustomerServiceOld.getBoCustomerService());
 			boCustomerService.setCreateBy(boCustomerServiceOld.getCreateBy());
 			boCustomerService.setCreateTime(boCustomerServiceOld.getCreateTime());
@@ -1717,6 +1709,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoTrain boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
 			boTrain.setBoTrainId(boTrainOld.getBoTrainId());
 			boTrain.setLogId(logId);
+			boTrain.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
 			boTrain.setCreateBy(boTrainOld.getCreateBy());
 			boTrain.setCreateTime(boTrainOld.getCreateTime());
 			boTrain.setUpdateBy(userId);
@@ -1727,6 +1720,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoSupport boSupportOld = boSupportMapper.selectBoSupportByLogId(logId);
 			boSupport.setBoSupportId(boSupportOld.getBoSupportId());
 			boSupport.setLogId(logId);
+			boSupport.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
 			boSupport.setCreateBy(boSupportOld.getCreateBy());
 			boSupport.setCreateTime(boSupportOld.getCreateTime());
 			boSupport.setUpdateBy(userId);
@@ -1759,6 +1753,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoPayment boPaymentOld = boPaymentMapper.selectBoPaymentByLogId(logId);
 			boPayment.setPaymentId(boPaymentOld.getPaymentId());
 			boPayment.setLogId(logId);
+			boPayment.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
 			boPayment.setCreateTime(boPaymentOld.getCreateTime());
 			boPayment.setCreateBy(boPaymentOld.getCreateBy());
 			boPayment.setUpdateBy(userId);
