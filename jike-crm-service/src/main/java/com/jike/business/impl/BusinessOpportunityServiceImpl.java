@@ -209,9 +209,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					businessOpportunityJson.put("distributeUserId", distributeUser.getUserId());
 					if(distributeUserId.equals(queryJson.getLong("userId"))){
 						businessOpportunityJson.put("assignService", true);//指派服务权限
+						businessOpportunityJson.put("closeAuthority", true);//关闭商机权限
 					}else{
 						businessOpportunityJson.put("assignService", false);//指派服务权限
+						businessOpportunityJson.put("closeAuthority", false);//关闭商机权限
 					}
+				}else{
+					businessOpportunityJson.put("closeAuthority", false);//关闭商机权限
 				}
 				Long businessOpportunityId = (Long) businessOpportunityMap.get("business_opportunity_id");
 				businessOpportunityJson.put("serviceList", queryServiceByBoId(businessOpportunityId));
@@ -341,11 +345,16 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			saleBusinessOpportunity.setCreateTime(nowdate);
 			saleBusinessOpportunityMapper.insert(saleBusinessOpportunity);
 		}else{
-			saleBusinessOpportunity.setDistributionTime(nowdate);//分配时间
-			saleBusinessOpportunity.setUserId(json.getLong("distributionId"));
-			saleBusinessOpportunity.setUpdateBy(json.getLong("userId"));
-			saleBusinessOpportunity.setUpdateTime(nowdate);
-			saleBusinessOpportunityMapper.updateByPrimaryKeySelective(saleBusinessOpportunity);
+			if(json.getLong("distributionId")==null){
+				saleBusinessOpportunityMapper.deleteByPrimaryKey(saleBusinessOpportunity.getId());
+			}else{
+				saleBusinessOpportunity.setDistributionTime(nowdate);//分配时间
+				saleBusinessOpportunity.setUserId(json.getLong("distributionId"));
+				saleBusinessOpportunity.setUpdateBy(json.getLong("userId"));
+				saleBusinessOpportunity.setUpdateTime(nowdate);
+				saleBusinessOpportunityMapper.updateByPrimaryKeySelective(saleBusinessOpportunity);
+			}
+			
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "操作成功");
