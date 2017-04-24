@@ -971,7 +971,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONObject serviceDailyEventsJson = jsonData.getJSONObject("serviceDailyEvents");
-			Integer documentWriteModify = serviceDailyEventsJson.getInteger("documentWriteModify");
+			BigDecimal documentWriteModify = serviceDailyEventsJson.getBigDecimal("documentWriteModify");
 			Integer pptDemonstratedCount = serviceDailyEventsJson.getInteger("pptDemonstratedCount");
 			Integer volumeDemonstratedCount = serviceDailyEventsJson.getInteger("volumeDemonstratedCount");
 			Integer markingTrainCount = serviceDailyEventsJson.getInteger("markingTrainCount");
@@ -1697,35 +1697,47 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoPurchase boPurchase = commonJson.toJavaObject(BoPurchase.class);
 			BoPurchase boPurchaseOld = boPurchaseMapper.selectBoPurchaseByLogId(logId);
 			boPurchase.setPurchaseId(boPurchaseOld.getPurchaseId());
+			boPurchase.setCreateBy(boPurchaseOld.getCreateBy());
+			boPurchase.setCreateTime(boPurchaseOld.getCreateTime());
 			boPurchase.setUpdateBy(userId);
 			boPurchase.setUpdateTime(nowDate);
 			boPurchaseMapper.updateByPrimaryKeySelective(boPurchase);
 		}else if("售后".equals(businessOpportunityLog.getEventType())){
 			BoCustomerService boCustomerService = commonJson.toJavaObject(BoCustomerService.class);
 			BoCustomerService boCustomerServiceOld = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
+			boCustomerService.setLogId(logId);
 			boCustomerService.setBoCustomerService(boCustomerServiceOld.getBoCustomerService());
+			boCustomerService.setCreateBy(boCustomerServiceOld.getCreateBy());
+			boCustomerService.setCreateTime(boCustomerServiceOld.getCreateTime());
 			boCustomerService.setUpdateBy(userId);
 			boCustomerService.setUpdateTime(nowDate);
-			boCustomerServiceMapper.updateByPrimaryKeySelective(boCustomerService);
+			boCustomerServiceMapper.updateByPrimaryKey(boCustomerService);
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
 			BoTrain boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
 			boTrain.setBoTrainId(boTrainOld.getBoTrainId());
+			boTrain.setLogId(logId);
+			boTrain.setCreateBy(boTrainOld.getCreateBy());
+			boTrain.setCreateTime(boTrainOld.getCreateTime());
 			boTrain.setUpdateBy(userId);
 			boTrain.setUpdateTime(nowDate);
-			boTrainMapper.updateByPrimaryKeySelective(boTrain);
+			boTrainMapper.updateByPrimaryKey(boTrain);
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
 			BoSupport boSupportOld = boSupportMapper.selectBoSupportByLogId(logId);
 			boSupport.setBoSupportId(boSupportOld.getBoSupportId());
+			boSupport.setLogId(logId);
+			boSupport.setCreateBy(boSupportOld.getCreateBy());
+			boSupport.setCreateTime(boSupportOld.getCreateTime());
 			boSupport.setUpdateBy(userId);
 			boSupport.setUpdateTime(nowDate);
-			boSupportMapper.updateByPrimaryKeySelective(boSupport);
+			boSupportMapper.updateByPrimaryKey(boSupport);
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
 			if("日常".equals(businessOpportunityLog.getSpecificEvent())){
 				ServiceDailyEvent serviceDailyEvent =  commonJson.toJavaObject(ServiceDailyEvent.class);
 				ServiceDailyEvent serviceDailyEventOld = serviceDailyEventMapper.selectByLogId(logId);
 				serviceDailyEvent.setSeviceDailyEventId(serviceDailyEventOld.getSeviceDailyEventId());
+				serviceDailyEvent.setLogId(logId);
 				serviceDailyEvent.setCreateTime(serviceDailyEventOld.getCreateTime());
 				serviceDailyEvent.setCreateBy(serviceDailyEventOld.getCreateBy());
 				serviceDailyEvent.setUpdateBy(userId);
@@ -1735,6 +1747,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
 				DailyEvents dailyEventsOld = dailyEventsMapper.selectDailyEventsByLogId(logId);
 				dailyEvents.setDailyEventsId(dailyEventsOld.getDailyEventsId());
+				dailyEvents.setLogId(logId);
 				dailyEvents.setCreateTime(dailyEvents.getCreateTime());
 				dailyEvents.setCreateBy(dailyEvents.getCreateBy());
 				dailyEvents.setUpdateBy(userId);
@@ -1745,6 +1758,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoPayment boPayment =commonJson.toJavaObject(BoPayment.class);
 			BoPayment boPaymentOld = boPaymentMapper.selectBoPaymentByLogId(logId);
 			boPayment.setPaymentId(boPaymentOld.getPaymentId());
+			boPayment.setLogId(logId);
 			boPayment.setCreateTime(boPaymentOld.getCreateTime());
 			boPayment.setCreateBy(boPaymentOld.getCreateBy());
 			boPayment.setUpdateBy(userId);
