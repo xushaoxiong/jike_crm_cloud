@@ -182,8 +182,8 @@
   </select>
   <select id="selectDistinctAll" resultMap="BaseResultMap">
     select 
-    distinct 
-    eveid, evename
+    <include refid="Base_Column_List" />
     from bo_event_label
+    where patent_id is null
   </select>
 </mapper>
