@@ -283,7 +283,8 @@ public class UserController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		if(session.getAttribute(roleId).equals(4L)){
+		Long roleID= Long.parseLong(session.getAttribute(roleId).toString());
+		if(roleID.equals(4L)){
 			result.put("ifService", true);
 			result.put("state", "success");
 			result.put("message", "服务人员");
