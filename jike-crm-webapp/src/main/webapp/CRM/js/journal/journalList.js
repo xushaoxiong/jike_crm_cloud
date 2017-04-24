@@ -135,7 +135,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
 		var businestype=$(this).parents('tr').find('.bussname').attr('busintype');
-		console.log(businestype)
+		
 		var netht="编辑日志";
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){

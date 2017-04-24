@@ -3,11 +3,16 @@ function previewdata(pdata){
 	$('.busName').html(pdata.businessOpportunityName);
 	$('.busaddr').html(pdata.addressProvince+''+pdata.addressCity+''+pdata.addressCounty+''+pdata.addressDetail);
 	$('.sclevel').html(pdata.schoolLevel);
-	if(pdata.schoolProperty==0){
-		$('.sclprot').html('公立');
+	if(pdata.schoolProperty==undefined){
+		$('.sclprot').html('');
 	}else{
-		$('.sclprot').html('私立');
+		if(pdata.schoolProperty==0){
+			$('.sclprot').html('公立');
+		}else{
+			$('.sclprot').html('私立');
+		}
 	}
+	
 	$('.scltype').html(pdata.schoolType);
 	$('.deciName').html(pdata.decisionMakerName);
 	if(pdata.decisionMakerTitle=='其它'){

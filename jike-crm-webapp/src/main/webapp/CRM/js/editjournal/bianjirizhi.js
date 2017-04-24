@@ -1,20 +1,26 @@
 
 	//工时添加按钮
-	var timeN=1
 	$('.addTime').click(function(){
-		timeN++;
-		$('.timeVal').val(timeN*0.5);
+		var timeN=Number($('.timeVal').val());
+		timeN+=0.5;
+		$('.timeVal').val(timeN);
 	})
 	$('.minusTime').click(function(){
-		timeN--;
-		$('.timeVal').val(timeN*0.5);
+		var timeN=Number($('.timeVal').val());
+		timeN-=0.5;
+		$('.timeVal').val(timeN);
 		if(timeN<0){
 			$('.timeVal').val('0');
 			timeN=0;
 		}
 	})
+
 	$('.timeVal').blur(function(){
 		worktimeNum($(this).val())
+	})
+	//返回上一级
+	$('.goBack').click(function(){
+		$('.R-wap').load('journal/journalList.html');
 	})
 	function worktimeNum(obj){
 	console.log((obj.value)*10%5)
