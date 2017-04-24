@@ -187,7 +187,7 @@ public class RoleServiceImpl implements RoleService {
 		JSONArray evenList = new JSONArray();
 		List<Integer> list = new ArrayList<Integer>();
 		for (BoEventLabel boEventLabel : roleEventList) {
-			if(list.contains(boEventLabel.getEveid())){
+			if(list.contains(boEventLabel.getEvename())){
 				continue;
 			}
 			list.add(boEventLabel.getEveid());	

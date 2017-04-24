@@ -1297,7 +1297,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		List<Long> userIds = new ArrayList<Long>();
 		if (roleId == 2) {// 商务查看所有角色
 			String userName = queryJson.getString("userName");
-			if(userName!=null){
+			if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 				userName = "%"+userName+"%";
 				List<User> userList = userService.querySaleAndServiceByUserName(userName);
 				if(!userList.isEmpty()){
