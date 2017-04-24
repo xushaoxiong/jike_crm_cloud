@@ -269,5 +269,31 @@ public class UserController extends BaseController{
 		return result.toString();
 	}
 	
+	/**
+	 * 判断登录用户是否是服务人员
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月21日下午7:08:26
+	 */
+	@RequestMapping(value = "/ifServiceRole", method = {RequestMethod.POST})
+	public @ResponseBody String ifServiceRole(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		if(session.getAttribute(roleId).equals(4L)){
+			result.put("ifService", true);
+			result.put("state", "success");
+			result.put("message", "服务人员");
+		}else{
+			result.put("ifService", false);
+			result.put("state", "success");
+			result.put("message", "非服务人员");
+		}
+		return result.toString();
+	}
+	
 	
 }

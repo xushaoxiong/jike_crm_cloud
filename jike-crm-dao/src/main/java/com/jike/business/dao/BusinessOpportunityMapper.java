@@ -128,4 +128,15 @@ public interface BusinessOpportunityMapper {
 	 * @createtime 2017年4月18日上午11:53:26
 	 */
 	int selectCountByAreaAndBoName(@Param("province")String province, @Param("city")String city, @Param("businessOpportunityType")int businessOpportunityType, @Param("businessOpportunityName")String businessOpportunityName);
+
+	/**
+	 * 查询服务的商机
+	 * @param businessOpportunityName
+	 * @param userId
+	 * @param unBusinessOpportunityProcess
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年4月21日下午3:37:01
+	 */
+	List<BusinessOpportunity> selectByServiceBusinessOpportunityName(@Param("businessOpportunityName")String businessOpportunityName,  @Param("userId")Long userId, @Param("unBusinessOpportunityProcess") String unBusinessOpportunityProcess);
 }

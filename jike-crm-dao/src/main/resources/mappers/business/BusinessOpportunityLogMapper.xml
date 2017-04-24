@@ -282,4 +282,63 @@
     from business_opportunity_log
     where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
   </select>
+  <select id="getServiceBusinessOpportunityLogCount" resultType="java.lang.Integer">
+    select 
+    count(1)
+    from business_opportunity_log bol left join business_opportunity bo
+    on 
+    bol.business_opportunity_id = bo.business_opportunity_id
+    <where>
+    	<if test="businessOpportunityName != null">
+			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
+		</if>
+		<if test="endTime != null">
+			and #{endTime,jdbcType=VARCHAR} &gt;= DATE_FORMAT(bol.log_date,'%Y-%m-%d')
+		</if>
+		<if test="eventType != null">
+			and bol.event_type = #{eventType,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and bol.create_by = #{userId,jdbcType=BIGINT}
+		</if>
+	</where>
+  </select>
+  <select id="getServiceBusinessOpportunityLogByPage" resultType="java.util.Map">  
+    select 
+    bol.log_id,
+    bol.log_date,
+    bo.business_opportunity_name,
+    bo.business_opportunity_type,
+    bol.create_by,
+    bol.event_type,
+    bol.specific_event,
+    bol.working_hours,
+    bol.internal_participant,
+    bol.external_participant
+    from business_opportunity_log bol left join business_opportunity bo
+    on 
+    bol.business_opportunity_id = bo.business_opportunity_id
+    <where>
+    	<if test="businessOpportunityName != null">
+			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
+		</if>
+		<if test="endTime != null">
+			and #{endTime,jdbcType=VARCHAR} &gt;= DATE_FORMAT(bol.log_date,'%Y-%m-%d')
+		</if>
+		<if test="eventType != null">
+			and bol.event_type = #{eventType,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and bol.create_by = #{userId,jdbcType=BIGINT}
+		</if>
+	</where>
+		ORDER BY bol.create_time desc
+		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
+  </select>
 </mapper>
