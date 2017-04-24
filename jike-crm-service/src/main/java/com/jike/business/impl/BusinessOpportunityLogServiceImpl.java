@@ -1664,16 +1664,20 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			DailyEvents dailyEvents = commonJson.toJavaObject(DailyEvents.class);
 			DailyEvents dailyEventsOld = dailyEventsMapper.selectDailyEventsByLogId(logId);
 			dailyEvents.setDailyEventsId(dailyEventsOld.getDailyEventsId());
+			dailyEvents.setCreateTime(dailyEvents.getCreateTime());
+			dailyEvents.setCreateBy(dailyEvents.getCreateBy());
 			dailyEvents.setUpdateBy(userId);
 			dailyEvents.setUpdateTime(nowDate);
-			dailyEventsMapper.updateByPrimaryKeySelective(dailyEvents);
+			dailyEventsMapper.updateByPrimaryKey(dailyEvents);
 		}else if("回款".equals(businessOpportunityLog.getEventType())){
 			BoPayment boPayment =commonJson.toJavaObject(BoPayment.class);
 			BoPayment boPaymentOld = boPaymentMapper.selectBoPaymentByLogId(logId);
 			boPayment.setPaymentId(boPaymentOld.getPaymentId());
+			boPayment.setCreateTime(boPaymentOld.getCreateTime());
+			boPayment.setCreateBy(boPaymentOld.getCreateBy());
 			boPayment.setUpdateBy(userId);
 			boPayment.setUpdateTime(nowDate);
-			boPaymentMapper.updateByPrimaryKeySelective(boPayment);
+			boPaymentMapper.updateByPrimaryKey(boPayment);
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "更新成功");
