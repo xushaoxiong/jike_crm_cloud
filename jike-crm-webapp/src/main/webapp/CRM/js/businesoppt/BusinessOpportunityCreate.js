@@ -29,6 +29,8 @@ $(function(){
 			businessJ.addressCity=city;
 			businessJ.addressCounty=dist;
 			businessJ.addressDetail=detailadrs;
+			//防止双击
+			$(this).prop('disabled',true);
 				$ajax("post","businessOpportunity/addBusinessOpportunity",businessJ,function succF(jo){
 					$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
 				},function errF(jo){

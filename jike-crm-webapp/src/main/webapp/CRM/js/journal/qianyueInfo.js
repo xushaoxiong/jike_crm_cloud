@@ -63,7 +63,7 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 		signJ.logData=logData;
 		signJ.totalDetail=totalDetail
 		signJ.boSign=boSign;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoSign',signJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

@@ -106,7 +106,7 @@ $('.FillInfo').on('click','.aftSealConfirm',function(){
 		afterSealJ.logData=logData;
 		afterSealJ.totalDetail=totalDetail
 		afterSealJ.boCustomerService=boCustomerService;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoCustomerService',afterSealJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

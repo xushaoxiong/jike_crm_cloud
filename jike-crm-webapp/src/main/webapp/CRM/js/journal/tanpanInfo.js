@@ -55,7 +55,7 @@ $('.FillInfo').on('click','.negoConfirm',function(){
 		negoJ.logData=logData;
 		negoJ.totalDetail=totalDetail
 		negoJ.boNegotiation=boNegotiation;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogNegotiation',negoJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

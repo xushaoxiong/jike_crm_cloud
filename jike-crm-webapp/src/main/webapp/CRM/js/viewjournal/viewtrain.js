@@ -42,7 +42,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">极课PPT演讲及简单出阅卷演示：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.pptDemonstratedCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.pptDemonstratedCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -50,7 +50,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">详细出卷演示（语数英）：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.volumeDemonstratedCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.volumeDemonstratedCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -58,7 +58,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">详细阅卷培训：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.markingTrainCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.markingTrainCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -66,7 +66,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">学情追踪介绍：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.introductionLeanCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.introductionLeanCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -74,7 +74,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">学生端及家长端介绍：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.studentParentIntroductionCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.studentParentIntroductionCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -82,7 +82,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">打印、油印注意事项及考务培训：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.examinationTrainCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.examinationTrainCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -90,7 +90,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">入校sop流程讲解：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.sopProcessExplanationCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.sopProcessExplanationCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -98,7 +98,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">竞品介绍：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.productsIntroductionCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.productsIntroductionCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';

@@ -366,7 +366,7 @@ function infodata(bInfoColet){
 		jourInJ.logData=logData;
 		jourInJ.totalDetail=totalDetail
 		jourInJ.boInformationCollect=boInformationCollect;
-		console.log(jourInJ)
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogInformationCollection',jourInJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

@@ -62,7 +62,7 @@ function visitplanHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >预估费用：</label>';
-			if(tdata.procurementBudget!=undefined){
+			if(tdata.estimateFee!=undefined){
 				negHtml+='<span class="colSp">'+tdata.estimateFee+'元</span>';	
 			}else{
 				negHtml+='<span class="colSp"></span>';

@@ -273,7 +273,7 @@ function visitPlan(){
 		VistPlanJ.logData=logData;
 		VistPlanJ.totalDetail=totalDetail
 		VistPlanJ.boVisitPlan=boVisitPlan;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOVisitPlan',VistPlanJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');
