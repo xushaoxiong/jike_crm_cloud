@@ -15,11 +15,16 @@ function infocoolHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >学校性质：</label>';
-			if(tdata.schoolProperty==0){
-				negHtml+='<span class="colSp">公立</span>';
+			if(tdata.schoolProperty==undefined){
+				negHtml+='<span class="colSp"></span>';
 			}else{
-				negHtml+='<span class="colSp">私立</span>';
-			}	
+				if(tdata.schoolProperty==0){
+					negHtml+='<span class="colSp">公立</span>';
+				}else{
+					negHtml+='<span class="colSp">私立</span>';
+				}	
+			}
+			
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >学校类别：</label>';

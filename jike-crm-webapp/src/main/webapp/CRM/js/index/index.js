@@ -1,7 +1,7 @@
 $(function(){
-	$('.L-wap,.R-container').height($(window).height()-60);
+	$('.L-wap,.R-container').height($(window).height()-80);
 	$(window).resize(function(){
-		$('.L-wap,.R-container').height($(window).height()-60);
+		$('.L-wap,.R-container').height($(window).height()-80);
 	})
 	
 	
@@ -22,22 +22,30 @@ $(function(){
 				})
 			}
 			$('.indexName').html(jo.name);
-//			var menuimmg=['img/']
+			var menuimmg=['img/business.png','img/journal.png','img/sess.png']
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
 				NavHtml+='<li class="L-list-item">';
 				NavHtml+='<div class="navTitle" menuId="'+item.menuId+'">';
-					NavHtml+='<span class="glyphicon glyphicon-wrench img-icon"></span>';
+					if(item.menuId==1){
+						NavHtml+='<img src="'+menuimmg[0]+'" alt="图片"/>';
+					}
+					if(item.menuId==2){
+						NavHtml+='<img src="'+menuimmg[1]+'" alt="图片"/>';
+					}
+					if(item.menuId==3){
+						NavHtml+='<img src="'+menuimmg[2]+'" alt="图片"/>';
+					}
 					NavHtml+='<span class="menuname">'+item.menuName+'</span>';
 				if(item.menu2==undefined){
 					NavHtml+='</div>';
 					NavHtml+='</li>';
 				}else{
-					NavHtml+='<span class="caret"></span>';
+					NavHtml+='<img src="img/creat.png"/>';
 					NavHtml+='</div>';
 					NavHtml+='<ul class="hide-menu">';
 					$.each(item.menu2,function(i2,item2){
-					NavHtml+='<li menuId="'+item2.menuId+'" url="'+item2.sourceUrl+'"><a>'+item2.menuName+'</a></li>';
+					NavHtml+='<li menuId="'+item2.menuId+'" url="'+item2.sourceUrl+'"><a><span class="circle"></span>'+item2.menuName+'</a></li>';
 				})	
 				NavHtml+='</ul>';
 				NavHtml+='</li>';

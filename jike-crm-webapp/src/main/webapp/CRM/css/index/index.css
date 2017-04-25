@@ -2,9 +2,14 @@ body,html{
 	overflow: hidden;
 }
 .nav{
-	background-color: #105598;
+	background-color: #00a0e9;
 	color: #fff;
-	height: 60px;
+	height: 80px;
+	line-height: 80px;
+}
+.logo{
+	padding-left: 50px;
+	vertical-align: middle;
 }
 .nav a,.nav input{color: #fff;}
 .nav-title{font-size: 25px;line-height: 50px;display: inline-block;}
@@ -14,8 +19,8 @@ body,html{
 	vertical-align: middle;
 }
 .nav-list li{
-	height: 60px;
-	line-height: 60px;
+	height: 80px;
+	line-height: 80px;
 	float: left;
 	color: #b0c4de;
 }
@@ -26,23 +31,36 @@ body,html{
 }
 .L-wap{
 	width: 12%;
-	background: #ccc;
+	background: #292d38;
 	padding: 0 !important;
 }
+.navTitle{background: #414654;}
 .hide-menu{display: none;}
+.L-list-item .menuname{color: #7c808c;padding: 0 12px;}
 .L-list li{
 	line-height: 40px;
 	text-align: center;
 	cursor: pointer;
+	list-style: circle !important;
 }
-.hide-menu .menuCheck{
-	background: #105598;
+
+.hide-menu li a{
+	color:  #7c808c;
+	text-underline: none;	
+}
+.hide-menu li:first-child{
+	border-bottom: 1px solid #424851;
+}
+.circle{
+	display: inline-block;
+	width: 2px;
+	height: 2px;
+	border-radius: 100%;
 }
 .hide-menu .menuCheck a{
-	color: #fff;
+	color:  #00a0e9;
 }
 .img-icon{padding: 0 10px;}
-.L-list-item div{border-top: 1px solid #080808;}
 label{
 	text-align: right;
 	padding-top: 6px;
@@ -52,9 +70,14 @@ label{
 	overflow-y: scroll;
 	padding-bottom: 20px;
 }
-.R-wap{width: 100%;}
+.R-wap{border: 1px solid #e2e2e3;}
 div[class^="col-"]{
 	padding:0 !important;
+}
+.btn-primary{
+	background-color: #00a0e9 !important;
+	/*color:  #00a0e9 !important;*/
+	border-color:#00a0e9 !important;
 }
 input[type=radio],input[type=checkbox]{
 	margin-top: -1px !important;
@@ -79,6 +102,15 @@ thead th{text-align: center;}
 textarea{resize: none;height: 100px !important;}
 .breadcrumb{
 	display: none;
+}
+.breadcrumb {
+    padding: 8px 0px;
+    margin-bottom: 20px;
+    list-style: none;
+    border-bottom: 1px solid #e2e2e3;
+    margin: 0 15px;
+    background: transparent !important;
+    border-radius: 0 !important;
 }
 /*分页*/
 .pagination-wap{

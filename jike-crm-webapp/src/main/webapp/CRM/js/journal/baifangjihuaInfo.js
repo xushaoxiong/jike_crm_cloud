@@ -4,7 +4,7 @@ function visitPlan(){
 		vPhtml+='<div class="plan-wap">';
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-2 col-sm-2">计划名称</label>';
-				vPhtml+='<div class="col-md-3 col-sm-5">';
+				vPhtml+='<div class="col-sm-4">';
 					vPhtml+='<span class="form-control planName"/></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
@@ -94,10 +94,10 @@ function visitPlan(){
 				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>最小物料明细</label>';
 				vPhtml+='<div class="col-md-5 col-sm-7">';
 					vPhtml+='<ul class="list-unstyled list-inline bomlist">';
-						vPhtml+='<li>折页</li>';
+						vPhtml+='<li>宣传页</li>';
 						vPhtml+='<li>电脑</li>';
 						vPhtml+='<li>二维码</li>';
-						vPhtml+='<li>演示侧</li>';
+						vPhtml+='<li>演示册</li>';
 						vPhtml+='<li>U盘</li>';
 						vPhtml+='<li>名片</li>';
 						vPhtml+='<li>演示账号</li>';
