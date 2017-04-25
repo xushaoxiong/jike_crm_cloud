@@ -55,7 +55,7 @@ $('.FillInfo').on('click','.purchConfirm',function(){
 		PurchaseJ.logData=logData;
 		PurchaseJ.totalDetail=totalDetail
 		PurchaseJ.boPurchase=boPurchase;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoPurchase',PurchaseJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

@@ -22,6 +22,7 @@ $(function(){
 				})
 			}
 			$('.indexName').html(jo.name);
+//			var menuimmg=['img/']
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
 				NavHtml+='<li class="L-list-item">';
@@ -70,18 +71,19 @@ $(function(){
 		breadnav(menuname,thisHtml);
 		if($(this).attr('menuid')==7){
 			$('.breadcrumb').on('click','.curBack',function(){
+				
 				breadnav(menuname,'编辑日志');
-				$('#addJournal').show();
 				$('.editInfo').hide();
+				$('#addJournal').show();
+				
 			})	
 		}
 		if($(this).attr('menuid')==6){
 			$('.breadcrumb').on('click','.curBack',function(){
 				breadnav(menuname,thisHtml);
+				$('.FillInfo').hide();
 				$('#addJournal').show();
-				$('.FillInfo').hide(function(){
-					begineveid=$('#eventType').find('option:selected').attr('eveid');
-				});
+			
 			})	
 		}
 	

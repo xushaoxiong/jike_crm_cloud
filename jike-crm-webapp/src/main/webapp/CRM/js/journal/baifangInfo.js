@@ -184,7 +184,8 @@ function visitordata(jodata){
 		totalDetailF(totalDetail);
 		boVistPlanJ.logData=logData;
 		boVistPlanJ.totalDetail=totalDetail
-		boVistPlanJ.boVisit=boVisit;		
+		boVistPlanJ.boVisit=boVisit;	
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOVisit',boVistPlanJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

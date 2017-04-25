@@ -44,7 +44,7 @@ $('.FillInfo').on('click','.tryConfirm',function(){
 		TryJ.logData=logData;
 		TryJ.totalDetail=totalDetail
 		TryJ.boTrialReuslt=boTrialReuslt;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogTrialReuslt',TryJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

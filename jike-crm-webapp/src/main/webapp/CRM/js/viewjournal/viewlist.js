@@ -114,7 +114,12 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//日常
 	if(eventType=='日常事项'){
 		$.getScript("js/viewjournal/viewdaily.js",function(){
-			ajaxpub(logIdJ,dailyHtml);
+			if(sessionStorage.server=='false'){
+				ajaxpub(logIdJ,dailyHtml);
+			}else{
+				ajaxpub(logIdJ,serverdailyHtml)
+			}
+			
 		})
 	}
 	//售后
@@ -126,11 +131,14 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//支持
 	if(specType=='支持'){
 		$.getScript("js/viewjournal/viewsupport.js",function(){
-			if(opptypeid==1){	
+			if(opptypeid==1&&sessionStorage.server=='false'){	
 				ajaxpub(logIdJ,supportpanerHtml);
+			}else if(sessionStorage.server=='true'){
+				ajaxpub(logIdJ,supportserverHtml);
 			}else{
 				ajaxpub(logIdJ,supportHtml);
 			}
+			
 		})
 	}
 	//培训

@@ -130,7 +130,9 @@ $.each(eventJson2.evenList, function(i,item) {
 
 //	//操作设置
 
-	$('.jourlist').on('click','.edit',function(){	
+	$('.jourlist').on('click','.edit',function(){
+		var evtypehtml=$(this).parents('tr').find('.evtype').html();
+		
 		var logIdJ={};
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
@@ -140,9 +142,15 @@ $.each(eventJson2.evenList, function(i,item) {
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.R-wap').load('journal/editlog.html',function(){
+				
 				$('.eventType').attr('businestype',businestype);
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
+				if(evtypehtml=='日常事项'){
+					console.log(1111)
+					$('.businessNameSp').val('日常事项');
+					$('.businesNumbspInp').val('R0000000-00');
+				}
 				commondetail(jo);
 				$('.editInfo').hide();
 				var lastht=$('.eventType').val();
@@ -404,6 +412,7 @@ $('.reset').click(function(){
 	$('#indate').val('');
 	$('#enddate').val('');
 	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
+	$('.creatName').val('');
 })
 
 //商机名称字数限制鼠标浮上显示全部内容

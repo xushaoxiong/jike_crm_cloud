@@ -43,7 +43,7 @@ $('.FillInfo').on('click','.dailyConfirm',function(){
 		dailyJ.logData=logData;
 		dailyJ.totalDetail=totalDetail
 		dailyJ.dailyEvents=dailyEvents;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addDailyEvents',dailyJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

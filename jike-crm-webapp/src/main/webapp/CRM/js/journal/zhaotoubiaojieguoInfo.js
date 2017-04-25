@@ -43,7 +43,7 @@ $('.FillInfo').on('click','.propRustConfirm',function(){
 		propRustJ.logData=logData;
 		propRustJ.totalDetail=totalDetail
 		propRustJ.boBiddingResult=boBiddingResult;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoBiddingResult',propRustJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

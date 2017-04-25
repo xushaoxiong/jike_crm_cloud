@@ -70,6 +70,7 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 		propreJ.logData=logData;
 		propreJ.totalDetail=totalDetail
 		propreJ.boBidding=boBidding;
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoBidding',propreJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

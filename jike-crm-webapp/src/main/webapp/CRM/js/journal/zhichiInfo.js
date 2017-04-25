@@ -57,7 +57,7 @@ $('.FillInfo').on('click','.suprtConfirm',function(){
 		supportJ.logData=logData;
 		supportJ.totalDetail=totalDetail
 		supportJ.boSupport=boSupport;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoSupport',supportJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

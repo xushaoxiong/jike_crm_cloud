@@ -72,7 +72,7 @@ $('.FillInfo').on('click','.payConfirm',function(){
 		signJ.logData=logData;
 		signJ.totalDetail=totalDetail
 		signJ.boPayment=boPayment;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoPayment',signJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

@@ -15,12 +15,20 @@
 		.login-wap{
 			width: 100%;
 			height: 100%;
-			background: url(img/bg.jpg) no-repeat;
+			background: url(img/bg.png) no-repeat;
 			background-size: 100% 100%;
 		}
 		.login-wap .wap{
+			width:100%;
+			height:76%;
+			margin-top:3%;
+			background: url(img/kuang.png) no-repeat;
+			background-size: 100% 100%;
 			
-			height: 200px;
+		}
+		.logowap{
+			width: 29.1%;
+			height:68%;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -28,39 +36,59 @@
 			right: 0;
 			margin: auto;
 		}
-		.input-group{
-			float: left !important;
-			margin-bottom: 15px;
+		.loginBtn{
+			width: 80.3%;
+			margin-left: 9.85%;
+			margin-top: 8%;
+		}
+		.logo{width:33.7%;}
+		.logosp{color: #fff;padding-left:9.3%;}
+		.LoginName{
+			border-radius: 5px!important;
+			background: url(img/user.png) no-repeat left 1% center;
+			background-size:5.3%;
+			padding-left: 6.5%
+		}
+		.LoginPwd{
+			background: url(img/pasword.png) no-repeat left 1% center;
+			background-size: 5.3%;
+			padding-left: 6.5%;
+			border-radius: 5px!important;
 			
 		}
-		.wap .text-danger{font-size: 13px;padding-top: 9px;height: 34px;}
+		.title{padding-left:9.85%;;padding-top:8%;padding-bottom:2%;color: #666;}
+		.input-group{
+			width: 80.3%;
+			margin-left: 9.85%;
+		}
+		.alert-Ninfo{font-size: 13px;padding-top: 9px;height: 34px;}
+		footer{text-align: center;font-size: 13px;}
 	</style>
 	<body>
 		<div class="container-fluid login-wap">
-			
-			<div class="col-md-3 col-sm-3 col-lg-3 wap col-xs-6">
-				<p class="text-danger alert-Ninfo col-xs-8 col-md-8 col-sm-8 col-lg-8"></p>
+			<div class="logowap">
+				<img src="img/logo.png" class="logo"/>
+				<span class="logosp">后台管理登录</span>
+				<p class="text-danger alert-Ninfo "></p>
+				<div class="wap">
 				<!--登录名-->
-				 <div class='input-group col-xs-8 col-md-8 col-sm-8 col-lg-8'> 
-				 	<span class="input-group-addon">  
-	                    <span class="glyphicon glyphicon-user"></span>  
-	                </span> 
+				<p class="title">用户名</p>
+				 <div class='input-group'> 
+				 	
 	                <input type='text' class="form-control LoginName" />  
 	                 
 	            </div>  
-				
 				<!--密码-->
-				<div class='input-group col-md-8 col-sm-8 col-lg-8 col-xs-8'> 
-				 	<span class="input-group-addon">  
-	                    <span class="glyphicon glyphicon-lock"></span>  
-	                </span> 
+				<p class="title">密码</p>
+				<div class='input-group'> 
 	                <input type='password' class="form-control LoginPwd" />  
-	                 
 	            </div>  
 				<!--<p class="text-danger alert-Pinfo col-md-4 col-sm-4 col-lg-4 col-xs-4">密码错误</p>-->
-				<button class="btn btn-primary col-md-8 col-sm-8 col-lg-8 col-xs-8" id="login-btn">登录系统</button>
+				<!--<button class="btn btn-primary col-sm-8" id="login-btn">登录系统</button>-->
+				<img src="img/login.png" class="loginBtn" id="login-btn"/>
 			</div>
-			
+			<footer>极课大数据后台管理登录系统</footer>
+			</div>
 		</div>
 	</body>
 	<script>

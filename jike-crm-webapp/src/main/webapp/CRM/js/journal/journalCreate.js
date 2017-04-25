@@ -112,7 +112,7 @@ $(function(){
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		
 		//判断如果选项为培训、售后、支持 工时不能编辑
-		if(eveid=='9'||eveid=='10'||eveid=='11'){
+		if(eveid=='9'||eveid=='10'||eveid=='11'||sessionStorage.server=='true'){
 			$('.journalTime span').hide();
 			$('.timeVal').prop('disabled',true);
 		}else{
@@ -122,7 +122,7 @@ $(function(){
 		//判断日常事项统一商机名称和流水号
 		if(eveid=='8'){
 			$('.businessNameSp').html('日常商机名称');
-			$('.businesNumbspInp').html('S1000000000000');
+			$('.businesNumbspInp').html('R0000000-00');
 		}else{
 			$('.businessNameSp').html('');
 			$('.businesNumbspInp').html('');
@@ -220,8 +220,7 @@ $(function(){
 		
 		//信息收集页面
 		if(spcid=='101'){
-			if(Mesclic && beginid==(eveid+spcid)){
-				console.log(beginid==(eveid+spcid))
+			if(Mesclic && beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(OpptunityId==0){
@@ -233,7 +232,7 @@ $(function(){
 								infodata(bInfoColet);
 							}
 							Mesclic=true;
-							beginid=eveid+spcid;
+							beginid=eveid+spcid+OpptunityId;
 							
 						},function errF(jo){
 							pub.Alt(jo.message,false);
@@ -249,7 +248,7 @@ $(function(){
 								infodata(bInfoColet);
 							}
 							Mesclic=true;
-							beginid=eveid+spcid;
+							beginid=eveid+spcid+OpptunityId;
 						},function errF(jo){
 							pub.Alt(jo.message,false)
 						})
@@ -259,7 +258,7 @@ $(function(){
 		}
 		//制定拜访计划页面
 		if(spcid=='201'){
-			if(Mesclic&&beginid==(eveid+spcid)){
+			if(Mesclic&&beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$('.FillInfo').html('');
@@ -278,7 +277,7 @@ $(function(){
 						VisitPlandata(jo)
 					}
 					Mesclic=true;
-					beginid=eveid+spcid;		
+					beginid=eveid+spcid+OpptunityId;		
 					},function errF(jo){
 						pub.Alt(jo.message,false);
 					})
@@ -289,7 +288,7 @@ $(function(){
 		}
 		//拜访客户
 		if(eveid=='3'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				//达成合作意向
@@ -300,7 +299,7 @@ $(function(){
 							$('.FillInfo').html(vistInformation());
 							visitordata(jo);
 							Mesclic=true;	
-							beginid=eveid+spcid;
+							beginid=eveid+spcid+OpptunityId+OpptunityId;
 						},function errF(jo){
 							pub.Alt(jo.message,false);
 						})
@@ -312,7 +311,7 @@ $(function(){
 							$('.FillInfo').html(vistInformation());
 							visitordata(jo);
 							Mesclic=true;	
-							beginid=eveid+spcid;
+							beginid=eveid+spcid+OpptunityId+OpptunityId;
 						},function errF(jo){
 							pub.Alt(jo.message,false);
 						})
@@ -323,7 +322,7 @@ $(function(){
 		}
 		//谈判
 		if(eveid=='4'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/tanpanInfo.js",function(){
@@ -331,7 +330,7 @@ $(function(){
 						$('.FillInfo').html(negotiationsHtml());
 						negotiationsData(jo);
 						Mesclic=true;	
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					},function errF(jo){
 						pub.Alt(jo.message,false);
 					})
@@ -340,52 +339,52 @@ $(function(){
 		}
 		//试用中-试用准备
 		if(spcid=='501'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/shiyongzhongInfo.js",function(){
 					$('.FillInfo').html(TrialHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			
 		}
 		//试用中-使用结果
 		if(spcid=='502'||spcid=='503'||spcid=='504'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/shiyongjieguoInfo.js",function(){
 					$('.FillInfo').html(TryHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			
 		}
 		//招投标-投标准备
 		if(spcid=='601'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/zhaotoubiaozhunbeiInfo.js",function(){
 					$('.FillInfo').html(PropPreionHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			
 		}
 		//招投标-投标结果
 		if(spcid=='602'||spcid=='603'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/zhaotoubiaojieguoInfo.js",function(){
 					$('.FillInfo').html(propreResultHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			
@@ -393,14 +392,14 @@ $(function(){
 		//签约
 		if(spcid=='701'){
 			
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(OpptunityId==0){
 					$.getScript("js/journal/qianyueInfo.js",function(){
 						$('.FillInfo').html(signHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 			}else{
 				$.getScript("js/journalpartners/PqianyueInfo.js",function(){
@@ -412,7 +411,7 @@ $(function(){
 					    nodata: "none"  
 					});
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 				
@@ -421,20 +420,21 @@ $(function(){
 		}
 		//日常
 		if(eveid=='8'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(sessionStorage.server=='true'){
+					
 					$.getScript("js/journalserver/serverdaily.js",function(){
 						$('.FillInfo').html(dailytHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}else{
 					$.getScript("js/journal/richangInfo.js",function(){
 						$('.FillInfo').html(dailytHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}
 				
@@ -443,39 +443,39 @@ $(function(){
 		}
 		//售后
 		if(eveid=='9'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/shouhouInfo.js",function(){
 					$('.FillInfo').html(aftSealtHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			
 		}
 		//支持
 		if(eveid=='10'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(OpptunityId==0&&sessionStorage.server=='false'){
 					$.getScript("js/journal/zhichiInfo.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}else if(sessionStorage.server=='true'){
 					$.getScript("js/journalserver/serversupport.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}else{
 					$.getScript("js/journalpartners/PzhichiInfo.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}
 				
@@ -484,20 +484,20 @@ $(function(){
 		}
 		//培训
 		if(eveid=='11'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(OpptunityId==0){
 					$.getScript("js/journal/peixunInfo.js",function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}else{
 					$.getScript("js/journalpartners/PpeixunInfo.js",function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
-						beginid=eveid+spcid;
+						beginid=eveid+spcid+OpptunityId;
 					})
 				}
 				
@@ -507,13 +507,13 @@ $(function(){
 		
 		//回款
 		if(eveid=='12'){
-			if(Mesclic&& beginid==(eveid+spcid)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/receivmoneyInfo.js",function(){
 					$('.FillInfo').html(receiveHtml());
 					Mesclic=true;
-					beginid=eveid+spcid;
+					beginid=eveid+spcid+OpptunityId;
 				})
 			}
 			

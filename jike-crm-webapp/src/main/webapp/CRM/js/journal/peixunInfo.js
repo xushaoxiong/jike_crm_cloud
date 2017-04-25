@@ -56,7 +56,7 @@ $('.FillInfo').on('click','.trainConfirm',function(){
 		trainJ.logData=logData;
 		trainJ.totalDetail=totalDetail
 		trainJ.boTrain=boTrain;
-		
+		$(this).prop('disabled',true);
 		$ajax('post','businessOpportunityLog/addBOLogBoTrain',trainJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

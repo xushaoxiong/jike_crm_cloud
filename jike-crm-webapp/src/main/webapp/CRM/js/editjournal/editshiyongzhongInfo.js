@@ -4,11 +4,11 @@ function TrialHtml(){
 		traHtml+='<div class="trial-wap">';
 			traHtml+='<div class="form-group row date-wap">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用周期</label>';
-				traHtml+='<div class="col-md-1 col-sm-2">';
+				traHtml+='<div class="col-sm-2">';
 					traHtml+='<span class="form-control startTime" data-format="dd-mm-yyyy" onclick="WdatePicker()"/></span>';
 				traHtml+='</div>';
-				traHtml+='<span class="pull-left" style="line-height: 34px;">到</span>';
-				traHtml+='<div class="col-md-1 col-sm-2">';
+				traHtml+='<span class="pull-left" style="line-height: 34px;padding:0 5px;">到</span>';
+				traHtml+='<div class="col-sm-2">';
 					traHtml+='<span class="form-control endTime" data-format="dd-mm-yyyy" onclick="WdatePicker()"/></span>';
 				traHtml+='</div>';
 			traHtml+='</div>';
