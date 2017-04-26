@@ -292,12 +292,21 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		JSONObject resultJson = new JSONObject();
 		if (!businessOpportunityJson.isEmpty()) {
 			BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
-//			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
-			if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
-				resultJson.put("state", "fail");
-				resultJson.put("message", "没有操作权限");
-				return resultJson;
+			if(businessOpportunityJson.getInteger("isClosed")!=null){
+				SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
+				if(!businessOpportunityJson.getLong("userId").equals(saleBusinessOpportunity.getUserId())){
+					resultJson.put("state", "fail");
+					resultJson.put("message", "没有操作权限");
+					return resultJson;
+				}
+			}else if(businessOpportunityJson.getInteger("isCancellation")!=null){
+				if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
+					resultJson.put("state", "fail");
+					resultJson.put("message", "没有操作权限");
+					return resultJson;
+				}
 			}
+			
 			//删除时判断该商机是否建立日志，建立日志的不能删除
 			if(businessOpportunityJson.getInteger("isCancellation")!=null&&businessOpportunityJson.getInteger("isCancellation")==1){
 				if(businessOpportunityLogService.queryBoLogByBoId(businessOpportunity.getBusinessOpportunityId())){
