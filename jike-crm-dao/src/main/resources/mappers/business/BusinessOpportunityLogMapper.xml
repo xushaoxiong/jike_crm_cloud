@@ -219,9 +219,11 @@
     left join sale_business_opportunity sbo     
     on 
     bol.business_opportunity_id = sbo.business_opportunity_id
-    <where>
+    LEFT JOIN user_role ur
+    on bol.create_by = ur.user_id
+    where ur.role_id = 3
     	<if test="businessOpportunityName != null">
-			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
 		<if test="startTime != null">
 			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
@@ -235,7 +237,13 @@
 		<if test="userId != null">
 			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
 		</if>
-	</where>
+		<if test="userIds != null">
+			and bol.create_by in 
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
+		</if>
   </select>
   <select id="getBusinessOpportunityLogByPage" resultType="java.util.Map">  
     select 
@@ -256,9 +264,11 @@
     left join sale_business_opportunity sbo     
     on 
     bol.business_opportunity_id = sbo.business_opportunity_id
-    <where>
+    LEFT JOIN user_role ur
+    on bol.create_by = ur.user_id
+    where ur.role_id = 3
     	<if test="businessOpportunityName != null">
-			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
 		<if test="startTime != null">
 			and DATE_FORMAT(bol.log_date,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
@@ -272,7 +282,13 @@
 		<if test="userId != null">
 			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
 		</if>
-	</where>
+		<if test="userIds != null">
+			and bol.create_by in 
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
+		</if>
 		ORDER BY bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>

@@ -292,8 +292,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		JSONObject resultJson = new JSONObject();
 		if (!businessOpportunityJson.isEmpty()) {
 			BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
-			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
-			if(!businessOpportunityJson.getLong("userId").equals(saleBusinessOpportunity.getUserId())){
+//			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());
+			if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
 				resultJson.put("state", "fail");
 				resultJson.put("message", "没有操作权限");
 				return resultJson;
@@ -478,6 +478,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if (businessOpportunity == null) {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "未查到该商机");
+			return resultJson;
+		}
+		if ("信息收集".equals(businessOpportunity.getBusinessOpportunityProcess())) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "信息未收集完全不能指派服务");
 			return resultJson;
 		}
 		SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunity.getBusinessOpportunityId());

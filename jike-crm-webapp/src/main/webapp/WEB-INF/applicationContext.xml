@@ -26,7 +26,6 @@
         <property name="initialPoolSize" value="${initialPoolSize}"></property>
         <property name="maxPoolSize" value="${maxPoolSize}"></property>
         <property name="minPoolSize" value="${minPoolSize}"></property>
-        
 	</bean>
 
 	<!-- Session工厂 -->

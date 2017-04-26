@@ -1295,7 +1295,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
 		List<Long> userIds = new ArrayList<Long>();
-		if (roleId == 2) {// 商务查看所有角色
+		if (roleId != 4) {// 查看所有角色
 			String userName = queryJson.getString("userName");
 			if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 				userName = "%"+userName+"%";
@@ -1316,7 +1316,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}
 		int totalCount =0;
 		if(roleId == 3){
-			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId);
+			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId,userIds);
 		}else{
 			totalCount = businessOpportunityLogMapper.getServiceBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userIds);
 		}
@@ -1324,7 +1324,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		List<Map<String,Object>> businessOpportunityLogList = new ArrayList<Map<String,Object>>();
 		if(roleId == 3){
-			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,startPosition,pageSize);
+			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,userIds,startPosition,pageSize);
 		}else{
 			businessOpportunityLogList = businessOpportunityLogMapper.getServiceBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userIds,startPosition,pageSize);
 		}
