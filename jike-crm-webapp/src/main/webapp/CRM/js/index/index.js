@@ -1,11 +1,17 @@
 $(function(){
-	$('.L-wap').height($(window).height()-80);
-	$('.R-container').height($(window).height()-100);
-	$(window).resize(function(){
-		$('.L-wap').height($(window).height()-80);
-		$('.R-container').height($(window).height()-100);
-	})
+	$('.L-wap,.R-container,.p-first').height($(window).height()-80);
 	
+	$(window).resize(function(){
+		$('.L-wap,.R-container,.p-first').height($(window).height()-80);
+	
+	})
+	//获取链接参数的男女
+	var locaurl=(window.location.href).split("?")
+	if(locaurl[1]==0){
+		$('.my-photo').attr('src','img/girl.png');
+	}else{
+		$('.my-photo').attr('src','img/man.png');
+	}
 		//列表
 	$.ajax({
 		type:"post",
@@ -72,6 +78,7 @@ $(function(){
 		//跳转链接是面包屑导航出现breadcrumb
 		$('.breadcrumbwap').show();
 		$('.hide-menu li').removeClass('menuCheck');
+		$('.R-wapFirst').addClass('R-wap');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
 		var thisHtml=$('.menuCheck').find('a').html();
@@ -102,6 +109,7 @@ $(function(){
 	})	
 	//修改密码
 	$('.changepwd').click(function(){
+		$('.R-wapFirst').addClass('R-wap');
 		$('.breadcrumbwap').show();
 		$('.breadcrumb').html('<li>修改密码</li>')
 		$('.R-wap').load('updateUserPassword.html');
