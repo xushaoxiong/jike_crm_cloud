@@ -1535,7 +1535,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			json = JSONObject.toJSONString(boPayment,SerializerFeature.WriteNullStringAsEmpty);
 		}
 		JSONObject commonJson =JSON.parseObject(json);
-		removeCommonAttribute(commonJson);
+		if(commonJson!=null){
+			removeCommonAttribute(commonJson);
+		}
 		//log
 		JSONObject  businessOpportunityLogJson = JSONObject.parseObject(JSONObject.toJSONString(businessOpportunityLog,SerializerFeature.WriteNullStringAsEmpty));
 		removeCommonAttribute(businessOpportunityLogJson);
