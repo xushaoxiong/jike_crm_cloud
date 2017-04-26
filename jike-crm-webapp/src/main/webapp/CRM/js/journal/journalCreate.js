@@ -123,9 +123,11 @@ $(function(){
 		if(eveid=='8'){
 			$('.businessNameSp').html('日常商机名称');
 			$('.businesNumbspInp').html('R0000000-00');
+			$('.businessNameSp').attr('disabled',true);
 		}else{
 			$('.businessNameSp').html('');
 			$('.businesNumbspInp').html('');
+			$('.businessNameSp').attr('disabled',false);
 		}
 		
 		messbtnType();
@@ -436,11 +438,11 @@ $(function(){
 		}
 		//日常
 		if(eveid=='8'){
+			console.log(111)
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				if(sessionStorage.server=='true'){
-					
 					$.getScript("js/journalserver/serverdaily.js",function(){
 						$('.FillInfo').html(dailytHtml());
 						Mesclic=true;

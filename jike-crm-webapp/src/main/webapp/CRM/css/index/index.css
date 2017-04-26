@@ -2,7 +2,7 @@ body,html{
 	overflow: hidden;
 }
 .nav{
-	background-color: #00a0e9;
+	background-color: #036eb8;
 	color: #fff;
 	height: 80px;
 	line-height: 80px;
@@ -50,7 +50,7 @@ body,html{
 	line-height: 40px;
 }
 .hide-menu li a{
-	color:  #7c808c;
+	color:  #ccc;
 	text-underline: none !important;	
 }
 .hide-menu li:first-child{
@@ -63,7 +63,7 @@ body,html{
 	border-radius: 100%;
 }
 .hide-menu .menuCheck a{
-	color:  #00a0e9;
+	color:  #036eb8;
 }
 .img-icon{padding: 0 10px;}
 label{
@@ -85,9 +85,9 @@ div[class^="col-"]{
 	padding:0 !important;
 }
 .btn-primary{
-	background-color: #00a0e9 !important;
-	/*color:  #00a0e9 !important;*/
-	border-color:#00a0e9 !important;
+	background-color: #036eb8 !important;
+	/*color:  #036eb8 !important;*/
+	border-color:#036eb8 !important;
 }
 input[type=radio],input[type=checkbox]{
 	margin-top: -1px !important;
@@ -105,6 +105,22 @@ select{
 .form-group{
 	margin-bottom: 30px !important;
 }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th{
+	padding: 4px !important;
+}
+  .table>thead>tr>th,.table>thead>tr>td{
+    font-weight: bold;
+    color: #333;
+    background: #d4d4d4;
+    border: none !important
+ }
+ .table>tbody .btn{
+ 	padding: 4px 12px !important;
+ 	font-size: 13px!important;
+ }
+ .table>tbody>tr:nth-of-type(even){
+ 	background: #eee;
+ }
 /*ie中去除三角形*/
 select::-ms-expand { display: none; } 
 .R-wap label{padding-right: 10px;min-width: 125px !important;}

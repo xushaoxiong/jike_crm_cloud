@@ -51,6 +51,15 @@
 		$('.totalCostwap').modal('hide');
 		$('.btnCost').html(totalReach.toFixed(2));
 		
+	});
+	$('.reachInp7').keyup(function(){
+		console.log(1111)
+		if($('.reachInp7').val()==''){
+			$('.payperson').hide();
+			$('.reachInp8').val('');
+		}else{
+			$('.payperson').show();
+		}
 	})
 	//新建日志提交返回后台
 	var jourInJ={};

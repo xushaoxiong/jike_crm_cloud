@@ -100,7 +100,12 @@ $(function(){
 		}
 	
 	})	
-	
+	//修改密码
+	$('.changepwd').click(function(){
+		$('.breadcrumbwap').show();
+		$('.breadcrumb').html('<li>修改密码</li>')
+		$('.R-wap').load('updateUserPassword.html');
+	})
 	
 	//退出
 	$('.loginOut').click(function(){
