@@ -36,7 +36,7 @@ $('.delJournal').click(function(){
 					if((item.businessOpportunityName).length>10){
 						html+='<td class="bussname cursorm" data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
 					}else{
-						html+='<td class="bussname cursorm" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
+						html+='<td class="bussname" busintype='+item.businessOpportunityType+'>'+item.businessOpportunityName+'</td>';
 					}
 					
 				}
@@ -65,7 +65,7 @@ $('.delJournal').click(function(){
 					if(item.authority==0){
 						html+='<button class="btn btn-primary edit" style="margin-right:8px;">编辑</button>';
 					}else{
-						html+='<button class="btn btn-primary" disabled="disabled" style="margin-right:8px;">编辑</button>';
+						html+='<button class="btn" disabled="disabled" style="margin-right:8px;">编辑</button>';
 					}
 					html+='<button class="btn btn-primary checkjounal">查看</button>';
 				html+='</td>';
@@ -142,12 +142,10 @@ $.each(eventJson2.evenList, function(i,item) {
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.R-wap').load('journal/editlog.html',function(){
-				
 				$('.eventType').attr('businestype',businestype);
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
 				if(evtypehtml=='日常事项'){
-					console.log(1111)
 					$('.businessNameSp').val('日常事项');
 					$('.businesNumbspInp').val('R0000000-00');
 				}
@@ -183,16 +181,52 @@ $.each(eventJson2.evenList, function(i,item) {
 	}
 	//费用赋值
 	function freedata(freedata){
-		$('.reachInp1').val(freedata.trafficFee);
-		$('.reachInp2').val(freedata.hotelFee);
-		$('.reachInp3').val(freedata.foodFee);
-		$('.reachInp4').val(freedata.entertainFee);
-		$('.reachInp5').val(freedata.giftFee);
-		$('.reachInp6').val(freedata.otherFee);
-		$('.reachInp7').val(freedata.advanceFee);
-		$('.reachInp8').val(freedata.advancePerson);
+		console.log(freedata.trafficFee)
+		if(freedata.trafficFee==undefined){
+			$('.reachInp1').val('');
+		}else{
+			$('.reachInp1').val(freedata.trafficFee);
+		}
+		if(freedata.hotelFee==undefined){
+			$('.reachInp2').val('');
+		}else{
+			$('.reachInp2').val(freedata.hotelFee);
+		}
+		if(freedata.foodFee==undefined){
+			$('.reachInp3').val('');
+		}else{
+			$('.reachInp3').val(freedata.foodFee);
+		}
+		if(freedata.entertainFee==undefined){
+			$('.reachInp4').val('');
+		}else{
+			$('.reachInp4').val(freedata.entertainFee);
+		}
+		if(freedata.giftFee==undefined){
+			$('.reachInp5').val('');
+		}else{
+			$('.reachInp5').val(freedata.giftFee);
+		}
+		if(freedata.otherFee==undefined){
+			$('.reachInp6').val('');
+		}else{
+			$('.reachInp6').val(freedata.otherFee);
+		}
+		if(freedata.advanceFee==undefined){
+			$('.reachInp7').val('');
+		}else{
+			$('.reachInp7').val(freedata.advanceFee);
+		}
+		if(freedata.advancePerson!=''){
+			$('.payperson').show();
+			$('.reachInp8').val(freedata.advancePerson);
+		}else{
+			$('.payperson').hide();
+		}
+		
 	}
-
+	//
+	
 	function commondetail(jo){
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var eventType=$('.eventType').val();
@@ -299,6 +333,8 @@ $.each(eventJson2.evenList, function(i,item) {
 		//日常
 		if($('.eventType').val()=='日常事项'){
 			if(sessionStorage.server=='true'){
+				$('.journalTime span').hide();
+				$('.timeVal').prop('disabled',true);
 				$.getScript("js/editjournalserver/editdaily.js",function(){
 					$('.editInfo').html(dailytHtml());
 					dailydata(jo.commonJson);

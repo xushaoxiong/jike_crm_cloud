@@ -16,7 +16,7 @@
 		function editTotalDetailF(totalDetail){
 			var totalDetailArry=[];
 			for (var i=0;i<$('.ReachInp').length;i++) {
-				totalDetailArry.push(Number($.trim($('.reachInp'+(i+1)).val())));
+				totalDetailArry.push($.trim($('.reachInp'+(i+1)).val()));
 			}
 			totalDetail.trafficFee=totalDetailArry[0]
 			totalDetail.hotelFee=totalDetailArry[1]

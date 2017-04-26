@@ -2,7 +2,7 @@ function infoColle(){
 	var html="";
 	html+='<div class="container-fluid" id="messBox">';
 		html+='	<div class="message-wap">';
-			html+='	<p class="text-danger">(备注：以下内容填写完成，转入信息收集完成状态：信息来源、学校规模、学校等级、学校性质、学校类别、联系人姓名、联系人职位、、联系人联系方式、决策人姓名、决策人职位)</p>';
+			html+='	<p class="text-danger">(备注：以下内容填写完成，转入信息收集完成状态：信息来源、主营范围、联系人姓名、联系人职位、联系人联系方式、决策人姓名、决策人职位)</p>';
 				html+='<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2">信息来源</label>';
 				html+='	<div class="col-md-3 col-sm-5">';

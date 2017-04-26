@@ -13,13 +13,42 @@ function jourlist(data){
 }
 //费用详情
 function costdata(cdata){
-	$('.reach1').html(cdata.trafficFee+"元");
-	$('.reach2').html(cdata.hotelFee+"元");
-	$('.reach3').html(cdata.foodFee+"元");
-	$('.reach4').html(cdata.entertainFee+"元");
-	$('.reach5').html(cdata.giftFee+"元");
-	$('.reach6').html(cdata.otherFee+"元");
-	$('.reach7').html(cdata.advanceFee+"元");
+	if(cdata.trafficFee==undefined){
+		$('.reach1').html('');
+	}else{
+		$('.reach1').html(cdata.trafficFee+"元");
+	}
+	if(cdata.hotelFee==undefined){
+		$('.reach2').html('');
+	}else{
+		$('.reach2').html(cdata.hotelFee+"元");
+	}	
+	if(cdata.foodFee==undefined){
+		$('.reach3').html('');
+	}else{
+		$('.reach3').html(cdata.foodFee+"元");
+	}
+	if(cdata.entertainFee==undefined){
+		$('.reach4').html('');
+	}else{
+		$('.reach4').html(cdata.entertainFee+"元");
+	}
+	if(cdata.giftFee==undefined){
+		$('.reach5').html('');
+	}else{
+		$('.reach5').html(cdata.giftFee+"元");
+	}
+	if(cdata.otherFee==undefined){
+		$('.reach6').html('');
+	}else{
+		$('.reach6').html(cdata.otherFee+"元");
+	}
+	if(cdata.advanceFee==undefined){
+		$('.reach7').html('');
+	}else{
+		$('.reach7').html(cdata.advanceFee+"元");
+	}
+	
 	$('.reach8').html(cdata.advancePerson);
 }
 //公用部分信息ajax内容

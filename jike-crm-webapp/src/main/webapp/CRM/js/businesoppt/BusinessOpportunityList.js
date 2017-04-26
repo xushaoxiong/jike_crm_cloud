@@ -51,7 +51,7 @@
 				Html+='<td class="opptNumb cursorm" oppid="'+item.businessOpportunityId+'" numb="'+item.businessOpportunityNum+'"><a>'+item.businessOpportunityName+'</a></td>';	
 			}
 			
-			Html+='<td class="checkBusiness cursor">'+item.businessOpportunityNum+'</td>';
+			Html+='<td class="checkBusiness">'+item.businessOpportunityNum+'</td>';
 			if(item.distributeUserName==undefined){
 				Html+='<td class="salesuserName" userid=""><span class="username"></span>&nbsp;&nbsp;';
 					Html+='<img src="img/busimg1.png" class="editserver cursor"/></td>';
@@ -160,9 +160,9 @@
 				
 			}else{
 				if(item.isClosed==0){
-					Html+='<button class="btn btn-primary closeBuiness" isClosedip="'+item.isClosed+'">关闭</button>';
+					Html+='<button class="btn btn-primary closeBuiness" isclosedip="'+item.isClosed+'">关闭</button>';
 				}else{
-					Html+='<button class="btn btn-info closeBuiness" isClosedip="'+item.isClosed+'">重启</button>';
+					Html+='<button class="btn btn-info closeBuiness" isclosedip="'+item.isClosed+'">重启</button>';
 				}
 			}
 			Html+='</td>';
@@ -401,13 +401,15 @@ var isClosedip=""
 $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
 	var businessOpportunityNum=$(this).parents('tr').find('.opptNumb').attr('numb');
-	isClosedip=$(this).attr('isClosedip');
+	isClosedip=$(this).attr('isclosedip');
+	console.log(isClosedip)
 	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
-		$('.altcont').html('提醒：是否关闭商机（'+businessOpportunityNum+'），关闭后商机将处于关闭状态')
+		$('.altcont').html('提醒：是否关闭商机（'+businessOpportunityNum+'），关闭后商机将处于关闭状态');
 	}else{
 		$('#closebuinessModal .modal-header h4').html('重启商机');
 		$('.altcont').html('提醒：是否重启商机（'+businessOpportunityNum+'）');
+
 	}
 	$("#closebuinessModal").modal("toggle");
 	var businessOpportunityNum=window.localStorage.getItem('opptNumb');
@@ -427,18 +429,19 @@ $('.closeConfirm').click(function(){
 	colJ.isClosed=isClosedip;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',colJ,function succF(jo){
 		$("#closebuinessModal").modal("hide");
+//		console.log(closeBtnPart.find('.closeBuiness').html())
 		if(isClosedip== '0'){
 			closeBtnPart.find('.closeBuiness').html('关闭');
-			closeBtnPart.find('.closeBuiness').attr('isclosedip','1');
+			closeBtnPart.find('.closeBuiness').attr('isclosedip','0');
 			closeBtnPart.find('.closeBuiness').addClass('btn-primary');
 			closeBtnPart.find('.closeBuiness').removeClass('btn-info');
 		}else{
 			closeBtnPart.find('.closeBuiness').html('重启');
-			closeBtnPart.find('.closeBuiness').attr('isclosedip','0');
+			closeBtnPart.find('.closeBuiness').attr('isclosedip','1');
 			closeBtnPart.find('.closeBuiness').addClass('btn-info');
 			closeBtnPart.find('.closeBuiness').removeClass('btn-primary');
 		}
-				
+		console.log(closeBtnPart.find('.closeBuiness').attr('isclosedip'))		
 	},function errF(jo){
 		pub.Alt(jo.message,false);
 	})
