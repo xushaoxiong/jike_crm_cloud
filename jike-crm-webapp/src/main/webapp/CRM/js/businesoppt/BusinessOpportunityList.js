@@ -56,11 +56,32 @@
 				Html+='<td class="salesuserName" userid=""><span class="username"></span>&nbsp;&nbsp;';
 					Html+='<img src="img/busimg1.png" class="editserver cursor"/></td>';
 				Html+='</td>';
-				Html+='<td class="serviceName">';
-				if(item.serviceList==""){
+			}else{
+				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
+				if(assignSale){
+					Html+='<img src="img/busimg1.png" class="editserver cursor"/>';
+				Html+='</td>';
+				}else{
+					Html+='</td>';
+				}
+			}
+			Html+='<td class="serviceName">';
+			if(item.serviceList==""){
+				if(item.businessOpportunityProcess=='信息收集'){
 					Html+='<div class="serviceNamewap"></div>';
-//					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+					Html+='</td>';
+				}else{
+					Html+='<div class="serviceNamewap"></div>';
 					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
+					Html+='</td>';
+				}
+			}else{
+				if(item.businessOpportunityProcess=='信息收集'){
+					Html+='<div class="serviceNamewap">';
+					$.each(item.serviceList, function(i2,item2) {
+						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
+					});
+					Html+='</div>';
 					Html+='</td>';
 				}else{
 					Html+='<div class="serviceNamewap">';
@@ -69,57 +90,55 @@
 					});
 					Html+='</div>';
 					if(assignSale){
-//						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
 						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 					Html+='</td>';
 					}else{
 						if(item.assignService){
-//							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
 							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
 						Html+='</td>';
 						}else{
 							Html+='</td>';
 						}
 					}	
-				}					
-				Html+='<td>'+item.businessOpportunityProcess+'</td>';
-			}else{
-				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
-					if(assignSale){
-//						Html+='<span class="glyphicon glyphicon-pencil cursor editserver"></span>';
-						Html+='<img src="img/busimg1.png" class="editserver cursor"/>';
-					Html+='</td>';
-					}else{
-						Html+='</td>';
-					}
-				Html+='<td>';
-				if(item.serviceList==""){
-					Html+='<div class="serviceNamewap"></div>';
-//					Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
-					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-					Html+='</td>';
-				}else{
-					Html+='<div class="serviceNamewap">';
-					$.each(item.serviceList, function(i2,item2) {
-						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
-					});
-					Html+='</div>';;
-					if(assignSale){
-//						Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
-						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-					Html+='</td>';
-					}else{
-						if(item.assignService){
-//							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
-							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-						Html+='</td>';
-						}else{
-							Html+='</td>';
-						}
-					}
-				}	
-				Html+='<td>'+item.businessOpportunityProcess+'</td>';
-			}
+				}
+				
+			}					
+			Html+='<td>'+item.businessOpportunityProcess+'</td>';
+//			}
+//			else{
+//				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
+//					if(assignSale){
+//						Html+='<img src="img/busimg1.png" class="editserver cursor"/>';
+//					Html+='</td>';
+//					}else{
+//						Html+='</td>';
+//					}
+//				Html+='<td>';
+//				if(item.serviceList==""){
+//					Html+='<div class="serviceNamewap"></div>';
+//					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
+//					Html+='</td>';
+//				}else{
+//					Html+='<div class="serviceNamewap">';
+//					$.each(item.serviceList, function(i2,item2) {
+//						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
+//					});
+//					Html+='</div>';;
+//					if(assignSale){
+//						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
+//					Html+='</td>';
+//					}else{
+//						if(item.assignService){
+////							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
+//							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
+//						Html+='</td>';
+//						}else{
+//							Html+='</td>';
+//						}
+//					}
+//				}	
+//				Html+='<td>'+item.businessOpportunityProcess+'</td>';
+//			}
 			Html+='<td class="operBtn-wap">';
 			if(item.authority==0){
 				Html+='<button class="btn btn-primary edit">编辑</button>';
@@ -150,6 +169,7 @@
 		Html+='</tr>';
 		});
 		$('.list-tr').html(Html);
+		
 	}
 
 	//点击页码

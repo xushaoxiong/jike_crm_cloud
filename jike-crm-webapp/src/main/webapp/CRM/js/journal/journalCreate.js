@@ -174,13 +174,29 @@ $(function(){
 	})
 	//提交费用
 	$('.reachConfirm').click(function(){
+		var inp7=$.trim($('.reachInp7').val());
+		var inp8=$.trim($('.reachInp8').val());
 		var totalReach=0;
 		for (var i=0;i<$('.ReachInp').length;i++) {
 			totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
 		}
+		if(inp7!==''&&inp8===''){
+			console.log($.trim($('.reachInp8').val()))
+			pub.Alt('请填写垫付人',false);
+			return;
+		}
 		$('.totalCost').modal('hide');
 		$('.btnCost').html(totalReach.toFixed(2));
 		
+	})
+	//填写垫付费用时垫付人出现
+	$('.reachInp7').keyup(function(){
+		if($('.reachInp7').val()!=''){
+			$('.payperson').show();
+			$('.reachInp8').val('');
+		}else{
+			$('.payperson').hide();
+		}
 	})
 	//添加信息按钮状态
 	function messbtnType(){
@@ -288,7 +304,7 @@ $(function(){
 		}
 		//拜访客户
 		if(eveid=='3'){
-			if(Mesclic&& beginid==(eveid+spcid+OpptunityId+OpptunityId)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				//达成合作意向
@@ -299,7 +315,7 @@ $(function(){
 							$('.FillInfo').html(vistInformation());
 							visitordata(jo);
 							Mesclic=true;	
-							beginid=eveid+spcid+OpptunityId+OpptunityId;
+							beginid=eveid+spcid+OpptunityId;
 						},function errF(jo){
 							pub.Alt(jo.message,false);
 						})
@@ -311,7 +327,7 @@ $(function(){
 							$('.FillInfo').html(vistInformation());
 							visitordata(jo);
 							Mesclic=true;	
-							beginid=eveid+spcid+OpptunityId+OpptunityId;
+							beginid=eveid+spcid+OpptunityId;
 						},function errF(jo){
 							pub.Alt(jo.message,false);
 						})
@@ -322,7 +338,7 @@ $(function(){
 		}
 		//谈判
 		if(eveid=='4'){
-			if(Mesclic&& beginid==(eveid+spcid+OpptunityId+OpptunityId)){
+			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
 				$.getScript("js/journal/tanpanInfo.js",function(){
