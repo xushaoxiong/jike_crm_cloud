@@ -25,15 +25,15 @@
 	<body>
 		<div class="container-fluid" id="index">
 			<!--头部-->
-		<header class="nav row navbar-fixed-top">
+		<header class="nav navbar-fixed-top">
 			<img src="img/logo.png" class="logo"/>
-			<ul class="pull-right list-inline nav-list" style="padding-right: 60px;">
+			<ul class="pull-right list-inline nav-list" style="margin-right:3.1%;">
 				<li><img src="img/2.png" class="img-circle my-photo img-responsive" style="margin-top:18.5px;"/></li>
-				<li class="dropdown" style="padding-right: 15px;">
-					<a class="dropdown-toggle" data-toggle='dropdown' >
-						<span class="indexName"></span><span class="caret"></span>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle='dropdown' style="padding: 0 5% 0 0;" >
+						<span class="indexName" style="padding:0 13% 0 1.3%;"></span><span class="caret"></span>
 					</a>
-					<ul class="dropdown-menu" role='menu' style="left: 40px;">
+					<ul class="dropdown-menu" role='menu' style="left:-35%;min-width: 115px;">
 						<li><a href="updateUserPassword.html">修改密码</a></li>
 						<li><a class="loginOut">安全退出</a></li>
 					</ul>
@@ -49,11 +49,15 @@
 			<!--右侧load内容-->
 			<div class="R-container  pull-left">
 				<!--面包屑导航-->
-				<ol class="breadcrumb" style="margin-bottom:15px;">
-				  <!--<li><a>首页</a></li>
-				  <li><a>我的书</a></li>
-				  <li class="active">《图解CSS3》</li>-->
-				</ol> 
+				<div class="breadcrumbwap">
+					<span class="pull-left">位置：</span>
+					<ol class="breadcrumb">
+					  <!--<li><a>首页</a></li>
+					  <li><a>我的书</a></li>
+					  <li class="active">《图解CSS3》</li>-->
+					</ol> 
+				</div>
+				
 				<!--加载内容-->
 				<div class="R-wap">
 					<p class="R-First" style="font-size: 25px;font-weight: bold;padding: 15px;">欢迎登陆CRM-1.0系统!</p>

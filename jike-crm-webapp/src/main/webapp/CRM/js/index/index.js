@@ -1,9 +1,10 @@
 $(function(){
-	$('.L-wap,.R-container').height($(window).height()-80);
+	$('.L-wap').height($(window).height()-80);
+	$('.R-container').height($(window).height()-100);
 	$(window).resize(function(){
-		$('.L-wap,.R-container').height($(window).height()-80);
+		$('.L-wap').height($(window).height()-80);
+		$('.R-container').height($(window).height()-100);
 	})
-	
 	
 		//列表
 	$.ajax({
@@ -41,11 +42,14 @@ $(function(){
 					NavHtml+='</div>';
 					NavHtml+='</li>';
 				}else{
-					NavHtml+='<img src="img/creat.png"/>';
+					NavHtml+='<img src="img/creat.png" class="creat"/>';
 					NavHtml+='</div>';
 					NavHtml+='<ul class="hide-menu">';
 					$.each(item.menu2,function(i2,item2){
-					NavHtml+='<li menuId="'+item2.menuId+'" url="'+item2.sourceUrl+'"><a><span class="circle"></span>'+item2.menuName+'</a></li>';
+					NavHtml+='<li menuId="'+item2.menuId+'" url="'+item2.sourceUrl+'">';
+						NavHtml+='<span class="circle"></span>';
+						NavHtml+='<a>'+item2.menuName+'</a>';
+						NavHtml+='</li>';
 				})	
 				NavHtml+='</ul>';
 				NavHtml+='</li>';
@@ -66,7 +70,7 @@ $(function(){
 	
 	$('.L-list').on('click','.hide-menu li',function(){
 		//跳转链接是面包屑导航出现breadcrumb
-		$('.breadcrumb').show();
+		$('.breadcrumbwap').show();
 		$('.hide-menu li').removeClass('menuCheck');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
