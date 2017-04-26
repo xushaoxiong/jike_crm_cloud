@@ -72,6 +72,7 @@ $('.editInfo').on('keyup','.inp4',function(){
 		$('.suppotrDetail').hide();
 	}else{
 		$('.suppotrDetail').show();
+		$('.inp5').val('');
 	}
 })
 //试用结果详情提交
