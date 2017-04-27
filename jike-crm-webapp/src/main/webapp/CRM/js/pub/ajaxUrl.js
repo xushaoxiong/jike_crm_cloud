@@ -11,6 +11,11 @@
 			success:function(jo){
 				if(jo.state=='success'){
 					succF(jo)
+				}else if(jo.state=='unLogin'){
+					pub.Alt(jo.message,false);
+					$('.confirm').click(function(){
+						window.location.href='login.html';
+					})
 				}else{
 					errF(jo)
 				}

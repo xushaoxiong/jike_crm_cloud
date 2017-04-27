@@ -31,6 +31,9 @@
 	})
 	//编辑确定
 	$('.editConfirm').click(function(){
+		breadnav('商机管理','查询商机');
+		$('.L-list-item').find('li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=5]').addClass('menuCheck');
 		$('.newlist-alert').html('');
 		var businessJ={};
 		var businessName=$('.businessName').val();

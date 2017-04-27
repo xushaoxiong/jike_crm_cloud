@@ -21,6 +21,9 @@
 	//返回上一级
 	$('.goBack').click(function(){
 		$('.R-wap').load('journal/journalList.html');
+		breadnav('日志管理','查看日志');
+		$('.L-list-item').find('li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
 	})
 	function worktimeNum(obj){
 	console.log((obj.value)*10%5)
@@ -46,14 +49,16 @@
 	$('.reachConfirm').click(function(){
 		var totalReach=0;
 		for (var i=0;i<$('.ReachInp').length;i++) {
-			totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
+			
+			if($('.reachInp'+(i+1)).val()!=''){
+				totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
+			}
 		}
 		$('.totalCostwap').modal('hide');
 		$('.btnCost').html(totalReach.toFixed(2));
 		
 	});
 	$('.reachInp7').keyup(function(){
-		console.log(1111)
 		if($('.reachInp7').val()==''){
 			$('.payperson').hide();
 			$('.reachInp8').val('');
@@ -65,6 +70,9 @@
 	var jourInJ={};
 	var commonJson={};
 	$('.journaConfirm').click(function(){
+		breadnav('日志管理','查看日志');
+		$('.L-list-item').find('li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var specEvent=$('.specEvent').val();
 		infodetail(commonJson);

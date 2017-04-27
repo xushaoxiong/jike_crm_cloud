@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* =reset 网页样式重置
 ------------------------------------------------------------------------------------------------------------------------------*/
-html{font:"Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;}
+html{font:"方正兰亭黑简体", '微软雅黑' SimHei, "\5B8B\4F53", simsun, sans-serif;}
 html,body{font-family: "微软雅黑";font-size: 14px;}
 input:focus{ outline: none; }
 input,button,select,textarea{outline:none;/*-webkit-appearance:none;*//*强制去除表单自带的样式*/ }

@@ -25,6 +25,9 @@ $(function(){
 	//返回上一级
 	$('.goBack').click(function(){
 		$('.R-wap').load('journal/journalList.html');
+		breadnav('日志管理','查看日志');
+		$('.L-list-item').find('li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
 	})
 	
 	//商机名称弹框状态如果事项类型未选择商机名称不能点击
@@ -121,13 +124,16 @@ $(function(){
 		}
 		//判断日常事项统一商机名称和流水号
 		if(eveid=='8'){
+			console.log(111)
 			$('.businessNameSp').html('日常商机名称');
 			$('.businesNumbspInp').html('R0000000-00');
-			$('.businessNameSp').attr('disabled',true);
+			$('.busnamState').removeClass('businessNameSp');
+			$('.busnamState').attr('disabled',true);
 		}else{
 			$('.businessNameSp').html('');
 			$('.businesNumbspInp').html('');
-			$('.businessNameSp').attr('disabled',false);
+			$('.busnamState').addClass('businessNameSp');
+			$('.busnamState').attr('disabled',false);
 		}
 		
 		messbtnType();
@@ -180,8 +186,11 @@ $(function(){
 		var inp8=$.trim($('.reachInp8').val());
 		var totalReach=0;
 		for (var i=0;i<$('.ReachInp').length;i++) {
-			totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
+			if($('.reachInp'+(i+1)).val()!=''){
+				totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
+			}
 		}
+		
 		if(inp7!==''&&inp8===''){
 			console.log($.trim($('.reachInp8').val()))
 			pub.Alt('请填写垫付人',false);
@@ -539,5 +548,9 @@ $(function(){
 		
 	})
 
-
+	$('.journaConfirm').click(function(){
+		breadnav('日志管理','查看日志');
+		$('.L-list-item').find('li').removeClass('menuCheck');
+		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
+	})
 })
