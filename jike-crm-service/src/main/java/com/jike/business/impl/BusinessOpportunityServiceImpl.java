@@ -209,7 +209,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			userIds = null;	
 		}
 		if (roleId != 2) {// 非商务只能查看自己创建的日志
-			if(userList.contains(userId)){
+			if(userIds.contains(userId)){
 				userIds.add(userId);
 			}else{
 				userIds.add(-1L);
