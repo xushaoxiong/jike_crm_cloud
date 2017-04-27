@@ -80,17 +80,12 @@ function trialInfo(boInTrial){
 	boInTrial.trialMachineNum=$.trim($('.triamModalNumb').val());
 
 }
-//选择年级
-$('.FillInfo').on('click','.gradeWap li',function(){
+////选择年级
+
+$('.FillInfo').on('click','.gradeWap li',function(event){
 	$(this).toggleClass('check');
 })
-$('.gradeWap li').click(function(){
-	$(this).toggleClass('check');
-})
-$('.FillInfo').on('click','.disciplineWap li',function(){
-	$(this).toggleClass('check');
-})
-$('.disciplineWap li').click(function(){
+$('.FillInfo').bind('click','.disciplineWap li',function(){
 	$(this).toggleClass('check');
 })
 //提交试用中详情信息

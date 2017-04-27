@@ -37,8 +37,8 @@ function visitPlan(){
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>拜访人联系方式</label>';
 				vPhtml+='<div class="form-inline col-md-6 col-ms-10 contact-wap" style=padding:0;>';
-					vPhtml+='<input type="text" value="" placeholder="（座机）" class="form-control contactLine" />';
-					vPhtml+='<input type="text" value="" placeholder="（手机）" class="form-control contactPhone"/>';
+					vPhtml+='<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control contactLine" />';
+					vPhtml+='<input type="text" value="" placeholder="（手机）例：133********" class="form-control contactPhone"/>';
 					vPhtml+='<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
 					vPhtml+='<input type="text" value="" placeholder="（QQ）" class="form-control nomarg contactQq"/>';
 					vPhtml+='<input type="text" value="" placeholder="（微信）" class="form-control nomarg contactWechat"/>';

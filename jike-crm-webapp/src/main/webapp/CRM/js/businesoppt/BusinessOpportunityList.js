@@ -104,41 +104,6 @@
 				
 			}					
 			Html+='<td>'+item.businessOpportunityProcess+'</td>';
-//			}
-//			else{
-//				Html+='<td class="salesuserName" userid="'+item.distributeUserId+'"><span class="username">'+item.distributeUserName+'</span>&nbsp;&nbsp;';
-//					if(assignSale){
-//						Html+='<img src="img/busimg1.png" class="editserver cursor"/>';
-//					Html+='</td>';
-//					}else{
-//						Html+='</td>';
-//					}
-//				Html+='<td>';
-//				if(item.serviceList==""){
-//					Html+='<div class="serviceNamewap"></div>';
-//					Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-//					Html+='</td>';
-//				}else{
-//					Html+='<div class="serviceNamewap">';
-//					$.each(item.serviceList, function(i2,item2) {
-//						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
-//					});
-//					Html+='</div>';;
-//					if(assignSale){
-//						Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-//					Html+='</td>';
-//					}else{
-//						if(item.assignService){
-////							Html+='<span class="glyphicon glyphicon-plus plusOppt cursor"></span>';
-//							Html+='<img src="img/busimg2.png" class="plusOppt cursor" />';
-//						Html+='</td>';
-//						}else{
-//							Html+='</td>';
-//						}
-//					}
-//				}	
-//				Html+='<td>'+item.businessOpportunityProcess+'</td>';
-//			}
 			Html+='<td class="operBtn-wap">';
 			if(item.authority==0){
 				Html+='<button class="btn btn-primary edit">编辑</button>';
@@ -178,6 +143,7 @@
 		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
 		list(jo.businessOpportunityList,jo.assignSale);
 		businesnamestrb();
+		serviceNamestrb();
 		cartePage(jo);
 	},function errF(){
 		pub.Alt(jo.message,false);
@@ -196,13 +162,36 @@
 		}
 		
 	}
+	//服务人员名字数限制
+	function serviceNamestrb(){
+		for (var i=0;i<$('.serviceNamewap').length;i++) {
+			var servernameArry='';
+			var servicesp=$('.serviceNamewap').eq(i).find('span');
+			if($('.serviceNamewap').eq(i).find('span').length>3){
+				var serverName1=$('.serviceNamewap').eq(i).find('span').eq(0).html();
+				var serverName2=$('.serviceNamewap').eq(i).find('span').eq(1).html();
+				var serverName3=$('.serviceNamewap').eq(i).find('span').eq(2).html();
+				$('.serviceNamewap').eq(i).html(serverName1+serverName2+serverName3+'...');
+				$('.serviceNamewap').eq(i).attr('data-toggle','tooltip');
+				$('.serviceNamewap').eq(i).attr('data-placement','bottom');
+				$('.serviceNamewap').eq(i).addClass('cursorm');
+			}
+			for (var j=0;j<servicesp.length;j++) {
+				servernameArry+=servicesp.eq(j).html();
+				
+			}
+			$('.serviceNamewap').eq(i).attr('title',servernameArry);
+		}
 	
+		
+	}
 	//搜索
 	$('.searchBusiness').click(function(){
 		var OpportunityName=$.trim($('.OpportunityName').val());
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());
 		var OpportunityProcess=$('.OpportunityProcess').find('option:selected').val();
+		var salesname=$.trim($('.salesname').val());
 		if(OpportunityProcess=="所有"){
 			paginatorJ.businessOpportunityProcess="";
 		}else{
@@ -211,6 +200,7 @@
 		paginatorJ.businessOpportunityName=OpportunityName;
 		paginatorJ.startTime=startTime;
 		paginatorJ.endTime=endTime;
+		paginatorJ.userName=salesname;
 		paginatorJ.start=1;
 		clickPage(paginatorJ);
 	})

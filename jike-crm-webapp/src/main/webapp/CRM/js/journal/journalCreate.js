@@ -228,6 +228,7 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
+		$('.FillInfo').off('click');
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
@@ -237,10 +238,9 @@ $(function(){
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		var eventType=$('#eventType').find('option:selected').val();
-		
-		
+
 		//面包屑导航
-		breadnav(Fht,netht,eventType);
+		breadnav(Fht,'创建日志',eventType);
 		
 		$('#addJournal').hide();
 		$('.FillInfo').show();

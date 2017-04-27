@@ -95,8 +95,8 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2">联系人联系方式</label>';
 				html+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
-					html+='	<input type="text" value="" placeholder="（座机）" class="form-control contactLandline" />';
-					html+='	<input type="text" value="" placeholder="（手机）" class="form-control contactPhone"/>';
+					html+='	<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control contactLandline" />';
+					html+='	<input type="text" value="" placeholder="（手机）例：133********" class="form-control contactPhone"/>';
 					html+='	<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
 					html+='	<input type="text" value="" placeholder="（QQ）" class="form-control nomarg contactQq"/>';
 					html+='	<input type="text" value="" placeholder="（微信）" class="form-control nomarg contactWechat"/>';
@@ -131,8 +131,8 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2">决策人联系方式</label>';
 				html+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
-					html+='	<input type="text" value="" placeholder="（座机）" class="form-control decisionMakerLandline" />';
-					html+='	<input type="text" value="" placeholder="（手机）" class="form-control decisionMakerPhone"/>';
+					html+='	<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control decisionMakerLandline" />';
+					html+='	<input type="text" value="" placeholder="（手机）例：133********" class="form-control decisionMakerPhone"/>';
 					html+='	<input type="text" value="" placeholder="（邮箱）" class="form-control decisionMakerEmail"/>';
 					html+='	<input type="text" value="" placeholder="（QQ）" class="form-control nomarg decisionMakerQq"/>';
 					html+='	<input type="text" value="" placeholder="（微信）" class="form-control nomarg decisionMakerWechat"/>';

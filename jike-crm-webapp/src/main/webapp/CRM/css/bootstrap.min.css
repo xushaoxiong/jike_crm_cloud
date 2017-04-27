@@ -3688,12 +3688,12 @@ textarea.input-lg {
 	outline-offset: -2px
 }
 
-.btn.focus,
+/*.btn.focus,
 .btn:focus,
 .btn:hover {
 	color: #333;
 	text-decoration: none
-}
+}*/
 
 .btn.active,
 .btn:active {
