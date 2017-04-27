@@ -3,6 +3,7 @@ $('.delJournal').click(function(){
 })
 //列表查询
 	var paginatorJ={"businessOpportunityName":"","start":1,"pageSize":10};
+
 	//分页
 	var cartePage=function(jo){
 		var options={
@@ -93,6 +94,7 @@ $('.delJournal').click(function(){
 		var endTime=$.trim($('#enddate').val());
 		var OpportunityProcess=$('.OpportunityProcess').find('option:selected').val();
 		var userName=$.trim($('.creatName').val());
+		
 		if(OpportunityProcess=="所有"){
 			paginatorJ.eventType="";
 		}else{

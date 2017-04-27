@@ -90,22 +90,20 @@ $(function(){
 			netht=thisHtml;
 		});
 		breadnav(menuname,thisHtml);
-		if($(this).attr('menuid')==7){
-			$('.breadcrumb').on('click','.curBack',function(){
-				breadnav(menuname,'编辑日志');
-				$('.editInfo').hide();
-				$('#addJournal').show();
+		$('.breadcrumb').on('click','.curBack',function(){
+			if($('.menuCheck').attr('menuid')==6){
 				
-			})	
-		}
-		if($(this).attr('menuid')==6){
-			$('.breadcrumb').on('click','.curBack',function(){
 				breadnav(menuname,thisHtml);
 				$('.FillInfo').hide();
 				$('#addJournal').show();
-			
-			})	
-		}
+			}
+			if($('.menuCheck').attr('menuid')==7){
+				breadnav(menuname,'编辑日志');
+				$('.editInfo').hide();
+				$('#addJournal').show();
+			}
+		
+		})	
 	
 	})	
 	//修改密码
