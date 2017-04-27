@@ -205,16 +205,21 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			}else{
 				userIds.add(-1L);
 			}
+			if (roleId != 2) {// 非商务只能查看自己创建的日志
+				if(userIds.contains(userId)){
+					userIds.add(userId);
+				}else{
+					userIds.add(-1L);
+				}
+			}
 		}else{
-			userIds = null;	
-		}
-		if (roleId != 2) {// 非商务只能查看自己创建的日志
-			if(userIds.contains(userId)){
-				userIds.add(userId);
+			if(roleId == 2){
+				userIds = null;	
 			}else{
-				userIds.add(-1L);
+				userIds.add(userId);
 			}
 		}
+		
 		if (roleId == 2) {// 商务查看所有角色
 			resultJson.put("assignSale", true);//指派销售权限
 		}else{
