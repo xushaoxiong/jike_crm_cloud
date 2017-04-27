@@ -29,6 +29,9 @@
 		.plusOppt,.editserver{
 			width: 16px;
 		}
+		.search-main label{
+			min-width: 0 !important;
+		}
 	</style>
 	<body>
 		<div class="container-fluid listContainer">
@@ -37,34 +40,43 @@
 				<button class="btn btn-primary newlist">创建商机+</button>
 			</div>
 			<p class="text-danger text-center alertTitle"></p>
-			<div class="search-main form-inline row">
-				<div class="form-group">
-					<label>商机名称&nbsp;</label>
-					<input type="text" class="form-control OpportunityName" placeholder="名称"/>
+			<div class="search-main row">
+				<div class="col-sm-3">
+					<label class="pull-left">商机名称</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control OpportunityName" placeholder="商机名称"/>
+					</div>
 				</div>
-				<div class="form-group">
+				<div class="col-sm-4">
 					
-	            	<label>创建日期&nbsp;</label>
-        			<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
-        				<span style="padding: 9px;">至</span>
-    				<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="" style="width:30%;">
+	            	<label class="pull-left">创建日期</label>
+	            	<div class="col-sm-4">
+	            		<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+	            	</div>
+					<span style="float: left;display: inline-block;line-height: 34px;padding: 0 2px;">至</span>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+					</div>
+    				
 	            </div>
-	            <div class="form-group">
-	            	<label>商机进度&nbsp;</label>
-	            	<select class="form-control OpportunityProcess">
-	            		<option proid='1'>所有</option>
-	            		<option>信息收集</option>
-	            		<option>信息收集完成</option>
-	            		<option>准备拜访</option>
-	            		<option>拜访</option>
-	            		<option>谈判</option>
-	            		<option>待试用</option>
-	            		<option>试用中</option>
-	            		<option>待招投标</option>
-	            		<option>招投标</option>
-	            		<option>签约准备</option>
-	            		<option>签约完成</option>
-	            	</select>
+	            <div class="col-sm-4">
+	            	<label class="pull-left">商机进度</label>
+	            	<div class="col-sm-6">
+	            		<select class="form-control OpportunityProcess">
+		            		<option proid='1'>所有</option>
+		            		<option>信息收集</option>
+		            		<option>信息收集完成</option>
+		            		<option>准备拜访</option>
+		            		<option>拜访</option>
+		            		<option>谈判</option>
+		            		<option>待试用</option>
+		            		<option>试用中</option>
+		            		<option>待招投标</option>
+		            		<option>招投标</option>
+		            		<option>签约准备</option>
+		            		<option>签约完成</option>
+		            	</select>
+	            	</div>
 	            </div>
 			</div>
 			<div class="row text-center" style="margin: 15px 0;">
@@ -123,12 +135,12 @@
 		</div>
 		<!--修改销售人员弹框-->
 		<div class="modal" id="editsaletModal">
-			<div class="modal-dialog modal-sm">
+			<div class="modal-dialog modal-md">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4>修改销售人员</h4>
 					</div>
-					<div class="modal-body clearfix">
+					<div class="modal-body clearfix" style="max-height: 400px;overflow-y: scroll;">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
@@ -163,12 +175,12 @@
 		</div>
 		<!--添加服务人员弹框-->
 		<div class="modal" id="opptModal">
-			<div class="modal-dialog modal-sm">
+			<div class="modal-dialog modal-md" >
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4>指派服务人员</h4>
 					</div>
-					<div class="modal-body clearfix">
+					<div class="modal-body clearfix" style="max-height: 400px;overflow-y: scroll;">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>

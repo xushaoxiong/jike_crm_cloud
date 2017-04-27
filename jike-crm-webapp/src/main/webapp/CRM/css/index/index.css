@@ -53,7 +53,7 @@ body,html{
 }
 .navTitle .creat{width: 7.3%;}
 .hide-menu{display: none;}
-.L-list-item .menuname{color: #666;padding: 0 6px 0 10px;font-size: 16px;}
+.L-list-item .menuname{color: #ccc;padding: 0 6px 0 10px;font-size: 16px;}
 .L-list li{
 	line-height: 50px;
 	text-align: center;
@@ -91,11 +91,13 @@ label{
 	overflow-y: scroll;
 }
 .R-wap{
-	padding-top: 10px;
-	width: 98%;
-	margin: 0 auto;
-	padding-bottom:40px;
-	border: 1px solid #e2e2e3;
+    padding-top: 10px;
+    width: 98%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    border: 1px solid #e2e2e3;
+    padding-bottom: 25px;
+    margin-top: 28px;
 }
 .R-wapFirst{
 	padding-top: 0px;
@@ -161,7 +163,7 @@ textarea{resize: none;height: 100px !important;}
 .breadcrumbwap span:first-child{padding: 8px 0;}
 .breadcrumb {
     padding: 8px 0px;
-    margin-bottom: 20px;
+    margin-bottom:0 !important;
     list-style: none;
     background: transparent !important;
     border-radius: 0 !important;

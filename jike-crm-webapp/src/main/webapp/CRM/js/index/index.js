@@ -78,7 +78,9 @@ $(function(){
 		//跳转链接是面包屑导航出现breadcrumb
 		$('.breadcrumbwap').show();
 		$('.hide-menu li').removeClass('menuCheck');
-		$('.R-wapFirst').addClass('R-wap');
+//		$('.R-wapFirst').addClass('R-wap');
+		$('.R').removeClass('R-wapFirst');
+		$('.R').addClass('R-wap');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
 		var thisHtml=$('.menuCheck').find('a').html();
@@ -90,7 +92,6 @@ $(function(){
 		breadnav(menuname,thisHtml);
 		if($(this).attr('menuid')==7){
 			$('.breadcrumb').on('click','.curBack',function(){
-				
 				breadnav(menuname,'编辑日志');
 				$('.editInfo').hide();
 				$('#addJournal').show();
@@ -109,7 +110,8 @@ $(function(){
 	})	
 	//修改密码
 	$('.changepwd').click(function(){
-		$('.R-wapFirst').addClass('R-wap');
+		$('.R').removeClass('R-wapFirst');
+		$('.R').addClass('R-wap');
 		$('.breadcrumbwap').show();
 		$('.breadcrumb').html('<li>修改密码</li>')
 		$('.R-wap').load('updateUserPassword.html');
