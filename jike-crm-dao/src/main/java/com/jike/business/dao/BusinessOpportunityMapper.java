@@ -71,13 +71,13 @@ public interface BusinessOpportunityMapper {
 	 * @param endTime
 	 * @param businessOpportunityProcess
 	 * @param roleId
-	 * @param userId
+	 * @param userIds
 	 * @return
 	 * @created wangyb
 	 * @createtime 2017年4月5日下午6:04:51
 	 */
 	int getBusinessOpportunityCount(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime, @Param("endTime")String endTime,
-			@Param("businessOpportunityProcess")String businessOpportunityProcess, @Param("userId")Long userId);
+			@Param("businessOpportunityProcess")String businessOpportunityProcess, @Param("userIds")List<Long> userIds);
 
 	/**
 	 * 分页查询商机
@@ -85,7 +85,7 @@ public interface BusinessOpportunityMapper {
 	 * @param startTime
 	 * @param endTime
 	 * @param businessOpportunityProcess
-	 * @param userId
+	 * @param userIds
 	 * @param startPosition
 	 * @param pageSize
 	 * @return
@@ -93,7 +93,7 @@ public interface BusinessOpportunityMapper {
 	 * @createtime 2017年4月6日上午8:42:42
 	 */
 	List<java.util.Map<String, Object>> getBusinessOpportunityByPage(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime, @Param("endTime")String endTime,
-			@Param("businessOpportunityProcess")String businessOpportunityProcess, @Param("userId")Long userId,@Param("start")Integer start, @Param("pageSize")Integer pageSize);
+			@Param("businessOpportunityProcess")String businessOpportunityProcess, @Param("userIds")List<Long> userIds,@Param("start")Integer start, @Param("pageSize")Integer pageSize);
 
 	/**
 	 * 通过商机名称查询商机

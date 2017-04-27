@@ -289,8 +289,12 @@
 		<if test="businessOpportunityProcess != null">
 			and bo.business_opportunity_process = #{businessOpportunityProcess,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		<if test="userIds != null">
+			and sbo.user_id in
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
   </select>
   <select id="getBusinessOpportunityByPage" resultType="java.util.Map">
@@ -320,8 +324,12 @@
 		<if test="businessOpportunityProcess != null">
 			and bo.business_opportunity_process = #{businessOpportunityProcess,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		<if test="userIds != null">
+			and sbo.user_id in
+			<foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
 		order by bo.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 

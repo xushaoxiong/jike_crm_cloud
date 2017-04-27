@@ -1,5 +1,6 @@
 package com.jike.business.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -9,16 +10,19 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
+import com.jike.business.dao.BoProcessHistoryMapper;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.CityAreaCodeMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
+import com.jike.business.model.BoProcessHistory;
 import com.jike.business.model.BusinessOpportunity;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
@@ -40,6 +44,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private UserService userService;
 	@Autowired
 	private BusinessOpportunityLogService businessOpportunityLogService;
+	@Autowired
+	private BoProcessHistoryMapper boProcessHistoryMapper;
 	@Autowired
 	private CityAreaCodeMapper cityAreaCodeMapper;
 
@@ -70,10 +76,19 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunity.setCreateTime(createTime);
 			businessOpportunity.setIsClosed(0);//商机是否关闭 0-否 1-是
 			businessOpportunityMapper.insert(businessOpportunity);
+			
+			BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityNum);
+			//添加商机进度
+			BoProcessHistory boProcessHistory = new BoProcessHistory();
+			boProcessHistory.setBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
+			boProcessHistory.setBusinessOpportunityProcess("信息收集");
+			boProcessHistory.setCreateBy(userId);
+			boProcessHistory.setCreateTime(new Date());
+			boProcessHistory.setLogDate(new Date());
+			boProcessHistoryMapper.insert(boProcessHistory);
 			Long roleId = json.getLong("roleId");
 			if (roleId == 3) {// 只有销售才分配商机
 				//分配商机
-				BusinessOpportunity businessOpportunityOld = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityNum);
 				SaleBusinessOpportunity saleBusinessOpportunity = new SaleBusinessOpportunity();
 				saleBusinessOpportunity.setBusinessOpportunityId(businessOpportunityOld.getBusinessOpportunityId());
 				saleBusinessOpportunity.setDistributionTime(createTime);//分配时间
@@ -176,16 +191,39 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
+		List<Long> userIds = new ArrayList<Long>();
+		
+		String userName = queryJson.getString("userName");
+		List<User> userList = null;
+		if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
+			userName = "%"+userName+"%";
+			 userList = userService.querySaleAndServiceByUserName(userName);
+			if(!userList.isEmpty()){
+				for (User user : userList) {
+					userIds.add(user.getUserId());
+				}
+			}else{
+				userIds.add(-1L);
+			}
+		}else{
+			userIds = null;	
+		}
+		if (roleId != 2) {// 非商务只能查看自己创建的日志
+			if(userList.contains(userId)){
+				userIds.add(userId);
+			}else{
+				userIds.add(-1L);
+			}
+		}
 		if (roleId == 2) {// 商务查看所有角色
-			userId = null;
 			resultJson.put("assignSale", true);//指派销售权限
 		}else{
 			resultJson.put("assignSale", false);////指派权限
 		}
 		
-		int totalCount = businessOpportunityMapper.getBusinessOpportunityCount(businessOpportunityName,startTime,endTime,businessOpportunityProcess,userId);
+		int totalCount = businessOpportunityMapper.getBusinessOpportunityCount(businessOpportunityName,startTime,endTime,businessOpportunityProcess,userIds);
 		int startPosition = (start - 1) * pageSize;
-		List<Map<String,Object>> businessOpportunityList = businessOpportunityMapper.getBusinessOpportunityByPage(businessOpportunityName,startTime,endTime,businessOpportunityProcess,userId,startPosition,pageSize);
+		List<Map<String,Object>> businessOpportunityList = businessOpportunityMapper.getBusinessOpportunityByPage(businessOpportunityName,startTime,endTime,businessOpportunityProcess,userIds,startPosition,pageSize);
 		JSONArray businessOpportunityArr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (Map<String, Object> businessOpportunityMap : businessOpportunityList) {
@@ -452,6 +490,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunity.setUpdateBy(json.getLong("userId"));
 			businessOpportunity.setUpdateTime(json.getDate("nowDate"));
 			businessOpportunityMapper.updateByPrimaryKeySelective(businessOpportunity);
+			//添加商机进度历史
+			BoProcessHistory boProcessHistory = new BoProcessHistory();
+			boProcessHistory.setBusinessOpportunityId(businessOpportunityId);
+			boProcessHistory.setBusinessOpportunityProcess(businessOpportunityProcess);
+			boProcessHistory.setCreateBy(json.getLong("userId"));
+			boProcessHistory.setCreateTime(new Date());
+			boProcessHistory.setLogDate(json.getDate("logDate"));
+			boProcessHistoryMapper.insert(boProcessHistory);
 		}
 	}
 	

@@ -334,7 +334,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
 						&&decisionMakerName!=null&&decisionMakerTitle!=null){
 					//修改商机进度
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成",logData.getDate("logDate"));
 				}
 			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
 				if(informationSources!=null&&mainScope!=null
@@ -342,7 +342,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 						(contactLandline!=null||contactPhone!=null||contactEmail!=null||contactQq!=null||contactWechat!=null)
 						&&decisionMakerName!=null&&decisionMakerTitle!=null){
 					//修改商机进度
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"信息收集完成",logData.getDate("logDate"));
 				}
 			}
 			
@@ -425,7 +425,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boVisitPlan.setInPlaning(0);//第一次添加处于激活状态
 			boVisitPlanMapper.insert(boVisitPlan);
 			//修改商机进度
-			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访");
+			this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"准备拜访",logData.getDate("logDate"));
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
@@ -542,9 +542,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				//修改商机进度
 				String specificEvent = logData.getString("specificEvent");
 				if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访",logData.getDate("logDate"));
 				}else if("达成合作意向".equals(specificEvent)){
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判",logData.getDate("logDate"));
 				}
 			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
 				//如果是达成合作意向，保存合作详情
@@ -559,9 +559,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				}
 				//修改商机进度
 				if("找到决策人".equals(specificEvent)||"洽谈中".equals(specificEvent)){
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"拜访",logData.getDate("logDate"));
 				}else if("达成合作意向".equals(specificEvent)){
-					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+					this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备",logData.getDate("logDate"));
 				}
 			}
 			
@@ -606,13 +606,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("谈判中".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"谈判",logData.getDate("logDate"));
 			}else if("承诺试用".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待试用");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待试用",logData.getDate("logDate"));
 			}else if("承诺购买".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备",logData.getDate("logDate"));
 			}else if("走招投标流程".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标",logData.getDate("logDate"));
 			}
 			
 		}
@@ -676,7 +676,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("试用准备".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"试用中");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"试用中",logData.getDate("logDate"));
 			}
 		}
 		resultJson.put("state", "success");
@@ -715,9 +715,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("试用结果-承诺购买".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备",logData.getDate("logDate"));
 			}else if("试用结果-招投标".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"待招投标",logData.getDate("logDate"));
 			}
 			
 		}
@@ -764,9 +764,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("投标准备".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"招投标");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"招投标",logData.getDate("logDate"));
 			}else if("投标成功".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备",logData.getDate("logDate"));
 			}
 			
 		}
@@ -806,7 +806,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("投标成功".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约准备",logData.getDate("logDate"));
 			}
 			
 		}
@@ -872,7 +872,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("签约".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约完成");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"签约完成",logData.getDate("logDate"));
 			}
 			
 		}
@@ -914,7 +914,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//修改商机进度
 			String specificEvent = logData.getString("specificEvent");
 			if("采购".equals(specificEvent)){
-				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"采购完成");
+				this.updateBoProcess(jsonData, nowDate, businessOpportunityId,"采购完成",logData.getDate("logDate"));
 			}
 			
 		}
@@ -1196,12 +1196,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	
 	
 
-	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process) {
+	private void updateBoProcess(JSONObject jsonData, Date nowDate, Long businessOpportunityId, String process,Date logdate) {
 		JSONObject json = new JSONObject();
 		json.put("businessOpportunityId", businessOpportunityId);
 		json.put("businessOpportunityProcess", process);
 		json.put("userId", jsonData.getLong("userId"));
 		json.put("nowDate", nowDate);
+		json.put("logDate", logdate);
 		businessOpportunityService.updateBusinessOpportunityProcess(json);
 	}
 
@@ -1626,7 +1627,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boInformationCollect.setUpdateBy(userId);
 			boInformationCollect.setUpdateTime(nowDate);
 			boInformationCollectMapper.updateByPrimaryKeySelective(boInformationCollect);
-			updateBoProcessByInfoCollection(businessOpportunityLogOld.getBusinessOpportunityId(),commonJson,userId);
+			updateBoProcessByInfoCollection(businessOpportunityLogOld.getBusinessOpportunityId(),commonJson,userId,businessOpportunityLog.getLogDate());
 		
 		}else if("制定拜访计划".equals(businessOpportunityLog.getEventType())){
 			BoVisitPlan boVisitPlan =  commonJson.toJavaObject(BoVisitPlan.class);
@@ -1785,7 +1786,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 	}
 	
-	private void updateBoProcessByInfoCollection(Long businessOpportunityId, JSONObject boInformationCollectJson,Long userId) {
+	private void updateBoProcessByInfoCollection(Long businessOpportunityId, JSONObject boInformationCollectJson,Long userId,Date logDate) {
 		String informationSources = boInformationCollectJson.getString("informationSources");
 		if(StringUtils.isEmpty(informationSources)){
 			informationSources = null;
@@ -1897,7 +1898,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 							|| contactWechat != null)
 					&& decisionMakerName != null && decisionMakerTitle != null) {
 				// 修改商机进度
-				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
+				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成",logDate);
 			}
 		} else if (businessOpportunityJson.getInteger("businessOpportunityType") == 1) {// 合作伙伴
 			if (informationSources != null && mainScope != null && expectedCooperationType != null
@@ -1906,7 +1907,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 							|| contactWechat != null)
 					&& decisionMakerName != null && decisionMakerTitle != null) {
 				// 修改商机进度
-				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成");
+				this.updateBoProcess(jsonData, new Date(), businessOpportunityId, "信息收集完成",logDate);
 			}
 		}
 
