@@ -18,14 +18,9 @@ function vistInformation(){
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访人职位</label>';
 				vFhtml+='	<div class="col-md-2 col-sm-2">';
 					vFhtml+='	<select class="form-control contTitle">';
-						vFhtml+='	<option>校长</option>';
-						vFhtml+='	<option>教学副校长</option>';
-						vFhtml+='	<option>教务主任</option>';
-						vFhtml+='	<option>信息主任</option>';
-						vFhtml+='	<option>总务主任</option>';
-						vFhtml+='	<option>学科组长</option>';
-						vFhtml+='	<option>任课教师</option>';
-						vFhtml+='	<option>学校职工</option>';
+						vFhtml+='	<option>总经理</option>';
+						vFhtml+='	<option>经理</option>';
+						vFhtml+='	<option>销售</option>';
 						vFhtml+='	<option>其它</option>';
 					vFhtml+='	</select>';
 //					vFhtml+='	<input type="text" value="" placeholder="" class="form-control visPosit"/>';

@@ -324,6 +324,7 @@ $(function(){
 						$ajax('post','businessOpportunityLog/queryVisitPlanByBoId',busoptIdJ,function succF(jo){
 							var bInfoColet=jo.boInformationCollect;
 							$('.FillInfo').html(vistInformation());
+							pantercontTile();
 							visitordata(jo);
 							Mesclic=true;	
 							beginid=eveid+spcid+OpptunityId;
@@ -336,6 +337,11 @@ $(function(){
 						$ajax('post','businessOpportunityLog/queryVisitPlanByBoId',busoptIdJ,function succF(jo){
 							var bInfoColet=jo.boInformationCollect;
 							$('.FillInfo').html(vistInformation());
+							if(OpptunityId==0){
+								scolcontTile();
+							}else{
+								pantercontTile();
+							}
 							visitordata(jo);
 							Mesclic=true;	
 							beginid=eveid+spcid+OpptunityId;
