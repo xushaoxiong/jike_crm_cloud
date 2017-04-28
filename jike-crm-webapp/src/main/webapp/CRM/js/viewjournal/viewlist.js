@@ -181,7 +181,7 @@ $('.jourlist').on('click','.checkjounal',function(){
 		})
 	}
 	//培训
-	if(specType=='回款'){
+	if(eventType=='回款'){
 		$.getScript("js/viewjournal/viewreceivable.js",function(){
 			ajaxpub(logIdJ,receiveHtml);
 		})
