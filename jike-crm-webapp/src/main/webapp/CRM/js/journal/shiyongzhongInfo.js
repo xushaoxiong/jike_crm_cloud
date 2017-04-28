@@ -85,7 +85,7 @@ function trialInfo(boInTrial){
 $('.FillInfo').on('click','.gradeWap li',function(event){
 	$(this).toggleClass('check');
 })
-$('.FillInfo').bind('click','.disciplineWap li',function(){
+$('.FillInfo').on('click','.disciplineWap li',function(){
 	$(this).toggleClass('check');
 })
 //提交试用中详情信息

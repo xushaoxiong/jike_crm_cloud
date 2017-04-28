@@ -17,13 +17,14 @@
 		resize: none;
 		height: 100px !important;
 	}
-	.plan-wap .planbtn-group{margin-left: 8%;margin-bottom: 10px;}
+	/*.plan-wap .planbtn-group{margin-left: 8%;margin-bottom: 10px;}*/
 	.plan-wap .planbtn-group .btn{padding: 6px 25px;}
 	.plan-wap .contact-wap .form-control{margin-bottom: 15px;}
 	.plan-wap .contact-wap .nomarg{margin-bottom: 0;}
 	.plan-wap .bomlist .check{
-		/*background: url('img/checked.png') no-repeat left top;*/
-		/*background-size:15px;*/
 		background: #105598;
 		color: #fff;
+	}
+	.message-wap label{
+		min-width: 140px !important;
 	}

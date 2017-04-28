@@ -471,6 +471,7 @@ $('.reset').click(function(){
 	$('.OpportunityName').val('');
 	$('#indate').val('');
 	$('#enddate').val('');
+	$('.salesname').val('');
 	$('.OpportunityProcess').find('option[proid="1"]').prop('selected',true);
 })
 //商机预览
