@@ -187,8 +187,12 @@ public class UserServiceImpl implements UserService {
 					userJson.put("phone", user.getPhone());
 					userJson.put("email", user.getEmail());
 					userJson.put("employeeNum", user.getEmployeeNum());
-					userJson.put("isEmployment", user.getIsEmployment()==0?"在职":"离职");
+					if(user.getIsEmployment()!=null){
+						userJson.put("isEmployment", user.getIsEmployment()==0?"在职":"离职");
+					}
+					if(user.getEntryDate()!=null){
 					userJson.put("entryDate", DateUtil.getDateFormat(user.getEntryDate()));
+					}
 					userArr.add(userJson);
 				}
 			}
