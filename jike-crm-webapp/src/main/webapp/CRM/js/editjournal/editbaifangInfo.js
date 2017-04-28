@@ -19,15 +19,15 @@ function vistInformation(){
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访人职位</label>';
 				vFhtml+='	<div class="col-md-3 col-sm-5">';
 					vFhtml+='	<select class="form-control contTitle">';
-						vFhtml+='	<option>校长</option>';
-						vFhtml+='	<option>教学副校长</option>';
-						vFhtml+='	<option>教务主任</option>';
-						vFhtml+='	<option>信息主任</option>';
-						vFhtml+='	<option>总务主任</option>';
-						vFhtml+='	<option>学科组长</option>';
-						vFhtml+='	<option>任课教师</option>';
-						vFhtml+='	<option>学校职工</option>';
-						vFhtml+='	<option>其它</option>';
+//						vFhtml+='	<option>校长</option>';
+//						vFhtml+='	<option>教学副校长</option>';
+//						vFhtml+='	<option>教务主任</option>';
+//						vFhtml+='	<option>信息主任</option>';
+//						vFhtml+='	<option>总务主任</option>';
+//						vFhtml+='	<option>学科组长</option>';
+//						vFhtml+='	<option>任课教师</option>';
+//						vFhtml+='	<option>学校职工</option>';
+//						vFhtml+='	<option>其它</option>';
 					vFhtml+='	</select>';
 //					vFhtml+='	<input type="text" value="" placeholder="" class="form-control visPosit"/>';
 				vFhtml+='	</div>';
@@ -147,6 +147,29 @@ function visitordata(jodata){
 		boVisit.procurementBudget=$.trim($('.budget').val());
 		boVisit.decisionMakerAdvice=$('.vispopuse').find('option:selected').attr('decMarkid');
 		boVisit.visitDetail=$.trim($('.purpTextare').val());
+	}
+	//学校伙伴职位列表
+	function scolcontTile(){
+		var contHtml='';
+		contHtml+='<option>校长</option>';
+		contHtml+='<option>教学副校长</option>';
+		contHtml+='<option>教务主任</option>';
+		contHtml+='<option>信息主任</option>';
+		contHtml+='<option>总务主任</option>';
+		contHtml+='<option>学科组长</option>';
+		contHtml+='<option>任课教师</option>';
+		contHtml+='<option>学校职工</option>';
+		contHtml+='<option>其它</option>';
+		$('.contTitle').html(contHtml);
+	}
+	//合作伙伴
+	function pantercontTile(){
+		var pcontHtml='';
+		pcontHtml+='<option>总经理</option>';
+		pcontHtml+='<option>经理</option>';
+		pcontHtml+='<option>销售</option>';
+		pcontHtml+='<option>其它</option>';
+		$('.contTitle').html(pcontHtml);
 	}
 	//联系人职务其他选框
 		$('.editInfo').on('change','.contTitle',function(){

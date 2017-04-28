@@ -278,6 +278,11 @@ $.each(eventJson2.evenList, function(i,item) {
 			}else{
 				$.getScript("js/editjournal/editbaifangInfo.js",function(){
 					$('.editInfo').html(vistInformation());
+					if(businestype==0){
+						scolcontTile();
+					}else{
+						pantercontTile();
+					}
 					visitordata(jo.commonJson)
 				})
 			}
