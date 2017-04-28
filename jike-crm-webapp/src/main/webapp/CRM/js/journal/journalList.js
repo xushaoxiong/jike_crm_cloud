@@ -2,7 +2,13 @@ $('.delJournal').click(function(){
 	$('#deljalModal').modal('toggle');
 })
 //列表查询
+	
+
+
+	
 	var paginatorJ={"businessOpportunityName":"","start":1,"pageSize":10};
+
+
 
 	//分页
 	var cartePage=function(jo){
@@ -89,6 +95,7 @@ $('.delJournal').click(function(){
 	
 	//搜索
 	$('.searchBusiness').click(function(){
+		console.log(1111)
 		var OpportunityName=$.trim($('.OpportunityName').val());
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());

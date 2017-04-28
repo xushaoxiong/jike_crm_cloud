@@ -51,6 +51,7 @@ function costdata(cdata){
 	
 	$('.reach8').html(cdata.advancePerson);
 }
+
 //公用部分信息ajax内容
 function ajaxpub(idJ,conmmJ){
 	$ajax('post','businessOpportunityLog/queryBOLog',idJ,function succF(jo){
@@ -65,7 +66,10 @@ function ajaxpub(idJ,conmmJ){
 		pub.Alt(jo.message,false);
 	})
 }
+//var backJ={};
 $('.jourlist').on('click','.checkjounal',function(){
+	backJ=paginatorJ;
+	console.log(backJ)
 	var logIdJ={};
 	var logid=$(this).parent().attr('logid');
 	logIdJ.logId=logid;
@@ -188,3 +192,20 @@ $('.jourlist').on('click','.checkjounal',function(){
 	}
 	
 })
+//返回上一级
+
+function goback(){
+	$('.R-wap').load('journal/journalList.html');
+//	$('.R-wap').load('journal/journalList.html',function(){
+//		$('.OpportunityName').val(backJ.businessOpportunityName);
+//		$('#indate').val(backJ.startTime);
+//		$('#enddate').val(backJ.endTime);
+//		$('.OpportunityProcess').val(backJ.eventType);
+//		$('.creatName').val(backJ.userName);
+//		console.log($('.jourlist').html())
+//		if($('.jourlist').html()!=''){
+//			$('.searchBusiness').click();
+//		}
+//		
+//	});
+}
