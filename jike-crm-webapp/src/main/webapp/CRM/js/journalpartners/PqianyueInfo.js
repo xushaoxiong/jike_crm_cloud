@@ -57,7 +57,7 @@ function signHtml(){
 //添加代理区域
 
 //$('.FillInfo').on('click','.addeare',function(){
-	function addeare(){
+function addeare(){
 	var earaN=($('.areaitem').length)-1;
 	earaN++;
 	var eareHtml="";
@@ -90,7 +90,7 @@ function deleare(_this){
 	$.each($('.earelist'), function(i) {
 		_this.attr('ty',i);
 	});
-})
+}
 //获取签约信息
 function signInfo(boSign){
 	var partnerAgentAreaList=[];
