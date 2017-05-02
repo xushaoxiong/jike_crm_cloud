@@ -25,7 +25,7 @@ function receiveHtml(){
 			receiveHtml+='</div>';
 		receiveHtml+='</div>';
 		receiveHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			receiveHtml+='<button class="btn btn-primary payConfirm" style="margin-right: 15px;">提交</button>';
+			receiveHtml+='<button class="btn btn-primary payConfirm" style="margin-right: 15px;" onclick="payConfirm()">提交</button>';
 //			receiveHtml+='<button class="btn btn-primary">重置</button>';
 		receiveHtml+='</div>';
 	receiveHtml+='</div>';
@@ -41,7 +41,8 @@ function receiveInfo(reInfo){
 	
 }
 //签约详情提交
-$('.FillInfo').on('click','.payConfirm',function(){
+//$('.FillInfo').on('click','.payConfirm',function(){
+function payConfirm(){
 	var paytype=$('.paytype').find('input:checked').val();
 	var paymentDate=$('.paytime').html();
 	var paymentAmount=$.trim($('.paymoney').val());
@@ -60,12 +61,13 @@ $('.FillInfo').on('click','.payConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 
 //提交返回后台签约信息
 	var signJ={};
 	var boPayment={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function receivjournaConfirm(){
 		receiveInfo(boPayment);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -81,4 +83,4 @@ $('.FillInfo').on('click','.payConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

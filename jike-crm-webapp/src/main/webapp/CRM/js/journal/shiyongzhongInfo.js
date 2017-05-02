@@ -15,27 +15,27 @@ function TrialHtml(){
 			traHtml+='<div class="form-group row ">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用年级</label>';
 				traHtml+='<ul class="list-unstyled col-md-4 col-sm-6 list-inline gradeWap">';
-					traHtml+='<li>初一</li>';
-					traHtml+='<li>初二</li>';
-					traHtml+='<li>初三</li>';
-					traHtml+='<li>高一</li>';
-					traHtml+='<li>高二</li>';
-					traHtml+='<li>高三</li>';
+					traHtml+='<li onclick="gradeWap($(this))">初一</li>';
+					traHtml+='<li onclick="gradeWap($(this))">初二</li>';
+					traHtml+='<li onclick="gradeWap($(this))">初三</li>';
+					traHtml+='<li onclick="gradeWap($(this))">高一</li>';
+					traHtml+='<li onclick="gradeWap($(this))">高二</li>';
+					traHtml+='<li onclick="gradeWap($(this))">高三</li>';
 				traHtml+='</ul>';
 			traHtml+='</div>';
 			traHtml+='<div class="form-group row">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用学科</label>';
 				traHtml+='<ul class="list-unstyled col-md-4 col-sm-6 list-inline disciplineWap">';
-					traHtml+='<li>语文</li>';
-					traHtml+='<li>数学</li>';
-					traHtml+='<li>英语</li>';
-					traHtml+='<li>物理</li>';
-					traHtml+='<li>化学</li>';
-					traHtml+='<li>生物</li>';
-					traHtml+='<li>政治</li>';
-					traHtml+='<li>地理</li>';
-					traHtml+='<li>历史</li>';
-					traHtml+='<li>信息</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">语文</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">数学</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">英语</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">物理</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">化学</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">生物</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">政治</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">地理</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">历史</li>';
+					traHtml+='<li onclick="disciplineWap($(this))">信息</li>';
 				traHtml+='</ul>';
 			traHtml+='</div>';
 			traHtml+='<div class="form-group row">';
@@ -56,7 +56,7 @@ function TrialHtml(){
 			traHtml+='</div>';
 		traHtml+='</div>';
 		traHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			traHtml+='<button class="btn btn-primary trialConfirm" style="margin-right: 15px;">提交</button>';
+			traHtml+='<button class="btn btn-primary trialConfirm" style="margin-right: 15px;" onclick="trial()">提交</button>';
 //			traHtml+='<button class="btn btn-primary">重置</button>';
 		traHtml+='</div>';
 	traHtml+='</div>';
@@ -81,15 +81,20 @@ function trialInfo(boInTrial){
 
 }
 ////选择年级
+//
+//$('.FillInfo').on('click','.gradeWap li',function(event){
+function gradeWap(_this){
+	_this.toggleClass('check');
+}
 
-$('.FillInfo').on('click','.gradeWap li',function(event){
-	$(this).toggleClass('check');
-})
-$('.FillInfo').on('click','.disciplineWap li',function(){
-	$(this).toggleClass('check');
-})
+
+//$('.FillInfo').on('click','.disciplineWap li',function(){
+function disciplineWap(_this){
+	_this.toggleClass('check');
+}
 //提交试用中详情信息
-$('.FillInfo').on('click','.trialConfirm',function(){
+//$('.FillInfo').on('click','.trialConfirm',function(){
+function trial(){
 	var startTime=$('.startTime').html();
 	var endTime=$('.endTime').html();
 	if(startTime==""){
@@ -128,11 +133,12 @@ $('.FillInfo').on('click','.trialConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 //提交试用信息返回后台数据
 	var trialJ={};
 	var boInTrial={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function trailjournaConfirm(){
 		trialInfo(boInTrial);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -148,6 +154,6 @@ $('.FillInfo').on('click','.trialConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}
 
 

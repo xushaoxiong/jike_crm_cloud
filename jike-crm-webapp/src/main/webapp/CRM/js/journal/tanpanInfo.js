@@ -16,7 +16,7 @@ function negotiationsHtml(){
 			negtionHtml+='	</div>';
 		negtionHtml+='	</div>';
 		negtionHtml+='	<div class="planbtn-group col-sm-6 text-center">';
-			negtionHtml+='	<button class="btn btn-primary negoConfirm" style="margin-right: 15px;">提交</button>';
+			negtionHtml+='	<button class="btn btn-primary negoConfirm" style="margin-right: 15px;" onclick="negoConfirm()">提交</button>';
 //			negtionHtml+='	<button class="btn btn-primary">重置</button>';
 		negtionHtml+='	</div>';
 	negtionHtml+='	</div>';
@@ -34,7 +34,8 @@ function negotionInfo(boNegotiation){
 	boNegotiation.negotiationDetail=$.trim($('.negDetail').val());
 }
 //提交谈判信息
-$('.FillInfo').on('click','.negoConfirm',function(){
+//$('.FillInfo').on('click','.negoConfirm',function(){
+function negoConfirm(){
 	var negoDetail=$.trim($('.negDetail').val());
 	if(negoDetail==''){
 		pub.Alt('请填写谈判详情',false);
@@ -43,12 +44,13 @@ $('.FillInfo').on('click','.negoConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 
 //信息提交返回后台
 	var negoJ={};
 	var boNegotiation={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+function negotionjournaConfirm(){
 		negotionInfo(boNegotiation);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -64,4 +66,4 @@ $('.FillInfo').on('click','.negoConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

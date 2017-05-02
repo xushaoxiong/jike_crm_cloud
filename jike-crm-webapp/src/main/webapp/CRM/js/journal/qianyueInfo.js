@@ -23,7 +23,7 @@ function signHtml(){
 			signHtml+='</div>';
 		signHtml+='</div>';
 		signHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			signHtml+='<button class="btn btn-primary SignConfirm" style="margin-right: 15px;">提交</button>';
+			signHtml+='<button class="btn btn-primary SignConfirm" style="margin-right: 15px;" onclick="SignConfirm()">提交</button>';
 //			signHtml+='<button class="btn btn-primary">重置</button>';
 		signHtml+='</div>';
 	signHtml+='</div>';
@@ -37,7 +37,8 @@ function signInfo(boSign){
 	
 }
 //签约详情提交
-$('.FillInfo').on('click','.SignConfirm',function(){
+//$('.FillInfo').on('click','.SignConfirm',function(){
+function SignConfirm(){
 	var signtime=$('.Signdate').html();
 	var signAmonut=$.trim($('.anmontCost').val());
 	if(signtime==''){
@@ -51,12 +52,13 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 
 //提交返回后台签约信息
 	var signJ={};
 	var boSign={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function signjournaConfirm(){
 		signInfo(boSign);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -72,4 +74,4 @@ $('.FillInfo').on('click','.SignConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

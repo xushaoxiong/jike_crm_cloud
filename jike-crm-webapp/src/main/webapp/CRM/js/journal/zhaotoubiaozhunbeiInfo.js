@@ -35,7 +35,7 @@ function PropPreionHtml(){
 			propHtml+='</div>';
 		propHtml+='</div>';
 		propHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			propHtml+='<button class="btn btn-primary propreConfirm" style="margin-right: 15px;">提交</button>';
+			propHtml+='<button class="btn btn-primary propreConfirm" style="margin-right: 15px;" onclick="propreConfirm()">提交</button>';
 //			propHtml+='<button class="btn btn-primary">重置</button>';
 		propHtml+='</div>';
 	propHtml+='</div>';
@@ -50,7 +50,8 @@ function propationInfo(boBidding){
 }
 
 //招投标准备详情提交
-$('.FillInfo').on('click','.propreConfirm',function(){
+//$('.FillInfo').on('click','.propreConfirm',function(){
+function propreConfirm(){
 	var link=$.trim($('.InterLink').val());;
 	if(link==''){
 		pub.Alt('请填挂网链接',false);
@@ -59,11 +60,12 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 //提交返回后台招投标准备信息
 	var propreJ={};
 	var boBidding={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function proprejournaConfirm(){
 		propationInfo(boBidding);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -79,4 +81,4 @@ $('.FillInfo').on('click','.propreConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

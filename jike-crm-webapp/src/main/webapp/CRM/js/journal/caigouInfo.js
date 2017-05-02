@@ -16,7 +16,7 @@ function PurchHtml(){
 			PurchHtml+='</div>';
 		PurchHtml+='</div>';
 		PurchHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			PurchHtml+='<button class="btn btn-primary purchConfirm" style="margin-right: 15px;">提交</button>';
+			PurchHtml+='<button class="btn btn-primary purchConfirm" style="margin-right: 15px;" onclick="purchConfirm()">提交</button>';
 //			PurchHtml+='<button class="btn btn-primary">重置</button>';
 		PurchHtml+='</div>';
 	PurchHtml+='</div>';
@@ -29,7 +29,8 @@ function PurchaseInfo(boPurchase){
 	
 }
 //采购详情提交
-$('.FillInfo').on('click','.purchConfirm',function(){
+//$('.FillInfo').on('click','.purchConfirm',function(){
+function purchConfirm(){
 	var arrivalTime=$('.arrivalTime').html();
 	var installTime=$('.installTime').html();
 	if(arrivalTime==''){
@@ -43,12 +44,13 @@ $('.FillInfo').on('click','.purchConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 
 //提交返回后台采购信息
 	var PurchaseJ={};
 	var boPurchase={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function PurchasejournaConfirm(){
 		PurchaseInfo(boPurchase);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -64,4 +66,4 @@ $('.FillInfo').on('click','.purchConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

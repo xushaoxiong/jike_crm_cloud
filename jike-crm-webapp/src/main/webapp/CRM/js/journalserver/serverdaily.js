@@ -82,7 +82,7 @@ function dailytHtml(){
 			dailytHtml+='</div>';
 		dailytHtml+='</div>';
 		dailytHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			dailytHtml+='<button class="btn btn-primary dailyConfirm" style="margin-right: 15px;">提交</button>';
+			dailytHtml+='<button class="btn btn-primary dailyConfirm" style="margin-right: 15px;" onclick="dailyConfirm()">提交</button>';
 //			dailytHtml+='<button class="btn btn-primary">重置</button>';
 		dailytHtml+='</div>';
 	dailytHtml+='</div>';
@@ -104,7 +104,8 @@ function dailyInfo(boTrain){
 	
 }
 //试用结果详情提交
-$('.FillInfo').on('click','.dailyConfirm',function(){
+//$('.FillInfo').on('click','.dailyConfirm',function(){
+function dailyConfirm(){
 	var inparry=[];
 	var totalTime=0;
 	$.each($('.inpitem'),function(){
@@ -123,11 +124,12 @@ $('.FillInfo').on('click','.dailyConfirm',function(){
 	//计算工时
 	var timeVal=((Number(totalTime))+Number($('.inp1').val())+Number($('.inp4').val())+Number($('.inp10').val())+Number($('.inp11').val())+(Number($('.inp3').val()))*2)*0.5;
 	$('.timeVal').val(timeVal);
-})
+}
 //提交返回后台试用结果信息
 	var dailyJ={};
 	var serviceDailyEvents={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function dailyserverjournaConfirm(){
 		dailyInfo(serviceDailyEvents);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -143,4 +145,4 @@ $('.FillInfo').on('click','.dailyConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

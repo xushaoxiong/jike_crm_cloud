@@ -75,7 +75,7 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2">联系人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control contTitle">';
+					html+='	<select class="form-control contTitle" onchange="contTitle($(this)">';
 						html+='	<option></option>';
 						html+='	<option>校长</option>';
 						html+='	<option>教学副校长</option>';
@@ -111,7 +111,7 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2">决策人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control decisionMakerTitle">';
+					html+='	<select class="form-control decisionMakerTitle" onchange="decisionMakerTitle($(this)">';
 						html+='	<option></option>';
 						html+='	<option>校长</option>';
 						html+='	<option>教学副校长</option>';
@@ -154,7 +154,7 @@ function infoColle(){
 			html+='	</div>';
 		html+='	</div>';
 		html+='	<div class="mesbtn-group col-md-4 col-sm-6 text-center">';
-			html+='	<button class="btn btn-primary mesConfirm" style="margin-right: 15px;">提交</button>';
+			html+='	<button class="btn btn-primary mesConfirm" style="margin-right: 15px;" onclick="mesConfirm()">提交</button>';
 //			html+='	<button class="btn btn-primary">重置</button>';
 		html+='	</div>';
 	html+='	</div>';
@@ -201,23 +201,25 @@ function infodata(bInfoColet){
 		$('.ifInterested').find('input[type=radio][ifined="'+bInfoColet.ifInterested+'"]').prop('checked',true);
 }
 	//联系人职务其他选框
-		$('.FillInfo').on('change','.contTitle',function(){
+//		$('.FillInfo').on('change','.contTitle',function(){
+	function contTitle(_this){
 			$('.otherCont').html("");
-			if($(this).find('option:selected').val()=="其它"){
+			if(_this.find('option:selected').val()=="其它"){
 				$('.otherCont').show();
 			}else{
 				$('.otherCont').hide();
 			}
-		})
+		}
 	//决策人职务其他选框
-		$('.FillInfo').on('change','.decisionMakerTitle',function(){
+//		$('.FillInfo').on('change','.decisionMakerTitle',function(){
+	function decisionMakerTitle(_this){
 			$('.otherMaker').html("");
-			if($(this).find('option:selected').val()=="其它"){
+			if(_this.find('option:selected').val()=="其它"){
 				$('.otherMaker').show();
 			}else{
 				$('.otherMaker').hide();
 			}
-		})
+		}
 	//信息收集页面内容
 		var jourInJ={};
 		var boInformationCollect={};
@@ -264,8 +266,8 @@ function infodata(bInfoColet){
 			
 			return dataJ;
 		}
-		$('.FillInfo').on('click','.mesConfirm',function(){	
-			$('.FillInfo').off('click');
+//		$('.FillInfo').on('click','.mesConfirm',function(){	
+	function mesConfirm(){
 			//收集信息必须至少填写一条才能提交判断
 			var contactTitle=$('.contTitle').find('option:selected').val();
 			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
@@ -357,10 +359,11 @@ function infodata(bInfoColet){
 			$('#addJournal').show();
 			$('.journaConfirm').prop('disabled',false);
 			
-		})
+		}
 	
 	//新建日志提交返回后台
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function jourInjournaConfirm(){
 		infodetail(boInformationCollect);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -376,4 +379,4 @@ function infodata(bInfoColet){
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
-	})
+	}

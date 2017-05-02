@@ -48,7 +48,7 @@ function visitPlan(){
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>拜访计划日期</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
-					vPhtml+='<span class="form-control Plandate" data-format="dd-mm-yyyy"/></span>';
+					vPhtml+='<span class="form-control Plandate" data-format="dd-mm-yyyy" onclick="WdatePicker()"/></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
@@ -94,17 +94,17 @@ function visitPlan(){
 				vPhtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>最小物料明细</label>';
 				vPhtml+='<div class="col-md-5 col-sm-7">';
 					vPhtml+='<ul class="list-unstyled list-inline bomlist">';
-						vPhtml+='<li>宣传页</li>';
-						vPhtml+='<li>电脑</li>';
-						vPhtml+='<li>二维码</li>';
-						vPhtml+='<li>演示册</li>';
-						vPhtml+='<li>U盘</li>';
-						vPhtml+='<li>名片</li>';
-						vPhtml+='<li>演示账号</li>';
-						vPhtml+='<li>试用申请表</li>';
-						vPhtml+='<li>个人物品</li>';
-						vPhtml+='<li>极课内刊</li>';
-						vPhtml+='<li>报价单</li>';
+						vPhtml+='<li onclick="bomlist($(this))">宣传页</li>';
+						vPhtml+='<li onclick="bomlist($(this))">电脑</li>';
+						vPhtml+='<li onclick="bomlist($(this))">二维码</li>';
+						vPhtml+='<li onclick="bomlist($(this))">演示册</li>';
+						vPhtml+='<li onclick="bomlist($(this))">U盘</li>';
+						vPhtml+='<li onclick="bomlist($(this))">名片</li>';
+						vPhtml+='<li onclick="bomlist($(this))">演示账号</li>';
+						vPhtml+='<li onclick="bomlist($(this))">试用申请表</li>';
+						vPhtml+='<li onclick="bomlist($(this))">个人物品</li>';
+						vPhtml+='<li onclick="bomlist($(this))">极课内刊</li>';
+						vPhtml+='<li onclick="bomlist($(this))">报价单</li>';
 					vPhtml+='</ul>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
@@ -116,7 +116,7 @@ function visitPlan(){
 			vPhtml+='</div>';
 		vPhtml+='</div>';
 		vPhtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			vPhtml+='<button class="btn btn-primary planConfirm" style="margin-right: 15px;">提交</button>';
+			vPhtml+='<button class="btn btn-primary planConfirm" style="margin-right: 15px;" onclick="planConfirm()">提交</button>';
 //			vPhtml+='<button class="btn btn-primary">重置</button>';
 		vPhtml+='</div>';
 	vPhtml+='</div>';
@@ -152,17 +152,16 @@ function visitPlan(){
 		
 	}
 	//新建日志时间
-		$('.FillInfo').on('click','.Plandate',function(){
-			WdatePicker();
-			
-		})
+//		$('.FillInfo').on('click','.Plandate',function(){
+//			WdatePicker();
+//			
+//		})
 //物料明细
-		$('.FillInfo').on('click','.bomlist li',function(){
-			$(this).toggleClass('check');
-		})
-		$('.bomlist li').click(function(){
-			$(this).toggleClass('check');
-		})
+//		$('.FillInfo').on('click','.bomlist li',function(){
+	function bomlist(_this){
+		_this.toggleClass('check');
+	}
+		
 //联系人职务其他选框
 		$('.FillInfo').on('change','.contTitle',function(){
 			$('.otherCont').html("");
@@ -205,7 +204,8 @@ function visitPlan(){
 	}
 //	
 
-	$('.FillInfo').on('click','.planConfirm',function(){
+//	$('.FillInfo').on('click','.planConfirm',function(){
+	function planConfirm(){
 		var visitorLandline=$.trim($('.contactLine').val());
 		var visitorPhone=$.trim($('.contactPhone').val());
 		var visitorEmail=$.trim($('.visitorEmail').val());
@@ -238,7 +238,7 @@ function visitPlan(){
 		$('#addJournal').show();
 		$('.journaConfirm').prop('disabled',false);
 		
-	})
+	}
 
 //学校伙伴职位列表
 	function scolcontTile(){
@@ -266,7 +266,8 @@ function visitPlan(){
 	
 	var VistPlanJ={};
 	var boVisitPlan={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function vistPlanjournaConfirm(){
 		VistPlanInfo(boVisitPlan);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -282,7 +283,7 @@ function visitPlan(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}
 
 
 	
