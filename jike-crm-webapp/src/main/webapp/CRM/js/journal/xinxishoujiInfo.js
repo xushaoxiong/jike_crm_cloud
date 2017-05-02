@@ -265,6 +265,7 @@ function infodata(bInfoColet){
 			return dataJ;
 		}
 		$('.FillInfo').on('click','.mesConfirm',function(){	
+			$('.FillInfo').off('click');
 			//收集信息必须至少填写一条才能提交判断
 			var contactTitle=$('.contTitle').find('option:selected').val();
 			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
