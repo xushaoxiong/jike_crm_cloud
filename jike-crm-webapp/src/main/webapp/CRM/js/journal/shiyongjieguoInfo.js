@@ -10,7 +10,7 @@ function TryHtml(){
 			tryHtml+='</div>';
 		tryHtml+='</div>';
 		tryHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			tryHtml+='<button class="btn btn-primary tryConfirm" style="margin-right: 15px;">提交</button>';
+			tryHtml+='<button class="btn btn-primary tryConfirm" style="margin-right: 15px;" onclick="tryConfirm()">提交</button>';
 //			tryHtml+='<button class="btn btn-primary">重置</button>';
 		tryHtml+='</div>';
 	tryHtml+='</div>';
@@ -23,7 +23,8 @@ function TryInfo(boTrialReuslt){
 	
 }
 //试用结果详情提交
-$('.FillInfo').on('click','.tryConfirm',function(){
+//$('.FillInfo').on('click','.tryConfirm',function(){
+function tryConfirm(){
 	var detal=$.trim($('.tryTextare').val());
 	if(detal==''){
 		pub.Alt('请填写试用结果详情',false);
@@ -32,12 +33,13 @@ $('.FillInfo').on('click','.tryConfirm',function(){
 	$('.FillInfo').hide();
 	$('#addJournal').show();
 	$('.journaConfirm').prop('disabled',false);
-})
+}
 
 //提交返回后台试用结果信息
 	var TryJ={};
 	var boTrialReuslt={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function TryjournaConfirm(){
 		TryInfo(boTrialReuslt);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -53,4 +55,4 @@ $('.FillInfo').on('click','.tryConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

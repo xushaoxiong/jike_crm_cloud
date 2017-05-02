@@ -17,7 +17,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">拜访人职位</label>';
 				vFhtml+='	<div class="col-md-2 col-sm-2">';
-					vFhtml+='	<select class="form-control contTitle">';
+					vFhtml+='	<select class="form-control contTitle" onchange="contTitle($(this))">';
 						vFhtml+='	<option>校长</option>';
 						vFhtml+='	<option>教学副校长</option>';
 						vFhtml+='	<option>教务主任</option>';
@@ -133,7 +133,7 @@ function vistInformation(){
 		vFhtml+='	</div>';
 		vFhtml+='	</div>';
 		vFhtml+='	<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;">提交</button>';
+			vFhtml+='	<button class="btn btn-primary visConfirm" style="margin-right: 15px;" onclick="visConfirm()">提交</button>';
 //			vFhtml+='	<button class="btn btn-primary">重置</button>';
 		vFhtml+='	</div>';
 	vFhtml+='	</div>';
@@ -195,16 +195,18 @@ function visitordata(jodata){
 		
 	}
 	//联系人职务其他选框
-		$('.FillInfo').on('change','.contTitle',function(){
+//		$('.FillInfo').on('change','.contTitle',function(){
+	function contTitle(_this){
 			$('.otherCont').html("");
-			if($(this).find('option:selected').val()=="其它"){
+			if(_this.find('option:selected').val()=="其它"){
 				$('.otherCont').show();
 			}else{
 				$('.otherCont').hide();
 			}
-		})
+		}
 //拜访提交
-	$('.FillInfo').on('click','.visConfirm',function(){
+//	$('.FillInfo').on('click','.visConfirm',function(){
+	function visConfirm(){
 		var visitorLandline=$.trim($('.contactLine').val());
 		var visitorPhone=$.trim($('.contactPhone').val());
 		var visitorEmail=$.trim($('.visitorEmail').val());
@@ -248,11 +250,12 @@ function visitordata(jodata){
 		$('#addJournal').show();
 		$('.journaConfirm').prop('disabled',false);
 		
-	})
+	}
 	var boVistPlanJ={};
 	var boVisit={};
 	var cooperationDetails={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function vistPanerjournaConfirm(){
 		VistInfo(boVisit);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -270,4 +273,4 @@ function visitordata(jodata){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

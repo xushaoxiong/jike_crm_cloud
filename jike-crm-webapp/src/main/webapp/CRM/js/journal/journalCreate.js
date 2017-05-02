@@ -227,8 +227,7 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
-		$('.FillInfo').on('click');
-		console.log(111)
+
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
@@ -519,13 +518,13 @@ $(function(){
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
-				if(OpptunityId==0){
-					$.getScript("js/journal/peixunInfo.js",function(){
-						$('.FillInfo').html(trainiHtml());
-						Mesclic=true;
-						beginid=eveid+spcid+OpptunityId;
-					})
-				}else{
+//				if(OpptunityId==0){
+//					$.getScript("js/journal/peixunInfo.js",function(){
+//						$('.FillInfo').html(trainiHtml());
+//						Mesclic=true;
+//						beginid=eveid+spcid+OpptunityId;
+//					})
+//				}else{
 					$.getScript("js/journalpartners/PpeixunInfo.js",function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
@@ -533,7 +532,7 @@ $(function(){
 					})
 				}
 				
-			}
+//			}
 			
 		}
 		
@@ -554,8 +553,95 @@ $(function(){
 	})
 
 	$('.journaConfirm').click(function(){
+		var OpptunityId=$('.businesNumbspInp').attr('OpptunityId');
+		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
+		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		breadnav('日志管理','查看日志');
 		$('.L-list-item').find('li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
+		//信息收集
+		if(spcid=='101'){
+			if(OpptunityId==0){
+				jourInjournaConfirm();
+			}else{
+				jourInpanerjournaConfirm();
+			}
+			
+			
+		}
+		//制定拜访计划页面
+		if(spcid=='201'){
+			vistPlanjournaConfirm();
+		}
+		//拜访客户
+		if(eveid=='3'){
+			if(spcid=='303'&& OpptunityId==1){
+				vistPanerjournaConfirm();
+			}else{
+				vistorjournaConfirm();
+			}
+			
+		}
+		//谈判
+		if(eveid=='4'){
+			negotionjournaConfirm();
+		}
+		//试用中-试用准备
+		if(spcid=='501'){
+			trailjournaConfirm();
+		}
+		//试用中-使用结果
+		if(spcid=='502'||spcid=='503'||spcid=='504'){
+			TryjournaConfirm();
+		}
+		//招投标-投标准备
+		if(spcid=='601'){
+			proprejournaConfirm();
+		}
+		//招投标-投标结果
+		if(spcid=='602'||spcid=='603'){
+			propRustjournaConfirm();
+		}
+		//签约
+		if(spcid=='701'){
+			if(OpptunityId==0){
+				signjournaConfirm();
+			}else{
+				signpanerjournaConfirm();
+			}
+		}
+		//日常
+		if(eveid=='8'){
+			if(sessionStorage.server=='true'){
+				dailyserverjournaConfirm();
+			}else{
+				dailyjournaConfirm();
+			}
+		}
+		//售后
+		if(eveid=='9'){
+			afterSealjournaConfirm();
+		}
+		//支持
+		if(eveid=='10'){
+			if(OpptunityId==0&&sessionStorage.server=='false'){
+					supportjournaConfirm();
+				}else if(sessionStorage.server=='true'){
+					supportserverjournaConfirm();
+				}else{
+					supportPanerjournaConfirm();
+				}
+		}
+		//培训
+		if(eveid=='11'){
+			trainjournaConfirm();
+			
+		}
+		
+		//回款
+		if(eveid=='12'){
+			 receivjournaConfirm();
+			
+		}
 	})
 })

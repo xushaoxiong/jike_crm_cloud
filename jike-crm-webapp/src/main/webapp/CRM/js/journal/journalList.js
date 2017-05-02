@@ -396,17 +396,17 @@ $.each(eventJson2.evenList, function(i,item) {
 		if($('.eventType').val()=='培训'){
 			$('.addTime,.minusTime').hide();
 			$('.timeVal').prop('disabled',true);
-			if(opptypeid==1){
+//			if(opptypeid==1){
 				$.getScript("js/editjournalpartner/editPpeixunInfo.js",function(){
 					$('.editInfo').html(trainiHtml());
 					traindata(jo.commonJson);
 				})
-			}else{
-				$.getScript("js/editjournal/editpeixunInfo.js",function(){
-					$('.editInfo').html(trainiHtml());
-					traindata(jo.commonJson);
-				})
-			}
+//			}else{
+//				$.getScript("js/editjournal/editpeixunInfo.js",function(){
+//					$('.editInfo').html(trainiHtml());
+//					traindata(jo.commonJson);
+//				})
+//			}
 			
 		}
 		//回款

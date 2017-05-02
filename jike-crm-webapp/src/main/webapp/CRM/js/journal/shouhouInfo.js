@@ -47,7 +47,7 @@ function aftSealtHtml(){
 			aftSealtHtml+='</div>';
 		aftSealtHtml+='</div>';
 		aftSealtHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			aftSealtHtml+='<button class="btn btn-primary aftSealConfirm" style="margin-right: 15px;">提交</button>';
+			aftSealtHtml+='<button class="btn btn-primary aftSealConfirm" style="margin-right: 15px;" onclick="aftSealConfirm()">提交</button>';
 //			aftSealtHtml+='<button class="btn btn-primary">重置</button>';
 		aftSealtHtml+='</div>';
 	aftSealtHtml+='</div>';
@@ -70,7 +70,8 @@ function aftSealInfo(boCustomerService){
 	
 }
 //试用结果详情提交
-$('.FillInfo').on('click','.aftSealConfirm',function(){
+//$('.FillInfo').on('click','.aftSealConfirm',function(){
+	function aftSealConfirm(){
 	var aftSelInpArry=[];
 	$('.aftSelInp').each(function(i){
 		if($(this).val()!=''){
@@ -94,12 +95,13 @@ $('.FillInfo').on('click','.aftSealConfirm',function(){
 	$('.timeVal').val((Inp1+Inp2+Inp3+Inp4+Inp5+Inp6));
 	 
 	
-})
+}
 
 //提交返回后台试用结果信息
 	var afterSealJ={};
 	var boCustomerService={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function afterSealjournaConfirm(){
 		aftSealInfo(boCustomerService);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -115,4 +117,4 @@ $('.FillInfo').on('click','.aftSealConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

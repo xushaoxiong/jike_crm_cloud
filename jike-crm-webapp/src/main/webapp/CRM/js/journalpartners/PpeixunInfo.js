@@ -89,7 +89,7 @@ function trainiHtml(){
 			trainiHtml+='</div>';
 		trainiHtml+='</div>';
 		trainiHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			trainiHtml+='<button class="btn btn-primary trainConfirm" style="margin-right: 15px;">提交</button>';
+			trainiHtml+='<button class="btn btn-primary trainConfirm" style="margin-right: 15px;" onclick="trainConfirm()">提交</button>';
 //			trainiHtml+='<button class="btn btn-primary">重置</button>';
 		trainiHtml+='</div>';
 	trainiHtml+='</div>';
@@ -112,7 +112,8 @@ function trainInfo(boTrain){
 	
 }
 //试用结果详情提交
-$('.FillInfo').on('click','.trainConfirm',function(){
+//$('.FillInfo').on('click','.trainConfirm',function(){
+function trainConfirm(){
 	var inparry=[];
 	var totalTime=0;
 	$.each($('.inpitem'),function(){
@@ -131,11 +132,12 @@ $('.FillInfo').on('click','.trainConfirm',function(){
 	//计算工时
 	var timeVal=((Number(totalTime))+Number($('.inp2').val())+Number($('.inp5').val())+Number($('.inp11').val())+Number($('.inp12').val())+(Number($('.inp4').val()))*2)*0.5;
 	$('.timeVal').val(timeVal);
-})
+}
 //提交返回后台试用结果信息
 	var trainJ={};
 	var boTrain={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function trainpanerjournaConfirm(){
 		trainInfo(boTrain);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -151,4 +153,4 @@ $('.FillInfo').on('click','.trainConfirm',function(){
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 		})
-	})
+	}

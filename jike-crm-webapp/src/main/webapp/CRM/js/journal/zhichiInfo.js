@@ -19,7 +19,7 @@ function supportHtml(){
 			suportHtml+='</div>';
 		suportHtml+='</div>';
 		suportHtml+='<div class="planbtn-group col-md-4 col-sm-6 text-center">';
-			suportHtml+='<button class="btn btn-primary suprtConfirm" style="margin-right: 15px;">提交</button>';
+			suportHtml+='<button class="btn btn-primary suprtConfirm" style="margin-right: 15px;" onclick="suprtConfirm()">提交</button>';
 //			suportHtml+='<button class="btn btn-primary">重置</button>';
 		suportHtml+='</div>';
 	suportHtml+='</div>';
@@ -32,7 +32,8 @@ function supportInfo(boSupport){
 	
 }
 //试用结果详情提交
-$('.FillInfo').on('click','.suprtConfirm',function(){
+//$('.FillInfo').on('click','.suprtConfirm',function(){
+function suprtConfirm(){
 	var scolAccoutnumb=$('.scolAccoutnumb').val();
 	var goodrepNumb=$('.goodrepNumb').val();
 	if(scolAccoutnumb==''&& goodrepNumb==''){
@@ -45,12 +46,13 @@ $('.FillInfo').on('click','.suprtConfirm',function(){
 	//计算工时
 	var timeVal=(Number(scolAccoutnumb)+Number(goodrepNumb))*0.5;
 	$('.timeVal').val(timeVal)
-})
+}
 
 //提交返回后台试用结果信息
 	var supportJ={};
 	var boSupport={};
-	$('.journaConfirm').click(function(){
+//	$('.journaConfirm').click(function(){
+	function supportjournaConfirm(){
 		supportInfo(boSupport);
 		logDateF(logData);
 		totalDetailF(totalDetail);
@@ -65,5 +67,5 @@ $('.FillInfo').on('click','.suprtConfirm',function(){
 			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
-		})
+		}
 	})
