@@ -91,7 +91,7 @@ $(function(){
 		});
 		breadnav(menuname,thisHtml);
 		$('.breadcrumb').on('click','.curBack',function(){
-//			$('.FillInfo').off('click');
+			$('.FillInfo').off('click');
 			if($('.menuCheck').attr('menuid')==6){
 				
 				breadnav(menuname,thisHtml);

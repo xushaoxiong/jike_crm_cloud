@@ -287,6 +287,7 @@
 				serversp+='<span userid="'+item.userid+'">'+item.name+'/</span>';
 			});
 			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.serviceNamewap').html(serversp);
+			serviceNamestrb();
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})

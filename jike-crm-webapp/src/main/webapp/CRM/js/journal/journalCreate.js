@@ -124,7 +124,6 @@ $(function(){
 		}
 		//判断日常事项统一商机名称和流水号
 		if(eveid=='8'){
-			console.log(111)
 			$('.businessNameSp').html('日常商机名称');
 			$('.businesNumbspInp').html('R0000000-00');
 			$('.busnamState').removeClass('businessNameSp');
@@ -228,7 +227,8 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
-//		$('.FillInfo').on('click');
+		$('.FillInfo').on('click');
+		console.log(111)
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
@@ -453,7 +453,6 @@ $(function(){
 		}
 		//日常
 		if(eveid=='8'){
-			console.log(111)
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
