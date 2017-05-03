@@ -1,7 +1,7 @@
 function visitPlan(){
 	var vPhtml="";
 	vPhtml+='<div class="container-fluid" id="palnBox">';
-		vPhtml+='<div class="plan-wap">';
+		vPhtml+='<div class="plan-wap planStyle">';
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-sm-1">计划名称</label>';
 				vPhtml+='<div class="col-sm-4">';
