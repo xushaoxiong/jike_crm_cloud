@@ -58,6 +58,7 @@ function supportInfo(boSupport){
 //试用结果详情提交
 //$('.FillInfo').on('click','.suprtConfirm',function(){
 function suprtConfirm(){
+	
 	var inpitemarry=[];
 	var totaltime=0;
 	$.each($('.inpitem'), function() {
@@ -72,6 +73,7 @@ function suprtConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 	//计算工时
 	

@@ -39,6 +39,7 @@ function signInfo(boSign){
 //签约详情提交
 //$('.FillInfo').on('click','.SignConfirm',function(){
 function SignConfirm(){
+	
 	var signtime=$('.Signdate').html();
 	var signAmonut=$.trim($('.anmontCost').val());
 	if(signtime==''){
@@ -51,6 +52,7 @@ function SignConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

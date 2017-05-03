@@ -40,8 +40,8 @@ function visitPlan(){
 					vPhtml+='<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control contactLine" />';
 					vPhtml+='<input type="text" value="" placeholder="（手机）例：133********" class="form-control contactPhone"/>';
 					vPhtml+='<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
-					vPhtml+='<input type="text" value="" placeholder="（QQ）" class="form-control nomarg contactQq"/>';
-					vPhtml+='<input type="text" value="" placeholder="（微信）" class="form-control nomarg contactWechat"/>';
+					vPhtml+='<input type="text" value="" placeholder="（QQ）" class="form-control contactQq"/>';
+					vPhtml+='<input type="text" value="" placeholder="（微信）" class="form-control contactWechat"/>';
 					vPhtml+='<span>（至少填一项）</span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
@@ -206,6 +206,7 @@ function visitPlan(){
 
 //	$('.FillInfo').on('click','.planConfirm',function(){
 	function planConfirm(){
+		
 		var visitorLandline=$.trim($('.contactLine').val());
 		var visitorPhone=$.trim($('.contactPhone').val());
 		var visitorEmail=$.trim($('.visitorEmail').val());
@@ -236,6 +237,7 @@ function visitPlan(){
 		}
 		$('.FillInfo').hide();
 		$('#addJournal').show();
+		$('.procewap').show();
 		$('.journaConfirm').prop('disabled',false);
 		
 	}

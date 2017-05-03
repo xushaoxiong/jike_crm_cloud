@@ -2,9 +2,9 @@ function infoColle(){
 	var html="";
 	html+='<div class="container-fluid" id="messBox">';
 		html+='	<div class="message-wap">';
-			html+='	<p class="text-danger">(备注：以下内容填写完成，转入信息收集完成状态：信息来源、学校规模、学校等级、学校性质、学校类别、联系人姓名、联系人职位、联系人联系方式、决策人姓名、决策人职位)</p>';
+			html+='	<p class="text-danger"><b>（备注：标有<img src="img/flag.png" style="width:18px;"/>的信息全部填写完成之后商机状态转化成信息收集完成）</b></p>';
 				html+='<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">信息来源</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">信息来源</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control scolInfo">';
 						html+='	<option></option>';
@@ -28,7 +28,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校规模</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">学校规模</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control scolPopleNumb">';
 						html+='	<option></option>';
@@ -40,7 +40,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校等级</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">学校等级</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control schoolLevel">';
 						html+='	<option></option>';
@@ -52,14 +52,14 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校性质</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">学校性质</label>';
 				html+='	<div class="col-md-3 col-sm-5 schoolProperty inpHeight">';
 					html+='	<input type="radio"  name="optionsRadios" scpid="0">公立&nbsp;&nbsp;&nbsp;';
 					html+='	<input type="radio"  name="optionsRadios" scpid="1">私立&nbsp;&nbsp;&nbsp;';
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">学校类别</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">学校类别</label>';
 				html+='	<div class="col-md-3 col-sm-5 schoolType inpHeight">';
 					html+='	<input type="checkbox" value="小学"/>小学&nbsp;&nbsp;&nbsp;';
 					html+='	<input type="checkbox" value="初中" />初中&nbsp;&nbsp;&nbsp;';
@@ -67,13 +67,13 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">联系人姓名</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">联系人姓名</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<input type="text" value="" placeholder="" class="form-control contName"/>';
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">联系人职位</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">联系人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control contTitle" onchange="contTitle($(this)">';
 						html+='	<option></option>';
@@ -93,7 +93,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">联系人联系方式</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">联系人联系方式</label>';
 				html+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
 					html+='	<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control contactLandline" />';
 					html+='	<input type="text" value="" placeholder="（手机）例：133********" class="form-control contactPhone"/>';
@@ -103,13 +103,13 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">决策人姓名</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">决策人姓名</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<input type="text" value="" placeholder="" class="form-control decisionMakerName"/>';
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">决策人职位</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">决策人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control decisionMakerTitle" onchange="decisionMakerTitle($(this)">';
 						html+='	<option></option>';
@@ -129,7 +129,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2">决策人联系方式</label>';
+				html+='	<label class="col-md-1 col-sm-2 flagImg">决策人联系方式</label>';
 				html+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
 					html+='	<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control decisionMakerLandline" />';
 					html+='	<input type="text" value="" placeholder="（手机）例：133********" class="form-control decisionMakerPhone"/>';
@@ -268,6 +268,7 @@ function infodata(bInfoColet){
 		}
 //		$('.FillInfo').on('click','.mesConfirm',function(){	
 	function mesConfirm(){
+		
 			//收集信息必须至少填写一条才能提交判断
 			var contactTitle=$('.contTitle').find('option:selected').val();
 			var decisionMakerTitle=$('.decisionMakerTitle').find('option:selected').val();
@@ -357,6 +358,7 @@ function infodata(bInfoColet){
 			}
 			$('.FillInfo').hide();
 			$('#addJournal').show();
+			$('.procewap').show();
 			$('.journaConfirm').prop('disabled',false);
 			
 		}
@@ -370,7 +372,7 @@ function infodata(bInfoColet){
 		jourInJ.logData=logData;
 		jourInJ.totalDetail=totalDetail
 		jourInJ.boInformationCollect=boInformationCollect;
-		$(this).prop('disabled',true);
+		
 		$ajax('post','businessOpportunityLog/addBOLogInformationCollection',jourInJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

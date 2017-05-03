@@ -52,6 +52,7 @@ function propationInfo(boBidding){
 //招投标准备详情提交
 //$('.FillInfo').on('click','.propreConfirm',function(){
 function propreConfirm(){
+	
 	var link=$.trim($('.InterLink').val());;
 	if(link==''){
 		pub.Alt('请填挂网链接',false);
@@ -59,6 +60,7 @@ function propreConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 //提交返回后台招投标准备信息

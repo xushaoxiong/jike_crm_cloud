@@ -124,7 +124,7 @@ $(function(){
 		}
 		//判断日常事项统一商机名称和流水号
 		if(eveid=='8'){
-			$('.businessNameSp').html('日常商机名称');
+			$('.businessNameSp').html('日常商机');
 			$('.businesNumbspInp').html('R0000000-00');
 			$('.busnamState').removeClass('businessNameSp');
 			$('.busnamState').attr('disabled',true);
@@ -227,7 +227,7 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
-
+		$('.procewap').hide();
 		var busoptIdJ={};
 		//根据商机名称id查询信息
 		var busoptid=$('.businessNameSp').attr('businessOpptunityId');
@@ -487,6 +487,7 @@ $(function(){
 		}
 		//支持
 		if(eveid=='10'){
+			console.log(OpptunityId)
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
@@ -553,6 +554,8 @@ $(function(){
 	})
 
 	$('.journaConfirm').click(function(){
+		$('.procewap').hide();
+		$(this).prop('disabled',true);
 		var OpptunityId=$('.businesNumbspInp').attr('OpptunityId');
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
@@ -634,8 +637,7 @@ $(function(){
 		}
 		//培训
 		if(eveid=='11'){
-			trainjournaConfirm();
-			
+			trainpanerjournaConfirm();
 		}
 		
 		//回款
