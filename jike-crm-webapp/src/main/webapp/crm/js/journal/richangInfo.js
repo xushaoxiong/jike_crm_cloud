@@ -3,7 +3,7 @@ function dailytHtml(){
 	dailytHtml+='<div class="container-fluid">';
 		dailytHtml+='<div class="trial-wap">';
 			dailytHtml+='<div class="form-group row">';
-				dailytHtml+='<label class="col-md-2 col-sm-2"><span class="col">*</span>填写详细信息</label>';
+				dailytHtml+='<label class="col-sm-1"><span class="col">*</span>填写详细信息</label>';
 				dailytHtml+='<div class="col-md-4 col-sm-6">';
 					dailytHtml+='<textarea class="form-control dailyTextare" style="height: 100px;resize:none;"></textarea>';
 				dailytHtml+='</div>';
