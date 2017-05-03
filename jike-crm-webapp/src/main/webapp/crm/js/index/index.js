@@ -28,7 +28,7 @@ $(function(){
 					})
 				})
 			}
-			$('.indexName').html(jo.name);
+				$('.indexName').html(jo.name);
 			var menuimmg=['img/business.png','img/journal.png','img/sess.png']
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
@@ -62,7 +62,6 @@ $(function(){
 				}				
 			})
 			$('.L-list').append(NavHtml);
-		
 			
 		},
 		error:function(){

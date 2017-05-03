@@ -154,7 +154,7 @@
 	function businesnamestrb(){
 		for (var i=0;i<$('.opptNumb').length;i++) {
 			var businessplit=$('.opptNumb a').eq(i).html().substring(0,11);
-			if($('.opptNumb a').eq(i).html().length>10){
+			if($('.opptNumb a').eq(i).html().length>=10){
 				$('.opptNumb a').eq(i).html(businessplit+'...');
 				businesnameall=businessplit+'...';
 			}
