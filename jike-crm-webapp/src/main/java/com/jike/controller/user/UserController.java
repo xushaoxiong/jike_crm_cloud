@@ -107,8 +107,8 @@ public class UserController extends BaseController{
 		    	session.setAttribute(loginFlag, true);
 		    	session.setAttribute(loginName, result.getString("loginName"));
 		    	session.setAttribute(userName, result.getString("userName"));
-		    	session.setAttribute(roleId, result.getString("roleId"));
-		    	session.setAttribute(userId, result.getString("userId"));
+		    	session.setAttribute(roleId, result.getLong("roleId"));
+		    	session.setAttribute(userId, result.getLong("userId"));
 		    }else{
 		    	session.setAttribute(loginFlag, false);
 		    }
