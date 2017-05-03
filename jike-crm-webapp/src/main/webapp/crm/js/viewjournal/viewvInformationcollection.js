@@ -1,6 +1,6 @@
 function infocoolHtml(tdata){
 	var negHtml='';
-	negHtml+='<ul class="list-unstyled">';
+	negHtml+='<ul class="list-unstyled collmessage">';
 		negHtml+='<li>';
 			negHtml+='<label >信息来源：</label>';
 			negHtml+='<span class="colSp">'+tdata.informationSources+'</span>';
@@ -131,7 +131,7 @@ function infocoolHtml(tdata){
 }
 function infocoolpanerHtml(tdata){
 	var negHtml='';
-	negHtml+='<ul class="list-unstyled">';
+	negHtml+='<ul class="list-unstyled collmessage">';
 		negHtml+='<li>';
 			negHtml+='<label >信息来源：</label>';
 			negHtml+='<span class="colSp">'+tdata.informationSources+'</span>';
