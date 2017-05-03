@@ -38,6 +38,7 @@ import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.dao.CooperationDetailsMapper;
 import com.jike.business.dao.DailyEventsMapper;
 import com.jike.business.dao.PartnerAgentAreaMapper;
+import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceDailyEventMapper;
 import com.jike.business.model.BoBidding;
 import com.jike.business.model.BoBiddingResult;
@@ -58,6 +59,7 @@ import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperationDetails;
 import com.jike.business.model.DailyEvents;
 import com.jike.business.model.PartnerAgentArea;
+import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceDailyEvent;
 import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
@@ -115,7 +117,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private PartnerAgentAreaMapper agentAreaMapper;
 	@Autowired
 	private ServiceDailyEventMapper serviceDailyEventMapper;
-	
+	@Autowired
+	private SaleBusinessOpportunityMapper saleBusinessOpportunityMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -1442,6 +1445,24 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long logId = queryJson.getLong("logId");
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
 		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
+		Long userId = queryJson.getLong("userId");
+		Long roleId = queryJson.getLong("roleId");
+		if(roleId==3){//销售
+			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityId);
+			if(userId!=saleBusinessOpportunity.getUserId()&&userId!=businessOpportunityLog.getCreateBy()){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "没有权限");
+				return resultJson;
+			}
+		}
+		if(roleId==4){//服务
+			if(userId!=businessOpportunityLog.getCreateBy()){
+				resultJson.put("state", "fail");
+				resultJson.put("message", "没有权限");
+				return resultJson;
+			}
+		}
+		
 		String json  = null;
 		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
 		if("信息收集".equals(businessOpportunityLog.getEventType())){
