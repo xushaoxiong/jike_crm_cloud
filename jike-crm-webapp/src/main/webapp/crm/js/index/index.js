@@ -78,7 +78,6 @@ $(function(){
 		$('.breadcrumbwap').show();
 		$('.procewap').hide();
 		$('.hide-menu li').removeClass('menuCheck');
-//		$('.R-wapFirst').addClass('R-wap');
 		$('.R').removeClass('R-wapFirst');
 		$('.R').addClass('R-wap');
 		$(this).addClass('menuCheck');
@@ -89,6 +88,7 @@ $(function(){
 			Fht=menuname
 			netht=thisHtml;
 		});
+		
 		if($('.menuCheck').attr('menuid')==6){
 			$('.procewap').show();
 		}

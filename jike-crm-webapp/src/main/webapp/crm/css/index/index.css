@@ -29,11 +29,11 @@ body,html{
 	line-height: 30px;
 	float: none;
 }
-.p-first{
+.R-wapFirst .p-first{
 	background:url(../../img/welcom.png) no-repeat;
 	background-size:cover;
 }
-.p-first p{
+.R-wapFirst .p-first p{
 	color: #666;
     font-size: 48px;
     position: absolute;
