@@ -24,7 +24,7 @@ function supportHtml(tdata){
 //合作伙伴信息
 function supportpanerHtml(tdata){
 	var negHtml='';
-	negHtml+='<ul class="list-unstyled">';
+	negHtml+='<ul class="list-unstyled supportStyle">';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">开通学校账号：</label>';
 			if(tdata.accountOpenCount!=undefined){

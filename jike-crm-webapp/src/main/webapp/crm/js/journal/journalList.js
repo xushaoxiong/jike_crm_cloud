@@ -95,7 +95,6 @@ $('.delJournal').click(function(){
 	
 	//搜索
 	$('.searchBusiness').click(function(){
-		console.log(1111)
 		var OpportunityName=$.trim($('.OpportunityName').val());
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());
@@ -118,7 +117,7 @@ $('.delJournal').click(function(){
 function businesnamestrb(){
 	for (var i=0;i<$('.bussname').length;i++) {
 		var businessplit=$('.bussname').eq(i).html().substring(0,11);
-		if($('.bussname').eq(i).html().length>10){
+		if($('.bussname').eq(i).html().length>=10){
 			$('.bussname').eq(i).html(businessplit+'...');
 			businesnameall=businessplit+'...';
 		}
@@ -190,7 +189,6 @@ $.each(eventJson2.evenList, function(i,item) {
 	}
 	//费用赋值
 	function freedata(freedata){
-		console.log(freedata.trafficFee)
 		if(freedata.trafficFee==undefined){
 			$('.reachInp1').val('');
 		}else{
@@ -467,9 +465,3 @@ $('.reset').click(function(){
 
 //商机名称字数限制鼠标浮上显示全部内容
 
-//var businesnamesp='';
-$(document).load(function(){
-	for (var i=0;i<$('.bussname').length;i++) {
-		console.log($('.bussname').eq(i).html())
-	}	
-})

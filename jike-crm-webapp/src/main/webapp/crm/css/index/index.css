@@ -218,7 +218,7 @@ textarea{resize: none;height: 100px !important;}
 }
 .procewap .proce5{
    background-position: 10px -268px;
-    background-size: 851%;
+    background-size: 852%;
     left: 281px;
 }
 .procewap .proce6{
@@ -270,4 +270,20 @@ textarea{resize: none;height: 100px !important;}
     left: 307px;
     top: 46px;
     width: 421px;
+}
+.procewap .Pbj{
+    background: url(../../img/jx.png) no-repeat;
+    width: 391px;
+    height: 120px;
+    left: 267px;
+    background-size: 98%;
+    top: 5px;
+}
+.procewap .lcstates{
+    background: none;
+    top: 114px;
+    left: 5px;
+    height: 20px;
+    width: 100%;
+    font-size: 13px;
 }

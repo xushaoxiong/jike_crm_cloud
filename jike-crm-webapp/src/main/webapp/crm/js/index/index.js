@@ -28,7 +28,6 @@ $(function(){
 					})
 				})
 			}
-			if(jo.state=='success'){
 				$('.indexName').html(jo.name);
 			var menuimmg=['img/business.png','img/journal.png','img/sess.png']
 			var NavHtml='';
@@ -63,7 +62,6 @@ $(function(){
 				}				
 			})
 			$('.L-list').append(NavHtml);
-			}
 			
 		},
 		error:function(){
