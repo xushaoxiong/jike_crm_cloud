@@ -1,7 +1,7 @@
 var pub={};
 pub.Alt=function(text,flag,callback){
 	var html='';
-	html+='<div class="alert-del" style="width:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,0.5)">';
+	html+='<div class="alert-del" style="width:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,0.5);z-index:1100;">';
 	html+='<div style="width: 15%;z-index:1052;background:#fff;height: 150px;border: 1px solid #ccc;border-radius:5px;position: fixed;top: 0;left: 0;bottom: 0;right: 0;margin: auto;">';
    		html+='<div class="del-text text-center" style="height: 80px;padding: 20px;font-size:14px;">'+text+'</div>';
    		html+='<div class="text-center">';
