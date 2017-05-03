@@ -28,6 +28,7 @@ $(function(){
 		breadnav('日志管理','查看日志');
 		$('.L-list-item').find('li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
+		$('.procewap').hide();
 	})
 	
 	//商机名称弹框状态如果事项类型未选择商机名称不能点击
@@ -162,8 +163,6 @@ $(function(){
 		if(businessOpptunityId==undefined){
 			var businessOpptunityId=0;
 		}
-		
-		
 		messbtnType();
 		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
 			console.log(messbtnTypeId)
