@@ -114,6 +114,7 @@ function trainInfo(boTrain){
 //试用结果详情提交
 //$('.FillInfo').on('click','.trainConfirm',function(){
 function trainConfirm(){
+	$('.procewap').show();
 	var inparry=[];
 	var totalTime=0;
 	$.each($('.inpitem'),function(){
