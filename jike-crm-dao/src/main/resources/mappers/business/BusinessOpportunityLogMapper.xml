@@ -289,7 +289,7 @@
                 #{item}  
             </foreach> 
 		</if>
-		ORDER BY bol.log_date ,bol.create_time desc
+		ORDER BY bol.log_date desc ,bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>
   <select id="selectByBusinessOpportunityId" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -362,7 +362,7 @@
             </foreach> 
 		</if>
 	</where>
-		ORDER BY bol.log_date,bol.create_time desc
+		ORDER BY bol.log_date desc ,bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
   </select>
 </mapper>
