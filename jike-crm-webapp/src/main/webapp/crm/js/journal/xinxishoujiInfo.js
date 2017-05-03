@@ -129,7 +129,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2 flagImg">决策人联系方式</label>';
+				html+='	<label class="col-md-1 col-sm-2">决策人联系方式</label>';
 				html+='	<div class="form-inline col-md-6 col-ms-10 contact-wap" style="padding:0;">';
 					html+='	<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control decisionMakerLandline" />';
 					html+='	<input type="text" value="" placeholder="（手机）例：133********" class="form-control decisionMakerPhone"/>';
