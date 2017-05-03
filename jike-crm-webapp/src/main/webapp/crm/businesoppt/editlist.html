@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="../js/city/city.js" ></script>
+		<script type="text/javascript" src="../js/pub/ajaxUrl.js" ></script>-->
+	</head>
+	<style>
+		.newlist-wap{
+			margin: 25px 0;
+		}
+		.newlist-wap label{text-align: center;padding: 5px;}
+		.newlist-wap .inp-list,.inp-list div{padding:0;}
+		.newBtn-wap{
+			margin-top: 25px;
+		}
+		.col{color: red;}
+		#city .form-control{
+			width: 100%;
+		}
+		.newlist-alert{line-height: 20px;height: 20px;}
+	</style>
+	<body>
+		<div class="container-fluid">
+			<!--<h3>
+				<span>商机列表>编辑商机</span>
+				<button class="btn btn-primary pull-right goBack">返回上一级</button>
+			</h3>-->
+			<div class="newlist-wap">
+				<!--<div class="form-group row">
+					<label class="col-md-1 col-sm-2"><span class="col">*</span>客户名称</label>
+					<div class="col-md-5 col-sm-6 inp-list">
+						<input type="text" class="form-control " placeholder="名称(最多30字)" maxlength="30"/>
+					</div>
+				</div>-->
+				<p class="newlist-alert text-danger"></p>
+				<div class="form-group row">
+	            	<label class="col-md-1 col-sm-2"><span class="col">*</span>商机名称</label>
+	            	<div class="col-md-5 col-sm-6 inp-list">
+	            		<input type="text" placeholder="商机名称" class="form-control businessName"/>
+	            	</div>
+	            </div>
+	            <div class="form-group row">
+	            	<label class="col-md-1 col-sm-2"><span class="col">*</span>客户类型</label>
+	            	<div class=" col-md-5 col-sm-6 inp-list">
+	            		<input class="form-control scloType" disabled="disabled"/>
+		            		<!--<option Optype="0">学校</option>
+		            		<option Optype="1">合作伙伴</option>-->
+	            		<!--</select>-->
+	            	</div>
+	            	
+	            </div>
+	            <div class="form-group row">
+	            	<label class="col-md-1 col-sm-2"><span class="col">*</span>商机地址</label>
+	            	<div id="city" class="form-inline col-md-5 col-sm-6 inp-list">
+	            		<div class="col-md-2 col-sm-2">
+	            			<select class="prov form-control" disabled="disabled"></select>
+	            		</div>
+					    <div class="col-md-2 col-sm-2 citywap">
+					    	<select class="city form-control" disabled="true"></select>  
+					    </div>
+					     <div class="col-md-2 col-sm-2">
+					     	<select class="dist form-control" disabled="disabled"></select> 
+					     </div>
+					    <div class="col-md-6 col-sm-6">
+					    	<input type="type" class="form-control addrDetial"/>
+					    </div>
+					    
+					</div>
+	            </div>
+			</div>
+			<div class="col-md-6 col-sm-8 text-center newBtn-wap" >
+				<button class="btn btn-primary editConfirm" style="margin-right:15px;">确定</button>
+				<!--<button class="btn btn-primary">重置</button>-->
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript" src="js/businesoppt/editlist.js" ></script>
+</html>

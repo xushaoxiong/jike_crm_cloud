@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style>
+		.search-main{
+			margin: 0;
+		}
+		.list-journal td{
+			line-height: 35px !important;
+		}
+		.search-main label{
+			min-width: 0 !important;
+		}
+		.flagImg{
+		    background: url(img/flag.png) no-repeat left 8% top 85%;
+   			 background-size: 15px;
+		}
+	</style>
+	<body>
+		<div class="container-fluid">
+			<!--<h3>日志列表</h3>-->
+			<div class="addBusiness">
+				<button class="btn btn-primary newlist">创建日志+</button>
+			</div>
+			<p class="text-danger text-center alertTitle"></p>
+			<div class="search-main row">
+				<div class="col-sm-3">
+					<label class="pull-left">商机名称&nbsp;</label>
+					<div class="col-sm-8"><input type="text" class="form-control OpportunityName" placeholder="名称"/></div>
+				</div>
+				<div class="col-sm-3">
+	            	<label class="pull-left">日志日期&nbsp;</label>
+	            	<div class="col-sm-4">
+	            		<input type="text" class="form-control" id="indate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+	            	</div>
+        			
+        			<span style="padding: 9px 2px;float: left;">至</span>
+        			<div class="col-sm-4">
+        				<input type="text" class="form-control" id="enddate" data-format="dd-mm-yyyy" onclick="WdatePicker()" value="">
+        			</div>
+    				
+	            </div>
+	            <div class="col-sm-3">
+	            	<label class="pull-left">事项类型&nbsp;</label>
+	            	<div class="col-sm-6">
+	            		<select class="form-control OpportunityProcess">
+		            		<option proid="1">所有</option>
+		            		<!--<option>信息收集</option>
+							<option>制定拜访计划</option>
+							<option>拜访客户</option>
+							<option>商业谈判</option>
+							<option>试用中</option>
+							<option>招投标中</option>
+							<option>签约</option>
+							<option>日常事项</option>
+							<option>售后</option>
+							<option>支持</option>
+							<option>培训</option>-->
+	            		</select>
+	            	</div>
+	            </div>
+	            <div class="col-sm-3">
+	            	<label class="pull-left">日志创建者</label>
+	            	<div class="col-sm-6">
+	            		<input type="text" class="form-control creatName">
+	            	</div>
+	            </div>
+			</div>
+			<div class="row text-center" style="margin: 15px 0;">
+				<button class="btn btn-primary searchBusiness" style="margin-right:15px;">查询</button>
+				<button class="btn btn-primary reset">重置</button>
+			</div>
+			<div class="list-wap">
+				<table class="table table-bordered text-center table-responsive list-journal">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>日志日期</th>
+							<th>商机名称</th>
+							<th>角色</th>
+							<th>日志创建者</th>
+							<th>事项类型</th>
+							<th>具体事项</th>
+							<th>工时</th>
+							<th>内部参与人员</th>
+							<th>外部参与人员</th>
+							<th>总费用</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody class="jourlist">
+						
+					</tbody>
+				</table>
+			</div>
+			<!--分页-->
+			<div class="Page-wap text-center">
+				<div class="pagination-wap row text-center" style="width: 40%;margin: 0 auto;">
+					<span class="totalNum pull-left"></span>
+					<ul class="pagination pull-left"></ul>
+				</div>	 
+			</div>
+		</div>
+		<!--删除日志-->
+		<div class="modal" id="deljalModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>删除日志</h4>
+					</div>
+					<div class="modal-body clearfix">
+						<p style="margin-top: 15px;">是否确认删除此条日志，删除后无法恢复</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary delopptConfirm">确定</button>
+						<button class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/journal/journalList.js" ></script>
+	<script type="text/javascript" src="js/editjournal/editPub.js" ></script>
+	<script type="text/javascript" src="js/viewjournal/viewlist.js" ></script>
+</html>
