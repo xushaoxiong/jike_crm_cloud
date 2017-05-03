@@ -39,6 +39,10 @@ public class BusinessOpportunityController extends BaseController{
 			return result.toJSONString();
 		}
 		try {
+			JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+			if("fail".equals(checkIfBusiness.getString("state"))){
+				return checkIfBusiness.toJSONString();
+			}
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
 			json.put("userId", session.getAttribute(userId));
@@ -63,6 +67,10 @@ public class BusinessOpportunityController extends BaseController{
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
 		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
@@ -90,6 +98,10 @@ public class BusinessOpportunityController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
+		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
@@ -115,6 +127,10 @@ public class BusinessOpportunityController extends BaseController{
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
 		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
@@ -142,6 +158,10 @@ public class BusinessOpportunityController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
+		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
@@ -166,6 +186,10 @@ public class BusinessOpportunityController extends BaseController{
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
 		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
@@ -243,6 +267,10 @@ public class BusinessOpportunityController extends BaseController{
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
 		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
