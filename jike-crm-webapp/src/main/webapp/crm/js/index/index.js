@@ -66,7 +66,7 @@ $(function(){
 			
 		},
 		error:function(){
-			alert('服务器忙！')
+//			alert('服务器忙！')
 		}
 	});
 	
