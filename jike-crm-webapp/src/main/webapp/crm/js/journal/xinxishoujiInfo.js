@@ -75,7 +75,7 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2 flagImg">联系人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control contTitle" onchange="contTitle($(this)">';
+					html+='	<select class="form-control contTitle" onchange="contTitle($(this))">';
 						html+='	<option></option>';
 						html+='	<option>校长</option>';
 						html+='	<option>教学副校长</option>';
@@ -111,7 +111,7 @@ function infoColle(){
 			html+='	<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2 flagImg">决策人职位</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
-					html+='	<select class="form-control decisionMakerTitle" onchange="decisionMakerTitle($(this)">';
+					html+='	<select class="form-control decisionMakerTitle" onchange="decisionMakerTitle($(this))">';
 						html+='	<option></option>';
 						html+='	<option>校长</option>';
 						html+='	<option>教学副校长</option>';
