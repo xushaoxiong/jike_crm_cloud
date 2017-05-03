@@ -25,6 +25,7 @@ function TryInfo(boTrialReuslt){
 //试用结果详情提交
 //$('.FillInfo').on('click','.tryConfirm',function(){
 function tryConfirm(){
+	
 	var detal=$.trim($('.tryTextare').val());
 	if(detal==''){
 		pub.Alt('请填写试用结果详情',false);
@@ -32,6 +33,7 @@ function tryConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

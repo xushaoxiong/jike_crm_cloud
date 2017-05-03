@@ -43,6 +43,7 @@ function receiveInfo(reInfo){
 //签约详情提交
 //$('.FillInfo').on('click','.payConfirm',function(){
 function payConfirm(){
+	
 	var paytype=$('.paytype').find('input:checked').val();
 	var paymentDate=$('.paytime').html();
 	var paymentAmount=$.trim($('.paymoney').val());
@@ -60,6 +61,7 @@ function payConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

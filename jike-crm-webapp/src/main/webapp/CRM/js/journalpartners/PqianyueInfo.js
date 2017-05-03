@@ -112,6 +112,7 @@ function signInfo(boSign){
 //签约详情提交
 //$('.FillInfo').on('click','.SignConfirm',function(){
 function SignConfirm(){
+	
 	var signtime=$('.Signdate').html();
 	var assessmentIndex=$.trim($('.Asseinde').val());
 	var assessmentPeriodBeginTime=$('.startdate').html();
@@ -134,6 +135,7 @@ function SignConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

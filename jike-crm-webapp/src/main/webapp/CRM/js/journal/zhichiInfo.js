@@ -31,24 +31,25 @@ function supportInfo(boSupport){
 	boSupport.informationConfirmationCount=$('.goodrepNumb').val();
 	
 }
-//试用结果详情提交
+////试用结果详情提交
 //$('.FillInfo').on('click','.suprtConfirm',function(){
 function suprtConfirm(){
+	
 	var scolAccoutnumb=$('.scolAccoutnumb').val();
 	var goodrepNumb=$('.goodrepNumb').val();
 	if(scolAccoutnumb==''&& goodrepNumb==''){
 		pub.Alt('请填写一项信息',false);
-		return false;
+		return;
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 	//计算工时
 	var timeVal=(Number(scolAccoutnumb)+Number(goodrepNumb))*0.5;
 	$('.timeVal').val(timeVal)
 }
-
-//提交返回后台试用结果信息
+////提交返回后台试用结果信息
 	var supportJ={};
 	var boSupport={};
 //	$('.journaConfirm').click(function(){
@@ -67,5 +68,5 @@ function suprtConfirm(){
 			});
 			},function errF(jo){
 				pub.Alt(jo.message,false);
-		}
-	})
+		})
+	}

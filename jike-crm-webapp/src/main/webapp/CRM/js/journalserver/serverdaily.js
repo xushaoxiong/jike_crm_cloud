@@ -106,6 +106,7 @@ function dailyInfo(boTrain){
 //试用结果详情提交
 //$('.FillInfo').on('click','.dailyConfirm',function(){
 function dailyConfirm(){
+	
 	var inparry=[];
 	var totalTime=0;
 	$.each($('.inpitem'),function(){
@@ -120,6 +121,7 @@ function dailyConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 	//计算工时
 	var timeVal=((Number(totalTime))+Number($('.inp1').val())+Number($('.inp4').val())+Number($('.inp10').val())+Number($('.inp11').val())+(Number($('.inp3').val()))*2)*0.5;

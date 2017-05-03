@@ -24,6 +24,7 @@ function propRustInfo(boBiddingResult){
 //信息详情提交
 //$('.FillInfo').on('click','.propRustConfirm',function(){
 	function propRustConfirm(){
+		
 	var detal=$.trim($('.propRustTextare').val());
 	if(detal==''){
 		pub.Alt('请填写招投标结果详情',false);
@@ -31,6 +32,7 @@ function propRustInfo(boBiddingResult){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

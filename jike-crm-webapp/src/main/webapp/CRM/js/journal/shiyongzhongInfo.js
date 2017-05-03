@@ -95,6 +95,7 @@ function disciplineWap(_this){
 //提交试用中详情信息
 //$('.FillInfo').on('click','.trialConfirm',function(){
 function trial(){
+	
 	var startTime=$('.startTime').html();
 	var endTime=$('.endTime').html();
 	if(startTime==""){
@@ -132,6 +133,7 @@ function trial(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 //提交试用信息返回后台数据

@@ -36,6 +36,7 @@ function negotionInfo(boNegotiation){
 //提交谈判信息
 //$('.FillInfo').on('click','.negoConfirm',function(){
 function negoConfirm(){
+	
 	var negoDetail=$.trim($('.negDetail').val());
 	if(negoDetail==''){
 		pub.Alt('请填写谈判详情',false);
@@ -43,6 +44,7 @@ function negoConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

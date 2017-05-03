@@ -176,6 +176,7 @@ function visitordata(jodata){
 //拜访提交
 //	$('.FillInfo').on('click','.visConfirm',function(){
 	function visConfirm(){
+		
 		var visitorLandline=$.trim($('.contactLine').val());
 		var visitorPhone=$.trim($('.contactPhone').val());
 		var visitorEmail=$.trim($('.visitorEmail').val());
@@ -197,6 +198,7 @@ function visitordata(jodata){
 		}
 		$('.FillInfo').hide();
 		$('#addJournal').show();
+		$('.procewap').show();
 		$('.journaConfirm').prop('disabled',false);
 		
 	}

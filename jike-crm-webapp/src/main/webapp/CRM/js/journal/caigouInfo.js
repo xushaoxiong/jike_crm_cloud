@@ -31,6 +31,7 @@ function PurchaseInfo(boPurchase){
 //采购详情提交
 //$('.FillInfo').on('click','.purchConfirm',function(){
 function purchConfirm(){
+	
 	var arrivalTime=$('.arrivalTime').html();
 	var installTime=$('.installTime').html();
 	if(arrivalTime==''){
@@ -43,6 +44,7 @@ function purchConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 

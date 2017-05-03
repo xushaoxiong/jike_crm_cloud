@@ -24,6 +24,7 @@ function dailyInfo(dailyEvents){
 //试用结果详情提交
 //$('.FillInfo').on('click','.dailyConfirm',function(){
 	function dailyConfirm(){
+		
 	var detal=$.trim($('.dailyTextare').val());
 	if(detal==''){
 		pub.Alt('请填写详细信息',false);
@@ -31,6 +32,7 @@ function dailyInfo(dailyEvents){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 }
 
@@ -45,7 +47,7 @@ function dailyInfo(dailyEvents){
 		dailyJ.logData=logData;
 		dailyJ.totalDetail=totalDetail
 		dailyJ.dailyEvents=dailyEvents;
-		$(this).prop('disabled',true);
+		
 		$ajax('post','businessOpportunityLog/addDailyEvents',dailyJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

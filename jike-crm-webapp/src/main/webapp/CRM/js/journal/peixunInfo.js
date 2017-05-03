@@ -34,6 +34,7 @@ function trainInfo(boTrain){
 //试用结果详情提交
 //$('.FillInfo').on('click','.trainConfirm',function(){
 function trainConfirm(){
+	
 	var trainPersonNumb=$('.trainPersonNumb').val();
 	var trainNumb=$('.trainNumb').val();
 	if(trainPersonNumb==''&& trainNumb==''){
@@ -42,6 +43,7 @@ function trainConfirm(){
 	}
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 	//计算工时
 	var timeVal=((Number(trainPersonNumb))*0.5+(Number(trainNumb)));

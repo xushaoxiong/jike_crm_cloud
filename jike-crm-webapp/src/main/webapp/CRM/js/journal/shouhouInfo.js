@@ -72,6 +72,7 @@ function aftSealInfo(boCustomerService){
 //试用结果详情提交
 //$('.FillInfo').on('click','.aftSealConfirm',function(){
 	function aftSealConfirm(){
+		
 	var aftSelInpArry=[];
 	$('.aftSelInp').each(function(i){
 		if($(this).val()!=''){
@@ -90,6 +91,7 @@ function aftSealInfo(boCustomerService){
 	var Inp6=Number($('.aftSelInp6').val())*0.5;
 	$('.FillInfo').hide();
 	$('#addJournal').show();
+	$('.procewap').show();
 	$('.journaConfirm').prop('disabled',false);
 	//计算工时
 	$('.timeVal').val((Inp1+Inp2+Inp3+Inp4+Inp5+Inp6));

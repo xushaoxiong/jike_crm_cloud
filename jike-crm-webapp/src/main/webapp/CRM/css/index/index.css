@@ -181,3 +181,93 @@ textarea{resize: none;height: 100px !important;}
 .pagination{
 	float: left !important;
 }
+/*流程图*/
+.procewap{
+	width: 100%;
+	height: 120px;
+	position: relative;
+	width: 860px;
+	margin-left: 1px !important;
+	display: none;
+}
+.procewap li{
+	height: 58px;
+	position: absolute;
+	top: 30px;
+	width: 120px;
+	background: url(../../img/lc.png) no-repeat;
+}
+.procewap .proce1{
+       background-position: 10px 4px;
+    background-size: 851%;
+}
+.procewap .proce2{
+      background-position: 10px -64px;
+    background-size: 851%;
+    left: 62px;
+}
+.procewap .proce3{
+      background-position: 10px -131px;
+    background-size: 851%;
+    left: 149px;
+}
+.procewap .proce4{
+	background-position: 10px -200px;
+    background-size: 853%;
+    left: 226px;
+}
+.procewap .proce5{
+   background-position: 10px -268px;
+    background-size: 851%;
+    left: 281px;
+}
+.procewap .proce6{
+   background-position: 10px -335px;
+    background-size: 851%;
+    left: 328px;
+}
+.procewap .proce7{
+	    background-position: -107px 3px;
+    background-size: 851%;
+    left: 390px;
+}
+.procewap .proce8{
+        background-position: -116px -64px;
+    background-size: 851%;
+    left: 467px;
+}
+.procewap .proce9{
+        background-position: -116px -132px;
+    background-size: 851%;
+    left: 551px
+}
+.procewap .proce10{
+	background-position: -116px -200px;
+    background-size: 851%;
+    left: 623px;
+}
+.procewap .proce11{
+       background-position: -116px -269px;
+    background-size: 851%;
+    left: 710px;
+}
+.procewap .line1{
+	background-position: -486px 1px;
+    background-size: 851%;
+    left: 162px;
+    top: 11px;
+}
+.procewap .line2{
+	background-position: -732px 2px;
+    background-size: 409%;
+    left: 440px;
+    top: 11px;
+    width: 237px;
+}
+.procewap .line3{
+	background-position: -616px -30px;
+    background-size: 237%;
+    left: 307px;
+    top: 46px;
+    width: 421px;
+}

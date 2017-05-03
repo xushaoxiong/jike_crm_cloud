@@ -77,6 +77,7 @@ $(function(){
 	$('.L-list').on('click','.hide-menu li',function(){
 		//跳转链接是面包屑导航出现breadcrumb
 		$('.breadcrumbwap').show();
+		$('.procewap').hide();
 		$('.hide-menu li').removeClass('menuCheck');
 //		$('.R-wapFirst').addClass('R-wap');
 		$('.R').removeClass('R-wapFirst');
@@ -89,6 +90,9 @@ $(function(){
 			Fht=menuname
 			netht=thisHtml;
 		});
+		if($('.menuCheck').attr('menuid')==6){
+			$('.procewap').show();
+		}
 		breadnav(menuname,thisHtml);
 		$('.breadcrumb').on('click','.curBack',function(){
 			if($('.menuCheck').attr('menuid')==6){

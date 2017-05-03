@@ -1,8 +1,15 @@
 //新建日志公用内容
 function jourlist(data){
 	$('.jourtime').html(data.logDate);
-	$('.businesname').html(data.businessOpportunityName);
-	$('.businesnum').html(data.businessOpportunityNum);
+	if(data.eventType=='日常事项'){
+		$('.businesname').html('日常商机');
+		$('.businesnum').html('R0000000-00');
+	}else{
+		$('.businesname').html(data.businessOpportunityName);
+		$('.businesnum').html(data.businessOpportunityNum);
+	}
+	
+	
 	$('.eventtype').html(data.eventType);
 	$('.spectype').html(data.specificEvent);
 	$('.worktime').html(data.workingHours);
