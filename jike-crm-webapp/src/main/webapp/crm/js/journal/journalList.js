@@ -117,7 +117,7 @@ $('.delJournal').click(function(){
 function businesnamestrb(){
 	for (var i=0;i<$('.bussname').length;i++) {
 		var businessplit=$('.bussname').eq(i).html().substring(0,11);
-		if($('.bussname').eq(i).html().length>=10){
+		if($('.bussname').eq(i).html().length>10){
 			$('.bussname').eq(i).html(businessplit+'...');
 			businesnameall=businessplit+'...';
 		}

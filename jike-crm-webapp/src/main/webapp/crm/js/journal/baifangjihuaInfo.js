@@ -5,7 +5,7 @@ function visitPlan(){
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-sm-1">计划名称</label>';
 				vPhtml+='<div class="col-sm-4">';
-					vPhtml+='<span class="form-control planName"/></span>';
+					vPhtml+='<span class="form-control planName" style="word-wrap:break-word;height:auto;"></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
