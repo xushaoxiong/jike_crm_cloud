@@ -76,7 +76,10 @@ $(function(){
 		$(this).find('.businesscheckimg').addClass('businesscheck');
 	})
 	//选择商机确定
+	var messbtnTypeId='';
 	$('.busnisListConfirm').click(function(){
+		var eveid=$('#eventType').find('option:selected').attr('eveid');
+		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var bussinesName=$('.businesscheck').parent('tr').find('.businesName').html();
 		var businessOpptunityId=$('.businesscheck').parent('tr').find('.businesName').attr('businessOpptunityId');
 		var bussinesNumb=$('.businesscheck').parent('tr').find('.businesNumb').html();
@@ -86,6 +89,12 @@ $(function(){
 		$('.businesNumbspInp').html(bussinesNumb);
 		$('.businessNameSp').attr('businessOpptunityId',businessOpptunityId);
 		$('.businesNumbspInp').attr('OpptunityId',opprtype);
+		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
+			console.log(messbtnTypeId)
+			$('.journaConfirm').attr('disabled','disabled');
+			
+		}
+		messbtnTypeId=eveid+spcid+businessOpptunityId;
 		messbtnType();
 		
 	})
@@ -113,7 +122,7 @@ $(function(){
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		spictype('#SpecItem',eveid);
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
-		
+		var businessOpptunityId=$('.busnamState ').attr('businessopptunityid');
 		//判断如果选项为培训、售后、支持 工时不能编辑
 		if(eveid=='9'||eveid=='10'||eveid=='11'||sessionStorage.server=='true'){
 			$('.journalTime span').hide();
@@ -134,12 +143,35 @@ $(function(){
 			$('.busnamState').addClass('businessNameSp');
 			$('.busnamState').attr('disabled',false);
 		}
-		
+		if(businessOpptunityId==undefined){
+			var businessOpptunityId=0;
+		}
+		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
+			console.log(messbtnTypeId)
+			$('.journaConfirm').attr('disabled','disabled');
+			
+		}
+		messbtnTypeId=eveid+spcid+businessOpptunityId;
 		messbtnType();
 	})
 	//选择不同事项加载不同js
 	$('#SpecItem').change(function(){
+		var eveid=$('#eventType').find('option:selected').attr('eveid');
+		var businessOpptunityId=$('.busnamState ').attr('businessopptunityid');
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
+		if(businessOpptunityId==undefined){
+			var businessOpptunityId=0;
+		}
+		
+		
+		messbtnType();
+		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
+			console.log(messbtnTypeId)
+			$('.journaConfirm').attr('disabled','disabled');
+			
+		}
+		messbtnTypeId=eveid+spcid+businessOpptunityId;
+		
 	})
 	
 	
@@ -209,18 +241,26 @@ $(function(){
 		}
 	})
 	//添加信息按钮状态
+	
 	function messbtnType(){
+		var eveid=$('#eventType').find('option:selected').attr('eveid');
+		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var indate =$.trim($('#indate').html());
 		var SpecItem=$('#SpecItem').val();
 		var businessNameSp=$('.businessNameSp').html();
+		var businessOpptunityId=$('.businessNameSp').attr('businessopptunityid');
 		if(indate==''||SpecItem==null||SpecItem==''||businessNameSp==''){
 			$('.addMessage').attr('disabled','disabled');
 		}else{
 			$('.addMessage').prop('disabled',false);
 		}
+		
 	}messbtnType();
 	
-	
+//	function journalConfirmtype(eveid,spcid,businessOpptunityId){
+//		console.log(messbtnTypeId)
+//		
+//	}
 
 /*添加信息*/
 	//商机名称id
