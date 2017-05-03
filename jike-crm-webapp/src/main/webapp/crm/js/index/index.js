@@ -94,11 +94,12 @@ $(function(){
 		}
 		breadnav(menuname,thisHtml);
 		$('.breadcrumb').on('click','.curBack',function(){
+			
 			if($('.menuCheck').attr('menuid')==6){
-				
 				breadnav(menuname,thisHtml);
 				$('.FillInfo').hide();
 				$('#addJournal').show();
+				$('.procewap').show();
 			}
 			if($('.menuCheck').attr('menuid')==7){
 				breadnav(menuname,'编辑日志');
