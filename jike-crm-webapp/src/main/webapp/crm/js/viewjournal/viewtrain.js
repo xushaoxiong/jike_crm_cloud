@@ -2,7 +2,7 @@ function trainHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled">';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">产品详细使用操作培训：</label>';
+			negHtml+='<label class="col-sm-3">产品详细使用操作培训：</label>';
 			if(tdata.operationTrainingCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.operationTrainingCount+'人</span>';
 			}else{
@@ -10,7 +10,7 @@ function trainHtml(tdata){
 			}
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">考务实施、学生作答、老师批改培训：</label>';
+			negHtml+='<label class="col-sm-3">考务实施、学生作答、老师批改培训：</label>';
 			if(tdata.correctingTrainingCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.correctingTrainingCount+'次</span>';
 			}else{
@@ -25,7 +25,7 @@ function trainpanerHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled">';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">产品详细使用操作培训：</label>';
+			negHtml+='<label class="col-sm-3">产品详细使用操作培训：</label>';
 			if(tdata.operationTrainingCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.operationTrainingCount+'人</span>';
 			}else{
@@ -33,7 +33,7 @@ function trainpanerHtml(tdata){
 			}
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">考务实施、学生作答、老师批改培训：</label>';
+			negHtml+='<label class="col-sm-3">考务实施、学生作答、老师批改培训：</label>';
 			if(tdata.correctingTrainingCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.correctingTrainingCount+'次</span>';
 			}else{
@@ -41,7 +41,7 @@ function trainpanerHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">极课PPT演讲及简单出阅卷演示：</label>';
+			negHtml+='<label class="col-sm-3">极课PPT演讲及简单出阅卷演示：</label>';
 			if(tdata.pptDemonstratedCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.pptDemonstratedCount+'次</span>';
 			}else{
@@ -49,7 +49,7 @@ function trainpanerHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">详细出卷演示（语数英）：</label>';
+			negHtml+='<label class="col-sm-3">详细出卷演示（语数英）：</label>';
 			if(tdata.volumeDemonstratedCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.volumeDemonstratedCount+'次</span>';
 			}else{
@@ -57,7 +57,7 @@ function trainpanerHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">详细阅卷培训：</label>';
+			negHtml+='<label class="col-sm-3">详细阅卷培训：</label>';
 			if(tdata.markingTrainCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.markingTrainCount+'次</span>';
 			}else{
@@ -65,7 +65,7 @@ function trainpanerHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">学情追踪介绍：</label>';
+			negHtml+='<label class="col-sm-3">学情追踪介绍：</label>';
 			if(tdata.introductionLeanCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.introductionLeanCount+'次</span>';
 			}else{
@@ -73,7 +73,7 @@ function trainpanerHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-4">学生端及家长端介绍：</label>';
+			negHtml+='<label class="col-sm-3">学生端及家长端介绍：</label>';
 			if(tdata.studentParentIntroductionCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.studentParentIntroductionCount+'次</span>';
 			}else{

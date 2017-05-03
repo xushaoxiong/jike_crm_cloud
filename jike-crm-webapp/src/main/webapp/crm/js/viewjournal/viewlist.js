@@ -76,7 +76,6 @@ function ajaxpub(idJ,conmmJ){
 //var backJ={};
 $('.jourlist').on('click','.checkjounal',function(){
 	backJ=paginatorJ;
-	console.log(backJ)
 	var logIdJ={};
 	var logid=$(this).parent().attr('logid');
 	logIdJ.logId=logid;
@@ -182,7 +181,7 @@ $('.jourlist').on('click','.checkjounal',function(){
 		})
 	}
 	//培训
-	if(specType=='培训'){
+	if(eventType=='培训'){
 		$.getScript("js/viewjournal/viewtrain.js",function(){
 			if(opptypeid==1){	
 				ajaxpub(logIdJ,trainpanerHtml);
