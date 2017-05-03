@@ -452,6 +452,7 @@ $('.newlist').click(function(){
 		$('.L-list-item').find('li[menuid=6]').addClass('menuCheck');
 		var netht=$('.menuCheck').find('a').html();
 		breadnav(Fht,netht);
+		$('.procewap').show();
 	})
 })
 ////重置
