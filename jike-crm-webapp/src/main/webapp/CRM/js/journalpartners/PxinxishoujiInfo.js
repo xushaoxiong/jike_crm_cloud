@@ -1,7 +1,7 @@
 function infoColle(){
 	var html="";
 	html+='<div class="container-fluid" id="messBox">';
-		html+='	<div class="message-wap">';
+		html+='	<div class="message-wap collmessage">';
 			html+='	<p class="text-danger"><b>（备注：标有<img src="img/flag.png" style="width:18px;"/>的信息全部填写完成之后商机状态转化成信息收集完成）</b></p>';
 				html+='<div class="form-group row">';
 				html+='	<label class="col-md-1 col-sm-2 flagImg">信息来源</label>';
