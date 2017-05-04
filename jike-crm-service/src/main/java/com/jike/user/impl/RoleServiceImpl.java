@@ -179,7 +179,7 @@ public class RoleServiceImpl implements RoleService {
 		JSONObject resultJson = new JSONObject();
 		Long roleId = json.getLong("roleId");
 		List<BoEventLabel> roleEventList = null;
-		if(roleId==2L){
+		if(roleId==2L||roleId==3L){
 			roleEventList = boEventLabelMapper.selectDistinctAll();
 		}else{
 			roleEventList = boEventLabelMapper.selectByRoleId(roleId);

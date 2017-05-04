@@ -221,7 +221,7 @@
     bol.business_opportunity_id = sbo.business_opportunity_id
     LEFT JOIN user_role ur
     on bol.create_by = ur.user_id
-    where ur.role_id = 3
+    where (ur.role_id = 3 or ur.role_id = 2)
     	<if test="businessOpportunityName != null">
 			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
@@ -266,7 +266,7 @@
     bol.business_opportunity_id = sbo.business_opportunity_id
     LEFT JOIN user_role ur
     on bol.create_by = ur.user_id
-    where ur.role_id = 3
+    where (ur.role_id = 3 or ur.role_id = 2)
     	<if test="businessOpportunityName != null">
 			 and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
