@@ -43,8 +43,8 @@ function supportpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">增删查改教师学生信息：</label>';
-			if(tdata.modifyStudentInformationCoun!=undefined){
-				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCoun+'次</span>';
+			if(tdata.modifyStudentInformationCount!=undefined){
+				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
 			}
@@ -88,8 +88,8 @@ function supportserverHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">增删查改教师学生信息：</label>';
-			if(tdata.modifyStudentInformationCoun!=undefined){
-				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCoun+'次</span>';
+			if(tdata.modifyStudentInformationCount!=undefined){
+				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
 			}
