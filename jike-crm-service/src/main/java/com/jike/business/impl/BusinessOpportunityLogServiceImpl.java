@@ -1445,7 +1445,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long logId = queryJson.getLong("logId");
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogMapper.selectByPrimaryKey(logId);
 		Long businessOpportunityId = businessOpportunityLog.getBusinessOpportunityId();
-		Long userId = queryJson.getLong("userId");
+		/*Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
 		if(roleId==3){//销售
 			SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityId);
@@ -1461,7 +1461,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				resultJson.put("message", "没有权限");
 				return resultJson;
 			}
-		}
+		}*/
 		
 		String json  = null;
 		JSONObject businessOpportunityJson = businessOpportunityService.queryByBusinessOpportunityId(businessOpportunityId);
