@@ -106,7 +106,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">必备配件安装及操作练习辅导：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.operationGuidanceCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.operationGuidanceCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
@@ -114,7 +114,7 @@ function trainpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">培训成果测试及辅导：</label>';
-			if(tdata.correctingTrainingCount!=undefined){
+			if(tdata.testCoachCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.testCoachCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
