@@ -307,6 +307,9 @@ public class UserServiceImpl implements UserService {
 	public List<User> querySaleAndServiceByUserName(String userName) {
 		return userMapper.querySaleAndServiceByUserName(userName);
 	}
+	public List<User> queryUserByUserName(String userName) {
+		return userMapper.queryUserByUserName(userName);
+	}
 	
 	
 }

@@ -103,5 +103,13 @@ public interface UserService {
      * @createtime 2017年4月24日下午12:01:30
      */
     public List<User> querySaleAndServiceByUserName(String userName);
+    /**
+     * 通过名称查询用户
+     * @param userName
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月4日上午10:41:33
+     */
+    public List<User> queryUserByUserName(String userName);
 
 }

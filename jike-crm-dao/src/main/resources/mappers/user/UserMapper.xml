@@ -254,4 +254,12 @@
     and (r.role_id =3 or r.role_id =4)
     and u.name like #{userName,jdbcType=VARCHAR}
     </select>
+   <select id="queryUserByUserName"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    u.*
+    from user u,user_role r
+    where u.user_id = r.user_id
+    and u.name like #{userName,jdbcType=VARCHAR}
+    </select>
+    
 </mapper>

@@ -1303,7 +1303,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			String userName = queryJson.getString("userName");
 			if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 				userName = "%"+userName+"%";
-				List<User> userList = userService.querySaleAndServiceByUserName(userName);
+				List<User> userList = userService.queryUserByUserName(userName);
 				if(!userList.isEmpty()){
 					for (User user : userList) {
 						userIds.add(user.getUserId());
