@@ -81,6 +81,7 @@ $('.jourlist').on('click','.checkjounal',function(){
 	logIdJ.logId=logid;
 	var eventType=$(this).parents('tr').find('.evtype').html();
 	var specType=$(this).parents('tr').find('.spetype').html();
+	var roleName=$(this).parents('tr').find('.roleName').html();
 	var opptypeid=$(this).parents('tr').find('.bussname').attr('busintype');
 	//opptid=1合作伙伴0学校
 	//信息收集
@@ -153,10 +154,10 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//日常
 	if(eventType=='日常事项'){
 		$.getScript("js/viewjournal/viewdaily.js",function(){
-			if(sessionStorage.server=='false'){
-				ajaxpub(logIdJ,dailyHtml);
-			}else{
+			if(roleName=='服务'){
 				ajaxpub(logIdJ,serverdailyHtml)
+			}else{
+				ajaxpub(logIdJ,dailyHtml);
 			}
 			
 		})
@@ -170,9 +171,9 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//支持
 	if(specType=='支持'){
 		$.getScript("js/viewjournal/viewsupport.js",function(){
-			if(opptypeid==1&&sessionStorage.server=='false'){	
+			if(opptypeid==1&&roleName!='服务'){	
 				ajaxpub(logIdJ,supportpanerHtml);
-			}else if(sessionStorage.server=='true'){
+			}else if(roleName=='服务'){
 				ajaxpub(logIdJ,supportserverHtml);
 			}else{
 				ajaxpub(logIdJ,supportHtml);

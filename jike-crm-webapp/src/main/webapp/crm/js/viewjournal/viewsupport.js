@@ -43,8 +43,8 @@ function supportpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">增删查改教师学生信息：</label>';
-			if(tdata.modifyStudentInformationCoun!=undefined){
-				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCoun+'次</span>';
+			if(tdata.modifyStudentInformationCount!=undefined){
+				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
 			}
@@ -69,9 +69,9 @@ function supportpanerHtml(tdata){
 }
 function supportserverHtml(tdata){
 	var negHtml='';
-	negHtml+='<ul class="list-unstyled">';
+	negHtml+='<ul class="list-unstyled serverSupStyle">';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-3">开通学校账号：</label>';
+			negHtml+='<label class="col-sm-2">开通学校账号：</label>';
 			if(tdata.accountOpenCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.accountOpenCount+'次</span>';
 			}else{
@@ -79,7 +79,7 @@ function supportserverHtml(tdata){
 			}
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-3">信息确认及物资准备：</label>';
+			negHtml+='<label class="col-sm-2">信息确认及物资准备：</label>';
 			if(tdata.informationConfirmationCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.informationConfirmationCount+'次</span>';
 			}else{
@@ -87,16 +87,16 @@ function supportserverHtml(tdata){
 			}	
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-3">增删查改教师学生信息：</label>';
-			if(tdata.modifyStudentInformationCoun!=undefined){
-				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCoun+'次</span>';
+			negHtml+='<label class="col-sm-2">增删查改教师学生信息：</label>';
+			if(tdata.modifyStudentInformationCount!=undefined){
+				negHtml+='<span class="colSp">'+tdata.modifyStudentInformationCount+'次</span>';
 			}else{
 				negHtml+='<span class="colSp"></span>';
 			}
 			
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-3">产品演示介绍：</label>';
+			negHtml+='<label class="col-sm-2">产品演示介绍：</label>';
 			if(tdata.productDemonstration!=undefined){
 				negHtml+='<span class="colSp">'+tdata.productDemonstration+'次</span>';
 			}else{
@@ -105,7 +105,7 @@ function supportserverHtml(tdata){
 			
 		negHtml+='</li>';
 		negHtml+='<li>';
-			negHtml+='<label class="col-sm-3">产品介绍讲解，简单操作演示：</label>';
+			negHtml+='<label class="col-sm-2">产品介绍讲解，简单操作演示：</label>';
 			if(tdata.productIntroduce!=undefined){
 				negHtml+='<span class="colSp">'+tdata.productIntroduce+'次</span>';
 			}else{

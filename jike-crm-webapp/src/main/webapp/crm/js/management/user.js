@@ -46,7 +46,7 @@
 			userHtml+='<td class="entryDate">'+item.entryDate+'</td>';
 			userHtml+='<td class="roleId" roleid="'+item.roleId+'">'+item.roleName+'</td>';
 			userHtml+='<td>';
-				userHtml+='<a class="userAmend">修改</a>';
+				userHtml+='<a class="userAmend cursorm">修改</a>';
 			userHtml+='</td>';
 		userHtml+='</tr>';
 		})

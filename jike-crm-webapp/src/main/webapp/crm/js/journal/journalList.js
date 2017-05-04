@@ -47,7 +47,7 @@ $('.delJournal').click(function(){
 					}
 					
 				}
-				html+='<td>'+item.roleName+'</td>';
+				html+='<td class="roleName">'+item.roleName+'</td>';
 				html+='<td>'+item.createUserName+'</td>';
 				html+='<td class="evtype">'+item.eventType+'</td>';
 				html+='<td class="spetype">'+item.specificEvent+'</td>';
