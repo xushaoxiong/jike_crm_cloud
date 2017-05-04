@@ -69,8 +69,11 @@ body,html{
 	color:  #ccc;
 	text-underline: none !important;	
 }
-.hide-menu li:first-child{
+.hide-menu li{
 	border-bottom: 1px solid #424851;
+}
+.hide-menu li:last-child{
+	border-bottom:none;
 }
 .circle{
 	display: inline-block;
