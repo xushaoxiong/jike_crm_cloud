@@ -184,11 +184,11 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//培训
 	if(eventType=='培训'){
 		$.getScript("js/viewjournal/viewtrain.js",function(){
-			if(opptypeid==1){	
+//			if(opptypeid==1){	
 				ajaxpub(logIdJ,trainpanerHtml);
-			}else{
-				ajaxpub(logIdJ,trainHtml);
-			}
+//			}else{
+//				ajaxpub(logIdJ,trainHtml);
+//			}
 		})
 	}
 	//培训
@@ -200,9 +200,14 @@ $('.jourlist').on('click','.checkjounal',function(){
 	
 })
 //返回上一级
-
+//var ajaxUrl="http://localhost:8080/jike-crm-webapp/";
 function goback(){
-	$('.R-wap').load('journal/journalList.html');
+	$('.R-wap').load('journal/journalList.html')
+//	$('.R-wap').load(ajaxUrl+'/businessOpportunityLog/queryBusinessOpportunityLogByParams',{"businessOpportunityName":"001","start":1,"pageSize":10},function(){
+//			$('.R-wap').load('journal/journalList.html')
+//	});
+//	history.pushState(null, null, 'journal/journalList.html');
+
 //	$('.R-wap').load('journal/journalList.html',function(){
 //		$('.OpportunityName').val(backJ.businessOpportunityName);
 //		$('#indate').val(backJ.startTime);
