@@ -96,7 +96,7 @@ function infoColle(){
 				html+='	</div>';
 			html+='	</div>';
 			html+='	<div class="form-group row">';
-				html+='	<label class="col-md-1 col-sm-2 flagImg">预计合作方式</label>';
+				html+='	<label class="col-md-1 col-sm-2">预计合作方式</label>';
 				html+='	<div class="col-md-3 col-sm-5">';
 					html+='	<select class="form-control cooperatType">';
 						html+='	<option>经销商</option>';
