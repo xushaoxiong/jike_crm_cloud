@@ -62,12 +62,13 @@ function costdata(cdata){
 //公用部分信息ajax内容
 function ajaxpub(idJ,conmmJ){
 	$ajax('post','businessOpportunityLog/queryBOLog',idJ,function succF(jo){
-		$('.R-wap').load('journalview/viewlist.html',function(){
+		$('.threloadWap').load('journalview/viewlist.html',function(){
 			jourlist(jo.businessOpportunityLogJson);
 			costdata(jo.boFeeDetailJson);
 			$('.addInfo').html(conmmJ(jo.commonJson));
 		
 		});
+	
 
 	},function errF(jo){
 		pub.Alt(jo.message,false);
@@ -75,6 +76,8 @@ function ajaxpub(idJ,conmmJ){
 }
 //var backJ={};
 $('.jourlist').on('click','.checkjounal',function(){
+	$('.R-wap').hide();
+	$('.threloadWap').show();
 	backJ=paginatorJ;
 	var logIdJ={};
 	var logid=$(this).parent().attr('logid');
@@ -200,24 +203,10 @@ $('.jourlist').on('click','.checkjounal',function(){
 	
 })
 //返回上一级
-//var ajaxUrl="http://localhost:8080/jike-crm-webapp/";
-function goback(){
-	$('.R-wap').load('journal/journalList.html')
-//	$('.R-wap').load(ajaxUrl+'/businessOpportunityLog/queryBusinessOpportunityLogByParams',{"businessOpportunityName":"001","start":1,"pageSize":10},function(){
-//			$('.R-wap').load('journal/journalList.html')
-//	});
-//	history.pushState(null, null, 'journal/journalList.html');
 
-//	$('.R-wap').load('journal/journalList.html',function(){
-//		$('.OpportunityName').val(backJ.businessOpportunityName);
-//		$('#indate').val(backJ.startTime);
-//		$('#enddate').val(backJ.endTime);
-//		$('.OpportunityProcess').val(backJ.eventType);
-//		$('.creatName').val(backJ.userName);
-//		console.log($('.jourlist').html())
-//		if($('.jourlist').html()!=''){
-//			$('.searchBusiness').click();
-//		}
-//		
-//	});
+function goback(){
+	$('.R-wap').show();
+	$('.threloadWap').hide();
+	$('.threloadWap').html('');
+
 }

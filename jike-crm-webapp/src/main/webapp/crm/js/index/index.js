@@ -80,6 +80,9 @@ $(function(){
 		$('.hide-menu li').removeClass('menuCheck');
 		$('.R').removeClass('R-wapFirst');
 		$('.R').addClass('R-wap');
+		$('.R-wap').show();
+		$('.threloadWap').hide();
+		$('.threloadWap').html('');
 		$(this).addClass('menuCheck');
 		var menuname=$(this).parents('.L-list-item').find('.menuname').html();
 		var thisHtml=$('.menuCheck').find('a').html();
@@ -114,6 +117,9 @@ $(function(){
 	$('.changepwd').click(function(){
 		$('.R').removeClass('R-wapFirst');
 		$('.R').addClass('R-wap');
+		$('R-wap').show();
+		$('.threloadWap').hide();
+		$('.threloadWap').html('');
 		$('.breadcrumbwap').show();
 		$('.breadcrumb').html('<li>修改密码</li>')
 		$('.R-wap').load('updateUserPassword.html');

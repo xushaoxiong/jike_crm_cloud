@@ -93,7 +93,7 @@ label{
 	width: 84.4%;
 	overflow-y: scroll;
 }
-.R-wap{
+.R-wap,.threloadWap{
     padding-top: 10px;
     width: 98%;
     margin: 0 auto;
