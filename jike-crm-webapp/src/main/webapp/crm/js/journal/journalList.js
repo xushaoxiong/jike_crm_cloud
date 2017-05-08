@@ -139,6 +139,8 @@ $.each(eventJson2.evenList, function(i,item) {
 //	//操作设置
 
 	$('.jourlist').on('click','.edit',function(){
+		$('.R-wap').hide();
+		$('.threloadWap').show();
 		var evtypehtml=$(this).parents('tr').find('.evtype').html();
 		
 		var logIdJ={};
@@ -149,7 +151,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		var netht="编辑日志";
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
-			$('.R-wap').load('journal/editlog.html',function(){
+			$('.threloadWap').load('journal/editlog.html',function(){
 				$('.eventType').attr('businestype',businestype);
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
@@ -175,8 +177,9 @@ $.each(eventJson2.evenList, function(i,item) {
 
 	//编辑页面赋值
 	function editdata(editdata){
-		$('#indate').html(editdata.logDate);
-		$('#indate').attr('logId',editdata.logId)
+		$('#indat').html(editdata.logDate);
+		console.log($('#indat').html())
+		$('#indat').attr('logId',editdata.logId)
 		$('.businessNameSp').val(editdata.businessOpportunityName);
 		$('.businessNameSp').attr('oppttypeid',editdata.businessOpportunityType);
 		$('.businesNumbspInp').val(editdata.businessOpportunityNum);

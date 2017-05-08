@@ -2,8 +2,8 @@
 		var businessOpportunityLogJson={};
 		var boFeeDetailJson={};
 		function editLogDateF(logData){
-			logData.logDate=$('#indate').html();
-			logData.logId=$('#indate').attr('logId');
+			logData.logDate=$('#indat').html();
+			logData.logId=$('#indat').attr('logId');
 			logData.businessOpportunityName=$('.businessNameSp').val();
 			logData.businessOpportunityNum=$('.businesNumbspInp').val();
 			logData.workingHours=$.trim($('.timeVal').val());

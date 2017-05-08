@@ -6,7 +6,7 @@ function visitPlan(){
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-1 col-sm-2">计划名称</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
-					vPhtml+='<span class="form-control planName"/></span>';
+					vPhtml+='<span class="form-control planName" style="word-break:break-all;height:auto;"></span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';
 			vPhtml+='<div class="form-group row">';
@@ -41,8 +41,8 @@ function visitPlan(){
 					vPhtml+='<input type="text" value="" placeholder="（座机）例：010-*******" class="form-control contactLine" />';
 					vPhtml+='<input type="text" value="" placeholder="（手机）例：133********" class="form-control contactPhone"/>';
 					vPhtml+='<input type="text" value="" placeholder="（邮箱）" class="form-control contactEmail"/>';
-					vPhtml+='<input type="text" value="" placeholder="（QQ）" class="form-control nomarg contactQq"/>';
-					vPhtml+='<input type="text" value="" placeholder="（微信）" class="form-control nomarg contactWechat"/>';
+					vPhtml+='<input type="text" value="" placeholder="（QQ）" class="form-control contactQq"/>';
+					vPhtml+='<input type="text" value="" placeholder="（微信）" class="form-control contactWechat"/>';
 					vPhtml+='<span>（至少填一项）</span>';
 				vPhtml+='</div>';
 			vPhtml+='</div>';

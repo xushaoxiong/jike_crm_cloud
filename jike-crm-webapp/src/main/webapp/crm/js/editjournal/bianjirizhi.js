@@ -1,4 +1,23 @@
-
+//新建日志时间
+$(function(){
+	var date=new Date();
+	var year=date.getFullYear();
+	var moth=date.getMonth()+1;
+	var day=date.getDate();
+	if(day<10){
+		day="0"+date.getDate();
+	}else{
+		day=date.getDate();
+	}
+	if(moth<10){
+		moth="0"+(date.getMonth()+1);
+	}else{
+		moth=date.getMonth()+1;
+	}
+	
+	$('#indat').html(year+'-'+moth+'-'+day);
+})
+	
 	//工时添加按钮
 	$('.addTime').click(function(){
 		var timeN=Number($('.timeVal').val());
@@ -20,13 +39,15 @@
 	})
 	//返回上一级
 	$('.goBack').click(function(){
-		$('.R-wap').load('journal/journalList.html');
+		$('.R-wap').show();
+		$('.threloadWap').hide();
+		$('.threloadWap').html('');
+//		$('.R-wap').load('journal/journalList.html');
 		breadnav('日志管理','查看日志');
 		$('.L-list-item').find('li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
 	})
 	function worktimeNum(obj){
-	console.log((obj.value)*10%5)
 		obj = obj.replace(/[^\d.]/g,""); //清除"数字"和"."以外的字符
 		obj = obj.replace(/^\./g,""); //验证第一个字符是数字
 		obj = obj.replace(/\.{2,}/g,"."); //只保留第一个, 清除多余的
@@ -70,6 +91,7 @@
 	var jourInJ={};
 	var commonJson={};
 	$('.journaConfirm').click(function(){
+		
 		breadnav('日志管理','查看日志');
 		$('.L-list-item').find('li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
@@ -90,9 +112,12 @@
 		}
 		
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
+			$('.R-wap').show();
+			$('.threloadWap').hide();
+			$('.threloadWap').html('');
 			$('.R-wap').load('journal/journalList.html',function(){
-				$('.hide-menu li').removeClass('menuCheck');
-				$('.hide-menu li[menuid=7]').addClass('menuCheck');
+			$('.hide-menu li').removeClass('menuCheck');
+			$('.hide-menu li[menuid=7]').addClass('menuCheck');
 			});
 		},function errF(jo){
 			pub.Alt(jo.message,false);

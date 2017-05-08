@@ -30,5 +30,8 @@ function previewdata(pdata){
 }
 //返回上一级
 $('.goBack').click(function(){
-	$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+	$('.R-wap').show();
+	$('.threloadWap').html('');
+	$('.threloadWap').hide();
+//	$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
 })

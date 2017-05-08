@@ -478,16 +478,19 @@ $('.reset').click(function(){
 //商机预览
 var opptIdJ={};
 $('.list-tr').on('click','.opptNumb',function(){
+	$('.R-wap').hide();
+	$('.threloadWap').show();
 	var pdata='';
 	opptIdJ.businessOpportunityId=$(this).attr('oppid');
 	var opptype=$(this).prev().attr('opptype');
 	$ajax('post','businessOpportunity/queryBusinessOpportunityInfoById',opptIdJ,function succF(jo){
 		if(opptype==0){
-			$('.R-wap').load('businesoppt/scolpreviewlist.html',function(){
+			
+			$('.threloadWap').load('businesoppt/scolpreviewlist.html',function(){
 				previewdata(jo)
 			})
 		}else{
-			$('.R-wap').load('businesoppt/panerpreviewlist.html',function(){
+			$('.threloadWap').load('businesoppt/panerpreviewlist.html',function(){
 				previewdata(jo)
 			})
 		}
