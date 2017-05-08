@@ -76,8 +76,9 @@ function ajaxpub(idJ,conmmJ){
 }
 //var backJ={};
 $('.jourlist').on('click','.checkjounal',function(){
-	$('.R-wap').hide();
+	
 	$('.threloadWap').show();
+	$('.R-wap').hide();
 	backJ=paginatorJ;
 	var logIdJ={};
 	var logid=$(this).parent().attr('logid');

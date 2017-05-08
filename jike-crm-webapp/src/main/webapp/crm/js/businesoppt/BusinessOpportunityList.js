@@ -214,7 +214,12 @@
 	})
 	//编辑
 	$('.list-tr').on('click','.operBtn-wap .edit',function(){
-		$('.R-wap').load('businesoppt/editlist.html');
+		$('.R-wap').hide();
+		$('.threloadWap').show();
+		var oppnumid=$(this).parents('tr').find('.opptNumb').attr('oppid');
+		$('.threloadWap').load('businesoppt/editlist.html',function(){
+			$('.businessName').attr('Numoppid',oppnumid);
+		});
 	})
 	//服务人员列表
 	function serverlist(sdata,servnumb){
