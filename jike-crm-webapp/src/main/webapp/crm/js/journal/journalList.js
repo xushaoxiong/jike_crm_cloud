@@ -36,7 +36,7 @@ $('.delJournal').click(function(){
 			$('.showNumb').html(datalist.length)
 			html+='<tr>';
 				html+='<td>'+(i+1)+'</td>';
-				html+='<td>'+item.logDate+'</td>';
+				html+='<td class="jourTime">'+item.logDate+'</td>';
 				if(item.businessOpportunityName==undefined){
 					html+='<td>日常商机</td>';
 				}else{
@@ -51,8 +51,8 @@ $('.delJournal').click(function(){
 				html+='<td>'+item.createUserName+'</td>';
 				html+='<td class="evtype">'+item.eventType+'</td>';
 				html+='<td class="spetype">'+item.specificEvent+'</td>';
-				html+='<td>'+item.workingHours+'</td>';
-				html+='<td>';
+				html+='<td class="jourHours">'+item.workingHours+'</td>';
+				html+='<td class="jourinnerPeop">';
 					if(item.internalParticipant==undefined){
 						html+='<span class="serviceName"></span>';
 					}else{
@@ -60,15 +60,15 @@ $('.delJournal').click(function(){
 					}
 					
 				html+='</td>';
-				html+='<td>';
+				html+='<td class="jourouterPeop">';
 				if(item.externalParticipant==undefined){
 					html+='<span class="serviceName"></span>';
 				}else{
 					html+='<span class="serviceName">'+item.externalParticipant+'</span>';
 				}	
 				html+='</td>';
-				html+='<td>'+item.totalFee+'</td>';
-				html+='<td logId="'+item.logId+'">';
+				html+='<td class="jourCost">'+item.totalFee+'</td>';
+				html+='<td logId="'+item.logId+'" class="Operatwap">';
 					if(item.authority==0){
 						html+='<button class="btn btn-primary edit" style="margin-right:8px;">编辑</button>';
 					}else{

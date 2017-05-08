@@ -59,7 +59,11 @@
 		businessJ.addressDetail=detailadrs;
 		businessJ.businessOpportunityNum=businessOpportunityNum;
 			$ajax("post","businessOpportunity/updateBusinessOpportunity",businessJ,function succF(jo){
-					$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+					$('.R-wap').show();
+					$('.threloadWap').hide();
+					var oppnumid= $('.businessName').attr('Numoppid');
+					$('.opptNumb[oppid="'+oppnumid+'"] a').html($('.businessName').val());
+					$('.threloadWap').html('');
 			},function errF(jo){
 				pub.Alt(jo.message,false);
 			})

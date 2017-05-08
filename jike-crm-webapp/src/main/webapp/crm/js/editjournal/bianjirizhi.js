@@ -91,7 +91,7 @@ $(function(){
 	var jourInJ={};
 	var commonJson={};
 	$('.journaConfirm').click(function(){
-		
+		var logid=$('#indat').attr('logid');
 		breadnav('日志管理','查看日志');
 		$('.L-list-item').find('li').removeClass('menuCheck');
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
@@ -114,11 +114,17 @@ $(function(){
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
 			$('.R-wap').show();
 			$('.threloadWap').hide();
-			$('.threloadWap').html('');
-			$('.R-wap').load('journal/journalList.html',function(){
+			
+			var parentsTd=$('.Operatwap[logid="'+logid+'"]').parents('tr');
+			console.log($('.innerPerson').val())
+			parentsTd.find('.jourTime').html($('#indat').html());
+			parentsTd.find('.jourinnerPeop span').html($('.innerPerson').val());
+			parentsTd.find('.jourouterPeop span').html($('.outPerson').val());
+			parentsTd.find('.jourCost').html($('.btnCost').html());
+			parentsTd.find('.jourHours').html($('.timeVal').val());
 			$('.hide-menu li').removeClass('menuCheck');
 			$('.hide-menu li[menuid=7]').addClass('menuCheck');
-			});
+			$('.threloadWap').html('');
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
