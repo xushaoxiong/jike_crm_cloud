@@ -27,7 +27,10 @@
 	
 	//返回上一级
 	$('.goBack').click(function(){
-		$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
+		$('.R-wap').show();
+		$('.threloadWap').hide();
+		$('.threloadWap').html('');
+//		$('.R-wap').load('businesoppt/BusinessOpportunityList.html');
 	})
 	//编辑确定
 	$('.editConfirm').click(function(){
