@@ -19,11 +19,15 @@ import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoProcessHistoryMapper;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.CityAreaCodeMapper;
+import com.jike.business.dao.CooperativePartnerSchoolMapper;
+import com.jike.business.dao.CooperativePartnerSchoolServiceMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BoProcessHistory;
 import com.jike.business.model.BusinessOpportunity;
+import com.jike.business.model.CooperativePartnerSchool;
+import com.jike.business.model.CooperativePartnerSchoolService;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
@@ -48,6 +52,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private BoProcessHistoryMapper boProcessHistoryMapper;
 	@Autowired
 	private CityAreaCodeMapper cityAreaCodeMapper;
+	@Autowired
+	private CooperativePartnerSchoolMapper cooperativePartnerSchoolMapper;
+	@Autowired
+	private CooperativePartnerSchoolServiceMapper cooperativePartnerSchoolServiceMapper;
+	
 
 	@Transactional
 	public synchronized JSONObject addBusinessOpportunity(JSONObject json) {
@@ -587,6 +596,86 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			}
 		}
 		
+	}
+	
+	@Transactional
+	public JSONObject addCooperativePartnerSchool(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		if(json!=null&&!json.isEmpty()){
+			Long businessOpportunityId = json.getLong("businessOpportunityId");
+			String schoolName = json.getString("schoolName");
+			String addressProvince = json.getString("addressProvince");
+			String addressCity = json.getString("addressCity");
+			String addressCountry = json.getString("addressCountry");
+			String addressDetail = json.getString("addressDetail");
+			String schoolScale = json.getString("schoolScale");
+			String schoolLevel = json.getString("schoolLevel");
+			Integer schoolProperty = json.getInteger("schoolProperty");
+			String schoolCategory = json.getString("schoolCategory");
+			
+			CooperativePartnerSchool cooperativePartnerSchool = new CooperativePartnerSchool();
+			cooperativePartnerSchool.setBusinessOpportunityId(businessOpportunityId);
+			cooperativePartnerSchool.setSchoolName(schoolName);
+			cooperativePartnerSchool.setAddressProvince(addressProvince);
+			cooperativePartnerSchool.setAddressCity(addressCity);
+			cooperativePartnerSchool.setAddressCountry(addressCountry);
+			cooperativePartnerSchool.setAddressDetail(addressDetail);
+			cooperativePartnerSchool.setSchoolScale(schoolScale);
+			cooperativePartnerSchool.setSchoolLevel(schoolLevel);
+			cooperativePartnerSchool.setSchoolProperty(schoolProperty);
+			cooperativePartnerSchool.setSchoolCategory(schoolCategory);
+			cooperativePartnerSchoolMapper.insert(cooperativePartnerSchool);
+			JSONArray serviceArr = json.getJSONArray("serviceArr");
+			if(serviceArr!=null&&!serviceArr.isEmpty()){
+				for (Object object : serviceArr) {
+					JSONObject serviceJson = JSONObject.parseObject(object.toString());
+					String serviceName = serviceJson.getString("serviceName");
+					String servicePhone = serviceJson.getString("servicePhone");
+					CooperativePartnerSchoolService cooperativePartnerSchoolService = new CooperativePartnerSchoolService(); 
+					cooperativePartnerSchoolService.setCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+					cooperativePartnerSchoolService.setServiceName(serviceName);
+					cooperativePartnerSchoolService.setServicePhone(servicePhone);
+					cooperativePartnerSchoolServiceMapper.insert(cooperativePartnerSchoolService);
+				}
+			}
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+
+	public JSONObject queryCopBusinessOpportunityByName(JSONObject queryJson) {
+		JSONObject resultJson = new JSONObject();
+		String businessOpportunityName = queryJson.getString("businessOpportunityName");
+		if(businessOpportunityName!=null){
+			businessOpportunityName="%"+businessOpportunityName+"%";
+		}
+		//如果是服务，查询服务商机
+		if (queryJson.getLong("roleId") != 2) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有编辑权限");
+			return resultJson;
+		}		
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName);
+		JSONArray arr = new JSONArray();
+		if(!businessOpportunityList.isEmpty()){
+			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
+				JSONObject json = new JSONObject();
+				json.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
+				json.put("businessOpportunityNum", businessOpportunity.getBusinessOpportunityNum());
+				json.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
+				json.put("addressProvince", businessOpportunity.getAddressProvince());
+				json.put("addressCity", businessOpportunity.getAddressCity());
+				json.put("addressCounty", businessOpportunity.getAddressCounty());
+				json.put("addressDetail", businessOpportunity.getAddressDetail());
+				json.put("businessOpportunityId", businessOpportunity.getBusinessOpportunityId());
+				arr.add(json);
+			}
+		}
+		resultJson.put("businessOpportunityList", arr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
 	}
 
 }

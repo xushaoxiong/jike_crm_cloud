@@ -284,6 +284,64 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 添加合作伙伴和学校关系
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月11日上午9:56:56
+	 */
+	@RequestMapping(value = "/addCooperativePartnerSchool", method ={RequestMethod.POST})
+	public @ResponseBody String addCooperativePartnerSchool(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.addCooperativePartnerSchool(json);
+		} catch (IOException e) {
+			logger.error("addCooperativePartnerSchool error", e);
+		}
+		return result.toJSONString();
+	}
 	
+	/**
+	 * 查询合作伙伴的商机
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月11日上午11:28:24
+	 */
+	@RequestMapping(value = "/queryCopBusinessOpportunityByName", method ={RequestMethod.POST})
+	public @ResponseBody String queryCopBusinessOpportunityByName(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		if("fail".equals(checkIfBusiness.getString("state"))){
+			return checkIfBusiness.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.queryCopBusinessOpportunityByName(json);
+		} catch (IOException e) {
+			logger.error("queryCopBusinessOpportunityByName error", e);
+		}
+		return result.toJSONString();
+	}
 
 }
