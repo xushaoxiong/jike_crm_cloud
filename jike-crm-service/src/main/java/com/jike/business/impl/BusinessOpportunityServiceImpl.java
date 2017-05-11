@@ -655,13 +655,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(businessOpportunityName!=null){
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
+		Long userId = queryJson.getLong("userId");
 		//如果是服务，查询服务商机
 		if (queryJson.getLong("roleId") != 3) {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有编辑权限");
 			return resultJson;
 		}		
-		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName);
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName,userId);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {

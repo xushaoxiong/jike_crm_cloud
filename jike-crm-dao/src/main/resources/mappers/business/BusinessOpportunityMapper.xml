@@ -393,13 +393,18 @@
 	   and business_opportunity_name = #{businessOpportunityName,jdbcType=VARCHAR}
   </select>
   <select id="getCopBusinessOpportunity"  resultMap="BaseResultMap">
-        select
-		<include refid="Base_Column_List" />
-		from business_opportunity
-		where is_cancellation = 0
-		and business_opportunity_type = 1
+       select
+		bo.*
+		from  business_opportunity bo , service_business_opportunity sbo
+		where bo.business_opportunity_id = sbo.business_opportunity_id
+		and bo.is_cancellation = 0
+		and bo.is_closed = 0
+		and bo.business_opportunity_type = 1
+		<if test="userId != null">
+			and sbo.user_id = #{userId,jdbcType=BIGINT}
+		</if>
 		<if test="businessOpportunityName != null">
-			and business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+			and bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
 		</if>
   </select>
 	

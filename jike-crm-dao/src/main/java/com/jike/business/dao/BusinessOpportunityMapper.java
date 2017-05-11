@@ -143,9 +143,10 @@ public interface BusinessOpportunityMapper {
 	/**
 	 * 查询合作伙伴的商机
 	 * @param businessOpportunityName
+	 * @param userId 
 	 * @return
 	 * @created wangyb
 	 * @createtime 2017年5月11日上午11:17:20
 	 */
-	List<BusinessOpportunity> getCopBusinessOpportunity(@Param("businessOpportunityName")String businessOpportunityName);
+	List<BusinessOpportunity> getCopBusinessOpportunity(@Param("businessOpportunityName")String businessOpportunityName, @Param("userId")Long userId);
 }
