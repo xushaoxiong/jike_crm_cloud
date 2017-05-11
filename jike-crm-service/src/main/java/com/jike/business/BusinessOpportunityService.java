@@ -100,4 +100,21 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年4月13日上午11:57:44
 	 */
 	public JSONObject distributionBoToService(JSONObject json);
+	
+	/**
+	 * 添加合作伙伴和学校关系
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月11日上午9:23:21
+	 */
+	public JSONObject addCooperativePartnerSchool(JSONObject json);
+	/**
+	 * 查询合作伙伴商机
+	 * @param queryJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月11日上午11:27:24
+	 */
+	public JSONObject queryCopBusinessOpportunityByName(JSONObject queryJson);
 }

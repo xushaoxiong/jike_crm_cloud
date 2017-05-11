@@ -374,23 +374,33 @@
 		order by bo.create_time desc
   </select>
   <select id="selectCountByAreaAndBoType" resultType = "java.lang.Integer">
-  select
-  count(1)
-  from  business_opportunity
-  where 
-   address_province = #{province,jdbcType=VARCHAR}
-   and address_city = #{city,jdbcType=VARCHAR}
-   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+	  select
+	  count(1)
+	  from  business_opportunity
+	  where 
+	   address_province = #{province,jdbcType=VARCHAR}
+	   and address_city = #{city,jdbcType=VARCHAR}
+	   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+	  </select>
+	  <select id="selectCountByAreaAndBoName" resultType = "java.lang.Integer">
+	  select
+	  count(1)
+	  from  business_opportunity
+	  where 
+	   address_province = #{province,jdbcType=VARCHAR}
+	   and address_city = #{city,jdbcType=VARCHAR}
+	   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
+	   and business_opportunity_name = #{businessOpportunityName,jdbcType=VARCHAR}
   </select>
-  <select id="selectCountByAreaAndBoName" resultType = "java.lang.Integer">
-  select
-  count(1)
-  from  business_opportunity
-  where 
-   address_province = #{province,jdbcType=VARCHAR}
-   and address_city = #{city,jdbcType=VARCHAR}
-   and business_opportunity_type = #{businessOpportunityType,jdbcType=INTEGER}
-   and business_opportunity_name = #{businessOpportunityName,jdbcType=VARCHAR}
+  <select id="getCopBusinessOpportunity"  resultMap="BaseResultMap">
+        select
+		<include refid="Base_Column_List" />
+		from business_opportunity
+		where is_cancellation = 0
+		and business_opportunity_type = 1
+		<if test="businessOpportunityName != null">
+			and business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
+		</if>
   </select>
 	
 </mapper>
