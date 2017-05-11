@@ -601,6 +601,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Transactional
 	public JSONObject addCooperativePartnerSchool(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
+		Long userId = json.getLong("userId");
 		if(json!=null&&!json.isEmpty()){
 			Long businessOpportunityId = json.getLong("businessOpportunityId");
 			String schoolName = json.getString("schoolName");
@@ -624,6 +625,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			cooperativePartnerSchool.setSchoolLevel(schoolLevel);
 			cooperativePartnerSchool.setSchoolProperty(schoolProperty);
 			cooperativePartnerSchool.setSchoolCategory(schoolCategory);
+			cooperativePartnerSchool.setCreateBy(userId);
+			cooperativePartnerSchool.setCreateTime(new Date());
 			cooperativePartnerSchoolMapper.insert(cooperativePartnerSchool);
 			JSONArray serviceArr = json.getJSONArray("serviceArr");
 			if(serviceArr!=null&&!serviceArr.isEmpty()){
@@ -635,6 +638,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					cooperativePartnerSchoolService.setCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 					cooperativePartnerSchoolService.setServiceName(serviceName);
 					cooperativePartnerSchoolService.setServicePhone(servicePhone);
+					cooperativePartnerSchoolService.setCreateBy(userId);
+					cooperativePartnerSchoolService.setCreateTime(new Date());
 					cooperativePartnerSchoolServiceMapper.insert(cooperativePartnerSchoolService);
 				}
 			}
@@ -651,7 +656,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
 		//如果是服务，查询服务商机
-		if (queryJson.getLong("roleId") != 2) {
+		if (queryJson.getLong("roleId") != 3) {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有编辑权限");
 			return resultJson;

@@ -298,7 +298,7 @@ public class BusinessOpportunityController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		JSONObject checkIfBusiness = checkIfSale(session);
 		if("fail".equals(checkIfBusiness.getString("state"))){
 			return checkIfBusiness.toJSONString();
 		}
@@ -327,10 +327,6 @@ public class BusinessOpportunityController extends BaseController{
 		JSONObject result = super.checkLogin(session);
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
-		}
-		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
-		if("fail".equals(checkIfBusiness.getString("state"))){
-			return checkIfBusiness.toJSONString();
 		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
