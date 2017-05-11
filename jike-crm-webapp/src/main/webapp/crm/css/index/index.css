@@ -175,13 +175,10 @@ textarea{resize: none;height: 100px !important;}
 	content:">\00a0" !important;
 }
 /*分页*/
-.pagination-wap{
-	width: 50% !important;
+.Page-wap .totalNum{
+	margin:18px 10px;
 }
-.pagination-wap .totalNum{
-	margin:26px 10px;
-}
-.pagination{
+.Page-wap .pagination{
 	float: left !important;
 }
 /*流程图*/

@@ -12,26 +12,35 @@
 //列表查询
 	var paginatorJ={"businessOpportunityProcess":"","start":1,"pageSize":10};
 	//分页
-	var cartePage=function(jo){
-		var options={
-			alignment:"center",
-	        bootstrapMajorVersion:1,    //版本
-	        numberOfPages:9,    //最多显示Page页
-	        totalPages:jo.totalPage,    //所有数据可以显示的页数
-	        onPageClicked:function(e,originalEvent,type,page){//点击跳转页
-		      	paginatorJ.start=page;
-		      	clickPage(paginatorJ);
-		      	
-	        },
-	        currentPage:paginatorJ.start,    //当前页数
-	        pageUrl:function(type, page, current){
-	        	 
-	        }        
-	    }
-		$(".pagination").bootstrapPaginator(options);
-		$('.totalNum').html('共'+jo.totalCount+'条');
-//		$('.pageTotal span').html(jo.businessOpportunityList.length);
-	}
+$(document).ready(function() {
+    getDataList(0, null);
+});
+var initFlag=true;
+function getDataList(currPage, jg) {
+	paginatorJ.start=currPage+1;
+    $ajax("post","businessOpportunity/queryBusinessOpportunity",paginatorJ,function succF(jo){
+    	if (initFlag) {
+    		//分页
+    		$("#Pagination").pagination(jo.totalCount,{
+	            items_per_page :10,
+	            num_display_entries:3,
+	            num_edge_entries:3,
+	            callback : getDataList//回调函数
+        	});
+        	initFlag=false;
+    	}
+        
+        $(".list-tr").html("");
+        list(jo.businessOpportunityList,jo.assignSale);
+        $('.totalNum').html('共'+jo.totalCount+'条');
+        businesnamestrb();
+		serviceNamestrb();
+      
+	},function errF(jo){
+		pub.Alt(jo.message,false);
+	})
+
+}
 	//列表内容
 	function list(List,assignSale){
 		var Html="";
@@ -136,20 +145,6 @@
 		$('.list-tr').html(Html);
 		
 	}
-
-	//点击页码
-	
-	function clickPage(PJson){
-		$ajax("post","businessOpportunity/queryBusinessOpportunity",PJson,function succF(jo){
-		list(jo.businessOpportunityList,jo.assignSale);
-		businesnamestrb();
-		serviceNamestrb();
-		cartePage(jo);
-	},function errF(){
-		pub.Alt(jo.message,false);
-	})
-	}clickPage(paginatorJ)
-	
 	//商机名称字数限制
 	function businesnamestrb(){
 		for (var i=0;i<$('.opptNumb').length;i++) {
@@ -187,6 +182,7 @@
 	}
 	//搜索
 	$('.searchBusiness').click(function(){
+		initFlag=true;
 		var OpportunityName=$.trim($('.OpportunityName').val());
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());
@@ -202,7 +198,7 @@
 		paginatorJ.endTime=endTime;
 		paginatorJ.userName=salesname;
 		paginatorJ.start=1;
-		clickPage(paginatorJ);
+		getDataList(0,null);
 	})
 
 	//操作设置

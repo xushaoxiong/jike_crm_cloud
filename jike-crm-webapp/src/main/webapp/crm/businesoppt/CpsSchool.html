@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		
+	</head>
+	<style>
+		#CpScolcity div .form-control{width: 100% !important;}
+		.inpHeight{line-height: 34px;}
+		.businesscheck{
+			background:url('img/checked.png') no-repeat center;
+			background-size: 15px;
+		}
+	</style>
+	<body>
+	<div class="container-fluid">
+		<div class="message-wap">
+			<div class="form-group row">
+				<label class="col-sm-1"><span class="col">*</span>商机名称</label>
+				<div class="col-sm-3">
+					<span class="busScolName form-control cursorm"></span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1"><span class="col">*</span>关联学校名称</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control associdScolName" placeholder="填写关联学校名称" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1"><span class="col">*</span>关联学校地址</label>
+				<div id="CpScolcity" class="form-inline col-sm-6" style="padding:0;">
+	            	<div class="col-sm-2">
+	            		<select class="prov form-control"></select>
+	            	</div>
+					<div class="col-sm-2">
+						<select class="city form-control" disabled="disabled"></select>
+					</div>
+					<div class="col-sm-2">
+						<select class="dist form-control" disabled="disabled"></select>
+					</div>
+					<div class="col-sm-6">
+						<input type="type" class="form-control detailadrs"/>
+					</div>   
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1">学校规模</label>
+				<div class="col-sm-3">
+					<select class="form-control scolPopleNumb">
+						<option></option>
+						<option>0-500</option>
+						<option>501-1000</option>
+						<option>1001-2000</option>
+						<option>2000以上</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1">学校等级</label>
+				<div class="col-sm-3">
+					<select class="form-control schoolLevel">
+						<option></option>
+						<option>普通</option>
+						<option>区重点</option>
+						<option>市重点</option>
+						<option>省重点</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1">学校性质</label>
+				<div class="col-sm-3 schoolProperty inpHeight">
+					<input type="radio"  name="optionsRadios" scpid="0">公立&nbsp;&nbsp;&nbsp;
+					<input type="radio"  name="optionsRadios" scpid="1">私立&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-1">学校类别</label>
+				<div class="col-sm-3 schoolType inpHeight">
+					<input type="checkbox" value="小学"/>小学&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" value="初中" />初中&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" value="高中"/>高中&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+			<div class="form-group row panterScolbox">
+				<div class="panterScolcontainer clearfix" style="margin-bottom: 30px;">
+					<div class="panterScolnamewap pull-left">
+						<label class="pull-left">服务人员姓名</label>
+						<div class="pull-left">
+							<input type="text" value="" placeholder="服务人员姓名" class="form-control pScolcontName"/>
+						</div>
+					</div>
+					<div class="panterScolcontwap pull-left" style="margin: 0 1% 0 3%;">
+						<label class="pull-left">服务人员联系电话</label>
+						<div class="pull-left">
+							<input type="text" value="" placeholder="服务人员联系电话" class="form-control pScolcontphone"/>
+						</div>
+					</div>
+					<button class="btn btn-primary addPanterScol">添加</button>
+				</div>
+				
+			</div>
+		</div>
+		<div class="mesbtn-group col-md-4 col-sm-6 text-center">
+			<button class="btn btn-primary mesConfirm" style="margin-right: 15px;">提交</button>
+		</div>
+	</div>
+	<!--商机名称列表-->
+	<div class="modal bussinesList">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header form-inline text-center" style="border: none;">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+					 <div class="input-group">
+			            <input type="text" placeholder="填写商机名称" class="form-control" id="searchBusinessName"/>
+			            <span class="input-group-addon cursorm" id="searchBtn"><span class="glyphicon glyphicon-search"></span></span>
+			        </div>
+				</div>
+				<div class="modal-body" style="max-height:400px;overflow-y: scroll;">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>选择</th>
+								<th>商机名称</th>
+								<th>商机流水号</th>
+								<th>商机类型</th>
+								<!--<th>商机进度</th>-->
+								<th>商机地址</th>
+							</tr>
+						</thead>
+						<tbody class="text-center bussinessItem cursorm">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer" style="text-align: center;">
+					<button class="btn btn-primary busnisListConfirm" style="padding: 6px 25px;">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript" src="js/businesoppt/CpsSchool.js" ></script>
+</html>
