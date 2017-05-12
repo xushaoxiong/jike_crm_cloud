@@ -50,4 +50,12 @@ public interface CooperativePartnerSchoolMapper {
      * @mbggenerated Wed May 10 18:09:32 CST 2017
      */
     int updateByPrimaryKey(CooperativePartnerSchool record);
+    /**
+     * 查询该学校所在的合作伙伴分配者
+     * @param cooperativePartnerSchoolId
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月12日下午3:18:17
+     */
+    Long selectDistributeIdByCpsId(Long cooperativePartnerSchoolId);
 }
