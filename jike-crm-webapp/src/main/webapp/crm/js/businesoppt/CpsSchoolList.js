@@ -6,7 +6,7 @@
 		
 	})
 //列表查询
-	var paginatorJ={"businessOpportunityProcess":"","start":1,"pageSize":10};
+	var paginatorJ={"businessOpportunityName":"","start":1,"pageSize":10};
 	//分页
 	$(document).ready(function() {
 	    getDataList(0, null);
@@ -14,7 +14,12 @@
 	var initFlag=true;
 	function getDataList(currPage, jg) {
 		paginatorJ.start=currPage+1;
-	    $ajax("post","businessOpportunity/queryBusinessOpportunity",paginatorJ,function succF(jo){
+	    $ajax("post","businessOpportunity/queryCpsByPage",paginatorJ,function succF(jo){
+	    	if(jo.ifBussiness==0){
+	    		$('.newlist').hide();
+	    	}else{
+	    		$('.newlist').show();
+	    	}
 	    	if (initFlag) {
 	    		//分页
 	    		$("#Pagination").pagination(jo.totalCount,{
@@ -27,7 +32,7 @@
 	    	}
 	        
 	        $(".list-tr").html("");
-	        list(jo.businessOpportunityList,jo.assignSale);
+	        list(jo.cpsArr,jo.ifBussiness);
 	        $('.totalNum').html('共'+jo.totalCount+'条');
 	        businesnamestrb();
 	        panterScoladdrstrb();
@@ -42,6 +47,7 @@
 	function list(List,assignSale){
 		var Html="";
 		$.each(List, function(i,item) {
+			var addrLenfth=(item.addressProvince).length+(item.addressCity).length+(item.addressCountry).length+(item.addressDetail).length;
 			Html+='<tr>';
 				Html+='<td>'+(i+1)+'</td>';
 				if((item.businessOpportunityName).length>10){
@@ -49,19 +55,27 @@
 				}else{
 					Html+='<td class="panterScolBusinesName">'+item.businessOpportunityName+'</td>';		
 				}
-				if((item.businessOpportunityName).length>10){
-					Html+='<td class="panterScolName cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'">'+item.businessOpportunityName+'</td>';		
+				if((item.schoolName).length>10){
+					Html+='<td class="panterScolName cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'" coopscolid="'+item.cooperativePartnerSchoolId+'" >'+item.businessOpportunityName+'</td>';		
 				}else{
-					Html+='<td class="panterScolName">'+item.businessOpportunityName+'</td>';		
+					Html+='<td class="panterScolName" coopscolid="'+item.cooperativePartnerSchoolId+'">'+item.schoolName+'</td>';		
 				}
-				if((item.businessOpportunityName).length>10){
-					Html+='<td class="panterScoladdr cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'">北京市朝阳区霄云路34号</td>';
+				if(addrLenfth>10){
+					Html+='<td class="panterScoladdr cursorm" data-toggle="tooltip" data-placement="bottom" title="'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'">'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'</td>';
 				}else{
-					Html+='<td class="panterScoladdr">北京市朝阳区霄云路34号</td>';		
+					Html+='<td class="panterScoladdr">'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'</td>';
 				}
+				
 				Html+='<td>';
-					Html+='<button class="btn btn-primary edit" style="margin-right:8px;">编辑</button>';
+				if(assignSale==0){
+					Html+='<button class="btn btn-primary check">查看</button>';
+					Html+='<button class="btn" style="margin:0 8px;" disabled="disabled">编辑</button>';
+					Html+='<button class="btn" disabled="disabled">删除</button>';
+				}else{
+					Html+='<button class="btn btn-primary check" onclick="viewPanterScol($(this))">查看</button>';
+					Html+='<button class="btn btn-primary edit" style="margin:0 8px;" onclick="editPanterScol($(this))">编辑</button>';
 					Html+='<button class="btn btn-primary delBuiness" onclick="delBuiness($(this))">删除</button>';
+				}
 				Html+='</td>';
 			Html+='</tr>';
 		});
@@ -100,25 +114,63 @@
 	$('.searchBusiness').click(function(){
 		initFlag=true;
 		var OpportunityName=$.trim($('.OpportunityName').val());
-		var salesname=$.trim($('.associdScolName').val());
+		var schoolName=$.trim($('.associdScolName').val());
 		paginatorJ.businessOpportunityName=OpportunityName;
-		paginatorJ.userName=salesname;
+		paginatorJ.schoolName=schoolName;
 		paginatorJ.start=1;
 		getDataList(0,null);
 	})
+	//查看
+	function viewPanterScol(_this){
+		var coopidJ={};
+		var coopscolid=_this.parents('tr').find('.panterScolName').attr('coopscolid');
+		coopidJ.cooperativePartnerSchoolId=coopscolid;
+		$ajax('post','businessOpportunity/queryCpsById',coopidJ,function succF(jo){
+			$('.R-wap').load('businesoppt/CpsSchoolView.html',function(){
+				viewPanterScoldata(jo);
+			})
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+		
+	}
+	//编辑
+	function editPanterScol(_this){
+		var editcoopidJ={};
+		var editcoopscolid=_this.parents('tr').find('.panterScolName').attr('coopscolid');
+		editcoopidJ.cooperativePartnerSchoolId=editcoopscolid;
+		$ajax('post','businessOpportunity/queryCpsById',editcoopidJ,function succF(jo){
+			$('.R-wap').load('businesoppt/CpsSchoolEdit.html',function(){
+				$('.busScolName').attr('coopscolid',editcoopscolid);
+				editPanterScoldata(jo);
+			})
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	}
+	
 	//删除
-//	function delBuiness(_this){
-//		$('#delbuinessModal').modal('toggle');
-//		_this.parents('tr').remove();
-//	}
-//	$('.delConfirm').click(function(){
-//		$("#delbuinessModal").modal("hide");
-//		var delJ={};
-//		delJ.businessOpportunityNum=businessOpportunityNum;
-//		delJ.isCancellation=isCancellation;
-//		$ajax('post','businessOpportunity/operationBusinessOpportunity',delJ,function succF(jo){
-//			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().remove();
-//		},function errF(jo){
-//			pub.Alt(jo.message,false)
-//		})
-//	})
+	function delBuiness(_this){
+		$('#delbuinessModal').modal('toggle');
+		var coopscolid=_this.parents('tr').find('.panterScolName').attr('coopscolid');
+		$('#delbuinessModal').attr('cooperid',coopscolid);
+		var businessName=_this.parents('tr').find('.panterScolBusinesName').html();
+		var businessNametitle=_this.parents('tr').find('.panterScolBusinesName').attr('title');
+		if(businessNametitle==undefined){
+			$('.businessName').html(businessName);
+		}else{
+			$('.businessName').html(businessNametitle);
+		}
+		
+	}
+	$('.delConfirm').click(function(){
+		var coopscolid=$("#delbuinessModal").attr('cooperid');
+		$("#delbuinessModal").modal("hide");
+		var delJ={};
+		delJ.cooperativePartnerSchoolId=coopscolid;
+		$ajax('post','businessOpportunity/deleteCpsById',delJ,function succF(jo){
+			$('.panterScolName[coopscolid="'+coopscolid+'"]').parent().remove();
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	})

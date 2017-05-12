@@ -147,7 +147,7 @@
 		dataJ.schoolCategory=scolTypeArry.join('#');
 		dataJ.serviceArr=serviceArr;
 		$ajax('post','businessOpportunity/addCooperativePartnerSchool',dataJ,function succF(jo){
-			console.log(222)
+			$('.R-wap').load('businesoppt/CpsSchoolList.html');
 		},function errF(jo){
 			
 		})
