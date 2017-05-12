@@ -700,6 +700,9 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		Long roleId = queryJson.getLong("roleId");
 		if(roleId==2){
 			userId = null;
+			resultJson.put("ifBussiness", 0);
+		}else{
+			resultJson.put("ifBussiness", 1);
 		}
 		int totalCount = businessOpportunityMapper.queryCpsCount(businessOpportunityName,schoolName,userId);
 		int startPosition = (start - 1) * pageSize;
