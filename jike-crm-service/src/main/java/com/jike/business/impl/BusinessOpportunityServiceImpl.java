@@ -793,11 +793,17 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "没有权限");
 			return resultJson;
 		}
+		CooperativePartnerSchool cooperativePartnerSchoolOld = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		cooperativePartnerSchool.setBusinessOpportunityId(cooperativePartnerSchoolOld.getBusinessOpportunityId());
+		cooperativePartnerSchool.setCreateTime(cooperativePartnerSchoolOld.getCreateTime());
+		cooperativePartnerSchool.setCreateBy(cooperativePartnerSchoolOld.getCreateBy());
+		cooperativePartnerSchool.setUpdateBy(userId);
+		cooperativePartnerSchool.setUpdateTime(new Date());
 		cooperativePartnerSchoolMapper.updateByPrimaryKey(cooperativePartnerSchool);
 		//删除以前的服务
 		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 		//添加新服务
-		JSONArray cpsServiceArr = updateJson.getJSONArray("cpsServiceArr");
+		JSONArray cpsServiceArr = updateJson.getJSONArray("serviceArr");
 		if (cpsServiceArr != null && !cpsServiceArr.isEmpty()) {
 			for (Object object : cpsServiceArr) {
 				JSONObject cpsServiceJson = (JSONObject) object;
