@@ -1487,11 +1487,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				}
 				json = vistJson.toJSONString();
 					//如果是达成合作意向，保存合作详情
-					if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())){
+					if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())&&businessOpportunityJson.getInteger("businessOpportunityType")==1){
 						CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
 						String json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
 						JSONObject cooperationDetailsJson = JSONObject.parseObject(json2);
-						removeCommonAttribute(cooperationDetailsJson);
+						if(cooperationDetailsJson==null){
+							removeCommonAttribute(cooperationDetailsJson);
+						}
 						JSONObject comJson = JSONObject.parseObject(json);
 						comJson.put("cooperationDetailsJson", cooperationDetailsJson);
 						json = comJson.toJSONString();
