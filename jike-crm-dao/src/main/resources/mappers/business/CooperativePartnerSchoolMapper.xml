@@ -250,4 +250,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where cooperative_partner_school_id = #{cooperativePartnerSchoolId,jdbcType=BIGINT}
   </update>
+  <select id="selectDistributeIdByCpsId"  parameterType="java.lang.Long" resultType="java.lang.Long">
+  
+  </select>
 </mapper>

@@ -174,4 +174,8 @@
     from cooperative_partner_school_service
     where cooperative_partner_school_id = #{cooperativePartnerSchoolId,jdbcType=BIGINT}
   </select>
+  <delete id="delteByCooperativePartnerSchoolId" parameterType="java.lang.Long" >
+   delete from cooperative_partner_school_service
+   where cooperative_partner_school_id = #{cooperativePartnerSchoolId,jdbcType=BIGINT}
+  </delete>
 </mapper>
