@@ -740,7 +740,6 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	}
 	
 	public JSONObject queryCpsById(JSONObject queryJson){
-		
 		JSONObject resultJson = new JSONObject();
 		Long cooperativePartnerSchoolId = queryJson.getLong("cooperativePartnerSchoolId");
 		CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
@@ -766,6 +765,16 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("schoolCategory", cooperativePartnerSchool.getSchoolCategory());
 		resultJson.put("schoolLevel", cooperativePartnerSchool.getSchoolLevel());
 		resultJson.put("addressDetail", cooperativePartnerSchool.getSchoolProperty());
+		JSONArray serviceArr = new JSONArray();
+		if(!cooperativePartnerSchoolServiceList.isEmpty()){
+			for (CooperativePartnerSchoolService cooperativePartnerSchoolService : cooperativePartnerSchoolServiceList) {
+				JSONObject json = new JSONObject();
+				json.put("serviceName", cooperativePartnerSchoolService.getServiceName());
+				json.put("servicePhone", cooperativePartnerSchoolService.getServicePhone());
+				serviceArr.add(json);
+			}
+		}
+		resultJson.put("serviceArr", serviceArr);
 		return resultJson;
 	}
 

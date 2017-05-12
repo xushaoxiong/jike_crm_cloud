@@ -125,4 +125,12 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年5月12日上午10:13:21
 	 */
 	public JSONObject queryCpsByPage(JSONObject queryJson);
+	/**
+	 * 查询合作伙伴学校详情
+	 * @param queryJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日上午11:51:53
+	 */
+	public JSONObject queryCpsById(JSONObject queryJson);
 }

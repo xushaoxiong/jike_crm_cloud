@@ -365,6 +365,32 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 查询或作伙伴下学校详情
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日上午11:57:50
+	 */
+	@RequestMapping(value = "/queryCpsById", method ={RequestMethod.POST})
+	public @ResponseBody String queryCpsById(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.queryCpsById(json);
+		} catch (IOException e) {
+			logger.error("queryCpsById error", e);
+		}
+		return result.toJSONString();
+	}
+	
 	
 
 }
