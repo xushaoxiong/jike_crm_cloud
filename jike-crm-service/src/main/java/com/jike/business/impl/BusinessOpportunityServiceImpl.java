@@ -683,5 +683,56 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("message", "查询成功");
 		return resultJson;
 	}
+	
+	public JSONObject queryCpsByPage(JSONObject queryJson){
+		JSONObject resultJson = new JSONObject();
+		Integer start = queryJson.getInteger("start");
+		Integer pageSize = queryJson.getInteger("pageSize");
+		String businessOpportunityName = queryJson.getString("businessOpportunityName");
+		if(businessOpportunityName!=null){
+			businessOpportunityName="%"+businessOpportunityName+"%";
+		}
+		String schoolName = queryJson.getString("schoolName");
+		if(schoolName!=null){
+			schoolName="%"+schoolName+"%";
+		}
+		Long userId = queryJson.getLong("userId");
+		Long roleId = queryJson.getLong("roleId");
+		if(roleId==2){
+			userId = null;
+		}
+		int totalCount = businessOpportunityMapper.queryCpsCount(businessOpportunityName,schoolName,userId);
+		int startPosition = (start - 1) * pageSize;
+		List<Map<String,Object>> cspList = businessOpportunityMapper.queryCpsByPage(businessOpportunityName,schoolName,userId,startPosition,pageSize);
+		JSONArray cpsArr = new JSONArray();
+		if(!cspList.isEmpty()){
+			for (Map<String,Object> map : cspList) {
+				JSONObject json = new JSONObject();
+				json.put("businessOpportunityName", map.get("business_opportunity_name"));
+				json.put("schoolName", map.get("school_name"));
+				json.put("addressProvince", map.get("address_province"));
+				json.put("addressCity", map.get("address_city"));
+				json.put("addressCountry", map.get("address_country"));
+				json.put("addressDetail", map.get("address_detail"));
+				cpsArr.add(json);
+			}
+		}
+		int totalPage = 0;
+		if (totalCount / pageSize > 0) {
+            if (totalCount % pageSize == 0) {
+                totalPage = totalCount / pageSize;
+            } else {
+                totalPage = totalCount / pageSize + 1;
+            }
+        } else {
+            totalPage = 1;
+        }
+		resultJson.put("totalCount", totalCount);
+		resultJson.put("totalPage", totalPage);
+		resultJson.put("cpsArr", cpsArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 
 }

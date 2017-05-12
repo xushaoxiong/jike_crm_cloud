@@ -117,4 +117,12 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年5月11日上午11:27:24
 	 */
 	public JSONObject queryCopBusinessOpportunityByName(JSONObject queryJson);
+	/**
+	 * 分页查询合作伙伴商机
+	 * @param queryJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日上午10:13:21
+	 */
+	public JSONObject queryCpsByPage(JSONObject queryJson);
 }
