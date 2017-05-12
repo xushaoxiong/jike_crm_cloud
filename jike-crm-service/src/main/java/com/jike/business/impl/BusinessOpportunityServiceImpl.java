@@ -821,9 +821,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Transactional
 	public JSONObject deleteCpsById(JSONObject updateJson){
 		JSONObject resultJson = new JSONObject();
-		JSONObject cpsJson = updateJson.getJSONObject("cpsJson");
-		CooperativePartnerSchool cooperativePartnerSchool = cpsJson.toJavaObject(CooperativePartnerSchool.class);
-		Long distributeId = cooperativePartnerSchoolMapper.selectDistributeIdByCpsId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		Long cooperativePartnerSchoolId = updateJson.getLong("cooperativePartnerSchoolId");
+		Long distributeId = cooperativePartnerSchoolMapper.selectDistributeIdByCpsId(cooperativePartnerSchoolId);
 		Long userId = updateJson.getLong("userId");
 		if(distributeId!=userId){
 			resultJson.put("state", "fail");
@@ -831,9 +830,9 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			return resultJson;
 		}
 		//删除以前的服务
-		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchoolId);
 		//删除学校
-		cooperativePartnerSchoolMapper.deleteByPrimaryKey(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		cooperativePartnerSchoolMapper.deleteByPrimaryKey(cooperativePartnerSchoolId);
 		//添加新服务
 		resultJson.put("state", "success");
 		resultJson.put("message", "删除成功");
