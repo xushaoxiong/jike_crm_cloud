@@ -26,6 +26,7 @@ import com.jike.business.dao.ServiceBusinessOpportunityMapper;
 import com.jike.business.enums.SaleFlowState;
 import com.jike.business.model.BoProcessHistory;
 import com.jike.business.model.BusinessOpportunity;
+import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperativePartnerSchool;
 import com.jike.business.model.CooperativePartnerSchoolService;
 import com.jike.business.model.SaleBusinessOpportunity;
@@ -775,6 +776,31 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			}
 		}
 		resultJson.put("serviceArr", serviceArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject updateCpsById(JSONObject updateJson){
+		JSONObject resultJson = new JSONObject();
+		JSONObject cpsJson = updateJson.getJSONObject("cpsJson");
+		CooperativePartnerSchool cooperativePartnerSchool = cpsJson.toJavaObject(CooperativePartnerSchool.class);
+		cooperativePartnerSchoolMapper.updateByPrimaryKey(cooperativePartnerSchool);
+		//删除以前的服务
+		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		//添加新服务
+		JSONArray cpsServiceArr = updateJson.getJSONArray("cpsServiceArr");
+		if (cpsServiceArr != null && !cpsServiceArr.isEmpty()) {
+			for (Object object : cpsServiceArr) {
+				JSONObject cpsServiceJson = (JSONObject) object;
+				CooperativePartnerSchoolService cooperativePartnerSchoolService = cpsServiceJson
+						.toJavaObject(CooperativePartnerSchoolService.class);
+				cooperativePartnerSchoolServiceMapper.insert(cooperativePartnerSchoolService);
+			}
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "更新成功");
 		return resultJson;
 	}
 

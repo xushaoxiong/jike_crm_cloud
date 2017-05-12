@@ -61,4 +61,12 @@ public interface CooperativePartnerSchoolServiceMapper {
      * @createtime 2017年5月12日上午11:28:23
      */
 	List<CooperativePartnerSchoolService> selectByCpsId(Long cooperativePartnerSchoolId);
+
+	/**
+	 * 删除学校下服务
+	 * @param cooperativePartnerSchoolId
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午2:52:03
+	 */
+	void delteByCooperativePartnerSchoolId(Long cooperativePartnerSchoolId);
 }
