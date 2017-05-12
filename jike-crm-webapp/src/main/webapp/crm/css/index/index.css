@@ -181,6 +181,12 @@ textarea{resize: none;height: 100px !important;}
 .Page-wap .pagination{
 	float: left !important;
 }
+#pagevalue{
+    text-decoration: none;
+    border: solid 1px #AAE;
+    color: #15B;
+    padding: 0.3em 0.5em;
+}
 /*流程图*/
 .procewap{
 	width: 100%;

@@ -1,4 +1,7 @@
-
+//返回上一级
+	$('.goBack').click(function(){
+		$('.R-wap').load('businesoppt/CpsSchoolList.html')
+	})
 //商机名称弹框
 	$('.busScolName').click(function(){
 		$('#searchBusinessName').val('');

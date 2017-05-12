@@ -8,19 +8,14 @@
 	<style>
 		#CpScolcity div .form-control{width: 100% !important;}
 		.inpHeight{line-height: 34px;}
-		.businesscheck{
-			background:url('img/checked.png') no-repeat center;
-			background-size: 15px;
-		}
 	</style>
 	<body>
 	<div class="container-fluid">
 		<div class="message-wap">
-			<button class="btn btn-primary goBack">返回上一级</button>
 			<div class="form-group row">
 				<label class="col-sm-1"><span class="col">*</span>商机名称</label>
 				<div class="col-sm-3">
-					<span class="busScolName form-control cursorm"></span>
+					<span class="busScolName form-control" disabled="disabled"></span>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -108,40 +103,6 @@
 			<button class="btn btn-primary mesConfirm" style="margin-right: 15px;">提交</button>
 		</div>
 	</div>
-	<!--商机名称列表-->
-	<div class="modal bussinesList">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header form-inline text-center" style="border: none;">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					 <div class="input-group">
-			            <input type="text" placeholder="填写商机名称" class="form-control" id="searchBusinessName"/>
-			            <span class="input-group-addon cursorm" id="searchBtn"><span class="glyphicon glyphicon-search"></span></span>
-			        </div>
-				</div>
-				<div class="modal-body" style="max-height:400px;overflow-y: scroll;">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>选择</th>
-								<th>商机名称</th>
-								<th>商机流水号</th>
-								<th>商机类型</th>
-								<!--<th>商机进度</th>-->
-								<th>商机地址</th>
-							</tr>
-						</thead>
-						<tbody class="text-center bussinessItem cursorm">
-
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer" style="text-align: center;">
-					<button class="btn btn-primary busnisListConfirm" style="padding: 6px 25px;">确定</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	</body>
-	<script type="text/javascript" src="js/businesoppt/CpsSchool.js" ></script>
+	<script type="text/javascript" src="js/businesoppt/CpsSchoolEdit.js" ></script>
 </html>

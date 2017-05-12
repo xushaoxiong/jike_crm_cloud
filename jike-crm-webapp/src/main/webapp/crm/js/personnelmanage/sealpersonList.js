@@ -30,8 +30,6 @@
 	        list(jo.businessOpportunityList,jo.assignSale);
 	        $('.totalNum').html('共'+jo.totalCount+'条');
 	        businesnamestrb();
-	        panterScoladdrstrb();
-			panterScolNamestrb();
 	      
 		},function errF(jo){
 			pub.Alt(jo.message,false);
@@ -44,16 +42,7 @@
 		$.each(List, function(i,item) {
 			Html+='<tr>';
 				Html+='<td>'+(i+1)+'</td>';
-				if((item.businessOpportunityName).length>10){
-					Html+='<td class="panterScolBusinesName cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'">'+item.businessOpportunityName+'</td>';		
-				}else{
-					Html+='<td class="panterScolBusinesName">'+item.businessOpportunityName+'</td>';		
-				}
-				if((item.businessOpportunityName).length>10){
-					Html+='<td class="panterScolName cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'">'+item.businessOpportunityName+'</td>';		
-				}else{
-					Html+='<td class="panterScolName">'+item.businessOpportunityName+'</td>';		
-				}
+				Html+='<td class="panterScolName">'+item.businessOpportunityName+'</td>';		
 				if((item.businessOpportunityName).length>10){
 					Html+='<td class="panterScoladdr cursorm"  data-toggle="tooltip" data-placement="bottom" title="'+item.businessOpportunityName+'">北京市朝阳区霄云路34号</td>';
 				}else{
@@ -78,29 +67,11 @@
 			
 		}
 	}
-	//关联学校名称字数限制
-	function panterScolNamestrb(){
-		for (var i=0;i<$('.panterScolName').length;i++) {
-			var businessplit=$('.panterScolName').eq(i).html().substring(0,11);
-			if($('.panterScolName').eq(i).html().length>10){
-				$('.panterScolName').eq(i).html(businessplit+'...');
-			}
-		}	
-	}
-	//关联学校地址字数限制
-	function panterScoladdrstrb(){
-		for (var i=0;i<$('.panterScoladdr').length;i++) {
-			var businessplit=$('.panterScoladdr').eq(i).html().substring(0,11);
-			if($('.panterScoladdr').eq(i).html().length>10){
-				$('.panterScoladdr').eq(i).html(businessplit+'...');
-			}
-		}
-	}
 	//搜索
 	$('.searchBusiness').click(function(){
 		initFlag=true;
-		var OpportunityName=$.trim($('.OpportunityName').val());
-		var salesname=$.trim($('.associdScolName').val());
+		var OpportunityName=$.trim($('.managePerson').val());
+		var salesname=$.trim($('.BymanagePerson').val());
 		paginatorJ.businessOpportunityName=OpportunityName;
 		paginatorJ.userName=salesname;
 		paginatorJ.start=1;
