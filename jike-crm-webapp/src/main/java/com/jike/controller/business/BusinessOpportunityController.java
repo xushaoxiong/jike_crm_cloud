@@ -298,7 +298,7 @@ public class BusinessOpportunityController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
+		JSONObject checkIfBusiness = checkIfSale(session);
 		if("fail".equals(checkIfBusiness.getString("state"))){
 			return checkIfBusiness.toJSONString();
 		}
@@ -328,10 +328,6 @@ public class BusinessOpportunityController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		JSONObject checkIfBusiness = checkIfBusinessOrSale(session);
-		if("fail".equals(checkIfBusiness.getString("state"))){
-			return checkIfBusiness.toJSONString();
-		}
 		try {
 			String requestJson = RequestUtils.getRequestJsonString(request);
 			JSONObject json = JSONObject.parseObject(requestJson);
@@ -343,5 +339,32 @@ public class BusinessOpportunityController extends BaseController{
 		}
 		return result.toJSONString();
 	}
+	/**
+	 * 分页查询或作伙伴下学校
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日上午10:37:59
+	 */
+	@RequestMapping(value = "/queryCpsByPage", method ={RequestMethod.POST})
+	public @ResponseBody String queryCpsByPage(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.queryCpsByPage(json);
+		} catch (IOException e) {
+			logger.error("queryCpsByPage error", e);
+		}
+		return result.toJSONString();
+	}
+	
+	
 
 }

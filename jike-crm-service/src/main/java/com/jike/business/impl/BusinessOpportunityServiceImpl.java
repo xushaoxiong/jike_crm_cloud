@@ -601,6 +601,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Transactional
 	public JSONObject addCooperativePartnerSchool(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
+		Long userId = json.getLong("userId");
 		if(json!=null&&!json.isEmpty()){
 			Long businessOpportunityId = json.getLong("businessOpportunityId");
 			String schoolName = json.getString("schoolName");
@@ -624,6 +625,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			cooperativePartnerSchool.setSchoolLevel(schoolLevel);
 			cooperativePartnerSchool.setSchoolProperty(schoolProperty);
 			cooperativePartnerSchool.setSchoolCategory(schoolCategory);
+			cooperativePartnerSchool.setCreateBy(userId);
+			cooperativePartnerSchool.setCreateTime(new Date());
 			cooperativePartnerSchoolMapper.insert(cooperativePartnerSchool);
 			JSONArray serviceArr = json.getJSONArray("serviceArr");
 			if(serviceArr!=null&&!serviceArr.isEmpty()){
@@ -635,6 +638,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					cooperativePartnerSchoolService.setCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 					cooperativePartnerSchoolService.setServiceName(serviceName);
 					cooperativePartnerSchoolService.setServicePhone(servicePhone);
+					cooperativePartnerSchoolService.setCreateBy(userId);
+					cooperativePartnerSchoolService.setCreateTime(new Date());
 					cooperativePartnerSchoolServiceMapper.insert(cooperativePartnerSchoolService);
 				}
 			}
@@ -650,13 +655,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(businessOpportunityName!=null){
 			businessOpportunityName="%"+businessOpportunityName+"%";
 		}
+		Long userId = queryJson.getLong("userId");
 		//如果是服务，查询服务商机
-		if (queryJson.getLong("roleId") != 2) {
+		if (queryJson.getLong("roleId") != 3) {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有编辑权限");
 			return resultJson;
 		}		
-		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName);
+		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName,userId);
 		JSONArray arr = new JSONArray();
 		if(!businessOpportunityList.isEmpty()){
 			for (BusinessOpportunity businessOpportunity : businessOpportunityList) {
@@ -673,6 +679,60 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			}
 		}
 		resultJson.put("businessOpportunityList", arr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	
+	public JSONObject queryCpsByPage(JSONObject queryJson){
+		JSONObject resultJson = new JSONObject();
+		Integer start = queryJson.getInteger("start");
+		Integer pageSize = queryJson.getInteger("pageSize");
+		String businessOpportunityName = queryJson.getString("businessOpportunityName");
+		if(businessOpportunityName!=null){
+			businessOpportunityName="%"+businessOpportunityName+"%";
+		}
+		String schoolName = queryJson.getString("schoolName");
+		if(schoolName!=null){
+			schoolName="%"+schoolName+"%";
+		}
+		Long userId = queryJson.getLong("userId");
+		Long roleId = queryJson.getLong("roleId");
+		if(roleId==2){
+			userId = null;
+			resultJson.put("ifBussiness", 0);
+		}else{
+			resultJson.put("ifBussiness", 1);
+		}
+		int totalCount = businessOpportunityMapper.queryCpsCount(businessOpportunityName,schoolName,userId);
+		int startPosition = (start - 1) * pageSize;
+		List<Map<String,Object>> cspList = businessOpportunityMapper.queryCpsByPage(businessOpportunityName,schoolName,userId,startPosition,pageSize);
+		JSONArray cpsArr = new JSONArray();
+		if(!cspList.isEmpty()){
+			for (Map<String,Object> map : cspList) {
+				JSONObject json = new JSONObject();
+				json.put("businessOpportunityName", map.get("business_opportunity_name"));
+				json.put("schoolName", map.get("school_name"));
+				json.put("addressProvince", map.get("address_province"));
+				json.put("addressCity", map.get("address_city"));
+				json.put("addressCountry", map.get("address_country"));
+				json.put("addressDetail", map.get("address_detail"));
+				cpsArr.add(json);
+			}
+		}
+		int totalPage = 0;
+		if (totalCount / pageSize > 0) {
+            if (totalCount % pageSize == 0) {
+                totalPage = totalCount / pageSize;
+            } else {
+                totalPage = totalCount / pageSize + 1;
+            }
+        } else {
+            totalPage = 1;
+        }
+		resultJson.put("totalCount", totalCount);
+		resultJson.put("totalPage", totalPage);
+		resultJson.put("cpsArr", cpsArr);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;
