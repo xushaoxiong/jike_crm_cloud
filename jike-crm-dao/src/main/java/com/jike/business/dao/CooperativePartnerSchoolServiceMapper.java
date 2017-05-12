@@ -1,5 +1,7 @@
 package com.jike.business.dao;
 
+import java.util.List;
+
 import com.jike.business.model.CooperativePartnerSchoolService;
 
 public interface CooperativePartnerSchoolServiceMapper {
@@ -50,4 +52,13 @@ public interface CooperativePartnerSchoolServiceMapper {
      * @mbggenerated Wed May 10 18:09:32 CST 2017
      */
     int updateByPrimaryKey(CooperativePartnerSchoolService record);
+
+    /**
+     * 查询学校的服务者
+     * @param cooperativePartnerSchoolId
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月12日上午11:28:23
+     */
+	List<CooperativePartnerSchoolService> selectByCpsId(Long cooperativePartnerSchoolId);
 }

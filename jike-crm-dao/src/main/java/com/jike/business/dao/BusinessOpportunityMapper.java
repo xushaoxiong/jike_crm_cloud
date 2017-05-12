@@ -150,9 +150,28 @@ public interface BusinessOpportunityMapper {
 	 * @createtime 2017年5月11日上午11:17:20
 	 */
 	List<BusinessOpportunity> getCopBusinessOpportunity(@Param("businessOpportunityName")String businessOpportunityName, @Param("userId")Long userId);
-
+    /**
+     * 查询合作伙伴下学校数量
+     * @param businessOpportunityName
+     * @param schoolName
+     * @param userId
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月12日上午11:01:07
+     */
 	int queryCpsCount(@Param("businessOpportunityName")String businessOpportunityName, @Param("schoolName")String schoolName, @Param("userId")Long userId);
 
+	/**
+	 * 分页查询合作伙伴学校
+	 * @param businessOpportunityName
+	 * @param schoolName
+	 * @param userId
+	 * @param startPosition
+	 * @param pageSize
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日上午11:01:17
+	 */
 	List<Map<String, Object>> queryCpsByPage(@Param("businessOpportunityName")String businessOpportunityName, @Param("schoolName")String schoolName, @Param("userId")Long userId,
 			 @Param("start")int startPosition, @Param("pageSize")Integer pageSize);
 }

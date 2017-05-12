@@ -432,6 +432,7 @@
   </select>
   <select id="queryCpsByPage" resultType="java.util.Map"> 
     select
+        s.cooperative_partner_school_id,
 		b.business_opportunity_name,
 		s.school_name,
 		s.address_province,
