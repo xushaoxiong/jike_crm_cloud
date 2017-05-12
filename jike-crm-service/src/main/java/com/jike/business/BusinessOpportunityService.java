@@ -133,4 +133,20 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年5月12日上午11:51:53
 	 */
 	public JSONObject queryCpsById(JSONObject queryJson);
+	/**
+	 * 更新合作伙伴下学校
+	 * @param updateJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午3:30:34
+	 */
+	public JSONObject updateCpsById(JSONObject updateJson);
+	/**
+	 * 删除合作伙伴下学校
+	 * @param updateJson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午3:30:45
+	 */
+	public JSONObject deleteCpsById(JSONObject updateJson);
 }

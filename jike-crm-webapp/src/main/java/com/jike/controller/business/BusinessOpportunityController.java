@@ -391,6 +391,57 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 更新合作伙伴下学校
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午3:31:57
+	 */
+	@RequestMapping(value = "/updateCpsById", method ={RequestMethod.POST})
+	public @ResponseBody String updateCpsById(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.updateCpsById(json);
+		} catch (IOException e) {
+			logger.error("updateCpsById error", e);
+		}
+		return result.toJSONString();
+	}
+	/**
+	 * 删除合作伙伴下学校
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午3:31:47
+	 */
+	@RequestMapping(value = "/deleteCpsById", method ={RequestMethod.POST})
+	public @ResponseBody String deleteCpsById(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.deleteCpsById(json);
+		} catch (IOException e) {
+			logger.error("deleteCpsById error", e);
+		}
+		return result.toJSONString();
+	}
+	
 	
 
 }

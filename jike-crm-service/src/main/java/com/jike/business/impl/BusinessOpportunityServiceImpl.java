@@ -765,7 +765,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("schoolScale", cooperativePartnerSchool.getSchoolScale());
 		resultJson.put("schoolCategory", cooperativePartnerSchool.getSchoolCategory());
 		resultJson.put("schoolLevel", cooperativePartnerSchool.getSchoolLevel());
-		resultJson.put("addressDetail", cooperativePartnerSchool.getSchoolProperty());
+		resultJson.put("schoolProperty", cooperativePartnerSchool.getSchoolProperty());
 		JSONArray serviceArr = new JSONArray();
 		if(!cooperativePartnerSchoolServiceList.isEmpty()){
 			for (CooperativePartnerSchoolService cooperativePartnerSchoolService : cooperativePartnerSchoolServiceList) {
@@ -786,6 +786,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		JSONObject resultJson = new JSONObject();
 		JSONObject cpsJson = updateJson.getJSONObject("cpsJson");
 		CooperativePartnerSchool cooperativePartnerSchool = cpsJson.toJavaObject(CooperativePartnerSchool.class);
+		Long distributeId = cooperativePartnerSchoolMapper.selectDistributeIdByCpsId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		Long userId = updateJson.getLong("userId");
+		if(distributeId!=userId){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
 		cooperativePartnerSchoolMapper.updateByPrimaryKey(cooperativePartnerSchool);
 		//删除以前的服务
 		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
@@ -801,6 +808,29 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "更新成功");
+		return resultJson;
+	}
+	
+	
+	@Transactional
+	public JSONObject deleteCpsById(JSONObject updateJson){
+		JSONObject resultJson = new JSONObject();
+		JSONObject cpsJson = updateJson.getJSONObject("cpsJson");
+		CooperativePartnerSchool cooperativePartnerSchool = cpsJson.toJavaObject(CooperativePartnerSchool.class);
+		Long distributeId = cooperativePartnerSchoolMapper.selectDistributeIdByCpsId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		Long userId = updateJson.getLong("userId");
+		if(distributeId!=userId){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		//删除以前的服务
+		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		//删除学校
+		cooperativePartnerSchoolMapper.deleteByPrimaryKey(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		//添加新服务
+		resultJson.put("state", "success");
+		resultJson.put("message", "删除成功");
 		return resultJson;
 	}
 
