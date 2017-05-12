@@ -711,6 +711,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(!cspList.isEmpty()){
 			for (Map<String,Object> map : cspList) {
 				JSONObject json = new JSONObject();
+				json.put("cooperativePartnerSchoolId", map.get("cooperative_partner_school_id"));
 				json.put("businessOpportunityName", map.get("business_opportunity_name"));
 				json.put("schoolName", map.get("school_name"));
 				json.put("addressProvince", map.get("address_province"));
@@ -735,6 +736,36 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("cpsArr", cpsArr);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	
+	public JSONObject queryCpsById(JSONObject queryJson){
+		
+		JSONObject resultJson = new JSONObject();
+		Long cooperativePartnerSchoolId = queryJson.getLong("cooperativePartnerSchoolId");
+		CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+		Long businessOpportunityId = cooperativePartnerSchool.getBusinessOpportunityId();
+		SaleBusinessOpportunity saleBusinessOpportunity = saleBusinessOpportunityMapper.selectByBusinessOpportunityId(businessOpportunityId);
+		Long userId = queryJson.getLong("userId");
+		Long roleId = queryJson.getLong("roleId");
+		if(roleId!=2&&!userId.equals(saleBusinessOpportunity.getUserId())){//非商务并不是指派给他的商机
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		List<CooperativePartnerSchoolService> cooperativePartnerSchoolServiceList = cooperativePartnerSchoolServiceMapper.selectByCpsId(cooperativePartnerSchoolId);
+		
+		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByPrimaryKey(businessOpportunityId);
+		resultJson.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
+		resultJson.put("schoolName", cooperativePartnerSchool.getSchoolName());
+		resultJson.put("addressProvince", cooperativePartnerSchool.getAddressProvince());
+		resultJson.put("addressCity", cooperativePartnerSchool.getAddressCity());
+		resultJson.put("addressCountry", cooperativePartnerSchool.getAddressCountry());
+		resultJson.put("addressDetail", cooperativePartnerSchool.getAddressDetail());
+		resultJson.put("schoolScale", cooperativePartnerSchool.getSchoolScale());
+		resultJson.put("schoolCategory", cooperativePartnerSchool.getSchoolCategory());
+		resultJson.put("schoolLevel", cooperativePartnerSchool.getSchoolLevel());
+		resultJson.put("addressDetail", cooperativePartnerSchool.getSchoolProperty());
 		return resultJson;
 	}
 
