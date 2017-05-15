@@ -310,8 +310,15 @@ public class UserServiceImpl implements UserService {
 	public List<User> queryUserByUserName(String userName) {
 		return userMapper.queryUserByUserName(userName);
 	}
-	public JSONObject queryNoBeManegeSales(JSONObject parseObject) {
+	public JSONObject queryNoBeManegeSales(JSONObject queryJson) {
+		
 		JSONObject resultJson = new JSONObject();
+		Long roleId = queryJson.getLong("roleId");
+		if (roleId!=2) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		} 
 		List<User> userList = userMapper.queryNoBeManegeSales();
 		JSONArray userArr = new JSONArray();
 		for (User user : userList) {
