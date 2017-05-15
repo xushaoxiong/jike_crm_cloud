@@ -1,27 +1,37 @@
 
 	//初始用户列表
 	//设置每页数量开始页
-	var paginatorJ={"name":"","start":1,"pageSize":10};	
-	var creaPage = function (jo){
-		var options={
-			alignment:"center",
-	        bootstrapMajorVersion:1,    //版本
-	        numberOfPages:9,    //最多显示Page页
-	        totalPages:jo.totalPage,    //所有数据可以显示的页数
-	        onPageClicked:function(e,originalEvent,type,page){//点击跳转页
-		      	paginatorJ.start=page;
-		      	clickPage(paginatorJ)
-
-	        },
-	        currentPage:paginatorJ.start,    //当前页数
-	        pageUrl:function(type, page, current){
-	        	 
-	        }        
-	    }
-		$(".pagination").bootstrapPaginator(options);
-			$('.totalPage').html('共'+jo.totalCount+'条');
-			$('.totalNum').html(jo.totalPage+'页');
-	}
+	var paginatorJ={"name":"","start":1,"pageSize":10};
+	$(document).ready(function(){
+		getDataList(0, null);
+	})
+	var initFlag=true;
+	function getDataList(currPage, jg) {
+		paginatorJ.start=currPage+1;
+		$.ajax({
+		type:"post",
+			contentType: "application/json; charset=utf-8",
+			url:ajaxUrl+'user/getUserByPage',
+			data:JSON.stringify(paginatorJ),
+			dataType:'json',
+			success:function(jo){
+				if (initFlag) {
+//	    		//分页
+		    		$("#Pagination").pagination(jo.totalCount,{
+			            items_per_page :10,
+			            num_display_entries:3,
+			            num_edge_entries:3,
+			            callback : getDataList//回调函数
+		        	});
+		        	initFlag=false;
+	    		}
+		        $(".userList").html("");
+		       	uselist(jo);
+		        $('.totalPage').html('共'+jo.totalCount+'条');
+				$('.totalNum').html(jo.totalPage+'页');
+			}
+		});
+	} 
 	//列表
 	var uselist=function(jo){
 		var userHtml='';
@@ -52,29 +62,15 @@
 		})
 		$('.userList').html(userHtml);
 	}
-	//点击跳转页
-	function clickPage(PJson){
-		$.ajax({
-		type:"post",
-		contentType: "application/json; charset=utf-8",
-		url:ajaxUrl+'user/getUserByPage',
-		data:JSON.stringify(PJson),
-		dataType:'json',
-		success:function(jo){
-			uselist(jo);
-			creaPage(jo);
-		}
-	});
-	}
-	clickPage(paginatorJ);
-	
+
 	//搜索
 	
 	$('.userSearch').click(function(){
+		initFlag=true;
 		var nameVal=$.trim($('.userName').val());
 		paginatorJ.start = 1;
 		paginatorJ.name=nameVal;
-		clickPage(paginatorJ)
+		getDataList(0, null);
 	})
 	
 	//新增

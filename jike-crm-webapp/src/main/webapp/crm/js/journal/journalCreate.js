@@ -44,8 +44,14 @@ $(function(){
 		bussinesNameJ.businessOpportunityName=businessOpportunityName;
 		bussinesNameJ.eventType=eventType;
 		$('.bussinesList').modal('toggle');
+		var businesoppid=$(this).attr('businessopptunityid');
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
-			bussinesList(jo.businessOpportunityList,".bussinessItem")
+			bussinesList(jo.businessOpportunityList,".bussinessItem");
+			$.each(jo.businessOpportunityList,function(i,item){
+				if(item.businessOpportunityId==businesoppid){
+					$('.bussinesList .businesName[businessopptunityid="'+businesoppid+'"]').prev().addClass('businesscheck');
+				}
+			})
 		},function errF(jo){
 			
 		})
@@ -91,7 +97,6 @@ $(function(){
 		$('.businessNameSp').attr('businessOpptunityId',businessOpptunityId);
 		$('.businesNumbspInp').attr('OpptunityId',opprtype);
 		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
-			console.log(messbtnTypeId)
 			$('.journaConfirm').attr('disabled','disabled');
 			
 		}
@@ -148,7 +153,6 @@ $(function(){
 			var businessOpptunityId=0;
 		}
 		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
-			console.log(messbtnTypeId)
 			$('.journaConfirm').attr('disabled','disabled');
 			
 		}
@@ -165,7 +169,6 @@ $(function(){
 		}
 		messbtnType();
 		if(messbtnTypeId!=(eveid+spcid+businessOpptunityId)){
-			console.log(messbtnTypeId)
 			$('.journaConfirm').attr('disabled','disabled');
 			
 		}
@@ -222,7 +225,6 @@ $(function(){
 		}
 		
 		if(inp7!==''&&inp8===''){
-			console.log($.trim($('.reachInp8').val()))
 			pub.Alt('请填写垫付人',false);
 			return;
 		}
@@ -256,10 +258,7 @@ $(function(){
 		
 	}messbtnType();
 	
-//	function journalConfirmtype(eveid,spcid,businessOpptunityId){
-//		console.log(messbtnTypeId)
-//		
-//	}
+
 
 /*添加信息*/
 	//商机名称id
@@ -526,7 +525,6 @@ $(function(){
 		}
 		//支持
 		if(eveid=='10'){
-			console.log(OpptunityId)
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{

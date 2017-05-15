@@ -53,11 +53,11 @@ function supportpanerHtml(tdata){
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">销售支持：</label>';
 			if(tdata.salesSupportCount!=undefined){
-					negHtml+='<span class="colSp">'+tdata.salesSupportCount+'次</span>';
+					negHtml+='<span class="colSp">'+tdata.salesSupportCount+'小时</span>';
 				negHtml+='</li>';
 				negHtml+='<li>';
 					negHtml+='<label class="col-sm-2">销售支持详情：</label>';
-					negHtml+='<span class="colSp">'+tdata.salesSupportCount+'次</span>';
+					negHtml+='<span class="colSp">'+tdata.salesSupportCount+'</span>';
 				negHtml+='</li>';
 			negHtml+='</ul>';
 			}else{

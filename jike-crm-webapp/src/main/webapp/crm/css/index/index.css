@@ -175,14 +175,17 @@ textarea{resize: none;height: 100px !important;}
 	content:">\00a0" !important;
 }
 /*分页*/
-.pagination-wap{
-	width: 50% !important;
+.Page-wap .totalNum{
+	margin:18px 10px;
 }
-.pagination-wap .totalNum{
-	margin:26px 10px;
-}
-.pagination{
+.Page-wap .pagination{
 	float: left !important;
+}
+#pagevalue{
+    text-decoration: none;
+    border: solid 1px #AAE;
+    color: #15B;
+    padding: 0.3em 0.5em;
 }
 /*流程图*/
 .procewap{

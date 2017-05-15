@@ -1,39 +1,42 @@
 $('.delJournal').click(function(){
 	$('#deljalModal').modal('toggle');
 })
-//列表查询
-	
 
-
-	
 	var paginatorJ={"businessOpportunityName":"","start":1,"pageSize":10};
-
-
-
+	
 	//分页
-	var cartePage=function(jo){
-		var options={
-			alignment:"center",
-	        bootstrapMajorVersion:1,    //版本
-	        numberOfPages:9,    //最多显示Page页
-	        totalPages:jo.totalPage,    //所有数据可以显示的页数
-	        onPageClicked:function(e,originalEvent,type,page){//点击跳转页
-		      	paginatorJ.start=page;
-		      	clickPage(paginatorJ);
-	        },
-	        currentPage:paginatorJ.start,    //当前页数
-	        	pageUrl:function(type, page, current){ 
-	        }        
-	    }
-		$(".pagination").bootstrapPaginator(options);
-		$('.totalNum').html('共'+jo.totalCount+'条');
+	$(document).ready(function() {
+	    getDataList(0, null);
+	});
+	var initFlag=true;
+	function getDataList(currPage, jg) {
+		paginatorJ.start=currPage+1;
+	    $ajax("post","businessOpportunityLog/queryBusinessOpportunityLogByParams",paginatorJ,function succF(jo){
+	    	if (initFlag) {
+	    		//分页
+	    		$("#Pagination").pagination(jo.totalCount,{
+		            items_per_page :10,
+		            num_display_entries:3,
+		            num_edge_entries:3,
+		            callback : getDataList//回调函数
+	        	});
+	        	initFlag=false;
+	    	}
+	        
+	        $(".jourlist").html("");
+	       	jourItem(jo.businessOpportunityLogList);
+			businesnamestrb();
+	        $('.totalNum').html('共'+jo.totalCount+'条');
+	      
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	
 	}
 	//列表内容
 	function jourItem(datalist){
 		var html="";
 		$.each(datalist, function(i,item) {
-			
-			$('.showNumb').html(datalist.length)
 			html+='<tr>';
 				html+='<td>'+(i+1)+'</td>';
 				html+='<td class="jourTime">'+item.logDate+'</td>';
@@ -67,7 +70,7 @@ $('.delJournal').click(function(){
 					html+='<span class="serviceName">'+item.externalParticipant+'</span>';
 				}	
 				html+='</td>';
-				html+='<td class="jourCost">'+item.totalFee+'</td>';
+				html+='<td class="jourCost cursorm" onclick="jourCost($(this))"><a>'+item.totalFee+'</a></td>';
 				html+='<td logId="'+item.logId+'" class="Operatwap">';
 					if(item.authority==0){
 						html+='<button class="btn btn-primary edit" style="margin-right:8px;">编辑</button>';
@@ -80,21 +83,9 @@ $('.delJournal').click(function(){
 		});
 		$('.jourlist').html(html);
 	}
-	//点击页码
-	
-	function clickPage(PJson){
-		$ajax("post","businessOpportunityLog/queryBusinessOpportunityLogByParams",PJson,function succF(jo){
-			jourItem(jo.businessOpportunityLogList);
-			cartePage(jo);
-			businesnamestrb();
-	},function errF(jo){
-		pub.Alt(jo.message,false);
-	})
-	}clickPage(paginatorJ)
-	
-	
 	//搜索
 	$('.searchBusiness').click(function(){
+		initFlag=true;
 		var OpportunityName=$.trim($('.OpportunityName').val());
 		var startTime=$.trim($('#indate').val());
 		var endTime=$.trim($('#enddate').val());
@@ -111,7 +102,7 @@ $('.delJournal').click(function(){
 		paginatorJ.endTime=endTime;
 		paginatorJ.userName=userName;
 		paginatorJ.start=1;
-		clickPage(paginatorJ);
+		getDataList(0, null);
 	})
 //商机名称字数限制
 function businesnamestrb(){
@@ -134,20 +125,15 @@ $.each(eventJson2.evenList, function(i,item) {
 	$('.OpportunityProcess').append(eventhtml);
 });
 
-
-
 //	//操作设置
-
 	$('.jourlist').on('click','.edit',function(){
 		$('.R-wap').hide();
 		$('.threloadWap').show();
 		var evtypehtml=$(this).parents('tr').find('.evtype').html();
-		
 		var logIdJ={};
 		var logid=$(this).parent().attr('logid');
 		logIdJ.logId=logid;
-		var businestype=$(this).parents('tr').find('.bussname').attr('busintype');
-		
+		var businestype=$(this).parents('tr').find('.bussname').attr('busintype');	
 		var netht="编辑日志";
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
@@ -178,7 +164,6 @@ $.each(eventJson2.evenList, function(i,item) {
 	//编辑页面赋值
 	function editdata(editdata){
 		$('#indat').html(editdata.logDate);
-		console.log($('#indat').html())
 		$('#indat').attr('logId',editdata.logId)
 		$('.businessNameSp').val(editdata.businessOpportunityName);
 		$('.businessNameSp').attr('oppttypeid',editdata.businessOpportunityType);
@@ -235,8 +220,20 @@ $.each(eventJson2.evenList, function(i,item) {
 		}
 		
 	}
-	//
-	
+	//列表费用弹框
+	function jourCost(_this){
+		var logIdJ={};
+		var logid=_this.parent().find('.Operatwap').attr('logid');
+		logIdJ.logId=logid;
+		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
+			$('.totalCost').modal('toggle');
+			freedata(jo.boFeeDetailJson);
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+		
+	}
+	//添加信息详情页面
 	function commondetail(jo){
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var eventType=$('.eventType').val();

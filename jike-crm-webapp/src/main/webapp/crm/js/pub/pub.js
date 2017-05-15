@@ -47,7 +47,15 @@ pub.Alt=function(text,flag,callback){
 	}	
 
 
-
+//固话加手机号验证
+function contact(contNum,selector){
+	var contantReg=/(^([0-9]{3,4}-)?[0-9]{7,8}$)|(^(\+86)?1[0-9]{10}$)/;
+	if(!contantReg.test(contNum)){ 
+        $(selector).html('联系方式填写有误');
+        return false; 
+	}
+    return true;
+}
 
 //手机验证
 function phoneCheck(phoneNum,selector){ 
