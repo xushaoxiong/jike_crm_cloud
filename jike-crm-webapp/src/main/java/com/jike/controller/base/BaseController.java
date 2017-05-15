@@ -57,5 +57,18 @@ public class BaseController {
 		}
 		return result;
 	}
+	
+	public JSONObject checkIfBusiness(HttpSession session){
+		Long loginRoleId = (Long) session.getAttribute(roleId);
+		JSONObject result = new JSONObject();
+		if (loginRoleId!=2) {
+			result.put("state", "fail");
+			result.put("message", "没有权限");
+		} else {
+			result.put("state", "success");
+			result.put("message", "有权限");
+		}
+		return result;
+	}
 
 }

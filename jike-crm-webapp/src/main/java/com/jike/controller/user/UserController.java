@@ -295,6 +295,55 @@ public class UserController extends BaseController{
 		}
 		return result.toString();
 	}
-	
+	/**
+	 * 是否是销售
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午4:32:39
+	 */
+	@RequestMapping(value = "/ifSaleRole", method = {RequestMethod.POST})
+	public @ResponseBody String ifSaleRole(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		Long roleID= Long.parseLong(session.getAttribute(roleId).toString());
+		if(roleID.equals(3L)){
+			result.put("ifSaleRole", true);
+			result.put("state", "success");
+			result.put("message", "销售人员");
+		}else{
+			result.put("ifSaleRole", false);
+			result.put("state", "success");
+			result.put("message", "非销售人员");
+		}
+		return result.toString();
+	}
+	/**
+	 * 查询没有被管理的销售
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午5:49:49
+	 */
+	@RequestMapping(value = "/queryNoBeManegeSales", method = {RequestMethod.POST})
+	public @ResponseBody String queryNoBeManegeSales(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.queryNoBeManegeSales(parseObject);
+		} catch (IOException e) {
+			logger.error("queryNoBeManegeSales error", e);
+		}
+		return result.toString();
+	}
 	
 }
