@@ -310,6 +310,24 @@ public class UserServiceImpl implements UserService {
 	public List<User> queryUserByUserName(String userName) {
 		return userMapper.queryUserByUserName(userName);
 	}
+	public JSONObject queryNoBeManegeSales(JSONObject parseObject) {
+		JSONObject resultJson = new JSONObject();
+		List<User> userList = userMapper.queryNoBeManegeSales();
+		JSONArray userArr = new JSONArray();
+		for (User user : userList) {
+			JSONObject userJson = new JSONObject();
+			userJson.put("name", user.getName());
+			userJson.put("loginName", user.getLoginName());
+			userJson.put("gender", user.getGender());
+			userJson.put("email", user.getEmail());
+			userJson.put("userId", user.getUserId());
+			userArr.add(userJson);
+		}
+		resultJson.put("userList", userArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 	
 	
 }

@@ -112,4 +112,13 @@ public interface UserService {
      */
     public List<User> queryUserByUserName(String userName);
 
+    /**
+     * 查询没有被管理的销售
+     * @param parseObject
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月12日下午5:46:24
+     */
+	JSONObject queryNoBeManegeSales(JSONObject parseObject);
+
 }

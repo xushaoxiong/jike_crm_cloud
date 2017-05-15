@@ -261,5 +261,12 @@
     where u.user_id = r.user_id
     and u.name like #{userName,jdbcType=VARCHAR}
     </select>
-    
+    <select id="queryNoBeManegeSales" resultMap="BaseResultMap">
+    select 
+    u.*
+    from user u,user_role r
+    where u.user_id = r.user_id
+    and r.role_id =3
+    and u.user_id not in(select managed_user_id from sales_leader s)   
+    </select>
 </mapper>

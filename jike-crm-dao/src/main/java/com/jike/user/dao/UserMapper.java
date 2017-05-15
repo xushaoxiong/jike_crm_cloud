@@ -108,4 +108,12 @@ public interface UserMapper {
 	 * @createtime 2017年4月24日下午12:03:03
 	 */
 	List<User> queryUserByUserName(String userName);
+
+	/**
+	 * 查询没有被管理的销售
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午5:54:04
+	 */
+	List<User> queryNoBeManegeSales();
 }
