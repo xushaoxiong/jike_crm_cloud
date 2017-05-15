@@ -337,16 +337,10 @@ public class UserController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		String queryJson;
-		try {
-			queryJson = RequestUtils.getRequestJsonString(request);
-			JSONObject json = JSONObject.parseObject(queryJson);
-			json.put("userId", session.getAttribute(userId));
-			json.put("roleId", session.getAttribute(roleId));
-		    result = userService.queryNoBeManegeSales(json);
-		} catch (IOException e) {
-			logger.error("queryNoBeManegeSales error", e);
-		}
+		JSONObject json = new JSONObject();
+		json.put("userId", session.getAttribute(userId));
+		json.put("roleId", session.getAttribute(roleId));
+	    result = userService.queryNoBeManegeSales(json);
 		return result.toString();
 	}
 	
