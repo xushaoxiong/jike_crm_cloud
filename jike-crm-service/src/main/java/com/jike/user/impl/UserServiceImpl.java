@@ -260,7 +260,7 @@ public class UserServiceImpl implements UserService {
 		}
 		Date nowDate = new Date();
 		for (Object obj : managedUserIds) {
-			Long managedUserId = (Long) obj;
+			Long managedUserId = Long.parseLong(obj.toString());
 			SalesLeader leader = new SalesLeader();
 			leader.setLeaderId(leaderId);
 			leader.setManagedUserId(managedUserId);
@@ -336,5 +336,32 @@ public class UserServiceImpl implements UserService {
 		return resultJson;
 	}
 	
+	
+	private List<User> querySaleByName(String userName,Long roleId) {
+		return userMapper.queryUserByNameAndRoleId(userName,roleId);
+	}
+//	public JSONObject querySalesLeader(JSONObject queryjson){
+//		JSONObject resultJson = new JSONObject();
+//		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
+//		if(!salesLeaderList.isEmpty()){
+//			for (SalesLeader salesLeader : salesLeaderList) {
+//				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
+//			}
+//		}
+//		Date nowDate = new Date();
+//		for (Object obj : managedUserIds) {
+//			Long managedUserId = (Long) obj;
+//			SalesLeader leader = new SalesLeader();
+//			leader.setLeaderId(leaderId);
+//			leader.setManagedUserId(managedUserId);
+//			leader.setCreateBy(json.getLong("userId"));
+//			leader.setCreateTime(nowDate);
+//			salesLeaderMapper.insert(leader);
+//		}
+//		
+//		resultJson.put("state", "success");
+//		resultJson.put("message", "密码修改成功");
+//		return resultJson;
+//	}
 	
 }
