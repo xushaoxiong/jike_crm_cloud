@@ -10,7 +10,7 @@
 		$('.bussinesList').modal('toggle');
 		var businesoppid=$(this).attr('businessopptunityid');
 		$ajax('post','businessOpportunity/queryCopBusinessOpportunityByName',bussinesNameJ,function succF(jo){
-			bussinesList(jo.businessOpportunityList,".bussinessItem");
+			bussinesList(jo.businessOpportunityList);
 			$.each(jo.businessOpportunityList,function(i,item){
 				if(item.businessOpportunityId==businesoppid){
 					$('.bussinesList .businesName[businessopptunityid="'+businesoppid+'"]').prev().addClass('businesscheck');
