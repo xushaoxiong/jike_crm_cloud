@@ -213,8 +213,10 @@ public class UserController extends BaseController{
 		String queryJson;
 		try {
 			queryJson = RequestUtils.getRequestJsonString(request);
-			JSONObject parseObject = JSONObject.parseObject(queryJson);
-		    result = userService.addSalesLeader(parseObject);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.addSalesLeader(json);
 		} catch (IOException e) {
 			logger.error("addSalesLeader error", e);
 		}
@@ -338,8 +340,10 @@ public class UserController extends BaseController{
 		String queryJson;
 		try {
 			queryJson = RequestUtils.getRequestJsonString(request);
-			JSONObject parseObject = JSONObject.parseObject(queryJson);
-		    result = userService.queryNoBeManegeSales(parseObject);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.queryNoBeManegeSales(json);
 		} catch (IOException e) {
 			logger.error("queryNoBeManegeSales error", e);
 		}
