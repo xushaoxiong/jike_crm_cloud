@@ -101,6 +101,45 @@
 		    background: url(img/flag.png) no-repeat left 8% top 85%;
    			 background-size: 15px;
 		}
+		/*培训*/
+		.R-wap .sign-wap .trainlabel{
+			float: left;
+			width: 260px !important;
+		}
+		.R-wap .trainobject-wap label{
+			min-width: 115px!important;
+		}
+		.traincontainer .sign-wap{
+			border: 1px solid #e2e2e3;
+			padding: 0 10px;
+		}
+		.trainobject-wap{
+			border:	1px solid #e2e2e3;
+			padding-top: 30px;
+			margin: 25px 0;
+		}
+		.trainobject-wap .trainobjectItemHide{
+			display: none;
+		}
+		.Addtrain-wap{
+			border: 1px solid #29b803;
+			background: rgba(41,184,3,0.05);
+			padding: 30px 10px;
+		}
+		.AddtrainItem li a{padding: 0 15px;}
+		.AddtrainItem li a:last-child{float: right;}
+		.AddtrainItem li{
+			width: 19%;
+		}
+		.AddtrainItem li:first-child{
+			width:auto;
+		}
+		.AddtrainItem li:nth-child(2){
+			width: 30%;
+		}
+		.AddtrainItem li:last-child{
+			width: 11%;
+		}
 		
 	</style>
 	<body>
@@ -300,6 +339,47 @@
 					</div>
 					<div class="modal-footer" style="text-align: center;">
 						<button class="btn btn-primary busnisListConfirm" style="padding: 6px 25px;">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--合作伙伴关联的学校弹框-->
+		<div class="modal panterScolwap">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header form-inline text-center" style="border: none;">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						 <div class="input-group">
+				            <input type="text" placeholder="填写关联学校名称" class="form-control" id="searchpanterScolName"/>
+				            <span class="input-group-addon cursorm" id="searchBtn"><span class="glyphicon glyphicon-search"></span></span>
+				        </div>
+					</div>
+					<div class="modal-body" style="max-height:400px;overflow-y: scroll;">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>选择</th>
+									<th>商机名称</th>
+									<th>商机流水号</th>
+									<th>商机类型</th>
+									<th>商机进度</th>
+									<th>商机地址</th>
+								</tr>
+							</thead>
+							<tbody class="text-center panterScolItem cursorm">
+								<tr>
+									<td class="businesscheckimg"></td>
+									<td>解放学校</td>
+									<td>12121212</td>
+									<td>合作伙伴</td>
+									<td>拜访</td>
+									<td>北京市朝阳区</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer" style="text-align: center;">
+						<button class="btn btn-primary panterScolConfirm" style="padding: 6px 25px;">确定</button>
 					</div>
 				</div>
 			</div>

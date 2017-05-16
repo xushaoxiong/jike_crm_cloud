@@ -1,5 +1,6 @@
 var pub={};
 pub.Alt=function(text,flag,callback){
+	$('.alertdiv').show();
 	var html='';
 	html+='<div class="alert-del" style="width:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,0.5);z-index:1100;">';
 	html+='<div style="width: 15%;z-index:1052;background:#fff;height: 150px;border: 1px solid #ccc;border-radius:5px;position: fixed;top: 0;left: 0;bottom: 0;right: 0;margin: auto;">';
@@ -12,7 +13,7 @@ pub.Alt=function(text,flag,callback){
    	
    	html+='</div>';
    	html+='</div>';
-   	$('body').append(html);
+   	$('.alertdiv').html(html);
 	 	$('.concel').on('click',function(){
 	 		$('.alert-del').hide();
 	 	})
@@ -21,7 +22,7 @@ pub.Alt=function(text,flag,callback){
    		html+='</div>';
    	html+='</div>';
    	html+='</div>';
-   	$('body').append(html);
+   	$('.alertdiv').html(html);
 	 	$('.confirm').on('click',function(){
 	 		$('.alert-del').hide();
    	})

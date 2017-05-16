@@ -265,6 +265,7 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
+		$('.R-wap').css('border','1px solid #e2e2e3');
 		$('.procewap').hide();
 		var busoptIdJ={};
 		//根据商机名称id查询信息
@@ -275,7 +276,7 @@ $(function(){
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		var eventType=$('#eventType').find('option:selected').val();
-
+		var busnamState=$('.businessNameSp').html();
 		//面包屑导航
 		breadnav(Fht,'创建日志',eventType);
 		
@@ -553,6 +554,7 @@ $(function(){
 		}
 		//培训
 		if(eveid=='11'){
+			$('.R-wap').css('border','none');
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
@@ -567,11 +569,23 @@ $(function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
 						beginid=eveid+spcid+OpptunityId;
+						if(OpptunityId==0){
+							$('.trainObjitem:first').find('span').html(busnamState);
+							$('.trainsave').show();
+							$('.trainObjitem:first').find('span').removeAttr('onclick');
+							$('.trainObjitem:first').find('span').attr('disabled','disabled');
+						}else{
+							$('.trainObjitem:not(:first)').addClass('trainobjectItemHide');
+							$('.trainObjitem:first').find('span').html(busnamState);
+							$('.trainObjitem:first').find('span').addClass('cursorm');
+							$('.trainObjitem:first').find('span').attr('trainObjid',busoptid);
+							$('.trainsave').hide();
+						
+						}
 					})
 				}
 				
 //			}
-			
 		}
 		
 		//回款

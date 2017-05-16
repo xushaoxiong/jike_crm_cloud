@@ -29,7 +29,7 @@ $(function(){
 				})
 			}
 				$('.indexName').html(jo.name);
-			var menuimmg=['img/business.png','img/journal.png','img/sess.png']
+			var menuimmg=['img/business.png','img/journal.png','img/sess.png','img/usermanage.png','img/archives.png']
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
 				NavHtml+='<li class="L-list-item">';
@@ -42,6 +42,9 @@ $(function(){
 					}
 					if(item.menuId==3){
 						NavHtml+='<img src="'+menuimmg[2]+'" alt="图片"/>';
+					}
+					if(item.menuId==12){
+						NavHtml+='<img src="'+menuimmg[3]+'" alt="图片"/>';
 					}
 					NavHtml+='<span class="menuname">'+item.menuName+'</span>';
 				if(item.menu2==undefined){
@@ -56,7 +59,7 @@ $(function(){
 						NavHtml+='<span class="circle"></span>';
 						NavHtml+='<a>'+item2.menuName+'</a>';
 						NavHtml+='</li>';
-				})	
+					})	
 				NavHtml+='</ul>';
 				NavHtml+='</li>';
 				}				

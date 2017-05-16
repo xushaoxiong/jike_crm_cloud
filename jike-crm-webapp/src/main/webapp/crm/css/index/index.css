@@ -115,6 +115,7 @@ div[class^="col-"]{
 	background-color: #036eb8 !important;
 	/*color:  #036eb8 !important;*/
 	border-color:#036eb8 !important;
+	font-size: 13px !important;
 }
 input[type=radio],input[type=checkbox]{
 	margin-top: -1px !important;
@@ -162,6 +163,7 @@ textarea{resize: none;height: 100px !important;}
    	width: 98%;
    	margin: 0 auto;
    	margin-bottom: 15px;
+   	font-size: 13px;
 }
 .breadcrumbwap span:first-child{padding: 8px 0;}
 .breadcrumb {
