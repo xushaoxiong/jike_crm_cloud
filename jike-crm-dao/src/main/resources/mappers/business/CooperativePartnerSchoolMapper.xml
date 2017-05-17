@@ -257,4 +257,13 @@
 	where cps.business_opportunity_id = sbo.business_opportunity_id
 	and cps.cooperative_partner_school_id = #{cooperativePartnerSchoolId,jdbcType=BIGINT}
   </select>
+  <select id="queryCpsByCoopId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cooperative_partner_school
+    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+    <if test="schoolName != null">
+     and school_name like #{schoolName,jdbcType=VARCHAR}
+	</if>
+  </select>
 </mapper>

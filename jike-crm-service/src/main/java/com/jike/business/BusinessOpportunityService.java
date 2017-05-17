@@ -149,4 +149,13 @@ public interface BusinessOpportunityService {
 	 * @createtime 2017年5月12日下午3:30:45
 	 */
 	public JSONObject deleteCpsById(JSONObject updateJson);
+
+	/**
+	 * 查询合作伙伴下学校
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月17日下午4:41:24
+	 */
+	public JSONObject queryCpsByCoopId(JSONObject json);
 }
