@@ -323,6 +323,33 @@ public class UserController extends BaseController{
 		}
 		return result.toString();
 	}
+	
+	/**
+	 * 是否是商务
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午4:32:39
+	 */
+	@RequestMapping(value = "/ifBusinessRole", method = {RequestMethod.POST})
+	public @ResponseBody String ifBusinessRole(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		Long roleID= Long.parseLong(session.getAttribute(roleId).toString());
+		if(roleID.equals(2L)){
+			result.put("ifSaleRole", true);
+			result.put("state", "success");
+			result.put("message", "商务人员");
+		}else{
+			result.put("ifSaleRole", false);
+			result.put("state", "success");
+			result.put("message", "非商务人员");
+		}
+		return result.toString();
+	}
 	/**
 	 * 查询没有被管理的销售
 	 * @param request
