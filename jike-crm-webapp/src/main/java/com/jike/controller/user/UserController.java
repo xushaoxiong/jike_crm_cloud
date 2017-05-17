@@ -343,5 +343,83 @@ public class UserController extends BaseController{
 	    result = userService.queryNoBeManegeSales(json);
 		return result.toString();
 	}
+	/**
+	 * 查询销售管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午10:50:22
+	 */
+	@RequestMapping(value = "/querySalesLeader", method = {RequestMethod.POST})
+	public @ResponseBody String querySalesLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.querySalesLeader(json);
+		} catch (IOException e) {
+			logger.error("querySalesLeader error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 删除销售管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午11:50:07
+	 */
+	@RequestMapping(value = "/deleteSalesLeader", method = {RequestMethod.POST})
+	public @ResponseBody String deleteSalesLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.deleteSalesLeader(json);
+		} catch (IOException e) {
+			logger.error("deleteSalesLeader error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 更新销售管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日下午1:40:10
+	 */
+	@RequestMapping(value = "/updateSalesLeader", method = {RequestMethod.POST})
+	public @ResponseBody String updateSalesLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.updateSalesLeader(json);
+		} catch (IOException e) {
+			logger.error("updateSalesLeader error", e);
+		}
+		return result.toString();
+	}
 	
 }

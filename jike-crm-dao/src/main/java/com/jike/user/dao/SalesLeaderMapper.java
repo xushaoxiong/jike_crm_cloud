@@ -1,6 +1,9 @@
 package com.jike.user.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.jike.user.model.SalesLeader;
 
@@ -53,5 +56,30 @@ public interface SalesLeaderMapper {
      */
     int updateByPrimaryKey(SalesLeader record);
 
+    /**
+     * 通过管理ID查询
+     * @param leaderId
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月16日上午10:05:50
+     */
 	List<SalesLeader> selectByLeaderId(Long leaderId);
+	/**
+	 * 查询销售管理和被管理者
+	 * @param leaderName
+	 * @param managedName
+	 * @param userId 
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午10:04:18
+	 */
+	List<Map<String, Object>> queryByLeaderAndManagedName(@Param("leaderName")String leaderName, @Param("managedName")String managedName, @Param("userId")Long userId);
+
+	/**
+	 * 删除销售管理
+	 * @param leaderId
+	 * @created wangyb
+	 * @createtime 2017年5月16日下午1:35:31
+	 */
+	void deleteByLeaderId(Long leaderId);
 }

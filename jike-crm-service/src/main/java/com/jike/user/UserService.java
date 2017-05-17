@@ -120,5 +120,31 @@ public interface UserService {
      * @createtime 2017年5月12日下午5:46:24
      */
 	JSONObject queryNoBeManegeSales(JSONObject parseObject);
+	/**
+	 * 查询销售管理
+	 * @param queryjson
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午10:48:33
+	 */
+	public JSONObject querySalesLeader(JSONObject queryjson);
+
+	/**
+	 * 删除销售管理
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午11:50:34
+	 */
+	JSONObject deleteSalesLeader(JSONObject json);
+
+	/**
+	 * 更新销售管理
+	 * @param json
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日下午1:42:15
+	 */
+	JSONObject updateSalesLeader(JSONObject json);
 
 }
