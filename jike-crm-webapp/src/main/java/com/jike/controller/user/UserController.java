@@ -340,11 +340,11 @@ public class UserController extends BaseController{
 		}
 		Long roleID= Long.parseLong(session.getAttribute(roleId).toString());
 		if(roleID.equals(2L)){
-			result.put("ifSaleRole", true);
+			result.put("ifBusinessRole", true);
 			result.put("state", "success");
 			result.put("message", "商务人员");
 		}else{
-			result.put("ifSaleRole", false);
+			result.put("ifBusinessRole", false);
 			result.put("state", "success");
 			result.put("message", "非商务人员");
 		}
