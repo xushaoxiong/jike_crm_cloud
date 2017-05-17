@@ -248,16 +248,24 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Transactional
-	public JSONObject addSalesLeader(JSONObject json){
+	public synchronized JSONObject addSalesLeader(JSONObject json){
 		JSONObject resultJson = new JSONObject();
 		Long leaderId = json.getLong("leaderId");
 		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
-//		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
-//		if(!salesLeaderList.isEmpty()){
-//			for (SalesLeader salesLeader : salesLeaderList) {
-//				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
-//			}
-//		}
+		//查询该管理者是否已存在
+		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
+		if(!salesLeaderList.isEmpty()){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "该销售已为管理者");
+			return resultJson;
+		}
+		//查询被管理是否已存在
+		List<SalesLeader> salesManageList = salesLeaderMapper.selectByManagedUserId(managedUserIds);
+		if(!salesManageList.isEmpty()){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "被管理者已分配其他销售管理");
+			return resultJson;
+		}
 		Date nowDate = new Date();
 		for (Object obj : managedUserIds) {
 			Long managedUserId = Long.parseLong(obj.toString());

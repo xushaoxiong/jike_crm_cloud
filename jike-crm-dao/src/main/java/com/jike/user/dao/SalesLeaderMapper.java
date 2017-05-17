@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.alibaba.fastjson.JSONArray;
 import com.jike.user.model.SalesLeader;
 
 public interface SalesLeaderMapper {
@@ -82,4 +83,13 @@ public interface SalesLeaderMapper {
 	 * @createtime 2017年5月16日下午1:35:31
 	 */
 	void deleteByLeaderId(Long leaderId);
+
+	/**
+	 * 查询被管理者是否存在
+	 * @param managedUserIds
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月17日上午10:00:33
+	 */
+	List<SalesLeader> selectByManagedUserId(JSONArray managedUserIds);
 }

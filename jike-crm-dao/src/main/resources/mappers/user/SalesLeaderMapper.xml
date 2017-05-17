@@ -189,4 +189,14 @@
    delete from sales_leader
    where leader_id = #{leaderId,jdbcType=BIGINT}
   </delete>
+  <select id="selectByManagedUserId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sales_leader
+    where managed_user_id in
+    <foreach item="item" index="index" collection="managedUserIds" open="("  
+                separator="," close=")">  
+                #{item}  
+    </foreach> 
+  </select>
 </mapper>
