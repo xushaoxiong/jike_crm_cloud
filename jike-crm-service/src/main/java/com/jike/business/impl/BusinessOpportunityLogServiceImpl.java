@@ -36,6 +36,7 @@ import com.jike.business.dao.BoVisitMapper;
 import com.jike.business.dao.BoVisitPlanMapper;
 import com.jike.business.dao.BusinessOpportunityLogMapper;
 import com.jike.business.dao.CooperationDetailsMapper;
+import com.jike.business.dao.CooperativePartnerSchoolMapper;
 import com.jike.business.dao.DailyEventsMapper;
 import com.jike.business.dao.PartnerAgentAreaMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
@@ -57,6 +58,7 @@ import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
 import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperationDetails;
+import com.jike.business.model.CooperativePartnerSchool;
 import com.jike.business.model.DailyEvents;
 import com.jike.business.model.PartnerAgentArea;
 import com.jike.business.model.SaleBusinessOpportunity;
@@ -119,6 +121,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private ServiceDailyEventMapper serviceDailyEventMapper;
 	@Autowired
 	private SaleBusinessOpportunityMapper saleBusinessOpportunityMapper;
+	@Autowired
+	private CooperativePartnerSchoolMapper cooperativePartnerSchoolMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -1138,6 +1142,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Integer printingInspectionCount = boCustomerServiceJson.getInteger("printingInspectionCount");
 			Integer markingHandleCount = boCustomerServiceJson.getInteger("markingHandleCount");
 			Integer systemObstacleCount = boCustomerServiceJson.getInteger("systemObstacleCount");
+			Long cooperativePartnerSchoolId = boCustomerServiceJson.getLong("cooperativePartnerSchoolId");
 			
 			BoCustomerService boCustomerService = new BoCustomerService();
 			boCustomerService.setBusinessOpportunityId(businessOpportunityId);
@@ -1148,6 +1153,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boCustomerService.setPrintingInspectionCount(printingInspectionCount);
 			boCustomerService.setMarkingHandleCount(markingHandleCount);
 			boCustomerService.setSystemObstacleCount(systemObstacleCount);
+			boCustomerService.setCooperativePartnerSchoolId(cooperativePartnerSchoolId);
 			boCustomerService.setCreateTime(nowDate);
 			boCustomerService.setCreateBy(jsonData.getLong("userId"));
 			boCustomerServiceMapper.insert(boCustomerService);
@@ -1542,6 +1548,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("售后".equals(businessOpportunityLog.getEventType())){
 			BoCustomerService boCustomerService = boCustomerServiceMapper.selectBoCustomerServiceByLogId(logId);
 			json = JSONObject.toJSONString(boCustomerService,SerializerFeature.WriteNullStringAsEmpty);
+			Long cooperativePartnerSchoolId = boCustomerService.getCooperativePartnerSchoolId();
+			if(cooperativePartnerSchoolId!=null){
+				CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
+				JSONObject newJson =JSON.parseObject(newJsonString);
+				JSONObject jsonJson =JSON.parseObject(json);
+				jsonJson.putAll(newJson);
+				json = jsonJson.toString();
+			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			BoTrain boTrain = boTrainMapper.selectBoTrainByLogId(logId);
 			json = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
