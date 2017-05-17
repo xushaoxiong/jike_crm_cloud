@@ -370,6 +370,7 @@ public class UserServiceImpl implements UserService {
 				String leader_name = map.get("leader_name").toString();
 				Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
 				String managed_user_name = map.get("managed_user_name").toString();
+				String managed_gender = map.get("managed_gender").toString();
 				if(leaderId!=nowLeaderId){
 					managedUserList = new JSONArray();
 					nowLeaderId = leaderId;
@@ -379,6 +380,7 @@ public class UserServiceImpl implements UserService {
 					JSONObject managedUserJson = new JSONObject();
 					managedUserJson.put("managedUserId", managedUserId);
 					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserJson.put("managedGender", managed_gender);
 					managedUserList.add(managedUserJson);
 					leaderJson.put("managedUserList",managedUserList);
 					saleLeaderList.add(leaderJson);
@@ -386,6 +388,7 @@ public class UserServiceImpl implements UserService {
 					JSONObject managedUserJson = new JSONObject();
 					managedUserJson.put("managedUserId", managedUserId);
 					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserJson.put("managedGender", managed_gender);
 					managedUserList.add(managedUserJson);
 				}
 			}
