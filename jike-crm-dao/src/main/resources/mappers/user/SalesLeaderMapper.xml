@@ -160,4 +160,33 @@
     from sales_leader
     where leader_id = #{leaderId,jdbcType=BIGINT}
   </select>
+  <select id="queryByLeaderAndManagedName"  resultType="java.util.Map">
+	select * from (
+	select
+	s.leader_id,
+	(select name from user u where u.user_id = s.leader_id) leader_name,
+	s.managed_user_id,
+	(select name from user u where u.user_id = s.managed_user_id) managed_user_name
+	from
+	sales_leader s
+	<where>
+	<if test="userId != null">
+     leader_id = #{userId,jdbcType=BIGINT} or managed_user_id = #{userId,jdbcType=BIGINT}
+	</if>
+	</where> 
+	order by s.leader_id,s.create_time
+	) a
+	<where>
+	<if test="leaderName != null">
+     a.leader_name like #{leaderName,jdbcType=VARCHAR}
+	</if>
+	<if test="managedName != null">
+	and a.managed_user_name like #{managedName,jdbcType=VARCHAR}
+	</if>
+	</where>
+  </select>
+  <delete id="deleteByLeaderId">
+   delete from sales_leader
+   where leader_id = #{leaderId,jdbcType=BIGINT}
+  </delete>
 </mapper>

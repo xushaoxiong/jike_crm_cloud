@@ -270,4 +270,16 @@
     and u.user_id not in(select managed_user_id from sales_leader s) 
     and u.user_id not in(select leader_id from sales_leader s)     
     </select>
+    <select id="queryUserByNameAndRoleId" resultMap="BaseResultMap">
+    select 
+    u.*
+    from user u,user_role r
+    where u.user_id = r.user_id
+    <if test="roleId != null">
+    and r.role_id = #{roleId,jdbcType=BIGINT}
+    </if>
+    <if test="userName != null">
+    and u.user_name like #{userName,jdbcType=VARCHAR}
+    </if>
+    </select>
 </mapper>

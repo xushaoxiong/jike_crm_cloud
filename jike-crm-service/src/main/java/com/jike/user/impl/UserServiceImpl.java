@@ -252,12 +252,12 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		Long leaderId = json.getLong("leaderId");
 		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
-		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
-		if(!salesLeaderList.isEmpty()){
-			for (SalesLeader salesLeader : salesLeaderList) {
-				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
-			}
-		}
+//		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
+//		if(!salesLeaderList.isEmpty()){
+//			for (SalesLeader salesLeader : salesLeaderList) {
+//				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
+//			}
+//		}
 		Date nowDate = new Date();
 		for (Object obj : managedUserIds) {
 			Long managedUserId = Long.parseLong(obj.toString());
@@ -270,7 +270,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		resultJson.put("state", "success");
-		resultJson.put("message", "密码修改成功");
+		resultJson.put("message", "添加成功");
 		return resultJson;
 	}
 	
@@ -336,32 +336,98 @@ public class UserServiceImpl implements UserService {
 		return resultJson;
 	}
 	
-	
-	private List<User> querySaleByName(String userName,Long roleId) {
-		return userMapper.queryUserByNameAndRoleId(userName,roleId);
+	public JSONObject querySalesLeader(JSONObject queryjson){
+		JSONObject resultJson = new JSONObject();
+		String leaderName = queryjson.getString("leaderName");
+		String managedName = queryjson.getString("managedName");
+		if(leaderName!=null){
+			leaderName="%"+leaderName+"%";
+		}
+		if(managedName!=null){
+			managedName="%"+managedName+"%";
+		}
+		Long roleId = queryjson.getLong("roleId");
+		Long userId = queryjson.getLong("userId");
+		if(roleId==2L){
+			userId = null;
+		}
+		//查询销售人员
+		List<Map<String,Object>> saleLeaderArr = salesLeaderMapper.queryByLeaderAndManagedName(leaderName,managedName,userId);
+		Long nowLeaderId = null;
+		JSONArray managedUserList = null;
+		JSONArray saleLeaderList = new JSONArray();
+		if(!saleLeaderArr.isEmpty()){ 
+			for (Map<String,Object> map : saleLeaderArr) {
+				Long leaderId = Long.parseLong(map.get("leader_id").toString());
+				String leader_name = map.get("leader_name").toString();
+				Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
+				String managed_user_name = map.get("managed_user_name").toString();
+				if(leaderId!=nowLeaderId){
+					managedUserList = new JSONArray();
+					nowLeaderId = leaderId;
+					JSONObject leaderJson = new JSONObject();
+					leaderJson.put("leaderId", leaderId);
+					leaderJson.put("leaderName", leader_name);
+					JSONObject managedUserJson = new JSONObject();
+					managedUserJson.put("managedUserId", managedUserId);
+					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserList.add(managedUserJson);
+					leaderJson.put("managedUserList",managedUserList);
+					saleLeaderList.add(leaderJson);
+				}else{
+					JSONObject managedUserJson = new JSONObject();
+					managedUserJson.put("managedUserId", managedUserId);
+					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserList.add(managedUserJson);
+				}
+			}
+		}
+		resultJson.put("saleLeaderList", saleLeaderList);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
 	}
-//	public JSONObject querySalesLeader(JSONObject queryjson){
-//		JSONObject resultJson = new JSONObject();
-//		List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(leaderId);
-//		if(!salesLeaderList.isEmpty()){
-//			for (SalesLeader salesLeader : salesLeaderList) {
-//				salesLeaderMapper.deleteByPrimaryKey(salesLeader.getSalesLeaderId());
-//			}
-//		}
-//		Date nowDate = new Date();
-//		for (Object obj : managedUserIds) {
-//			Long managedUserId = (Long) obj;
-//			SalesLeader leader = new SalesLeader();
-//			leader.setLeaderId(leaderId);
-//			leader.setManagedUserId(managedUserId);
-//			leader.setCreateBy(json.getLong("userId"));
-//			leader.setCreateTime(nowDate);
-//			salesLeaderMapper.insert(leader);
-//		}
-//		
-//		resultJson.put("state", "success");
-//		resultJson.put("message", "密码修改成功");
-//		return resultJson;
-//	}
+	public JSONObject deleteSalesLeader(JSONObject queryjson) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = queryjson.getLong("roleId");
+		if(roleId!=2L){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		Long leaderId = queryjson.getLong("leaderId");
+		salesLeaderMapper.deleteByLeaderId(leaderId);
+		resultJson.put("state", "success");
+		resultJson.put("message", "删除成功");
+		return resultJson;
+	}
+	
+	@Transactional
+	public JSONObject updateSalesLeader(JSONObject queryjson) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = queryjson.getLong("roleId");
+		if(roleId!=2L){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		Long leaderId = queryjson.getLong("leaderId");
+		salesLeaderMapper.deleteByLeaderId(leaderId);
+		
+		JSONArray  managedUserIds = queryjson.getJSONArray("managedUserIds");
+		Date nowDate = new Date();
+		for (Object obj : managedUserIds) {
+			Long managedUserId = Long.parseLong(obj.toString());
+			SalesLeader leader = new SalesLeader();
+			leader.setLeaderId(leaderId);
+			leader.setManagedUserId(managedUserId);
+			leader.setCreateBy(queryjson.getLong("userId"));
+			leader.setCreateTime(nowDate);
+			salesLeaderMapper.insert(leader);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "更新成功");
+		return resultJson;
+	}
 	
 }
