@@ -166,7 +166,8 @@
 	s.leader_id,
 	(select name from user u where u.user_id = s.leader_id) leader_name,
 	s.managed_user_id,
-	(select name from user u where u.user_id = s.managed_user_id) managed_user_name
+	(select name from user u where u.user_id = s.managed_user_id) managed_user_name,
+	(select gender from user u where u.user_id = s.managed_user_id) managed_gender
 	from
 	sales_leader s
 	<where>
