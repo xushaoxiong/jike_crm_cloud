@@ -99,7 +99,8 @@
 		var Mhtml='';
 		$.each(Mdata, function(i,item) {
 			if(item.userId==uid){
-				Mhtml+='<tr onclick="checkByManPer($(this))" style="display:none;">';Mhtml+='</tr>';
+				Mhtml+='<tr onclick="checkByManPer($(this))" style="display:none;">';
+				Mhtml+='</tr>';
 			}else{
 				Mhtml+='<tr onclick="checkByManPer($(this))">';
 					Mhtml+='<td class="checkimg"></td>';

@@ -424,20 +424,20 @@ function trainConfirm(){
 		AddtrainInfo(AddboTrain);
 		trainInfo(AddboTrain);
 		addTrainObjArry[trainsaveId]=AddboTrain;
-			$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.trainObjName);
-			$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainObjDiscipline);
-			$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainObjGrade);
-			$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjNumb').html(AddboTrain.trainObjNumb);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.trainObjName);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainObjDiscipline);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainObjGrade);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjNumb').html(AddboTrain.trainObjNumb);
 		if(!addtrainstate()&&addTrainObjArry.length!=0){
 			$('.alertdiv').hide();	
 			
-			}
+		}
 		
 	}else{
 		trainsaveLiat(AddboTrain);
 		addTrainObjArry.push(AddboTrain);
 	}
-	$('.inpitem').val('');
+	$('.inpitem').val(''); 
 	$('.trainObjitem input').val('');
 	$('.trainObjitem select').val('');
 	$('.FillInfo').hide();

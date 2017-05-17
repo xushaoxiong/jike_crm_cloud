@@ -20,6 +20,7 @@ $(function(){
 		dataType:'json',
 		success:function(jo){
 			server();
+			busines();
 			if(jo.state=='unLogin'){
 				pub.Alt(jo.message,true,function(){
 					$('.confirm').click(function(){
@@ -154,7 +155,15 @@ $(function(){
 		})
 	}
 	
-	
+	//判断登录人是否是商务人员
+	function busines(){
+		var businesJ={};
+		$ajax('post','user/ifBusinessRole',businesJ,function succF(jo){
+			sessionStorage.business=jo.ifBusinessRole;
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	}
 	
 	
 	
