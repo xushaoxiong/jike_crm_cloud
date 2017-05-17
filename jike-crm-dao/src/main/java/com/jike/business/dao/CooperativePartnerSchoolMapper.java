@@ -1,5 +1,9 @@
 package com.jike.business.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.jike.business.model.CooperativePartnerSchool;
 
 public interface CooperativePartnerSchoolMapper {
@@ -58,4 +62,15 @@ public interface CooperativePartnerSchoolMapper {
      * @createtime 2017年5月12日下午3:18:17
      */
     Long selectDistributeIdByCpsId(Long cooperativePartnerSchoolId);
+
+	/**
+     * 查询商机下学校数量
+     * @param schoolName
+     * @param userId
+     * @param businessOpportunityId
+     * @return
+     * @created wangyb
+     * @createtime 2017年5月17日下午5:09:37
+     */
+	List<CooperativePartnerSchool> queryCpsByCoopId(@Param("schoolName")String schoolName, @Param("businessOpportunityId")String businessOpportunityId);
 }

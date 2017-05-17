@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jike.business.BusinessOpportunityLogService;
 import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoProcessHistoryMapper;
@@ -836,6 +838,28 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		//添加新服务
 		resultJson.put("state", "success");
 		resultJson.put("message", "删除成功");
+		return resultJson;
+	}
+
+	public JSONObject queryCpsByCoopId(JSONObject queryJson) {
+		JSONObject resultJson = new JSONObject();
+		String schoolName = queryJson.getString("schoolName");
+		String businessOpportunityId = queryJson.getString("businessOpportunityId");
+		if(schoolName!=null){
+			schoolName="%"+schoolName+"%";
+		}
+		List<CooperativePartnerSchool> cspList = cooperativePartnerSchoolMapper.queryCpsByCoopId(schoolName,businessOpportunityId);
+		JSONArray cpsArr = new JSONArray();
+		if(!cspList.isEmpty()){
+			for (CooperativePartnerSchool cooperativePartnerSchool : cspList) {
+				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
+				JSONObject json =JSON.parseObject(newJsonString);
+				cpsArr.add(json);
+			}
+		}
+		resultJson.put("cpsArr", cpsArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
 		return resultJson;
 	}
 

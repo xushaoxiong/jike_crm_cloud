@@ -442,6 +442,31 @@ public class BusinessOpportunityController extends BaseController{
 		return result.toJSONString();
 	}
 	
+	/**
+	 * 查询合作伙伴下的学校
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月17日下午4:39:57
+	 */
+	@RequestMapping(value = "/queryCpsByCoopId", method ={RequestMethod.POST})
+	public @ResponseBody String queryCpsByCoopId(HttpServletRequest request, HttpSession session){
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		try {
+			String requestJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(requestJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = businessOpportunityService.queryCpsByCoopId(json);
+		} catch (IOException e) {
+			logger.error("queryCpsByCoopId error", e);
+		}
+		return result.toJSONString();
+	}
 	
 
 }
