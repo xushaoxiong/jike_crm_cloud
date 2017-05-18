@@ -1569,6 +1569,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
 				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 				JSONObject newJson =JSON.parseObject(newJsonString);
+				removeCommonAttribute(newJson);
 				JSONObject jsonJson =JSON.parseObject(json);
 				jsonJson.put("cooperativePartnerSchool",newJson);
 				json = jsonJson.toString();
@@ -1579,6 +1580,14 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			for (BoTrain boTrain : boTrainList) {
 				 String boTrainJsonStr = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
 				 JSONObject boTrainJson = JSONObject.parseObject(boTrainJsonStr);
+				 Long cooperativePartnerSchoolId = boTrain.getCooperativePartnerSchoolId();
+					if(cooperativePartnerSchoolId!=null){
+						CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+						String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
+						JSONObject newJson =JSON.parseObject(newJsonString);
+						removeCommonAttribute(newJson);
+						boTrainJson.put("cooperativePartnerSchool",newJson);
+					}
 				 removeCommonAttribute(boTrainJson);
 				 boTrainArr.add(boTrainJson);
 			}
