@@ -1038,6 +1038,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			Integer productIntroduce = boSupportJson.getInteger("productIntroduce");
 			BigDecimal salesSupportCount = boSupportJson.getBigDecimal("salesSupportCount");
 			String salesSupportDetail = boSupportJson.getString("salesSupportDetail");
+			Long cooperativePartnerSchoolId = boSupportJson.getLong("cooperativePartnerSchoolId");
 			
 			BoSupport boSupport = new BoSupport();
 			boSupport.setBusinessOpportunityId(businessOpportunityId);
@@ -1049,6 +1050,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			boSupport.setSalesSupportDetail(salesSupportDetail);
 			boSupport.setProductDemonstration(productDemonstration);
 			boSupport.setProductIntroduce(productIntroduce);
+			boSupport.setCooperativePartnerSchoolId(cooperativePartnerSchoolId);
 			boSupport.setCreateTime(nowDate);
 			boSupport.setCreateBy(jsonData.getLong("userId"));
 			boSupportMapper.insert(boSupport);
@@ -1563,6 +1565,15 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
+			Long cooperativePartnerSchoolId = boSupport.getCooperativePartnerSchoolId();
+			if(cooperativePartnerSchoolId!=null){
+				CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
+				JSONObject newJson =JSON.parseObject(newJsonString);
+				JSONObject jsonJson =JSON.parseObject(json);
+				jsonJson.putAll(newJson);
+				json = jsonJson.toString();
+			}
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
 			if("日常".equals(businessOpportunityLog.getSpecificEvent())){
 				ServiceDailyEvent serviceDailyEvent = serviceDailyEventMapper.selectByLogId(logId);
