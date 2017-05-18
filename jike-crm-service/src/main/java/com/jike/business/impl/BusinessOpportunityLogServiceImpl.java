@@ -1079,38 +1079,54 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			//保存费用
 			JSONObject totalDetail = jsonData.getJSONObject("totalDetail");
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
-			JSONObject boTrainJson = jsonData.getJSONObject("boTrain");
-			Integer operationTrainingCount = boTrainJson.getInteger("operationTrainingCount");
-			Integer correctingTrainingCount = boTrainJson.getInteger("correctingTrainingCount");
-			Integer pptDemonstratedCount = boTrainJson.getInteger("pptDemonstratedCount");
-			Integer volumeDemonstratedCount = boTrainJson.getInteger("volumeDemonstratedCount");
-			Integer markingTrainCount = boTrainJson.getInteger("markingTrainCount");
-			Integer introductionLeanCount = boTrainJson.getInteger("introductionLeanCount");
-			Integer studentParentIntroductionCount = boTrainJson.getInteger("studentParentIntroductionCount");
-			Integer examinationTrainCount = boTrainJson.getInteger("examinationTrainCount");
-			Integer sopProcessExplanationCount = boTrainJson.getInteger("sopProcessExplanationCount");
-			Integer productsIntroductionCount = boTrainJson.getInteger("productsIntroductionCount");
-			Integer operationGuidanceCount = boTrainJson.getInteger("operationGuidanceCount");
-			Integer testCoachCount = boTrainJson.getInteger("testCoachCount");
-			
-			BoTrain boTrain = new BoTrain();
-			boTrain.setBusinessOpportunityId(businessOpportunityId);
-			boTrain.setLogId(logId);
-			boTrain.setOperationTrainingCount(operationTrainingCount);
-			boTrain.setCorrectingTrainingCount(correctingTrainingCount);
-			boTrain.setPptDemonstratedCount(pptDemonstratedCount);
-			boTrain.setVolumeDemonstratedCount(volumeDemonstratedCount);
-			boTrain.setMarkingTrainCount(markingTrainCount);
-			boTrain.setIntroductionLeanCount(introductionLeanCount);
-			boTrain.setStudentParentIntroductionCount(studentParentIntroductionCount);
-			boTrain.setExaminationTrainCount(examinationTrainCount);
-			boTrain.setSopProcessExplanationCount(sopProcessExplanationCount);
-			boTrain.setProductsIntroductionCount(productsIntroductionCount);
-			boTrain.setOperationGuidanceCount(operationGuidanceCount);
-			boTrain.setTestCoachCount(testCoachCount);
-			boTrain.setCreateTime(nowDate);
-			boTrain.setCreateBy(jsonData.getLong("userId"));
-			boTrainMapper.insert(boTrain);
+			JSONArray boTrainArrJson = jsonData.getJSONArray("boTrainArr");
+			if(boTrainArrJson!=null&&!boTrainArrJson.isEmpty()){
+				
+			}
+			for (Object object : boTrainArrJson) {
+				JSONObject boTrainJson = JSONObject.parseObject(object.toString());
+				Integer operationTrainingCount = boTrainJson.getInteger("operationTrainingCount");
+				Integer correctingTrainingCount = boTrainJson.getInteger("correctingTrainingCount");
+				Integer pptDemonstratedCount = boTrainJson.getInteger("pptDemonstratedCount");
+				Integer volumeDemonstratedCount = boTrainJson.getInteger("volumeDemonstratedCount");
+				Integer markingTrainCount = boTrainJson.getInteger("markingTrainCount");
+				Integer introductionLeanCount = boTrainJson.getInteger("introductionLeanCount");
+				Integer studentParentIntroductionCount = boTrainJson.getInteger("studentParentIntroductionCount");
+				Integer examinationTrainCount = boTrainJson.getInteger("examinationTrainCount");
+				Integer sopProcessExplanationCount = boTrainJson.getInteger("sopProcessExplanationCount");
+				Integer productsIntroductionCount = boTrainJson.getInteger("productsIntroductionCount");
+				Integer operationGuidanceCount = boTrainJson.getInteger("operationGuidanceCount");
+				Integer testCoachCount = boTrainJson.getInteger("testCoachCount");
+				
+				Long cooperativePartnerSchoolId = boTrainJson.getLong("cooperativePartnerSchoolId");
+				String trainingDiscipline = boTrainJson.getString("trainingDiscipline");
+				String trainingGrade = boTrainJson.getString("trainingGrade");
+				Integer trainingTeachersCount = boTrainJson.getInteger("trainingTeachersCount");
+				
+				BoTrain boTrain = new BoTrain();
+				boTrain.setBusinessOpportunityId(businessOpportunityId);
+				boTrain.setLogId(logId);
+				boTrain.setOperationTrainingCount(operationTrainingCount);
+				boTrain.setCorrectingTrainingCount(correctingTrainingCount);
+				boTrain.setPptDemonstratedCount(pptDemonstratedCount);
+				boTrain.setVolumeDemonstratedCount(volumeDemonstratedCount);
+				boTrain.setMarkingTrainCount(markingTrainCount);
+				boTrain.setIntroductionLeanCount(introductionLeanCount);
+				boTrain.setStudentParentIntroductionCount(studentParentIntroductionCount);
+				boTrain.setExaminationTrainCount(examinationTrainCount);
+				boTrain.setSopProcessExplanationCount(sopProcessExplanationCount);
+				boTrain.setProductsIntroductionCount(productsIntroductionCount);
+				boTrain.setOperationGuidanceCount(operationGuidanceCount);
+				boTrain.setTestCoachCount(testCoachCount);
+				boTrain.setCooperativePartnerSchoolId(cooperativePartnerSchoolId);
+				boTrain.setTrainingDiscipline(trainingDiscipline);
+				boTrain.setTrainingGrade(trainingGrade);
+				boTrain.setTrainingTeachersCount(trainingTeachersCount);
+				boTrain.setCreateTime(nowDate);
+				boTrain.setCreateBy(jsonData.getLong("userId"));
+				boTrainMapper.insert(boTrain);
+				
+			}
 			
 		}
 		resultJson.put("state", "success");
@@ -1556,12 +1572,12 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 				JSONObject newJson =JSON.parseObject(newJsonString);
 				JSONObject jsonJson =JSON.parseObject(json);
-				jsonJson.putAll(newJson);
+				jsonJson.put("cooperativePartnerSchool",newJson);
 				json = jsonJson.toString();
 			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
-			BoTrain boTrain = boTrainMapper.selectBoTrainByLogId(logId);
-			json = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
+			List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByLogId(logId);
+			json = JSONObject.toJSONString(boTrainList,SerializerFeature.WriteNullStringAsEmpty);
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
@@ -1571,7 +1587,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 				JSONObject newJson =JSON.parseObject(newJsonString);
 				JSONObject jsonJson =JSON.parseObject(json);
-				jsonJson.putAll(newJson);
+				jsonJson.put("cooperativePartnerSchool",newJson);
 				json = jsonJson.toString();
 			}
 		}else if("日常事项".equals(businessOpportunityLog.getEventType())){
@@ -1871,23 +1887,23 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
-			BoTrain boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
-			if(boTrainOld==null){
-				boTrain.setCreateBy(userId);
-				boTrain.setCreateTime(nowDate);
-				boTrain.setBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
-				boTrain.setLogId(logId);
-				boTrainMapper.insert(boTrain);
-			}else{
-				boTrain.setBoTrainId(boTrainOld.getBoTrainId());
-				boTrain.setLogId(logId);
-				boTrain.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
-				boTrain.setCreateBy(boTrainOld.getCreateBy());
-				boTrain.setCreateTime(boTrainOld.getCreateTime());
-				boTrain.setUpdateBy(userId);
-				boTrain.setUpdateTime(nowDate);
-				boTrainMapper.updateByPrimaryKey(boTrain);
-			}
+			List<BoTrain> boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
+//			if(boTrainOld==null){
+//				boTrain.setCreateBy(userId);
+//				boTrain.setCreateTime(nowDate);
+//				boTrain.setBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
+//				boTrain.setLogId(logId);
+//				boTrainMapper.insert(boTrain);
+//			}else{
+//				boTrain.setBoTrainId(boTrainOld.getBoTrainId());
+//				boTrain.setLogId(logId);
+//				boTrain.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
+//				boTrain.setCreateBy(boTrainOld.getCreateBy());
+//				boTrain.setCreateTime(boTrainOld.getCreateTime());
+//				boTrain.setUpdateBy(userId);
+//				boTrain.setUpdateTime(nowDate);
+//				boTrainMapper.updateByPrimaryKey(boTrain);
+//			}
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
 			BoSupport boSupportOld = boSupportMapper.selectBoSupportByLogId(logId);
