@@ -1081,8 +1081,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			this.createBoFeeDatail(logId,jsonData, nowDate, totalDetail);
 			JSONArray boTrainArrJson = jsonData.getJSONArray("boTrainArr");
 			if(boTrainArrJson!=null&&!boTrainArrJson.isEmpty()){
-				
-			}
 			for (Object object : boTrainArrJson) {
 				JSONObject boTrainJson = JSONObject.parseObject(object.toString());
 				Integer operationTrainingCount = boTrainJson.getInteger("operationTrainingCount");
@@ -1127,7 +1125,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boTrainMapper.insert(boTrain);
 				
 			}
-			
+			}
 		}
 		resultJson.put("state", "success");
 		resultJson.put("message", "添加成功");
@@ -1571,13 +1569,31 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
 				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 				JSONObject newJson =JSON.parseObject(newJsonString);
+				removeCommonAttribute(newJson);
 				JSONObject jsonJson =JSON.parseObject(json);
 				jsonJson.put("cooperativePartnerSchool",newJson);
 				json = jsonJson.toString();
 			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByLogId(logId);
-			json = JSONObject.toJSONString(boTrainList,SerializerFeature.WriteNullStringAsEmpty);
+			JSONArray boTrainArr = new JSONArray();
+			for (BoTrain boTrain : boTrainList) {
+				 String boTrainJsonStr = JSONObject.toJSONString(boTrain,SerializerFeature.WriteNullStringAsEmpty);
+				 JSONObject boTrainJson = JSONObject.parseObject(boTrainJsonStr);
+				 Long cooperativePartnerSchoolId = boTrain.getCooperativePartnerSchoolId();
+					if(cooperativePartnerSchoolId!=null){
+						CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+						String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
+						JSONObject newJson =JSON.parseObject(newJsonString);
+						removeCommonAttribute(newJson);
+						boTrainJson.put("cooperativePartnerSchool",newJson);
+					}
+				 removeCommonAttribute(boTrainJson);
+				 boTrainArr.add(boTrainJson);
+			}
+			JSONObject jsonJson =JSON.parseObject(json);
+			jsonJson.put("boTrainArr", boTrainArr);
+			json = jsonJson.toJSONString();
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = boSupportMapper.selectBoSupportByLogId(logId);
 			json = JSONObject.toJSONString(boSupport,SerializerFeature.WriteNullStringAsEmpty);
@@ -1586,6 +1602,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
 				String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 				JSONObject newJson =JSON.parseObject(newJsonString);
+				removeCommonAttribute(newJson);
 				JSONObject jsonJson =JSON.parseObject(json);
 				jsonJson.put("cooperativePartnerSchool",newJson);
 				json = jsonJson.toString();
@@ -1886,24 +1903,20 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boCustomerServiceMapper.updateByPrimaryKey(boCustomerService);
 			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
-			BoTrain boTrain = commonJson.toJavaObject(BoTrain.class);
-			List<BoTrain> boTrainOld = boTrainMapper.selectBoTrainByLogId(logId);
-//			if(boTrainOld==null){
-//				boTrain.setCreateBy(userId);
-//				boTrain.setCreateTime(nowDate);
-//				boTrain.setBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
-//				boTrain.setLogId(logId);
-//				boTrainMapper.insert(boTrain);
-//			}else{
-//				boTrain.setBoTrainId(boTrainOld.getBoTrainId());
-//				boTrain.setLogId(logId);
-//				boTrain.setBusinessOpportunityId(businessOpportunityLog.getBusinessOpportunityId());
-//				boTrain.setCreateBy(boTrainOld.getCreateBy());
-//				boTrain.setCreateTime(boTrainOld.getCreateTime());
-//				boTrain.setUpdateBy(userId);
-//				boTrain.setUpdateTime(nowDate);
-//				boTrainMapper.updateByPrimaryKey(boTrain);
-//			}
+			//删除以前培训
+			boTrainMapper.deleteByLogId(logId);
+			JSONArray boTrainArrJson = commonJson.getJSONArray("boTrainArr");
+			if(boTrainArrJson!=null&&!boTrainArrJson.isEmpty()){
+				for (Object object : boTrainArrJson) {
+					JSONObject boTrainJson = JSONObject.parseObject(object.toString());
+					BoTrain boTrain = boTrainJson.toJavaObject(BoTrain.class);
+					boTrain.setCreateBy(userId);
+					boTrain.setCreateTime(nowDate);
+					boTrain.setBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
+					boTrain.setLogId(logId);
+					boTrainMapper.insert(boTrain);
+				}
+			}
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
 			BoSupport boSupport = commonJson.toJavaObject(BoSupport.class);
 			BoSupport boSupportOld = boSupportMapper.selectBoSupportByLogId(logId);

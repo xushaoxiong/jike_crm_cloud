@@ -42,4 +42,6 @@ public interface BoTrainMapper {
 	int updateByPrimaryKey(BoTrain record);
 
 	List<BoTrain> selectBoTrainByLogId(Long logId);
+
+	void deleteByLogId(Long logId);
 }

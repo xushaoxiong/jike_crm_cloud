@@ -357,4 +357,8 @@
     from bo_train
     where log_id = #{logId,jdbcType=BIGINT}
   </select>
+  <delete id="deleteByLogId" parameterType="java.lang.Long">
+    delete from bo_train
+    where log_id = #{logId,jdbcType=BIGINT}
+  </delete>
 </mapper>
