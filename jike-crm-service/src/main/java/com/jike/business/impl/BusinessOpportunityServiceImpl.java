@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,9 @@ import com.jike.business.BusinessOpportunityService;
 import com.jike.business.dao.BoProcessHistoryMapper;
 import com.jike.business.dao.BusinessOpportunityMapper;
 import com.jike.business.dao.CityAreaCodeMapper;
+import com.jike.business.dao.CooperativePartnerSchoolLogMapper;
 import com.jike.business.dao.CooperativePartnerSchoolMapper;
+import com.jike.business.dao.CooperativePartnerSchoolServiceLogMapper;
 import com.jike.business.dao.CooperativePartnerSchoolServiceMapper;
 import com.jike.business.dao.SaleBusinessOpportunityMapper;
 import com.jike.business.dao.ServiceBusinessOpportunityMapper;
@@ -30,7 +33,9 @@ import com.jike.business.model.BoProcessHistory;
 import com.jike.business.model.BusinessOpportunity;
 import com.jike.business.model.BusinessOpportunityLog;
 import com.jike.business.model.CooperativePartnerSchool;
+import com.jike.business.model.CooperativePartnerSchoolLog;
 import com.jike.business.model.CooperativePartnerSchoolService;
+import com.jike.business.model.CooperativePartnerSchoolServiceLog;
 import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
@@ -58,7 +63,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Autowired
 	private CooperativePartnerSchoolMapper cooperativePartnerSchoolMapper;
 	@Autowired
+	private CooperativePartnerSchoolLogMapper cooperativePartnerSchoolLogMapper;
+	@Autowired
 	private CooperativePartnerSchoolServiceMapper cooperativePartnerSchoolServiceMapper;
+	@Autowired
+	private CooperativePartnerSchoolServiceLogMapper cooperativePartnerSchoolServiceLogMapper;
 	
 
 	@Transactional
@@ -795,6 +804,10 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "没有权限");
 			return resultJson;
 		}
+		
+		//备份历史服务和学校信息
+		this.saveCooperLog(cooperativePartnerSchool.getCooperativePartnerSchoolId());
+		//更新
 		CooperativePartnerSchool cooperativePartnerSchoolOld = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 		cooperativePartnerSchool.setBusinessOpportunityId(cooperativePartnerSchoolOld.getBusinessOpportunityId());
 		cooperativePartnerSchool.setCreateTime(cooperativePartnerSchoolOld.getCreateTime());
@@ -831,6 +844,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "没有权限");
 			return resultJson;
 		}
+		//备份历史服务和学校信息
+		this.saveCooperLog(cooperativePartnerSchoolId);
 		//删除以前的服务
 		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchoolId);
 		//删除学校
@@ -839,6 +854,21 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		resultJson.put("state", "success");
 		resultJson.put("message", "删除成功");
 		return resultJson;
+	}
+
+	private void saveCooperLog(Long cooperativePartnerSchoolId) {
+		List<CooperativePartnerSchoolService> serviceList = cooperativePartnerSchoolServiceMapper.selectByCpsId(cooperativePartnerSchoolId);
+		if(!serviceList.isEmpty()){
+			for (CooperativePartnerSchoolService cooperativePartnerSchoolService : serviceList) {
+				CooperativePartnerSchoolServiceLog cooperativePartnerSchoolServiceLog = new CooperativePartnerSchoolServiceLog();
+				BeanUtils.copyProperties(cooperativePartnerSchoolService, cooperativePartnerSchoolServiceLog);
+				cooperativePartnerSchoolServiceLogMapper.insert(cooperativePartnerSchoolServiceLog);
+			}
+		}
+		CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
+		CooperativePartnerSchoolLog cooperativePartnerSchoolLog = new CooperativePartnerSchoolLog();
+		BeanUtils.copyProperties(cooperativePartnerSchool,cooperativePartnerSchoolLog);
+		cooperativePartnerSchoolLogMapper.insert(cooperativePartnerSchoolLog);
 	}
 
 	public JSONObject queryCpsByCoopId(JSONObject queryJson) {
