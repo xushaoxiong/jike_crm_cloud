@@ -1591,7 +1591,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				 removeCommonAttribute(boTrainJson);
 				 boTrainArr.add(boTrainJson);
 			}
-			JSONObject jsonJson =JSON.parseObject(json);
+			JSONObject jsonJson =new JSONObject();
 			jsonJson.put("boTrainArr", boTrainArr);
 			json = jsonJson.toJSONString();
 		}else if("支持".equals(businessOpportunityLog.getEventType())){
