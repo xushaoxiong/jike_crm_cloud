@@ -91,5 +91,5 @@ public interface SalesLeaderMapper {
 	 * @created wangyb
 	 * @createtime 2017年5月17日上午10:00:33
 	 */
-	List<SalesLeader> selectByManagedUserId(JSONArray managedUserIds);
+	List<SalesLeader> selectByManagedUserId(@Param("managedUserIds")List<Long> managedUserIds);
 }

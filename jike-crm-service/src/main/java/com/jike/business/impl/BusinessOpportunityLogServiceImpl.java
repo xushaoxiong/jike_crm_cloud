@@ -1910,9 +1910,10 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
 			//备份历史
 			List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByLogId(logId);
+			Long cooperativePartnerSchoolId = boTrainList.get(0).getCooperativePartnerSchoolId();
 			for (BoTrain boTrain : boTrainList) {
 				BoTrainLog boTrainLog = new BoTrainLog(); 
-				BeanUtils.copyProperties(boTrain, boTrainLog);
+				BeanUtils.copyProperties(boTrain, boTrainLog,"boTrainId");
 				boTrainLogMapper.insert(boTrainLog);
 			}
 			//删除以前培训
@@ -1926,6 +1927,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					boTrain.setCreateTime(nowDate);
 					boTrain.setBusinessOpportunityId(businessOpportunityLogOld.getBusinessOpportunityId());
 					boTrain.setLogId(logId);
+					boTrain.setCooperativePartnerSchoolId(cooperativePartnerSchoolId);
 					boTrainMapper.insert(boTrain);
 				}
 			}

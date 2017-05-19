@@ -867,13 +867,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		if(!serviceList.isEmpty()){
 			for (CooperativePartnerSchoolService cooperativePartnerSchoolService : serviceList) {
 				CooperativePartnerSchoolServiceLog cooperativePartnerSchoolServiceLog = new CooperativePartnerSchoolServiceLog();
-				BeanUtils.copyProperties(cooperativePartnerSchoolService, cooperativePartnerSchoolServiceLog);
+				BeanUtils.copyProperties(cooperativePartnerSchoolService, cooperativePartnerSchoolServiceLog,"cpsServiceId");
 				cooperativePartnerSchoolServiceLogMapper.insert(cooperativePartnerSchoolServiceLog);
 			}
 		}
 		CooperativePartnerSchool cooperativePartnerSchool = cooperativePartnerSchoolMapper.selectByPrimaryKey(cooperativePartnerSchoolId);
 		CooperativePartnerSchoolLog cooperativePartnerSchoolLog = new CooperativePartnerSchoolLog();
-		BeanUtils.copyProperties(cooperativePartnerSchool,cooperativePartnerSchoolLog);
+		BeanUtils.copyProperties(cooperativePartnerSchool,cooperativePartnerSchoolLog,"cooperativePartnerSchoolId");
 		cooperativePartnerSchoolLogMapper.insert(cooperativePartnerSchoolLog);
 	}
 

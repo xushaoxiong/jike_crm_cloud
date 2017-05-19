@@ -1,5 +1,6 @@
 package com.jike.user.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -260,7 +261,11 @@ public class UserServiceImpl implements UserService {
 			return resultJson;
 		}
 		//查询被管理是否已存在
-		List<SalesLeader> salesManageList = salesLeaderMapper.selectByManagedUserId(managedUserIds);
+		List<Long> managedUserIdList = new ArrayList<Long>();
+		for (Object managedIdObj : managedUserIds) {
+			managedUserIdList.add(Long.parseLong(managedIdObj.toString()));
+		}
+		List<SalesLeader> salesManageList = salesLeaderMapper.selectByManagedUserId(managedUserIdList);
 		if(!salesManageList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "被管理者已分配其他销售管理");

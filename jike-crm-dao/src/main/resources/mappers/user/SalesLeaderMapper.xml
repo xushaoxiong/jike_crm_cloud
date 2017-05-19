@@ -196,9 +196,9 @@
     <include refid="Base_Column_List" />
     from sales_leader
     where managed_user_id in
-    <foreach item="item" index="index" collection="managedUserIds" open="("  
+   <foreach item="item" index="index" collection="managedUserIds" open="("  
                 separator="," close=")">  
                 #{item}  
-    </foreach> 
+   </foreach> 
   </select>
 </mapper>
