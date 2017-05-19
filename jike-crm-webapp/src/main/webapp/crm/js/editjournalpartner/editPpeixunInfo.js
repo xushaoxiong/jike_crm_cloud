@@ -164,12 +164,12 @@ function trainsaveLiat(addTraindata){
 	var TraSaveHtml='';
 	console.log(addTraindata)
 	$.each(addTraindata, function(i,item) {
+		console.log(item)
 		var cooperativePartnerSchool=item.cooperativePartnerSchool;
-		console.log(cooperativePartnerSchool)
 		TraSaveHtml+='<div class="AddtrainItem">';
 			TraSaveHtml+='<ul class="list-inline">';
 				TraSaveHtml+='<li>'+(i+1)+'</li>';
-				TraSaveHtml+='<li><label>培训对象：</label><span class="AddTrainObjname" scolid="'+cooperativePartnerSchool.cooperativePartnerscolid+'">'+cooperativePartnerSchool.schoolName+'</span></li>';
+				TraSaveHtml+='<li><label>培训对象：</label><span class="AddTrainObjname" scolid="'+item.cooperativePartnerscolId+'">'+cooperativePartnerSchool.schoolName+'</span></li>';
 				TraSaveHtml+='<li><label>培训学科：</label><span class="AddTrainObjDiscipline">'+item.trainingDiscipline+'</span></li>';
 				TraSaveHtml+='<li><label>培训年级：</label><span class="AddTrainObjGrade">'+item.trainingGrade+'</span></li>';
 				TraSaveHtml+='<li><label>培训教师数量：</label><span class="AddTrainObjNumb">'+item.trainingTeachersCount+'</span></li>';
@@ -179,6 +179,8 @@ function trainsaveLiat(addTraindata){
 	});
 	
 	$('.Addtrain-wap').html(TraSaveHtml);
+	$('.trainObjName').attr('scolid',$('.AddTrainObjname').attr('scolid'));
+	$('.trainObjName').html($('.AddTrainObjname').html());
 }
 
 //信息赋值
@@ -229,8 +231,8 @@ function editTrainInfo(boTrain){
 	$('.inp10').val(boTrain.productsIntroductionCount);
 	$('.inp11').val(boTrain.operationGuidanceCount);
 	$('.inp12').val(boTrain.testCoachCount);
-	$('.trainObjitem').eq(0).find('span').html(cooperativePartnerSchool.schoolName);
-	$('.trainObjitem').eq(0).find('span').attr('scolid',cooperativePartnerSchool.cooperativePartnerscolid);
+//	$('.trainObjitem').eq(0).find('span').html(cooperativePartnerSchool.schoolName);
+//	$('.trainObjitem').eq(0).find('span').attr('scolid'.cooperativePartnerscolId);
 	$('.trainObjitem').eq(1).find('select').val(boTrain.trainingDiscipline);
 	$('.trainObjitem').eq(2).find('select').val(boTrain.trainingGrade);
 	$('.trainObjitem').eq(3).find('input').val(boTrain.trainingTeachersCount);
@@ -286,7 +288,6 @@ function trainsave(_this){
 		trainsaveLiat(commJ.boTrainArr);
 	}else{
 		commJ.boTrainArr[trainsaveId]=AddboTrain;
-//		AddboTrain.cooperativePartnerSchool=
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.schoolName);
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainingDiscipline);
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainingGrade);
@@ -336,7 +337,7 @@ function infodetail(boTrain){
 	boTrain.productsIntroductionCount=$('.inp10').val();
 	boTrain.operationGuidanceCount=$('.inp11').val();
 	boTrain.testCoachCount=$('.inp12').val();
-	cooperativePartnerSchool.cooperativePartnerscolid=$('.trainObjitem').eq(0).find('span').attr('scolid');
+	boTrain.cooperativePartnerscolId=$('.trainObjitem').eq(0).find('span').attr('scolid');
 	cooperativePartnerSchool.schoolName=$('.trainObjitem').eq(0).find('span').html();
 	boTrain.trainingDiscipline=$('.trainObjitem').eq(1).find('select').val();
 	boTrain.trainingGrade=$('.trainObjitem').eq(2).find('select').val();
@@ -395,8 +396,9 @@ function trainConfirm(){
 		return;
 	}
 	var AddboTrain={};
-	infodetail(commJ.boTrainArr)
-	$('.Addtrain-wap').show();
+	infodetail(AddboTrain)
+	console.log(AddboTrain)
+//	$('.Addtrain-wap').show();
 	if(trainsaveId!=="00"){
 		commJ.boTrainArr[trainsaveId]=AddboTrain;
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.schoolName);
@@ -408,7 +410,10 @@ function trainConfirm(){
 		if(!addtrainstate()&&commJ.boTrainArr.length!=0){
 			$('.alertdiv').hide();	
 		}else{
+			commJ.boTrainArr.push(AddboTrain);
 			trainsaveLiat(commJ.boTrainArr);
+			
+			
 		}
 	}
 	$('.inpitem').val(''); 

@@ -423,20 +423,19 @@ $.each(eventJson2.evenList, function(i,item) {
 					$('.editInfo').html(trainiHtml());
 					
 						$.each(jo.commonJson.boTrainArr, function(i,item) {
-							if(item.cooperativePartnerSchool==undefined){
+							if(item.cooperativePartnerSchool==undefined&&opptypeid==1){
 								$('.trainsave').hide();
 								$('.trainObjstate').attr('disabled',true);
 								$('.trainObjName').attr('scolid','');
 								$('.trainObjName').html(jo.businessOpportunityLogJson.businessOpportunityName);
 								traindata(item);
-								
 							}else{
 								$('.trainsave').show();
 								$('.trainObjstate').attr('disabled',false);
 								$('.Addtrain-wap').show();
 								trainsaveLiat(jo.commonJson.boTrainArr);
 								$('.trainObjName').attr('scolid',item.cooperativePartnerSchoolId);
-								$('.trainObjName').html(item.cooperativePartnerSchool.schoolName);
+								$('.trainObjName').html(item.schoolName);
 							}
 						});
 					
