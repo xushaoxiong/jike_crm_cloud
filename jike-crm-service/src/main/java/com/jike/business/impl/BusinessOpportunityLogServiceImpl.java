@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ import com.jike.business.dao.BoPaymentMapper;
 import com.jike.business.dao.BoPurchaseMapper;
 import com.jike.business.dao.BoSignMapper;
 import com.jike.business.dao.BoSupportMapper;
+import com.jike.business.dao.BoTrainLogMapper;
 import com.jike.business.dao.BoTrainMapper;
 import com.jike.business.dao.BoTrialReusltMapper;
 import com.jike.business.dao.BoVisitMapper;
@@ -53,6 +55,7 @@ import com.jike.business.model.BoPurchase;
 import com.jike.business.model.BoSign;
 import com.jike.business.model.BoSupport;
 import com.jike.business.model.BoTrain;
+import com.jike.business.model.BoTrainLog;
 import com.jike.business.model.BoTrialReuslt;
 import com.jike.business.model.BoVisit;
 import com.jike.business.model.BoVisitPlan;
@@ -123,6 +126,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private SaleBusinessOpportunityMapper saleBusinessOpportunityMapper;
 	@Autowired
 	private CooperativePartnerSchoolMapper cooperativePartnerSchoolMapper;
+	@Autowired
+	private BoTrainLogMapper  boTrainLogMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -1903,6 +1908,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				boCustomerServiceMapper.updateByPrimaryKey(boCustomerService);
 			}
 		}else if("培训".equals(businessOpportunityLog.getEventType())){
+			//备份历史
+			List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByLogId(logId);
+			for (BoTrain boTrain : boTrainList) {
+				BoTrainLog boTrainLog = new BoTrainLog(); 
+				BeanUtils.copyProperties(boTrain, boTrainLog);
+				boTrainLogMapper.insert(boTrainLog);
+			}
 			//删除以前培训
 			boTrainMapper.deleteByLogId(logId);
 			JSONArray boTrainArrJson = commonJson.getJSONArray("boTrainArr");
