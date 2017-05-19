@@ -2,6 +2,14 @@ function supportHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled">';
 		negHtml+='<li>';
+			negHtml+='<label class="col-sm-2">售后对象：</label>';
+			if(tdata.cooperativePartnerSchool!=undefined){
+				negHtml+='<span class="colSp">'+tdata.cooperativePartnerSchool.schoolName+'</span>';
+			}else{
+				negHtml+='<span class="colSp afterObjName"></span>';
+			}
+		negHtml+='</li>';
+		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">开通学校账号：</label>';
 			if(tdata.accountOpenCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.accountOpenCount+'次</span>';
@@ -25,6 +33,14 @@ function supportHtml(tdata){
 function supportpanerHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled supportStyle">';
+		negHtml+='<li>';
+			negHtml+='<label class="col-sm-2">售后对象：</label>';
+			if(tdata.schoolName!=undefined){
+				negHtml+='<span class="colSp">'+tdata.schoolName+'</span>';
+			}else{
+				negHtml+='<span class="colSp afterObjName"></span>';
+			}
+		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">开通学校账号：</label>';
 			if(tdata.accountOpenCount!=undefined){
@@ -70,6 +86,14 @@ function supportpanerHtml(tdata){
 function supportserverHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled serverSupStyle">';
+		negHtml+='<li>';
+			negHtml+='<label class="col-sm-2">售后对象：</label>';
+			if(tdata.schoolName!=undefined){
+				negHtml+='<span class="colSp">'+tdata.schoolName+'</span>';
+			}else{
+				negHtml+='<span class="colSp afterObjName"></span>';
+			}
+		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label class="col-sm-2">开通学校账号：</label>';
 			if(tdata.accountOpenCount!=undefined){

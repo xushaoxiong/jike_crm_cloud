@@ -97,26 +97,30 @@ $(function(){
 		$('.L-list-item').find('li[menuid=7]').addClass('menuCheck');
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var specEvent=$('.specEvent').val();
-		infodetail(commonJson);
+		
 		editLogDateF(businessOpportunityLogJson);
 		editTotalDetailF(boFeeDetailJson);
 		jourInJ.businessOpportunityLogJson=businessOpportunityLogJson;
 		jourInJ.boFeeDetailJson=boFeeDetailJson;
 		if(opptypeid==1&&specEvent=="达成合作意向"){
+			infodetail(commonJson);
 			var cooperationDetails={};
 			copratInfo(cooperationDetails)
-			jourInJ.commonJson=commonJson;
 			jourInJ.commonJson.cooperationDetails=cooperationDetails;
-		}else{
-			jourInJ.commonJson=commonJson;
-		}
+		}else if(specEvent=='培训'){
+			var boTrainArr=[];
+			commonJson.boTrainArr=commJ.boTrainArr;
 		
+		}else{
+			infodetail(commonJson);
+			
+		}
+		jourInJ.commonJson=commonJson;
 		$ajax('post','businessOpportunityLog/updateBOLog',jourInJ,function succF(jo){
 			$('.R-wap').show();
 			$('.threloadWap').hide();
 			
 			var parentsTd=$('.Operatwap[logid="'+logid+'"]').parents('tr');
-			console.log($('.innerPerson').val())
 			parentsTd.find('.jourTime').html($('#indat').html());
 			parentsTd.find('.jourinnerPeop span').html($('.innerPerson').val());
 			parentsTd.find('.jourouterPeop span').html($('.outPerson').val());

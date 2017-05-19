@@ -17,7 +17,7 @@ function trainiHtml(){
 			trainiHtml+='<div class="col-sm-3 form-group trainObjitem">';
 				trainiHtml+='<label class="col-sm-2">培训对象</label>';
 				trainiHtml+='<div class="col-sm-6">';
-					trainiHtml+='<span class="form-control" style="width:150%;" onclick="panterScolwap($(this))"><span>';
+					trainiHtml+='<span class="form-control trainObjName" style="width:150%;" onclick="panterScolwap($(this))"></span>';
 				trainiHtml+='</div>';
 			trainiHtml+='</div>';
 			trainiHtml+='<div class="col-sm-3 form-group trainObjitem" style="padding-left:3%!important">';
@@ -173,111 +173,104 @@ function trainInfo(boTrain){
 	boTrain.productsIntroductionCount=$('.inp10').val();
 	boTrain.operationGuidanceCount=$('.inp11').val();
 	boTrain.testCoachCount=$('.inp12').val();
-	
-	
 }
 
 function AddtrainInfo(boTrain){
+	boTrain.cooperativePartnerSchoolId=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').attr('schoolid');
 	boTrain.trainObjName=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').html();
-	boTrain.trainObjDiscipline=$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val();
-	boTrain.trainObjGrade=$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val();
-	boTrain.trainObjNumb=$('.trainObjitem:not(".trainobjectItemHide")').eq(3).find('input').val();
-	if(boTrain.trainObjName==undefined){
-		boTrain.trainObjName='';
-	}
-	if(boTrain.trainObjDiscipline==undefined){
+	boTrain.trainingDiscipline=$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val();
+	boTrain.trainingGrade=$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val();
+	boTrain.trainingTeachersCount=$('.trainObjitem:not(".trainobjectItemHide")').eq(3).find('input').val();
+//	if(boTrain.trainObjName==undefined){
+//		boTrain.trainObjName='';
+//	}
+	if(boTrain.trainingDiscipline==undefined){
 		boTrain.trainObjDiscipline='';
 	}
-	if(boTrain.trainObjGrade==undefined){
+	if(boTrain.trainingGrade==undefined){
 		boTrain.trainObjGrade='';
 	}
-	if(boTrain.trainObjNumb==undefined){
+	if(boTrain.trainingTeachersCount==""){
 		boTrain.trainObjNumb='';
 	}
 	
 	
 }
 //合作伙伴关联的学校列表
-function panterScolwap(_this){
-	$('.panterScolItem').html('');
-		var bussinesNameJ={};
-		var businessOpportunityName="";
-		var eventType=$('#eventType').find('option:selected').val();
-		bussinesNameJ.businessOpportunityName=businessOpportunityName;
-		bussinesNameJ.eventType=eventType;
-		$('.panterScolwap').modal('toggle');
-		var trainobjid=_this.attr('trainobjid');
-		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
-			panterScolList(jo.businessOpportunityList);
-			$.each(jo.businessOpportunityList,function(i,item){
-				if(item.businessOpportunityId==trainobjid){
-					$('.panterScolItem .businesName[businessopptunityid="'+trainobjid+'"]').prev().addClass('businesscheck');
-				}
-			})
+var bussinesNameJ={};
+	function panterScolwap(_this){
+		$('.panterScolSaleAfteItem').html('');
+		var schoolName="";
+		var businessOpportunityId=_this.attr('trainobjid');
+		bussinesNameJ.schoolName=schoolName;
+		bussinesNameJ.businessOpportunityId=businessOpportunityId;
+		$('.panterScolSaleAfterwap').modal('toggle');
+		queryCpsByCoAjax();
+	}
+	function queryCpsByCoAjax(){
+		var trainobjid=$('.trainObjName').attr('schoolid');
+		$ajax('post','businessOpportunity/queryCpsByCoopId',bussinesNameJ,function succF(jo){
+			panterScolList(jo.cpsArr);
+			$('.schoolName[schoolid="'+trainobjid+'"]').prev().addClass('businesscheck');
 		},function errF(jo){
-			
+			pub.Alt(jo.message,false);
 		})
-}
-function panterScolList(businessOppList){
-	var html="";
-	$.each(businessOppList, function(i,item) {
-		html+='<tr>';
-			html+='	<td class="businesscheckimg"></td>';
-			html+='	<td class=" businesName" businessOpptunityId="'+item.businessOpportunityId+'">'+item.businessOpportunityName+'</td>';
-			html+='	<td class=" businesNumb">'+item.businessOpportunityNum+'</td>';
-			if(item.businessOpportunityType==0){
-				html+='	<td oppridtype="0" class="opprtype">学校</td>';
-			}else{
-				html+='	<td oppridtype="1" class="opprtype">合作伙伴</td>';
-			}
-			
-			html+='	<td>'+item.businessOpportunityProcess+'</td>';
-			html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCounty+''+item.addressDetail+'</td>';
-		html+='	</tr>';
-	});
-	$('.panterScolItem').html(html);
-		
-}
+	}
+	function panterScolList(businessOppList){
+		var html="";
+		$.each(businessOppList, function(i,item) {
+			html+='<tr>';
+				html+='	<td class="businesscheckimg"></td>';
+				html+='	<td class=" schoolName" schoolid="'+item.cooperativePartnerSchoolId+'">'+item.schoolName+'</td>';
+				html+='	<td class=" schoolLevel">'+item.schoolLevel+'</td>';
+				html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'</td>';
+			html+='	</tr>';
+		});
+		$('.panterScolSaleAfteItem').html(html);	
+	}
 //选择学校
-$('.panterScolItem').on('click','tr',function(){
-	if($(this).find('.businesscheckimg').hasClass('businesscheck')){
-		$(this).find('.businesscheckimg').removeClass('businesscheck');
-	}else{
-		$('.businesscheckimg').removeClass('businesscheck');
-		$(this).find('.businesscheckimg').addClass('businesscheck');
-	}
-})
-$('.panterScolConfirm').click(function(){
-	$('.panterScolwap').modal('hide');
-	var trainObjName=$('.businesscheck').next().html();
-	var businesid=$('.businesscheck').next().attr('businessopptunityid');
-	var trainObjhtml=$('.trainObjitem:first').find('span').html();
-	if(trainObjName!=trainObjhtml){
-		$('.trainObjitem').removeClass('trainobjectItemHide');
-		$('.trainsave').show();
-	}else{
-		$('.trainObjitem:not(:first)').addClass('trainobjectItemHide');
-		$('.trainsave').hide();
-	}
-	if(businesid==undefined){
-		$('.trainObjitem:not(:first)').addClass('trainobjectItemHide');
-		$('.trainObjitem:first').find('span').html($('.businessNameSp').html());
-		businesid=$('.businessNameSp').attr('businessopptunityid');
-		$('.trainObjitem:first').find('span').attr('trainObjid',businesid);
-	}else{
-		$('.trainObjitem:first').find('span').attr('trainObjid',businesid);
-		$('.trainObjitem:first').find('span').html(trainObjName);
-	}
-	
-	
-	
-	
-})
+
+//搜索
+	$('.aftetSearch').click(function(){
+		var businessOpportunityId=$('.trainObjName').attr('trainobjid');
+		bussinesNameJ.schoolName=$.trim($('.aftetSearchInp').val());
+		bussinesNameJ.businessOpportunityId=businessOpportunityId;
+		queryCpsByCoAjax();
+	})
+	//选择售后对象
+	$('.panterScolSaleAfteItem').on('click','tr',function(){
+		if($(this).find('.businesscheckimg').hasClass('businesscheck')){
+			$(this).find('.businesscheckimg').removeClass('businesscheck');
+		}else{
+			$('.businesscheckimg').removeClass('businesscheck');
+			$(this).find('.businesscheckimg').addClass('businesscheck');
+		}
+		
+	})
+	//选择售后对象确定
+	$('.panterScolConfirm').click(function(){
+		var schoolName=$('.businesscheck').parent('tr').find('.schoolName').html();
+		var schoolid=$('.businesscheck').parent('tr').find('.schoolName').attr('schoolid');
+		if(schoolid==undefined){
+			$('.trainObjName').html(schoolName);
+			$('.trainObjName').attr('schoolid','');
+			$('.trainObjName').html($('.businessNameSp').html());
+			$('.trainsave').hide();
+			$('.trainObjitem:not(:first)').addClass('trainobjectItemHide');
+		}else{
+			$('.trainObjName').html(schoolName);
+			$('.trainObjName').attr('schoolid',schoolid);
+			$('.trainObjitem').removeClass('trainobjectItemHide');
+			$('.trainsave').show();
+		}
+		$('.panterScolSaleAfterwap').modal('hide');
+		
+	})
 //保存并添加
 //未填写新增信息内容判断
 function addtrainstate(){
 	var inparry=[];
-	var trainObjName=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').html();
+//	var trainObjName=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').attr('schoolid');
 	var trainObjDiscipline=$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val();
 	var trainObjGrade=$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val();
 	var trainObjNumb=$('.trainObjitem:not(".trainobjectItemHide")').eq(3).find('input').val();
@@ -306,10 +299,13 @@ function addtrainstate(){
 	return true;
 }
 var addTrainObjArry=[];
+//添加保存按钮
 function trainsave(_this){
 	if(!addtrainstate()){
 		return;
 	}
+	$('.trainObjName').attr('disabled',true);
+	$('.trainObjName').removeAttr('onclick');
 	$('.Addtrain-wap').show();
 	var AddboTrain={};
 	var trainsaveId=_this.attr('addId');
@@ -321,10 +317,11 @@ function trainsave(_this){
 	}else{
 		addTrainObjArry[trainsaveId]=AddboTrain;
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.trainObjName);
-		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainObjDiscipline);
-		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainObjGrade);
-		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjNumb').html(AddboTrain.trainObjNumb);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainingDiscipline);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainingGrade);
+		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjNumb').html(AddboTrain.trainingTeachersCount);
 	}
+	
 	$('.inpitem').val('');
 	$('.trainObjitem input').val('');
 	$('.trainObjitem select').val('');
@@ -341,9 +338,9 @@ function trainsaveLiat(addTraindata){
 		TraSaveHtml+='<ul class="list-inline">';
 			TraSaveHtml+='<li>'+(addTrainIndex+1)+'</li>';
 			TraSaveHtml+='<li><label>培训对象：</label><span class="AddTrainObjname">'+addTraindata.trainObjName+'</span></li>';
-			TraSaveHtml+='<li><label>培训学科：</label><span class="AddTrainObjDiscipline">'+addTraindata.trainObjDiscipline+'</span></li>';
-			TraSaveHtml+='<li><label>培训年级：</label><span class="AddTrainObjGrade">'+addTraindata.trainObjGrade+'</span></li>';
-			TraSaveHtml+='<li><label>培训教师数量：</label><span class="AddTrainObjNumb">'+addTraindata.trainObjNumb+'</span></li>';
+			TraSaveHtml+='<li><label>培训学科：</label><span class="AddTrainObjDiscipline">'+addTraindata.trainingDiscipline+'</span></li>';
+			TraSaveHtml+='<li><label>培训年级：</label><span class="AddTrainObjGrade">'+addTraindata.trainingGrade+'</span></li>';
+			TraSaveHtml+='<li><label>培训教师数量：</label><span class="AddTrainObjNumb">'+addTraindata.trainingTeachersCount+'</span></li>';
 			TraSaveHtml+='<li><a class="cursorm" onclick="editTrainObj($(this))">编辑</a><a class="cursorm" onclick="delTrainObj($(this))">删除</a></li>';
 		TraSaveHtml+='</ul>';
 	TraSaveHtml+='</div>';
@@ -366,7 +363,6 @@ function editTrainInfo(boTrain){
 	
 	
 }
-
 function editAddTrainInfo(boTrain){
 	$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').html(boTrain.trainObjName);
 	$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val(boTrain.trainObjDiscipline);
@@ -387,8 +383,11 @@ function editTrainObj(_this){
 }
 //删除新增信息内容
 function delTrainObj(_this){
-	console.log(addTrainObjArry)
 	var delIndex=_this.parents('.AddtrainItem').index();
+	var Indexlength=_this.parents('.AddtrainItem').length;
+	$('input,select').val('');
+	$('.trainObjName').html('');
+	$('.trainsave').attr('addId',(Indexlength-1));
 	$.each(addTrainObjArry,function(i,item){
 		if(i==delIndex){
 			addTrainObjArry.splice(delIndex,1);
@@ -396,6 +395,8 @@ function delTrainObj(_this){
 		}
 	})
 	if($('.AddtrainItem').length==0){
+		$('.trainObjName').attr('disabled',false);
+		$('.trainObjName').attr('onclick','panterScolwap($(this))');
 		$('.Addtrain-wap').hide();
 	}
 }
@@ -417,25 +418,25 @@ function trainConfirm(){
 		return;
 	}
 	var AddboTrain={};
-	
+	AddtrainInfo(AddboTrain);
+	trainInfo(AddboTrain);
 	$('.Addtrain-wap').show();
-	console.log(!addtrainstate())
 	if(trainsaveId!=="00"){
-		AddtrainInfo(AddboTrain);
-		trainInfo(AddboTrain);
 		addTrainObjArry[trainsaveId]=AddboTrain;
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjname').html(AddboTrain.trainObjName);
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjDiscipline').html(AddboTrain.trainObjDiscipline);
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjGrade').html(AddboTrain.trainObjGrade);
 		$('.AddtrainItem').eq(trainsaveId).find('.AddTrainObjNumb').html(AddboTrain.trainObjNumb);
-		if(!addtrainstate()&&addTrainObjArry.length!=0){
-			$('.alertdiv').hide();	
-			
-		}
 		
 	}else{
-		trainsaveLiat(AddboTrain);
-		addTrainObjArry.push(AddboTrain);
+		if(!addtrainstate()&&addTrainObjArry.length!=0){
+			$('.alertdiv').hide();	
+		}else{
+			trainsaveLiat(AddboTrain);
+			addTrainObjArry.push(AddboTrain);
+		}
+		
+		
 	}
 	$('.inpitem').val(''); 
 	$('.trainObjitem input').val('');
@@ -450,14 +451,13 @@ function trainConfirm(){
 }
 //提交返回后台试用结果信息
 	var trainJ={};
-
 	function trainpanerjournaConfirm(){
 		trainInfo(boTrain);
 		logDateF(logData);
 		totalDetailF(totalDetail);
 		trainJ.logData=logData;
 		trainJ.totalDetail=totalDetail
-		trainJ.boTrain=boTrain;
+		trainJ.boTrainArr=addTrainObjArry;
 		$ajax('post','businessOpportunityLog/addBOLogBoTrain',trainJ,function succF(jo){
 			$('.R-wap').load('journal/journalList.html',function(){
 				$('.hide-menu li').removeClass('menuCheck');

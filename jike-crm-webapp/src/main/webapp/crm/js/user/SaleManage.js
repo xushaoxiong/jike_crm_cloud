@@ -19,7 +19,7 @@ function SalesLeader(){
 }SalesLeader()
 	
 //	//列表内容
-	function list(List,assignSale){
+	function list(List){
 		var Html="";
 		$.each(List, function(i,item) {
 			Html+='<tr>';
@@ -27,7 +27,7 @@ function SalesLeader(){
 				Html+='<td class="saleLaderName" leaderid="'+item.leaderId+'">'+item.leaderName+'</td>';	
 				Html+='<td class="managedUserNameWap">';
 					$.each(item.managedUserList, function(i2,item2) {
-						Html+='<span manauserid="'+item2.managedUserId+'">'+item2.managedUserName+'</span><i class="manauserline">/</i>'
+						Html+='<span manauserid="'+item2.managedUserId+'" graderid="'+item2.managedGender+'" email="'+item2.managedEmail+'">'+item2.managedUserName+'</span><i class="manauserline">/</i>'
 				});
 				Html+='<td>';
 					if(sessionStorage.business=='true'){
@@ -49,23 +49,30 @@ function SalesLeader(){
 	function managedUserstrb(){
 		for (var i=0;i<$('.managedUserNameWap').length;i++) {
 			var managedUserNamespArry=[];
+			var managedUserNamespArry2=[];
 			var managedUserNamespTitle=""
 			var managedUserNamesp=$('.managedUserNameWap').eq(i).find('span');
 			if(managedUserNamesp.length>3){
-				for (var j=0;j<3;j++) {
+				for (var j=0;j<managedUserNamesp.length;j++) {
 					var managedUserNamespJ={};
 					managedUserNamespJ.name=managedUserNamesp.eq(j).html();
 					managedUserNamespJ.manauserid=managedUserNamesp.eq(j).attr('manauserid');
 					managedUserNamespArry.push(managedUserNamespJ);
-				}
-				for (var j=0;j<managedUserNamesp.length;j++) {
 					managedUserNamespTitle+=managedUserNamesp.eq(j).html()+('/');
 				}
+//				for (var j=0;j<managedUserNamesp.length;j++) {
+//					
+//				}
 				var managedUserNamespTitlestring=managedUserNamespTitle.substring(0,managedUserNamespTitle.length-1);
 				$('.managedUserNameWap').eq(i).addClass('cursorm');
+				var manageuserHtml="";
 				$.each(managedUserNamespArry, function(i2,item2) {
-					var manageuserHtml="";
-					manageuserHtml+='<span manauserid="'+item2.manauserid+'">'+item2.name+'</span>';
+					if(i2>2){
+						manageuserHtml+='<span manauserid="'+item2.manauserid+'" style="display:none;">'+item2.name+'</span><i class="manauserline" style="display:none;">/</i>';
+					}else{
+						manageuserHtml+='<span manauserid="'+item2.manauserid+'">'+item2.name+'</span><i class="manauserline">/</i>';
+					}
+					
 					$('.managedUserNameWap').eq(i).html(manageuserHtml+'...');
 				});
 
@@ -94,19 +101,19 @@ function SalesLeader(){
 			var BymanagePJ={};
 			BymanagePJ.name=$(this).html();
 			BymanagePJ.userid=$(this).attr('manauserid');
+			BymanagePJ.graderid=$(this).attr('graderid');
+			BymanagePJ.email=$(this).attr('email');
 			BymanagePArry.push(BymanagePJ);
 		})
 		$('.R-wap').load('user/sealpersonEdit.html',function(){
 			$('.EditmanagePerson').attr('leaderid',leaderId);
-
 			$('.EditmanagePerson').val(leaderhtml);
 			var editmanagehtml="";
 			$.each(BymanagePArry, function(i2,item2) {
-				console.log(item2)
+				editmanagehtml+='<i class="division">、</i><span byuserid="'+item2.userid+'" gardeid="'+item2.graderid+'" email="'+item2.email+'">'+item2.name+'</span>';
 				
-				editmanagehtml+='<i class="division">、</i><span byuserid="'+item2.userid+'">'+item2.name+'</span>';
-				$('.EditBymanagePerson').html(editmanagehtml);
 			});
+			$('.EditBymanagePerson').html(editmanagehtml);
 		})
 		
 	}

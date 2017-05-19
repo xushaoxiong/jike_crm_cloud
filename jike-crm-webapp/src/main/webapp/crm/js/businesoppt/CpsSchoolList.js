@@ -10,16 +10,18 @@
 	//分页
 	$(document).ready(function() {
 	    getDataList(0, null);
+	    
+	    //判断是不是商务（销售人员增删改查；商务只有查看）
+	    if(sessionStorage.business=='true'){
+    		$('.newlist').hide();
+    	}else{
+    		$('.newlist').show();
+    	}
 	});
 	var initFlag=true;
 	function getDataList(currPage, jg) {
 		paginatorJ.start=currPage+1;
 	    $ajax("post","businessOpportunity/queryCpsByPage",paginatorJ,function succF(jo){
-	    	if(jo.ifBussiness==0){
-	    		$('.newlist').hide();
-	    	}else{
-	    		$('.newlist').show();
-	    	}
 	    	if (initFlag) {
 	    		//分页
 	    		$("#Pagination").pagination(jo.totalCount,{

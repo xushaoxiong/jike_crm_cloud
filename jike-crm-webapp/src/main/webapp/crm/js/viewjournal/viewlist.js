@@ -66,7 +66,7 @@ function ajaxpub(idJ,conmmJ){
 			jourlist(jo.businessOpportunityLogJson);
 			costdata(jo.boFeeDetailJson);
 			$('.addInfo').html(conmmJ(jo.commonJson));
-		
+			$('.afterObjName').html($('.businesname').html())
 		});
 	
 
@@ -90,7 +90,7 @@ $('.jourlist').on('click','.checkjounal',function(){
 	//opptid=1合作伙伴0学校
 	//信息收集
 	if(eventType=='信息收集'){
-		$.getScript("js/viewjournal/viewvInformationcollection.js",function(){
+		$.getScript("js/viewjournal/viewvInformationcollection.js?v1",function(){
 			if(opptypeid==1){
 				ajaxpub(logIdJ,infocoolpanerHtml);
 			}else{

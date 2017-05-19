@@ -50,7 +50,7 @@ pub.Alt=function(text,flag,callback){
 
 //固话加手机号验证
 function contact(contNum,selector){
-	var contantReg=/(^([0-9]{3,4}-)?[0-9]{7,8}$)|(^(\+86)?1[0-9]{10}$)/;
+	var contantReg= /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/;
 	if(!contantReg.test(contNum)){ 
         $(selector).html('联系方式填写有误');
         return false; 

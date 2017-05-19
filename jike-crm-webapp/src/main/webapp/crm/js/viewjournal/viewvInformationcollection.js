@@ -43,10 +43,8 @@ function infocoolHtml(tdata){
 			}
 				
 		negHtml+='</li>';
-		negHtml+='<li class="clearfix" style="margin-bottom:0px;">';
-			negHtml+='<label >拜访人联系方式：</label>';
-		negHtml+='</li>';
-		negHtml+='<li>';
+		negHtml+='<li class="clearfix">';
+			negHtml+='<label class="pull-left" style="line-height:28px;">拜访人联系方式：</label>';
 			negHtml+='<ul class="list-unstyled list-inline cont-wap">';	
 				negHtml+='<li>';
 					negHtml+='<label >座机：</label>';
@@ -70,6 +68,9 @@ function infocoolHtml(tdata){
 				negHtml+='</li>';
 			negHtml+='</ul>';	
 		negHtml+='</li>';
+//		negHtml+='<li>';
+//			
+//		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >决策人姓名：</label>';
 			negHtml+='<span class="colSp">'+tdata.decisionMakerName+'</span>';	
@@ -83,10 +84,8 @@ function infocoolHtml(tdata){
 			}
 			
 		negHtml+='</li>';
-		negHtml+='<li class="clearfix" style="margin-bottom:0px;">';
-			negHtml+='<label >决策人联系方式：</label>';
-		negHtml+='</li>';
-		negHtml+='<li>';
+		negHtml+='<li class="clearfix">';
+			negHtml+='<label class="pull-left" style="line-height:28px;">决策人联系方式：</label>';
 			negHtml+='<ul class="list-unstyled list-inline cont-wap">';	
 				negHtml+='<li>';
 					negHtml+='<label >座机：</label>';
@@ -110,6 +109,9 @@ function infocoolHtml(tdata){
 				negHtml+='</li>';
 			negHtml+='</ul>';	
 		negHtml+='</li>';
+//		negHtml+='<li>';
+//			
+//		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >是否有意向：</label>';
 			if(tdata.ifIntention==0){
@@ -120,7 +122,7 @@ function infocoolHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >是否对产品感兴趣：</label>';
-			if(tdata.ifInterested){
+			if(tdata.ifInterested==0){
 				negHtml+='<span class="colSp">是</span>';	
 			}else{
 				negHtml+='<span class="colSp">否</span>';	
@@ -153,10 +155,8 @@ function infocoolpanerHtml(tdata){
 			}
 				
 		negHtml+='</li>';
-		negHtml+='<li class="clearfix" style="margin-bottom:0px;">';
-			negHtml+='<label >拜访人联系方式：</label>';
-		negHtml+='</li>';
-		negHtml+='<li>';
+		negHtml+='<li class="clearfix">';
+			negHtml+='<label class="pull-left" style="line-height:28px;">拜访人联系方式：</label>';
 			negHtml+='<ul class="list-unstyled list-inline cont-wap">';	
 				negHtml+='<li>';
 					negHtml+='<label >座机：</label>';
@@ -180,6 +180,9 @@ function infocoolpanerHtml(tdata){
 				negHtml+='</li>';
 			negHtml+='</ul>';	
 		negHtml+='</li>';
+//		negHtml+='<li>';
+//			
+//		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >决策人姓名：</label>';
 			negHtml+='<span class="colSp">'+tdata.decisionMakerName+'</span>';	
@@ -193,10 +196,8 @@ function infocoolpanerHtml(tdata){
 			}
 			
 		negHtml+='</li>';
-		negHtml+='<li class="clearfix" style="margin-bottom:0px;">';
-			negHtml+='<label >决策人联系方式：</label>';
-		negHtml+='</li>';
-		negHtml+='<li>';
+		negHtml+='<li class="clearfix">';
+			negHtml+='<label class="pull-left" style="line-height:28px;">决策人联系方式：</label>';
 			negHtml+='<ul class="list-unstyled list-inline cont-wap">';	
 				negHtml+='<li>';
 					negHtml+='<label >座机：</label>';
@@ -220,6 +221,9 @@ function infocoolpanerHtml(tdata){
 				negHtml+='</li>';
 			negHtml+='</ul>';	
 		negHtml+='</li>';
+//		negHtml+='<li>';
+//			
+//		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >预计合作方式：</label>';
 			negHtml+='<span class="colSp">'+tdata.expectedCooperationType+'</span>';		

@@ -126,6 +126,7 @@ $.each(eventJson2.evenList, function(i,item) {
 });
 
 //	//操作设置
+	var commJ={};
 	$('.jourlist').on('click','.edit',function(){
 		$('.R-wap').hide();
 		$('.threloadWap').show();
@@ -138,6 +139,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		breadnav(Fht,netht);
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.threloadWap').load('journal/editlog.html',function(){
+				commJ=jo.commonJson;
 				$('.eventType').attr('businestype',businestype);
 				editdata(jo.businessOpportunityLogJson);
 				freedata(jo.boFeeDetailJson);
@@ -164,9 +166,10 @@ $.each(eventJson2.evenList, function(i,item) {
 	//编辑页面赋值
 	function editdata(editdata){
 		$('#indat').html(editdata.logDate);
-		$('#indat').attr('logId',editdata.logId)
+		$('#indat').attr('logId',editdata.logId);
 		$('.businessNameSp').val(editdata.businessOpportunityName);
 		$('.businessNameSp').attr('oppttypeid',editdata.businessOpportunityType);
+		$('.businessNameSp').attr('objid',editdata.businessOpportunityId);
 		$('.businesNumbspInp').val(editdata.businessOpportunityNum);
 		$('.eventType').val(editdata.eventType);
 		$('.specEvent').val(editdata.specificEvent);
@@ -233,7 +236,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		})
 		
 	}
-	//添加信息详情页面
+	//编辑添加信息详情页面
 	function commondetail(jo){
 		var opptypeid=$('.businessNameSp').attr('oppttypeid');
 		var eventType=$('.eventType').val();
@@ -366,6 +369,14 @@ $.each(eventJson2.evenList, function(i,item) {
 			$.getScript("js/editjournal/editshouhouInfo.js",function(){
 				$('.editInfo').html(aftSealtHtml());
 				aftSealdata(jo.commonJson);
+				if(opptypeid==0){
+					$('.saleAfterObjName').attr('disabled',true);
+					$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
+				}else{
+					$('.saleAfterObjName').addClass('cursorm');
+					$('.saleAfterObjName').attr('disabled',false);
+					$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('objid'));
+				}
 			})
 			
 		}
@@ -373,20 +384,33 @@ $.each(eventJson2.evenList, function(i,item) {
 		if($('.eventType').val()=='支持'){
 			$('.addTime,.minusTime').hide();
 			$('.timeVal').prop('disabled',true);
-			if(opptypeid==1&&sessionStorage.server=='false'){
-				$.getScript("js/editjournalpartner/editPzhichiInfo.js",function(){
+			if(opptypeid==0&&sessionStorage.server=='false'){
+				$.getScript("js/editjournal/editzhichiInfo.js",function(){
 					$('.editInfo').html(supportHtml());
 					supportdata(jo.commonJson);
+					$('.saleAfterObjName').attr('disabled',true);
+					$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
 				})
 			}else if(sessionStorage.server=='true'){
 				$.getScript("js/editjournalserver/editsersupport.js",function(){
 					$('.editInfo').html(supportHtml());
 					supportdata(jo.commonJson);
+					if(opptypeid==0){
+						$('.saleAfterObjName').attr('disabled',true);
+						$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
+					}else{
+						$('.saleAfterObjName').addClass('cursorm');
+						$('.saleAfterObjName').attr('disabled',false);
+						$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('objid'));
+					}
 				})
 			}else{
-				$.getScript("js/editjournal/editzhichiInfo.js",function(){
+				$.getScript("js/editjournalpartner/editPzhichiInfo.js",function(){
 					$('.editInfo').html(supportHtml());
 					supportdata(jo.commonJson);
+					$('.saleAfterObjName').addClass('cursorm');
+					$('.saleAfterObjName').attr('disabled',false);
+					$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('objid'));
 				})
 			}
 		}
@@ -397,7 +421,26 @@ $.each(eventJson2.evenList, function(i,item) {
 //			if(opptypeid==1){
 				$.getScript("js/editjournalpartner/editPpeixunInfo.js",function(){
 					$('.editInfo').html(trainiHtml());
-					traindata(jo.commonJson);
+					
+						$.each(jo.commonJson.boTrainArr, function(i,item) {
+							if(item.cooperativePartnerSchool==undefined){
+								$('.trainsave').hide();
+								$('.trainObjstate').attr('disabled',true);
+								$('.trainObjName').attr('scolid','');
+								$('.trainObjName').html(jo.businessOpportunityLogJson.businessOpportunityName);
+								traindata(item);
+								
+							}else{
+								$('.trainsave').show();
+								$('.trainObjstate').attr('disabled',false);
+								$('.Addtrain-wap').show();
+								trainsaveLiat(jo.commonJson.boTrainArr);
+								$('.trainObjName').attr('scolid',item.cooperativePartnerSchoolId);
+								$('.trainObjName').html(item.cooperativePartnerSchool.schoolName);
+							}
+						});
+					
+					
 				})
 //			}else{
 //				$.getScript("js/editjournal/editpeixunInfo.js",function(){
