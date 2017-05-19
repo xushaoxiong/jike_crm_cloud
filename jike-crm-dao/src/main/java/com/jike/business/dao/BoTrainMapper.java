@@ -44,4 +44,6 @@ public interface BoTrainMapper {
 	List<BoTrain> selectBoTrainByLogId(Long logId);
 
 	void deleteByLogId(Long logId);
+
+	List<BoTrain>  selectBoTrainByCspId(Long cooperativePartnerSchoolId);
 }

@@ -1,5 +1,7 @@
 package com.jike.business.dao;
 
+import java.util.List;
+
 import com.jike.business.model.BoCustomerService;
 
 public interface BoCustomerServiceMapper {
@@ -40,4 +42,6 @@ public interface BoCustomerServiceMapper {
 	int updateByPrimaryKey(BoCustomerService record);
 
 	BoCustomerService selectBoCustomerServiceByLogId(Long logId);
+
+	List<BoCustomerService> selectBoCustomerServiceByCspId(Long cooperativePartnerSchoolId);
 }

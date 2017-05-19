@@ -844,6 +844,12 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			resultJson.put("message", "没有权限");
 			return resultJson;
 		}
+		//查看该学校是否创建支持，培训，售后的相关日志
+		JSONObject checkJson = businessOpportunityLogService.checkIfCreateLog(cooperativePartnerSchoolId);
+		if("fail".equals(checkJson.getString("state"))){
+			return checkJson;
+		}
+		
 		//备份历史服务和学校信息
 		this.saveCooperLog(cooperativePartnerSchoolId);
 		//删除以前的服务

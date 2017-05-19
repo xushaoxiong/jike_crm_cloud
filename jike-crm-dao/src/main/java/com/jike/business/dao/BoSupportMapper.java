@@ -1,5 +1,7 @@
 package com.jike.business.dao;
 
+import java.util.List;
+
 import com.jike.business.model.BoSupport;
 
 public interface BoSupportMapper {
@@ -40,4 +42,6 @@ public interface BoSupportMapper {
 	int updateByPrimaryKey(BoSupport record);
 
 	BoSupport selectBoSupportByLogId(Long logId);
+
+	List<BoSupport> selectBoSupportByCspId(Long cooperativePartnerSchoolId);
 }

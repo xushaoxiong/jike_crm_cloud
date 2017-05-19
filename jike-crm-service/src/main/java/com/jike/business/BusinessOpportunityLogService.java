@@ -216,4 +216,13 @@ public interface BusinessOpportunityLogService {
 	 */
 	public JSONObject addServiceDailyEvent(JSONObject jsonData);
 
+	/**
+	 * 查看该学校是否创建支持，培训，售后的相关日志
+	 * @param cooperativePartnerSchoolId
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月19日上午11:05:37
+	 */
+	public JSONObject checkIfCreateLog(Long cooperativePartnerSchoolId);
+
 }

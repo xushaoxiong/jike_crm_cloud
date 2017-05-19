@@ -361,4 +361,10 @@
     delete from bo_train
     where log_id = #{logId,jdbcType=BIGINT}
   </delete>
+   <select id="selectBoTrainByCspId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bo_train
+    where cooperative_partner_school_id = #{cooperativePartnerSchoolId,jdbcType=BIGINT}
+  </select>
 </mapper>
