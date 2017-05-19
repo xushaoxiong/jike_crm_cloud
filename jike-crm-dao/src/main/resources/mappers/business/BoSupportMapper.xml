@@ -258,7 +258,7 @@
     from bo_support
     where log_id = #{logId,jdbcType=BIGINT}
   </select>
-  <select id="selectBoSupportByLogId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectBoSupportByCspId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from bo_support
