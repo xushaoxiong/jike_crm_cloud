@@ -3,6 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<style>
+			.managedUserNameWap .manauserline:nth-child(3){
+				display: none;
+			}
+			
+		</style>
 	</head>
 	<body>
 		<div class="container-fluid listContainer">
@@ -40,24 +46,17 @@
 						</tr>
 					</thead>
 					<tbody class="list-tr">
-						<tr>
-							<td>1</td>
+						<!--<tr>-->
+							<!--<td>1</td>
 							<td>张三</td>
 							<td>李四/赵武/刘浏</td>	
 							<td>
 								<button class="btn btn-primary edit">编辑</button>
 								<button class="btn btn-primary delBuiness">删除</button>
-							</td>
-						</tr>
+							</td>-->
+						<!--</tr>-->
 					</tbody>
 				</table>
-			</div>
-			<!--分页-->
-			<div class="Page-wap text-center clearfix">
-				<div class="pagination-wap text-center" style="display: inline-block;">
-					<span class="totalNum pull-left"></span>
-					<div id="Pagination" class="pagination"></div>
-				</div>
 			</div>
 		</div>
 		<!--删除弹框-->
@@ -65,10 +64,10 @@
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4>删除商机</h4>
+						<h4>删除销售管理者</h4>
 					</div>
 					<div class="modal-body clearfix">
-						<p style="margin-top: 15px;">提醒：是否确删除（<span class="businessNum"></span>），删除后将不再显示</p>
+						<p style="margin-top: 15px;">提醒：是否确删除销售管理者（<span class="saleladerName"></span>）</p>
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary delConfirm">确定</button>

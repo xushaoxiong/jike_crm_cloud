@@ -2,6 +2,14 @@ function aftsaleHtml(tdata){
 	var negHtml='';
 	negHtml+='<ul class="list-unstyled">';
 		negHtml+='<li>';
+			negHtml+='<label class="col-sm-3">售后对象：</label>';
+			if(tdata.cooperativePartnerSchool!=undefined){
+				negHtml+='<span class="colSp">'+tdata.cooperativePartnerSchool.schoolName+'</span>';
+			}else{
+				negHtml+='<span class="colSp afterObjName"></span>';
+			}
+		negHtml+='</li>';
+		negHtml+='<li>';
 			negHtml+='<label class="col-sm-3">极课相关软硬件安装调试：</label>';
 			if(tdata.installationDebuggingCount!=undefined){
 				negHtml+='<span class="colSp">'+tdata.installationDebuggingCount+'台</span>';
@@ -54,3 +62,4 @@ function aftsaleHtml(tdata){
 	negHtml+='</ul>';
 	return negHtml;
 }
+	

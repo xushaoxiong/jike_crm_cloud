@@ -124,17 +124,20 @@
 			return;
 		}
 		var serviceArr=[];
+		var phoneStates=true;
 		$('.panterScolcontainer').each(function(){
 			var serviceJ={};
 			serviceJ.serviceName=$.trim($(this).find('.pScolcontName').val());
 			serviceJ.servicePhone=$.trim($(this).find('.pScolcontphone').val());
-			if(!contact(serviceJ.servicePhone)){
+			if(!contact(serviceJ.servicePhone)&&serviceJ.servicePhone!=''){
 				pub.Alt('请填写联系人正确联系方式',false);
-				return;
-			}	
+				return phoneStates=false;
+			}
 			serviceArr.push(serviceJ);
 		});
-	
+		if(!phoneStates){
+			return;
+		}
 		dataJ.businessOpportunityId=businessopptunityid;
 		dataJ.schoolName=associdScolName;
 		dataJ.addressProvince=prov;
@@ -149,7 +152,7 @@
 		$ajax('post','businessOpportunity/addCooperativePartnerSchool',dataJ,function succF(jo){
 			$('.R-wap').load('businesoppt/CpsSchoolList.html');
 		},function errF(jo){
-			
+			pub.Alt(jo.message,false);
 		})
 	})
 	

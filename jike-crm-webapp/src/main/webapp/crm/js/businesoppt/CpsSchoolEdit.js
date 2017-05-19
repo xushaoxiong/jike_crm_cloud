@@ -108,17 +108,20 @@ function editPanterScoldata(vdata){
 			return;
 		}
 		var serviceArry=[];
+		var phoneState=true;
 		$('.panterScolcontainer').each(function(){
 			var serviceJ={};
 			serviceJ.serviceName=$.trim($(this).find('.pScolcontName').val());
 			serviceJ.servicePhone=$.trim($(this).find('.pScolcontphone').val());
 			if(!contact(serviceJ.servicePhone)&&serviceJ.servicePhone!=''){
 				pub.Alt('请填写联系人正确联系方式',false);
-				return;
+				return phoneState=false;
 			}	
 			serviceArry.push(serviceJ);
 		});
-	
+		if(!phoneState){
+			return;
+		}
 		cpsJson.cooperativePartnerSchoolId=coopscolid;
 		cpsJson.schoolName=associdScolName;
 		cpsJson.addressProvince=prov;

@@ -59,22 +59,22 @@ $(function(){
 	//商机名称列表
 	function bussinesList(businessOppList,seltor){
 		var html="";
-			$.each(businessOppList, function(i,item) {
-				html+='<tr>';
-					html+='	<td class="businesscheckimg"></td>';
-					html+='	<td class=" businesName" businessOpptunityId="'+item.businessOpportunityId+'">'+item.businessOpportunityName+'</td>';
-					html+='	<td class=" businesNumb">'+item.businessOpportunityNum+'</td>';
-					if(item.businessOpportunityType==0){
-						html+='	<td oppridtype="0" class="opprtype">学校</td>';
-					}else{
-						html+='	<td oppridtype="1" class="opprtype">合作伙伴</td>';
-					}
-					
-					html+='	<td>'+item.businessOpportunityProcess+'</td>';
-					html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCounty+''+item.addressDetail+'</td>';
-				html+='	</tr>';
-			});
-			$(seltor).html(html);
+		$.each(businessOppList, function(i,item) {
+			html+='<tr>';
+				html+='	<td class="businesscheckimg"></td>';
+				html+='	<td class=" businesName" businessOpptunityId="'+item.businessOpportunityId+'">'+item.businessOpportunityName+'</td>';
+				html+='	<td class=" businesNumb">'+item.businessOpportunityNum+'</td>';
+				if(item.businessOpportunityType==0){
+					html+='	<td oppridtype="0" class="opprtype">学校</td>';
+				}else{
+					html+='	<td oppridtype="1" class="opprtype">合作伙伴</td>';
+				}
+				
+				html+='	<td>'+item.businessOpportunityProcess+'</td>';
+				html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCounty+''+item.addressDetail+'</td>';
+			html+='	</tr>';
+		});
+		$(seltor).html(html);
 		
 	}
 	//选择商机
@@ -265,6 +265,7 @@ $(function(){
 	var beginid='';
 	var Mesclic=false;
 	$('.addMessage').click(function(){
+		$('.R-wap').css('border','1px solid #e2e2e3');
 		$('.procewap').hide();
 		var busoptIdJ={};
 		//根据商机名称id查询信息
@@ -275,7 +276,7 @@ $(function(){
 		var spcid=$('#SpecItem').find('option:selected').attr('spcid');
 		var eveid=$('#eventType').find('option:selected').attr('eveid');
 		var eventType=$('#eventType').find('option:selected').val();
-
+		var busnamState=$('.businessNameSp').html();
 		//面包屑导航
 		breadnav(Fht,'创建日志',eventType);
 		
@@ -519,6 +520,15 @@ $(function(){
 					$('.FillInfo').html(aftSealtHtml());
 					Mesclic=true;
 					beginid=eveid+spcid+OpptunityId;
+					$('.saleAfterObjName').html($('.businessNameSp').html());
+					if(OpptunityId==0){
+						$('.saleAfterObjName').attr('disabled',true);
+						$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
+					}else{
+						$('.saleAfterObjName').addClass('cursorm');
+						$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('businessopptunityid'));
+						
+					}
 				})
 			}
 			
@@ -533,18 +543,34 @@ $(function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
 						beginid=eveid+spcid+OpptunityId;
+						$('.saleAfterObjName').attr('disabled',true);
+						$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
+						$('.saleAfterObjName').html($('.businessNameSp').html());
 					})
 				}else if(sessionStorage.server=='true'){
 					$.getScript("js/journalserver/serversupport.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
 						beginid=eveid+spcid+OpptunityId;
+						if(OpptunityId==0){
+							$('.saleAfterObjName').attr('disabled',true);
+							$('.saleAfterObjName').removeAttr('onclick','salesAfterModal()');
+							$('.saleAfterObjName').html($('.businessNameSp').html());
+						}else{
+							$('.saleAfterObjName').addClass('cursorm');
+							$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('businessopptunityid'));
+							$('.saleAfterObjName').html($('.businessNameSp').html());
+						}
+						
 					})
 				}else{
 					$.getScript("js/journalpartners/PzhichiInfo.js",function(){
 						$('.FillInfo').html(supportHtml());
 						Mesclic=true;
 						beginid=eveid+spcid+OpptunityId;
+						$('.saleAfterObjName').addClass('cursorm');
+						$('.saleAfterObjName').attr('objid',$('.businessNameSp').attr('businessopptunityid'));
+						$('.saleAfterObjName').html($('.businessNameSp').html());
 					})
 				}
 				
@@ -553,6 +579,7 @@ $(function(){
 		}
 		//培训
 		if(eveid=='11'){
+			$('.R-wap').css('border','none');
 			if(Mesclic&& beginid==(eveid+spcid+OpptunityId)){
 				$('.FillInfo').show();
 			}else{
@@ -567,11 +594,23 @@ $(function(){
 						$('.FillInfo').html(trainiHtml());
 						Mesclic=true;
 						beginid=eveid+spcid+OpptunityId;
+						if(OpptunityId==0){
+							$('.trainObjitem:first').find('span').html(busnamState);
+							$('.trainsave').show();
+							$('.trainObjitem:first').find('span').removeAttr('onclick');
+							$('.trainObjitem:first').find('span').attr('disabled','disabled');
+						}else{
+							$('.trainObjitem:not(:first)').addClass('trainobjectItemHide');
+							$('.trainObjitem:first').find('span').html(busnamState);
+							$('.trainObjitem:first').find('span').addClass('cursorm');
+							$('.trainObjitem:first').find('span').attr('trainObjid',busoptid);
+							$('.trainsave').hide();
+						
+						}
 					})
 				}
 				
 //			}
-			
 		}
 		
 		//回款

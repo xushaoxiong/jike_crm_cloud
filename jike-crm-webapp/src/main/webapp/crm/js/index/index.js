@@ -20,6 +20,7 @@ $(function(){
 		dataType:'json',
 		success:function(jo){
 			server();
+			busines();
 			if(jo.state=='unLogin'){
 				pub.Alt(jo.message,true,function(){
 					$('.confirm').click(function(){
@@ -29,7 +30,7 @@ $(function(){
 				})
 			}
 				$('.indexName').html(jo.name);
-			var menuimmg=['img/business.png','img/journal.png','img/sess.png']
+			var menuimmg=['img/business.png','img/journal.png','img/sess.png','img/usermanage.png','img/archives.png']
 			var NavHtml='';
 			$.each(jo.menu1,function(i,item){
 				NavHtml+='<li class="L-list-item">';
@@ -42,6 +43,9 @@ $(function(){
 					}
 					if(item.menuId==3){
 						NavHtml+='<img src="'+menuimmg[2]+'" alt="图片"/>';
+					}
+					if(item.menuId==12){
+						NavHtml+='<img src="'+menuimmg[3]+'" alt="图片"/>';
 					}
 					NavHtml+='<span class="menuname">'+item.menuName+'</span>';
 				if(item.menu2==undefined){
@@ -56,7 +60,7 @@ $(function(){
 						NavHtml+='<span class="circle"></span>';
 						NavHtml+='<a>'+item2.menuName+'</a>';
 						NavHtml+='</li>';
-				})	
+					})	
 				NavHtml+='</ul>';
 				NavHtml+='</li>';
 				}				
@@ -151,7 +155,15 @@ $(function(){
 		})
 	}
 	
-	
+	//判断登录人是否是商务人员
+	function busines(){
+		var businesJ={};
+		$ajax('post','user/ifBusinessRole',businesJ,function succF(jo){
+			sessionStorage.business=jo.ifBusinessRole;
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
+	}
 	
 	
 	

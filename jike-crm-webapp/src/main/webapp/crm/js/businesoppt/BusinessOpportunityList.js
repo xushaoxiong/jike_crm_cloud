@@ -95,7 +95,7 @@ function getDataList(currPage, jg) {
 				}else{
 					Html+='<div class="serviceNamewap">';
 					$.each(item.serviceList, function(i2,item2) {
-						Html+='<span userid="'+item2.userId+'">'+item2.userName+'/</span>';
+						Html+='<span userid="'+item2.userId+'">'+item2.userName+'</span>';
 					});
 					Html+='</div>';
 					if(assignSale){
@@ -160,25 +160,35 @@ function getDataList(currPage, jg) {
 	//服务人员名字数限制
 	function serviceNamestrb(){
 		for (var i=0;i<$('.serviceNamewap').length;i++) {
-			var servernameArry='';
+			var servernameNamespTitle='';
+			var servernameNamespArry=[];
 			var servicesp=$('.serviceNamewap').eq(i).find('span');
-			if($('.serviceNamewap').eq(i).find('span').length>3){
-				var serverName1=$('.serviceNamewap').eq(i).find('span').eq(0).html();
-				var serverName2=$('.serviceNamewap').eq(i).find('span').eq(1).html();
-				var serverName3=$('.serviceNamewap').eq(i).find('span').eq(2).html();
-				$('.serviceNamewap').eq(i).html(serverName1+serverName2+serverName3+'...');
+			if(servicesp.length>3){
+				for (var j=0;j<servicesp.length;j++) {
+					var servernameNamespJ={};
+					servernameNamespJ.name=servicesp.eq(j).html();
+					servernameNamespJ.userid=servicesp.eq(j).attr('userid');
+					servernameNamespArry.push(servernameNamespJ);
+					servernameNamespTitle+=servicesp.eq(j).html()+('/');
+				}
+				var servernameNamespTitlestring=servernameNamespTitle.substring(0,servernameNamespTitle.length-1);
+				$('.serviceNamewap').eq(i).addClass('cursorm');
+				var manageuserHtml="";
+				$.each(servernameNamespArry, function(i2,item2) {
+					if(i2>2){
+						manageuserHtml+='<span userid="'+item2.userid+'" style="display:none;">'+item2.name+'</span><i class="divisionline" style="display:none;">/</i>';
+					}else{
+						manageuserHtml+='<span userid="'+item2.userid+'">'+item2.name+'</span><i class="divisionline">/</i>';
+					}
+					$('.serviceNamewap').eq(i).html(manageuserHtml+'...');
+
+				});
+
 				$('.serviceNamewap').eq(i).attr('data-toggle','tooltip');
 				$('.serviceNamewap').eq(i).attr('data-placement','bottom');
-				$('.serviceNamewap').eq(i).addClass('cursorm');
+				$('.serviceNamewap').eq(i).attr('title',servernameNamespTitlestring);
 			}
-			for (var j=0;j<servicesp.length;j++) {
-				servernameArry+=servicesp.eq(j).html();
-				
-			}
-			$('.serviceNamewap').eq(i).attr('title',servernameArry);
 		}
-	
-		
 	}
 	//搜索
 	$('.searchBusiness').click(function(){
@@ -247,14 +257,10 @@ function getDataList(currPage, jg) {
 		var serverlistJ={};
 		$ajax('post','user/queryServiceList',serverlistJ,function succF(jo){
 			serverlist(jo.userList);
-			$.each(jo.userList, function(i1,item1) {
-				$.each(servnamelistArry, function(i2,item2) {
-					if(item1.userId==item2){
-						$('.servname').eq(i1).prev().addClass('checked');
-					}
-					
-				});
-			})
+			$.each(servnamelistArry, function(i2,item2) {
+				$('.servname[userid="'+item2+'"]').prev().addClass('checked');
+				
+			});
 			
 		},function errF(jo){
 			pub.Alt(jo.message,false);
@@ -285,7 +291,7 @@ function getDataList(currPage, jg) {
 			})
 			var serversp="";
 			$.each(srevnamelist, function(i,item) {
-				serversp+='<span userid="'+item.userid+'">'+item.name+'/</span>';
+				serversp+='<span userid="'+item.userid+'">'+item.name+'</span><i class="divisionline">/</i>';
 			});
 			$('.opptNumb[numb="'+businessOpportunityNum+'"]').parent().find('.serviceNamewap').html(serversp);
 			serviceNamestrb();
@@ -394,7 +400,6 @@ $('.list-tr').on('click','.closeBuiness',function(){
 	closeBtnPart=$(this).parent();
 	var businessOpportunityNum=$(this).parents('tr').find('.opptNumb').attr('numb');
 	isClosedip=$(this).attr('isclosedip');
-	console.log(isClosedip)
 	if(isClosedip==0){
 		$('#closebuinessModal .modal-header h4').html('关闭商机');
 		$('.altcont').html('提醒：是否关闭商机（'+businessOpportunityNum+'），关闭后商机将处于关闭状态');
@@ -421,7 +426,7 @@ $('.closeConfirm').click(function(){
 	colJ.isClosed=isClosedip;
 	$ajax('post','businessOpportunity/operationBusinessOpportunity',colJ,function succF(jo){
 		$("#closebuinessModal").modal("hide");
-//		console.log(closeBtnPart.find('.closeBuiness').html())
+
 		if(isClosedip== '0'){
 			closeBtnPart.find('.closeBuiness').html('关闭');
 			closeBtnPart.find('.closeBuiness').attr('isclosedip','0');
@@ -432,8 +437,7 @@ $('.closeConfirm').click(function(){
 			closeBtnPart.find('.closeBuiness').attr('isclosedip','1');
 			closeBtnPart.find('.closeBuiness').addClass('btn-info');
 			closeBtnPart.find('.closeBuiness').removeClass('btn-primary');
-		}
-		console.log(closeBtnPart.find('.closeBuiness').attr('isclosedip'))		
+		}	
 	},function errF(jo){
 		pub.Alt(jo.message,false);
 	})

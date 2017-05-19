@@ -3,17 +3,20 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<!--<link rel="stylesheet" href="../css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../css/pagination.css" />
 		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="../js/jquery.pagination.js" ></script>
-		<script type="text/javascript" src="../js/pub/ajaxUrl.js"></script>
+		<script type="text/javascript" src="../js/pub/ajaxUrl.js"></script>-->
 	</head>
 	<style>
 		.checkedimg{
-			background: url(../img/checked.png) no-repeat center;
+			background: url(img/checked.png) no-repeat center;
 			background-size:15px;
+		}
+		.EditBymanagePerson .division:first-child{
+				display: none;
 		}
 	</style>
 	<body>
@@ -26,15 +29,18 @@
 				<div class="form-group row">
 					<label class="col-sm-1">销售管理者</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control managePerson" placeholder="销售管理者" disabled="disabled"/>
+						<input type="text" class="form-control EditmanagePerson" placeholder="销售管理者" disabled="disabled"/>
 					</div>
 				</div>
 	            <div class="form-group row">
 					<label class="col-sm-1">被管理者</label>
 					<div class="col-sm-3">
-						<span class="form-control BymanagePerson cursorm">请选择被管理者</span>
+						<div class="form-control EditBymanagePerson cursorm">请选择被管理者</div>
 					</div>
 				</div>
+			</div>
+			<div class="text-center col-sm-5">
+				<button class="btn btn-primary editConfirm">提交</button>
 			</div>
 		</div>
 		<!--被管理者-->
@@ -60,12 +66,12 @@
 						</table>
 					</div>
 					<div class="modal-footer" style="text-align: center;">
-						<button class="btn btn-primary busnisListConfirm">确定</button>
+						<button class="btn btn-primary BymanagePersonConfirm">确定</button>
 						<button class="btn btn-default"  data-dismiss="modal">取消</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</body>
-	<!--<script type="text/javascript" src="../js/personnelmanage/sealpersonCreat.js" ></script>-->
+	<script type="text/javascript" src="js/user/sealpersonEdit.js" ></script>
 </html>

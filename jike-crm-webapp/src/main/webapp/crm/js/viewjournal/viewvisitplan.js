@@ -17,10 +17,8 @@ function visitplanHtml(tdata){
 				negHtml+='<span class="colSp">'+tdata.visitorTitle+'</span>';
 			}	
 		negHtml+='</li>';
-		negHtml+='<li class="clearfix" style="margin-bottom:0px;">';
-			negHtml+='<label >拜访人联系方式：</label>';
-		negHtml+='</li>';
-		negHtml+='<li>';
+		negHtml+='<li class="clearfix">';
+			negHtml+='<label class="pull-left" style="line-height:28px;">拜访人联系方式：</label>';
 			negHtml+='<ul class="list-unstyled list-inline cont-wap">';	
 				negHtml+='<li>';
 					negHtml+='<label >座机：</label>';
@@ -44,6 +42,9 @@ function visitplanHtml(tdata){
 				negHtml+='</li>';
 			negHtml+='</ul>';	
 		negHtml+='</li>';
+//		negHtml+='<li>';
+//			
+//		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >拜访计划日期：</label>';
 			negHtml+='<span class="colSp">'+tdata.visitPlanDate+'</span>';	
