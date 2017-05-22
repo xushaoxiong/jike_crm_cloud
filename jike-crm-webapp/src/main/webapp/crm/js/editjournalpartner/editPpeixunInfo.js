@@ -162,9 +162,7 @@ function trainiHtml(){
 //新增培训信息列表
 function trainsaveLiat(addTraindata){
 	var TraSaveHtml='';
-	console.log(addTraindata)
 	$.each(addTraindata, function(i,item) {
-		console.log(item)
 		var cooperativePartnerSchool=item.cooperativePartnerSchool;
 		TraSaveHtml+='<div class="AddtrainItem">';
 			TraSaveHtml+='<ul class="list-inline">';
@@ -181,6 +179,9 @@ function trainsaveLiat(addTraindata){
 	$('.Addtrain-wap').html(TraSaveHtml);
 	$('.trainObjName').attr('scolid',$('.AddTrainObjname').attr('scolid'));
 	$('.trainObjName').html($('.AddTrainObjname').html());
+	if($('.AddtrainItem').length==1){
+		$('.delObj').hide();
+	}
 }
 
 //信息赋值
@@ -303,23 +304,29 @@ function trainsave(_this){
 }
 //删除新增信息内容
 function delTrainObj(_this){
-	var delIndex=_this.parents('.AddtrainItem').index();
-	var Indexlength=_this.parents('.AddtrainItem').length;
-	$('input,select').val('');
-	$('.trainObjName').html('');
-	$('.trainsave').attr('addId',(Indexlength-1));
-	if(Indexlength==1){
-		$('.delObj').hide();
-	}
-	$.each(commJ.boTrainArr,function(i,item){	
-		if(i==delIndex){
-			commJ.boTrainArr.splice(delIndex,1);
-			_this.parents('.AddtrainItem').remove();
+	pub.Alt('确定删除该项？',true);
+	func=function(){
+		$('.alert-del').hide();
+		var delIndex=_this.parents('.AddtrainItem').index();
+		var Indexlength=$('.AddtrainItem').length;
+		$('input,select').val('');
+		$('.trainObjName').html('');
+		$('.trainsave').attr('addId',(Indexlength-1));
+		
+		$.each(commJ.boTrainArr,function(i,item){	
+			if(i==delIndex){
+				commJ.boTrainArr.splice(delIndex,1);
+				_this.parents('.AddtrainItem').remove();
+			}
+		})
+		if($('.AddtrainItem').length==1){	
+			$('.delObj').hide();
 		}
-	})
-	if($('.AddtrainItem').length==0){
-		$('.Addtrain-wap').hide();
+		if($('.AddtrainItem').length==0){
+			$('.Addtrain-wap').hide();
+		}
 	}
+	
 }
 ////获取试用结果信息
 function infodetail(boTrain){
@@ -397,7 +404,6 @@ function trainConfirm(){
 	}
 	var AddboTrain={};
 	infodetail(AddboTrain)
-	console.log(AddboTrain)
 //	$('.Addtrain-wap').show();
 	if(trainsaveId!=="00"){
 		commJ.boTrainArr[trainsaveId]=AddboTrain;
@@ -425,58 +431,3 @@ function trainConfirm(){
 	$('.timeVal').val(timeVal);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////试用结果详情提交
-//$('.editInfo').on('click','.trainConfirm',function(){
-//	var inparry=[];
-//	var totalTime=0;
-//	$.each($('.inpitem'),function(){
-//		if($(this).val()!=""){
-//			inparry.push($(this).val());
-//			totalTime=totalTime+Number($(this).val())
-//		}
-//	})
-//	if(inparry.length==0){
-//		pub.Alt('请填写一项信息',false);
-//		return false;
-//	}
-//	$('.editInfo').hide();
-//	$('#addJournal').show();
-//	$('.journaConfirm').prop('disabled',false);
-//	//计算工时
-//	var timeVal=((Number(totalTime))+Number($('.inp2').val())+Number($('.inp5').val())+Number($('.inp11').val())+Number($('.inp12').val())+(Number($('.inp4').val()))*2)*0.5;
-//	$('.timeVal').val(timeVal);
-//})
