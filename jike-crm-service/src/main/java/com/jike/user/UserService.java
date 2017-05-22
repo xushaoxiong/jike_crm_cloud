@@ -146,5 +146,48 @@ public interface UserService {
 	 * @createtime 2017年5月16日下午1:42:15
 	 */
 	JSONObject updateSalesLeader(JSONObject json);
+	/**
+	 * 配置服务人员管理及销售关系
+	 * @param json
+	 * @return
+	 * @created xushaoxiong
+	 */
+	public JSONObject addServiceLeader(JSONObject json);
+	/**
+	 * 删除服务人员管理
+	 * @param json
+	 * @return
+	 * @created xushaoxiong
+	 */
+	JSONObject deleteServiceLeader(JSONObject json);
 
+	/**
+	 * 更新服务管理
+	 * @param json
+	 * @return
+	 * @created xushaoxiong
+	 */
+	JSONObject updateServiceLeader(JSONObject json);
+	/**
+	 * 查询服务人员管理
+	 * @param queryjson
+	 * @return
+	 * @created xushaoxiong
+	 */
+	public JSONObject queryServiceLeader(JSONObject queryjson);
+	/**
+	 * 查询服务人员集合
+	 * @param json
+	 * @return
+	 * @created xushaoxiong
+	 */
+	public JSONObject queryServiceLeaderList(JSONObject json);
+	/**
+     * 查询没有被管理的服务人员
+     * @param parseObject
+     * @return
+     * @created xushaoxiong
+     */
+	JSONObject queryNoBeManegeServiceLeaders(JSONObject parseObject);
+	
 }
