@@ -423,7 +423,7 @@ $.each(eventJson2.evenList, function(i,item) {
 					$('.editInfo').html(trainiHtml());
 					
 						$.each(jo.commonJson.boTrainArr, function(i,item) {
-							if(item.cooperativePartnerSchool==undefined&&opptypeid==1){
+							if(item.cooperativePartnerSchoolId==undefined&&opptypeid==1){
 								$('.trainsave').hide();
 								$('.trainObjstate').attr('disabled',true);
 								$('.trainObjName').attr('scolid','');
