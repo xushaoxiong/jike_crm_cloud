@@ -287,7 +287,7 @@
     u.*
     from user u,user_role r
     where u.user_id = r.user_id
-    and r.role_id =3
+    and r.role_id =4
     and u.user_id not in(select managed_user_id from service_leader s) 
     and u.user_id not in(select leader_id from service_leader s)     
     </select>
