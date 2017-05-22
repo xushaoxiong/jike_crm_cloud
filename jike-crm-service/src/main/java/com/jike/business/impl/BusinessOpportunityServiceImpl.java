@@ -222,7 +222,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		List<User> userList = null;
 		if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 			userName = "%"+userName+"%";
-			 userList = userService.querySaleAndServiceByUserName(userName);
+			 userList = userService.queryUserByUserName(userName);
 			if(!userList.isEmpty()){
 				for (User user : userList) {
 					userIds.add(user.getUserId());

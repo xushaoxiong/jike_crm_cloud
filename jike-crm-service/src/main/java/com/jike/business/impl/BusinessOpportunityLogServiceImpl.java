@@ -1330,8 +1330,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
 		List<Long> userIds = new ArrayList<Long>();
+		String userName = queryJson.getString("userName");
 		if (roleId == 2) {// 查看所有角色
-			String userName = queryJson.getString("userName");
 			if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 				userName = "%"+userName+"%";
 				List<User> userList = userService.queryUserByUserName(userName);
@@ -1347,30 +1347,38 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}
 			
 		}
+		List<User> userList = null;
+		List<Long> createUserIds = null;
 		if (roleId == 3){
-			//销售管理查看自己手下销售商机
+			//指派给该用户或该用户的条件
 			List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(userId);
 			if(!salesLeaderList.isEmpty()){
 				for (SalesLeader salesLeader : salesLeaderList) {
-					if(userIds.contains(salesLeader.getManagedUserId())){
 						userIds.add(salesLeader.getManagedUserId());
+				}
+			}
+			userIds.add(userId);
+			//模糊查询用户
+			if (userName != null && !StringUtils.isEmpty(userName.trim())) {
+				createUserIds =new ArrayList<Long>();
+				userName = "%" + userName + "%";
+				userList = userService.queryUserByUserName(userName);
+				if (!userList.isEmpty()) {
+					for (User user : userList) {
+						createUserIds.add(user.getUserId());
 					}
+				} else {
+					createUserIds.add(-1L);
 				}
 				
 			}
-			if(userIds.contains(userId)){
-				userIds.add(userId);
-			}else{
-				userIds.add(-1L);
-			}
-			userIds.add(userId);
 		}
 	    if (roleId == 4){
 			userIds.add(userId);
 		}
 		int totalCount =0;
 		if(roleId == 3){
-			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userId,userIds);
+			 totalCount = businessOpportunityLogMapper.getBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,createUserIds,userIds);
 		}else{
 			totalCount = businessOpportunityLogMapper.getServiceBusinessOpportunityLogCount(businessOpportunityName,startTime,endTime,eventType,userIds);
 		}
@@ -1378,7 +1386,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		
 		List<Map<String,Object>> businessOpportunityLogList = new ArrayList<Map<String,Object>>();
 		if(roleId == 3){
-			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userId,userIds,startPosition,pageSize);
+			businessOpportunityLogList = businessOpportunityLogMapper.getBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,createUserIds,userIds,startPosition,pageSize);
 		}else{
 			businessOpportunityLogList = businessOpportunityLogMapper.getServiceBusinessOpportunityLogByPage(businessOpportunityName,startTime,endTime,eventType,userIds,startPosition,pageSize);
 		}
@@ -1617,7 +1625,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 						boTrainJson.put("cooperativePartnerSchool",newJson);
 					}else{
 						JSONObject newJson = new JSONObject();
-						newJson.put("schoolName", businessOpportunityJson.getString("businessOpportunityNum"));
+						newJson.put("schoolName", businessOpportunityJson.getString("businessOpportunityName"));
 						boTrainJson.put("cooperativePartnerSchool",newJson);
 					}
 				 removeCommonAttribute(boTrainJson);
@@ -1716,6 +1724,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		JSONObject resultJson = new JSONObject();
 		JSONObject businessOpportunityLogJson = updateJson.getJSONObject("businessOpportunityLogJson");
 		BusinessOpportunityLog businessOpportunityLog = businessOpportunityLogJson.toJavaObject(BusinessOpportunityLog.class);
+	
 		//查询创建者
 		BusinessOpportunityLog businessOpportunityLogOld = businessOpportunityLogMapper.selectByPrimaryKey(businessOpportunityLog.getLogId());
 		if(!updateJson.getLong("userId").equals(businessOpportunityLogOld.getCreateBy())){
@@ -1723,8 +1732,9 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			resultJson.put("message", "没有编辑权限");
 			return resultJson;
 		}
-		
 		//更新日志表
+		businessOpportunityLog.setUpdateBy(updateJson.getLong("userId"));
+		businessOpportunityLog.setUpdateTime(new Date());
 		businessOpportunityLogMapper.updateByPrimaryKeySelective(businessOpportunityLog);
 		//更新费用表
 		JSONObject boFeeDetailJson = updateJson.getJSONObject("boFeeDetailJson");
