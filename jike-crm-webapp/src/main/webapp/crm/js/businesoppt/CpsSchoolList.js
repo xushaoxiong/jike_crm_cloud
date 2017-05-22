@@ -70,7 +70,7 @@
 				
 				Html+='<td>';
 				if(assignSale==0){
-					Html+='<button class="btn btn-primary check">查看</button>';
+					Html+='<button class="btn btn-primary check" onclick="viewPanterScol($(this))">查看</button>';
 					Html+='<button class="btn" style="margin:0 8px;" disabled="disabled">编辑</button>';
 					Html+='<button class="btn" disabled="disabled">删除</button>';
 				}else{
