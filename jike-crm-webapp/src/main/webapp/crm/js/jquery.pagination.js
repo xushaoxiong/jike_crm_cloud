@@ -141,7 +141,7 @@ jQuery.fn.pagination = function(maxentries, opts){
 			}
 	        /****************** Added ***************/
             /*插入一个文本框，用户输入并回车后进行跳转*/
-			var pagetext = '<span style="margin-left:15px;">跳转至</span><input id="pagevalue" size="1" value="'+(current_page+1)+'"type="text">';
+			var pagetext = '<span style="margin-left:15px;">跳转至</span><input id="pagevalue" size="1" "type="text">';
             var toPage='<span><a id="search" href="#">跳转</a></span>';
             $(pagetext).appendTo(panel);
             $(toPage).appendTo(panel);
