@@ -40,6 +40,8 @@ import com.jike.business.model.SaleBusinessOpportunity;
 import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
+import com.jike.user.dao.SalesLeaderMapper;
+import com.jike.user.model.SalesLeader;
 import com.jike.user.model.User;
 
 @Service("businessOpportunityService")
@@ -68,6 +70,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private CooperativePartnerSchoolServiceMapper cooperativePartnerSchoolServiceMapper;
 	@Autowired
 	private CooperativePartnerSchoolServiceLogMapper cooperativePartnerSchoolServiceLogMapper;
+	@Autowired
+	private SalesLeaderMapper salesLeaderMapper;
 	
 
 	@Transactional
@@ -226,12 +230,21 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			}else{
 				userIds.add(-1L);
 			}
-			if (roleId != 2) {// 非商务只能查看自己创建的日志
+			if (roleId != 2) {
+				// 非商务只能查看自己创建的日志
+				//销售管理查看自己手下销售商机
+				List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(userId);
+				if(!salesLeaderList.isEmpty()){
+					for (SalesLeader salesLeader : salesLeaderList) {
+						if(userIds.contains(salesLeader.getManagedUserId())){
+							userIds.add(salesLeader.getManagedUserId());
+						}
+					}
+					
+				}
 				if(userIds.contains(userId)){
-					userIds.clear();
 					userIds.add(userId);
 				}else{
-					userIds.clear();
 					userIds.add(-1L);
 				}
 			}
@@ -239,6 +252,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			if(roleId == 2){
 				userIds = null;	
 			}else{
+				List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(userId);
+				if(!salesLeaderList.isEmpty()){
+					for (SalesLeader salesLeader : salesLeaderList) {
+							userIds.add(salesLeader.getManagedUserId());
+					}
+					
+				}
 				userIds.add(userId);
 			}
 		}
