@@ -26,12 +26,12 @@ function trainpanerHtml(tdata){
 	$.each(tdata.boTrainArr, function(i,item) {
 		var cooperativePartnerSchool=item.cooperativePartnerSchool;
 		negHtml+='<ul class="list-inline trainUlLit">';
-			negHtml+='<li class="trainUlLitNumb">'+(i+1)+'</li>';
+			negHtml+='<li class="trainUlLitNumb">'+(i+1)+'.</li>';
 			negHtml+='<li><label>培训对象：</label><span class="AddTrainObjname">'+cooperativePartnerSchool.schoolName+'</span></li>';
 			negHtml+='<li><label>培训学科：</label><span class="AddTrainObjDiscipline">'+item.trainingDiscipline+'</span></li>';
 			negHtml+='<li><label>培训年级：</label><span class="AddTrainObjGrade">'+item.trainingGrade+'</span></li>';
 			negHtml+='<li><label>培训教师数量：</label><span class="AddTrainObjNumb">'+item.trainingTeachersCount+'</span></li>';
-			negHtml+='<li><a class="cursorm" onclick="detailTrainObj($(this))">详情</a></li>';
+			negHtml+='<li class="imgliDown"><a class="cursorm" onclick="detailTrainObj($(this))">详情</a></li>';
 		negHtml+='</ul>';
 		negHtml+='<div class="traindetailItem clearfix" style="display:none;padding:0 5%;">';
 		negHtml+='<div class="col-sm-5">';
@@ -141,5 +141,7 @@ function trainpanerHtml(tdata){
 function detailTrainObj(_this){
 	var _Index=_this.parents('.trainUlLit').find('.trainUlLitNumb').html();
 	$('.traindetailItem').eq((_Index-1)).slideToggle();
+	_this.parent().toggleClass('imgliUp')
+	
 }
 	
