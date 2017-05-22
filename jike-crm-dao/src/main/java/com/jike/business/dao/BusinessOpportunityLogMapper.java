@@ -51,14 +51,14 @@ public interface BusinessOpportunityLogMapper {
 	 * @param startTime
 	 * @param endTime
 	 * @param eventType
-	 * @param userId
+	 * @param createUserIds
 	 * @param userIds 
 	 * @return
 	 * @created wangyb
 	 * @createtime 2017年4月11日上午10:52:25
 	 */
 	int getBusinessOpportunityLogCount(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime,
-			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId, @Param("userIds")List<Long> userIds);
+			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("createUserIds")List<Long> createUserIds, @Param("userIds")List<Long> userIds);
 
 	/**
 	 * 分页查询日志信息
@@ -66,7 +66,7 @@ public interface BusinessOpportunityLogMapper {
 	 * @param startTime
 	 * @param endTime
 	 * @param eventType
-	 * @param userId
+	 * @param createUserIds
 	 * @param userIds 
 	 * @param startPosition
 	 * @param pageSize
@@ -75,7 +75,7 @@ public interface BusinessOpportunityLogMapper {
 	 * @createtime 2017年4月11日上午10:54:20
 	 */
 	List<Map<String, Object>> getBusinessOpportunityLogByPage(@Param("businessOpportunityName")String businessOpportunityName, @Param("startTime")String startTime,
-			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("userId")Long userId, @Param("userIds")List<Long> userIds, @Param("start")int start, @Param("pageSize")Integer pageSize);
+			          @Param("endTime")String endTime, @Param("eventType")String eventType, @Param("createUserIds")List<Long> createUserIds, @Param("userIds")List<Long> userIds, @Param("start")int start, @Param("pageSize")Integer pageSize);
 
 	/**
 	 * 通过商机ID查询日志

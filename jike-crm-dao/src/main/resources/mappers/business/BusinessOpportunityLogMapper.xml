@@ -234,15 +234,25 @@
 		<if test="eventType != null">
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
+		<if test="createUserIds != null">
+			 and bol.create_by in 
+			<foreach item="item" index="index" collection="createUserIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
 		<if test="userIds != null">
-			and bol.create_by in 
+			and (bol.create_by in 
 			<foreach item="item" index="index" collection="userIds" open="("  
                 separator="," close=")">  
                 #{item}  
             </foreach> 
+            or sbo.user_id in
+            <foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
+            )
 		</if>
   </select>
   <select id="getBusinessOpportunityLogByPage" resultType="java.util.Map">  
@@ -279,15 +289,25 @@
 		<if test="eventType != null">
 			and bol.event_type = #{eventType,jdbcType=VARCHAR}
 		</if>
-		<if test="userId != null">
-			and (bol.create_by = #{userId,jdbcType=BIGINT} or sbo.user_id = #{userId,jdbcType=BIGINT})
+		<if test="createUserIds != null">
+			and bol.create_by in 
+			<foreach item="item" index="index" collection="createUserIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
 		</if>
 		<if test="userIds != null">
-			and bol.create_by in 
+			and (bol.create_by in 
 			<foreach item="item" index="index" collection="userIds" open="("  
                 separator="," close=")">  
                 #{item}  
             </foreach> 
+            or sbo.user_id in
+            <foreach item="item" index="index" collection="userIds" open="("  
+                separator="," close=")">  
+                #{item}  
+            </foreach> 
+            )
 		</if>
 		ORDER BY bol.log_date desc ,bol.create_time desc
 		limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
