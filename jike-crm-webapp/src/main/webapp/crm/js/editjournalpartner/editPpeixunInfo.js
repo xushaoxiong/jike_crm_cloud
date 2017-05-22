@@ -310,9 +310,7 @@ function delTrainObj(_this){
 		var delIndex=_this.parents('.AddtrainItem').index();
 		var Indexlength=$('.AddtrainItem').length;
 		$('input,select').val('');
-		$('.trainObjName').html('');
 		$('.trainsave').attr('addId',(Indexlength-1));
-		
 		$.each(commJ.boTrainArr,function(i,item){	
 			if(i==delIndex){
 				commJ.boTrainArr.splice(delIndex,1);
