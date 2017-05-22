@@ -412,8 +412,6 @@ function trainConfirm(){
 		}else{
 			commJ.boTrainArr.push(AddboTrain);
 			trainsaveLiat(commJ.boTrainArr);
-			
-			
 		}
 	}
 	$('.inpitem').val(''); 

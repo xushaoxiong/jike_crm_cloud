@@ -230,7 +230,7 @@ function infocoolpanerHtml(tdata){
 		negHtml+='</li>';
 		negHtml+='<li>';
 			negHtml+='<label >是否对产品感兴趣：</label>';
-			if(tdata.ifInterested){
+			if(tdata.ifInterested==0){
 				negHtml+='<span class="colSp">是</span>';	
 			}else{
 				negHtml+='<span class="colSp">否</span>';	

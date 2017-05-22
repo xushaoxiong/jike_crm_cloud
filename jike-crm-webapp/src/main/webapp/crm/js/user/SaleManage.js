@@ -1,3 +1,11 @@
+ //判断是不是商务（销售人员增删改查；商务只有查看）
+    if(sessionStorage.business=='true'){
+		$('.newlist').show();
+	}else{
+		$('.newlist').hide();
+	}
+
+
 //添加关联学校
 	$('.newlist').click(function(){
 		$('.R-wap').load('user/SalePersonCreat.html',function(){
@@ -5,6 +13,7 @@
 		});
 		
 	})
+ 
 //列表查询
 var salesLaderJ={"leaderName":"","managedName":""};
 function SalesLeader(){
