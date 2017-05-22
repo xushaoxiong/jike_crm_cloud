@@ -1,5 +1,12 @@
 package com.jike.user.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.alibaba.fastjson.JSONArray;
+import com.jike.user.model.SalesLeader;
 import com.jike.user.model.ServiceLeader;
 
 public interface ServiceLeaderMapper {
@@ -50,4 +57,36 @@ public interface ServiceLeaderMapper {
      * @mbggenerated Thu May 18 17:18:28 CST 2017
      */
     int updateByPrimaryKey(ServiceLeader record);
+    
+    /**
+     * 通过管理ID查询
+     * @param leaderId
+     * @return
+     * @created xushaoxiong
+     */
+	List<ServiceLeader> selectByLeaderId(Long leaderId);
+	/**
+	 * 查询被管理者是否存在
+	 * @param managedUserIds
+	 * @return
+	 * @created xushaoxiong
+	 */
+	List<ServiceLeader> selectByManagedUserId(JSONArray managedUserIds);
+	/**
+	 * 查询销售管理和被管理者
+	 * @param leaderName
+	 * @param managedName
+	 * @param userId 
+	 * @return
+	 * @created xushaoxiong
+	 */
+	List<Map<String, Object>> queryByServiceLeaderAndManagedName(@Param("leaderName")String leaderName, @Param("managedName")String managedName, @Param("userId")Long userId);
+
+	/**
+	 * 删除销售管理
+	 * @param leaderId
+	 * @created wangyb
+	 * @createtime 2017年5月16日下午1:35:31
+	 */
+	void deleteByLeaderId(Long leaderId);
 }

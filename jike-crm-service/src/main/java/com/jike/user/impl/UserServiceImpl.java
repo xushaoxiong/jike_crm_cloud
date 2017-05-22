@@ -15,9 +15,11 @@ import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
 import com.jike.user.dao.SalesLeaderMapper;
+import com.jike.user.dao.ServiceLeaderMapper;
 import com.jike.user.dao.UserMapper;
 import com.jike.user.dao.UserRoleMapper;
 import com.jike.user.model.SalesLeader;
+import com.jike.user.model.ServiceLeader;
 import com.jike.user.model.User;
 import com.jike.user.model.UserRole;
 import com.jike.user.utils.security.Password;
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
 	private UserRoleMapper userRoleMapper;
 	@Autowired
 	private SalesLeaderMapper salesLeaderMapper;
+	@Autowired
+	private ServiceLeaderMapper serviceLeaderMapper;
 
 	private Password passwordenEcrypt = new ShaPasswordImplV1();
 
@@ -450,4 +454,173 @@ public class UserServiceImpl implements UserService {
 		return resultJson;
 	}
 	
+	
+	@Transactional
+	public JSONObject addServiceLeader(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		Long leaderId = json.getLong("leaderId");
+		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
+		//查询该管理者是否已存在
+		List<ServiceLeader> salesLeaderList = serviceLeaderMapper.selectByLeaderId(leaderId);
+		if(!salesLeaderList.isEmpty()){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "该服务人员已为管理者");
+			return resultJson;
+		}
+		//查询被管理是否已存在
+		List<ServiceLeader> salesManageList = serviceLeaderMapper.selectByManagedUserId(managedUserIds);
+		if(!salesManageList.isEmpty()){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "被管理者已分配其他销售管理");
+			return resultJson;
+		}
+		Date nowDate = new Date();
+		for (Object obj : managedUserIds) {
+			Long managedUserId = Long.parseLong(obj.toString());
+			ServiceLeader leader = new ServiceLeader();
+			leader.setLeaderId(leaderId);
+			leader.setManagedUserId(managedUserId);
+			leader.setCreateBy(json.getLong("userId"));
+			leader.setCreateTime(nowDate);
+			serviceLeaderMapper.insert(leader);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "添加成功");
+		return resultJson;
+	}
+	public JSONObject deleteServiceLeader(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = json.getLong("roleId");
+		if(roleId!=2L){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		Long leaderId = json.getLong("leaderId");
+		serviceLeaderMapper.deleteByLeaderId(leaderId);
+		resultJson.put("state", "success");
+		resultJson.put("message", "删除成功");
+		return resultJson;
+	}
+	@Transactional
+	public JSONObject updateServiceLeader(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = json.getLong("roleId");
+		if(roleId!=2L){
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		}
+		Long leaderId = json.getLong("leaderId");
+		serviceLeaderMapper.deleteByPrimaryKey(leaderId);
+		
+		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
+		Date nowDate = new Date();
+		for (Object obj : managedUserIds) {
+			Long managedUserId = Long.parseLong(obj.toString());
+			ServiceLeader leader = new ServiceLeader();
+			leader.setLeaderId(leaderId);
+			leader.setManagedUserId(managedUserId);
+			leader.setCreateBy(json.getLong("userId"));
+			leader.setCreateTime(nowDate);
+			serviceLeaderMapper.insert(leader);
+		}
+		resultJson.put("state", "success");
+		resultJson.put("message", "更新成功");
+		return resultJson;
+	}
+	public JSONObject queryServiceLeader(JSONObject queryjson) {
+		JSONObject resultJson = new JSONObject();
+		String leaderName = queryjson.getString("leaderName");
+		String managedName = queryjson.getString("managedName");
+		if(leaderName!=null){
+			leaderName="%"+leaderName+"%";
+		}
+		if(managedName!=null){
+			managedName="%"+managedName+"%";
+		}
+		Long roleId = queryjson.getLong("roleId");
+		Long userId = queryjson.getLong("userId");
+		if(roleId==2L){
+			userId = null;
+		}
+		//查询服务人员
+		List<Map<String,Object>> serviceLeaderArr = serviceLeaderMapper.queryByServiceLeaderAndManagedName(leaderName,managedName,userId);
+		Long nowLeaderId = null;
+		JSONArray managedUserList = null;
+		JSONArray saleLeaderList = new JSONArray();
+		if(!serviceLeaderArr.isEmpty()){ 
+			for (Map<String,Object> map : serviceLeaderArr) {
+				Long leaderId = Long.parseLong(map.get("leader_id").toString());
+				String leader_name = map.get("leader_name").toString();
+				Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
+				String managed_user_name = map.get("managed_user_name").toString();
+				String managed_gender = map.get("managed_gender").toString();
+				String managed_email = map.get("managed_email").toString();
+				
+				if(leaderId!=nowLeaderId){
+					managedUserList = new JSONArray();
+					nowLeaderId = leaderId;
+					JSONObject leaderJson = new JSONObject();
+					leaderJson.put("leaderId", leaderId);
+					leaderJson.put("leaderName", leader_name);
+					JSONObject managedUserJson = new JSONObject();
+					managedUserJson.put("managedUserId", managedUserId);
+					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserJson.put("managedGender", managed_gender);
+					managedUserJson.put("managedEmail", managed_email);
+					managedUserList.add(managedUserJson);
+					leaderJson.put("managedUserList",managedUserList);
+					saleLeaderList.add(leaderJson);
+				}else{
+					JSONObject managedUserJson = new JSONObject();
+					managedUserJson.put("managedUserId", managedUserId);
+					managedUserJson.put("managedUserName", managed_user_name);
+					managedUserJson.put("managedGender", managed_gender);
+					managedUserJson.put("managedEmail", managed_email);
+					managedUserList.add(managedUserJson);
+				}
+			}
+		}
+		resultJson.put("serviceLeaderList", saleLeaderList);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
+	public JSONObject queryServiceLeaderList(JSONObject json) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = 3L;
+		this.queryUserList(resultJson, roleId);
+		return resultJson;
+	}
+	public JSONObject queryServerServiceLeaderList(JSONObject json){
+		JSONObject resultJson = new JSONObject();
+		Long roleId = 4L;
+		this.queryUserList(resultJson, roleId);
+		return resultJson;
+	}
+	public JSONObject queryNoBeManegeServiceLeaders(JSONObject parseObject) {
+		JSONObject resultJson = new JSONObject();
+		Long roleId = parseObject.getLong("roleId");
+		if (roleId!=2) {
+			resultJson.put("state", "fail");
+			resultJson.put("message", "没有权限");
+			return resultJson;
+		} 
+		List<User> userList = userMapper.queryNoBeManegeServiceLeaders();
+		JSONArray userArr = new JSONArray();
+		for (User user : userList) {
+			JSONObject userJson = new JSONObject();
+			userJson.put("name", user.getName());
+			userJson.put("loginName", user.getLoginName());
+			userJson.put("gender", user.getGender());
+			userJson.put("email", user.getEmail());
+			userJson.put("userId", user.getUserId());
+			userArr.add(userJson);
+		}
+		resultJson.put("userList", userArr);
+		resultJson.put("state", "success");
+		resultJson.put("message", "查询成功");
+		return resultJson;
+	}
 }

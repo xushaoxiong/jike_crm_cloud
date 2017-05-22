@@ -449,4 +449,146 @@ public class UserController extends BaseController{
 		return result.toString();
 	}
 	
+	/**
+	 * 添加服务人员管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created xushaoxiong
+	 */
+	@RequestMapping(value = "/addServiceLeader", method = {RequestMethod.POST})
+	public @ResponseBody String addServiceLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.addServiceLeader(json);
+		} catch (IOException e) {
+			logger.error("addSalesLeader error", e);
+		}
+		return result.toString();
+	}
+	
+	
+	/**
+	 * 查询销售管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月16日上午10:50:22
+	 */
+	@RequestMapping(value = "/queryServiceLeader", method = {RequestMethod.POST})
+	public @ResponseBody String queryServiceLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.queryServiceLeader(json);
+		} catch (IOException e) {
+			logger.error("querySalesLeader error", e);
+		}
+		return result.toString();
+	}
+	
+	
+	@RequestMapping(value = "/queryServiceLeaderList", method = {RequestMethod.POST})
+	public @ResponseBody String queryServiceLeaderList(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject parseObject = JSONObject.parseObject(queryJson);
+		    result = userService.queryServiceLeaderList(parseObject);
+		} catch (IOException e) {
+			logger.error("queryServiceLeaderList error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 查询没有被管理的服务人员
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created wangyb
+	 * @createtime 2017年5月12日下午5:49:49
+	 */
+	@RequestMapping(value = "/queryNoBeManegeServiceLeaders", method = {RequestMethod.POST})
+	public @ResponseBody String queryNoBeManegeServiceLeaders(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		JSONObject json = new JSONObject();
+		json.put("userId", session.getAttribute(userId));
+		json.put("roleId", session.getAttribute(roleId));
+	    result = userService.queryNoBeManegeServiceLeaders(json);
+		return result.toString();
+	}
+	/**
+	 * 删除服务人员管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created xushaoxiong
+	 */
+	@RequestMapping(value = "/deleteServiceLeader", method = {RequestMethod.POST})
+	public @ResponseBody String deleteServiceLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.deleteServiceLeader(json);
+		} catch (IOException e) {
+			logger.error("deleteServiceLeader error", e);
+		}
+		return result.toString();
+	}
+	/**
+	 * 更新服务管理
+	 * @param request
+	 * @param session
+	 * @return
+	 * @created xushaoxiong
+	 */
+	@RequestMapping(value = "/updateServiceLeader", method = {RequestMethod.POST})
+	public @ResponseBody String updateServiceLeader(HttpServletRequest request, HttpSession session) {
+		JSONObject result = super.checkLogin(session);
+		if("unLogin".equals(result.getString("state"))){
+			return result.toJSONString();
+		}
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+		    result = userService.updateServiceLeader(json);
+		} catch (IOException e) {
+			logger.error("updateServiceLeader error", e);
+		}
+		return result.toString();
+	}
+	
 }
