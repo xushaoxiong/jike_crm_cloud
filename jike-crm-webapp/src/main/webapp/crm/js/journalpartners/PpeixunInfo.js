@@ -176,7 +176,13 @@ function trainInfo(boTrain){
 }
 
 function AddtrainInfo(boTrain){
-	boTrain.cooperativePartnerSchoolId=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').attr('schoolid');
+	var cooperativePartnerSchoolId=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').attr('schoolid');
+	if(cooperativePartnerSchoolId==undefined){
+		boTrain.cooperativePartnerSchoolId="";
+	}else{
+		boTrain.cooperativePartnerSchoolId=cooperativePartnerSchoolId;
+	}
+//	boTrain.cooperativePartnerSchoolId=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').attr('schoolid');
 	boTrain.trainObjName=$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').html();
 	boTrain.trainingDiscipline=$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val();
 	boTrain.trainingGrade=$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val();
@@ -360,14 +366,12 @@ function editTrainInfo(boTrain){
 	$('.inp10').val(boTrain.productsIntroductionCount);
 	$('.inp11').val(boTrain.operationGuidanceCount);
 	$('.inp12').val(boTrain.testCoachCount);
-	
-	
 }
 function editAddTrainInfo(boTrain){
 	$('.trainObjitem:not(".trainobjectItemHide")').eq(0).find('span').html(boTrain.trainObjName);
-	$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val(boTrain.trainObjDiscipline);
-	$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val(boTrain.trainObjGrade);
-	$('.trainObjitem:not(".trainobjectItemHide")').eq(3).find('input').val(boTrain.trainObjNumb);
+	$('.trainObjitem:not(".trainobjectItemHide")').eq(1).find('select').val(boTrain.trainingDiscipline);
+	$('.trainObjitem:not(".trainobjectItemHide")').eq(2).find('select').val(boTrain.trainingGrade);
+	$('.trainObjitem:not(".trainobjectItemHide")').eq(3).find('input').val(boTrain.trainingTeachersCount);
 
 }
 function editTrainObj(_this){
@@ -383,21 +387,25 @@ function editTrainObj(_this){
 }
 //删除新增信息内容
 function delTrainObj(_this){
-	var delIndex=_this.parents('.AddtrainItem').index();
-	var Indexlength=_this.parents('.AddtrainItem').length;
-	$('input,select').val('');
-	$('.trainObjName').html('');
-	$('.trainsave').attr('addId',(Indexlength-1));
-	$.each(addTrainObjArry,function(i,item){
-		if(i==delIndex){
-			addTrainObjArry.splice(delIndex,1);
-			_this.parents('.AddtrainItem').remove();
+	pub.Alt('确定删除该项？',true);
+	func=function(){
+		$('.alert-del').hide();
+		var delIndex=_this.parents('.AddtrainItem').index();
+		var Indexlength=_this.parents('.AddtrainItem').length;
+		$('input,select').val('');
+		$('.trainObjName').html('');
+		$('.trainsave').attr('addId',(Indexlength-1));
+		$.each(addTrainObjArry,function(i,item){
+			if(i==delIndex){
+				addTrainObjArry.splice(delIndex,1);
+				_this.parents('.AddtrainItem').remove();
+			}
+		})
+		if($('.AddtrainItem').length==0){
+			$('.trainObjName').attr('disabled',false);
+			$('.trainObjName').attr('onclick','panterScolwap($(this))');
+			$('.Addtrain-wap').hide();
 		}
-	})
-	if($('.AddtrainItem').length==0){
-		$('.trainObjName').attr('disabled',false);
-		$('.trainObjName').attr('onclick','panterScolwap($(this))');
-		$('.Addtrain-wap').hide();
 	}
 }
 

@@ -7,7 +7,7 @@ pub.Alt=function(text,flag,callback){
    		html+='<div class="del-text text-center" style="height: 80px;padding: 20px;font-size:14px;">'+text+'</div>';
    		html+='<div class="text-center">';
    	if(arguments[1]==true){
-   		html+='<button class="btn btn-primary confirm" style="margin-right: 10px;">确定</button>';
+   		html+='<button class="btn btn-primary confirm" style="margin-right: 10px;" onclick="func()">确定</button>';
 	 	html+='<button class="btn btn-default concel">取消</button>';
    		html+='</div>';
    	
@@ -16,7 +16,8 @@ pub.Alt=function(text,flag,callback){
    	$('.alertdiv').html(html);
 	 	$('.concel').on('click',function(){
 	 		$('.alert-del').hide();
-	 	})
+	 	});
+	 	
    	}else{
    		html+='<button class="btn btn-primary confirm" style="margin-right: 10px;padding:6px 20px;">确定</button>';
    		html+='</div>';
@@ -25,10 +26,7 @@ pub.Alt=function(text,flag,callback){
    	$('.alertdiv').html(html);
 	 	$('.confirm').on('click',function(){
 	 		$('.alert-del').hide();
-   	})
-   	}
-   	if(typeof arguments[2]=='function'){
-   		fun();
+   		})
    	}
 	$('.alert-del').height($(window).height());
 }
