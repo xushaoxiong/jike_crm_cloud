@@ -116,4 +116,10 @@ public interface UserMapper {
 	 * @createtime 2017年5月12日下午5:54:04
 	 */
 	List<User> queryNoBeManegeSales();
+	/**
+	 * 查询没有被管理的服务人员
+	 * @return
+	 * @created xushaoxiong
+	 */
+	List<User> queryNoBeManegeServiceLeaders();
 }
