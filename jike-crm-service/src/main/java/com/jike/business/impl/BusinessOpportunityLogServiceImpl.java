@@ -70,7 +70,9 @@ import com.jike.crm.utils.DateUtil;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.RoleService;
 import com.jike.user.UserService;
+import com.jike.user.dao.SalesLeaderMapper;
 import com.jike.user.model.Role;
+import com.jike.user.model.SalesLeader;
 import com.jike.user.model.User;
 @Service("businessOpportunityLogService")
 @Transactional 
@@ -128,6 +130,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private CooperativePartnerSchoolMapper cooperativePartnerSchoolMapper;
 	@Autowired
 	private BoTrainLogMapper  boTrainLogMapper;
+	@Autowired
+	private SalesLeaderMapper salesLeaderMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -1326,7 +1330,7 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 		Long userId = queryJson.getLong("userId");
 		Long roleId = queryJson.getLong("roleId");
 		List<Long> userIds = new ArrayList<Long>();
-		if (roleId != 4) {// 查看所有角色
+		if (roleId == 2) {// 查看所有角色
 			String userName = queryJson.getString("userName");
 			if(userName!=null&&!StringUtils.isEmpty(userName.trim())){
 				userName = "%"+userName+"%";
@@ -1342,7 +1346,26 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				userIds = null;	
 			}
 			
-		}else{
+		}
+		if (roleId == 3){
+			//销售管理查看自己手下销售商机
+			List<SalesLeader> salesLeaderList = salesLeaderMapper.selectByLeaderId(userId);
+			if(!salesLeaderList.isEmpty()){
+				for (SalesLeader salesLeader : salesLeaderList) {
+					if(userIds.contains(salesLeader.getManagedUserId())){
+						userIds.add(salesLeader.getManagedUserId());
+					}
+				}
+				
+			}
+			if(userIds.contains(userId)){
+				userIds.add(userId);
+			}else{
+				userIds.add(-1L);
+			}
+			userIds.add(userId);
+		}
+	    if (roleId == 4){
 			userIds.add(userId);
 		}
 		int totalCount =0;
@@ -1591,6 +1614,10 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 						String newJsonString = JSONObject.toJSONString(cooperativePartnerSchool,SerializerFeature.WriteNullStringAsEmpty);
 						JSONObject newJson =JSON.parseObject(newJsonString);
 						removeCommonAttribute(newJson);
+						boTrainJson.put("cooperativePartnerSchool",newJson);
+					}else{
+						JSONObject newJson = new JSONObject();
+						newJson.put("schoolName", businessOpportunityJson.getString("businessOpportunityNum"));
 						boTrainJson.put("cooperativePartnerSchool",newJson);
 					}
 				 removeCommonAttribute(boTrainJson);
