@@ -71,8 +71,10 @@ import com.jike.crm.utils.PageUtil;
 import com.jike.user.RoleService;
 import com.jike.user.UserService;
 import com.jike.user.dao.SalesLeaderMapper;
+import com.jike.user.dao.ServiceLeaderMapper;
 import com.jike.user.model.Role;
 import com.jike.user.model.SalesLeader;
+import com.jike.user.model.ServiceLeader;
 import com.jike.user.model.User;
 @Service("businessOpportunityLogService")
 @Transactional 
@@ -132,6 +134,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	private BoTrainLogMapper  boTrainLogMapper;
 	@Autowired
 	private SalesLeaderMapper salesLeaderMapper;
+	@Autowired
+	private ServiceLeaderMapper servieLeaderMapper;
 	
 	public JSONObject queryInformationCollectionByBoId(JSONObject jsonData){
 		JSONObject resultJson = new JSONObject();
@@ -1373,8 +1377,33 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				
 			}
 		}
-	    if (roleId == 4){
-			userIds.add(userId);
+		if (roleId == 4) {
+
+			List<Long> leadUserIds = new ArrayList<Long>();
+			List<ServiceLeader> serviceLeaderList = servieLeaderMapper.selectByLeaderId(userId);
+			if (!serviceLeaderList.isEmpty()) {
+				for (ServiceLeader serviceLeader : serviceLeaderList) {
+					leadUserIds.add(serviceLeader.getManagedUserId());
+				}
+			}
+			leadUserIds.add(userId);
+			// 模糊查询用户
+			if (userName != null && !StringUtils.isEmpty(userName.trim())) {
+				userName = "%" + userName + "%";
+				userList = userService.queryUserByUserName(userName);
+				if (!userList.isEmpty()) {
+					for (User user : userList) {
+						if(leadUserIds.contains(user.getUserId())){
+							userIds.add(user.getUserId());
+						}
+					}
+				} else {
+					userIds.add(-1L);
+				}
+
+			} else {
+				userIds.addAll(leadUserIds);
+			}
 		}
 		int totalCount =0;
 		if(roleId == 3){
@@ -2269,19 +2298,19 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	public JSONObject checkIfCreateLog(Long cooperativePartnerSchoolId) {
 		JSONObject resultJson = new JSONObject();
 		List<BoCustomerService> boCustomerServiceList = boCustomerServiceMapper.selectBoCustomerServiceByCspId(cooperativePartnerSchoolId);
-		if(boCustomerServiceList.isEmpty()){
+		if(!boCustomerServiceList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在服务日志");
 			return resultJson;
 		}
 		List<BoSupport> boSupportList = boSupportMapper.selectBoSupportByCspId(cooperativePartnerSchoolId);
-		if(boSupportList.isEmpty()){
+		if(!boSupportList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在支持日志");
 			return resultJson;
 		}
 		List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByCspId(cooperativePartnerSchoolId);
-		if(boTrainList.isEmpty()){
+		if(!boTrainList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在培训日志");
 			return resultJson;

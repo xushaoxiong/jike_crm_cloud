@@ -376,33 +376,66 @@ public class UserServiceImpl implements UserService {
 		if(!saleLeaderArr.isEmpty()){ 
 			for (Map<String,Object> map : saleLeaderArr) {
 				Long leaderId = Long.parseLong(map.get("leader_id").toString());
-				String leader_name = map.get("leader_name").toString();
-				Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
-				String managed_user_name = map.get("managed_user_name").toString();
-				String managed_gender = map.get("managed_gender").toString();
-				String managed_email = map.get("managed_email").toString();
-				
-				if(leaderId!=nowLeaderId){
-					managedUserList = new JSONArray();
-					nowLeaderId = leaderId;
-					JSONObject leaderJson = new JSONObject();
-					leaderJson.put("leaderId", leaderId);
-					leaderJson.put("leaderName", leader_name);
-					JSONObject managedUserJson = new JSONObject();
-					managedUserJson.put("managedUserId", managedUserId);
-					managedUserJson.put("managedUserName", managed_user_name);
-					managedUserJson.put("managedGender", managed_gender);
-					managedUserJson.put("managedEmail", managed_email);
-					managedUserList.add(managedUserJson);
-					leaderJson.put("managedUserList",managedUserList);
-					saleLeaderList.add(leaderJson);
+				if(!"%%".equals(managedName.replaceAll(" ", ""))){
+					List<Map<String,Object>> saleLeaderIdArr = salesLeaderMapper.queryByLeaderId(leaderId);
+					for(Map<String,Object> map1 : saleLeaderIdArr){
+						String leader_name = map1.get("leader_name").toString();
+						Long managedUserId = Long.parseLong(map1.get("managed_user_id").toString());
+						String managed_user_name = map1.get("managed_user_name").toString();
+						String managed_gender = map1.get("managed_gender").toString();
+						String managed_email = map1.get("managed_email").toString();
+						if(leaderId!=nowLeaderId){
+							managedUserList = new JSONArray();
+							nowLeaderId = leaderId;
+							JSONObject leaderJson = new JSONObject();
+							leaderJson.put("leaderId", leaderId);
+							leaderJson.put("leaderName", leader_name);
+							JSONObject managedUserJson = new JSONObject();
+							managedUserJson.put("managedUserId", managedUserId);
+							managedUserJson.put("managedUserName", managed_user_name);
+							managedUserJson.put("managedGender", managed_gender);
+							managedUserJson.put("managedEmail", managed_email);
+							managedUserList.add(managedUserJson);
+							leaderJson.put("managedUserList",managedUserList);
+							saleLeaderList.add(leaderJson);
+						}else{
+							JSONObject managedUserJson = new JSONObject();
+							managedUserJson.put("managedUserId", managedUserId);
+							managedUserJson.put("managedUserName", managed_user_name);
+							managedUserJson.put("managedGender", managed_gender);
+							managedUserJson.put("managedEmail", managed_email);
+							managedUserList.add(managedUserJson);
+						}
+					}
 				}else{
-					JSONObject managedUserJson = new JSONObject();
-					managedUserJson.put("managedUserId", managedUserId);
-					managedUserJson.put("managedUserName", managed_user_name);
-					managedUserJson.put("managedGender", managed_gender);
-					managedUserJson.put("managedEmail", managed_email);
-					managedUserList.add(managedUserJson);
+					String leader_name = map.get("leader_name").toString();
+					Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
+					String managed_user_name = map.get("managed_user_name").toString();
+					String managed_gender = map.get("managed_gender").toString();
+					String managed_email = map.get("managed_email").toString();
+					
+					if(leaderId!=nowLeaderId){
+						managedUserList = new JSONArray();
+						nowLeaderId = leaderId;
+						JSONObject leaderJson = new JSONObject();
+						leaderJson.put("leaderId", leaderId);
+						leaderJson.put("leaderName", leader_name);
+						JSONObject managedUserJson = new JSONObject();
+						managedUserJson.put("managedUserId", managedUserId);
+						managedUserJson.put("managedUserName", managed_user_name);
+						managedUserJson.put("managedGender", managed_gender);
+						managedUserJson.put("managedEmail", managed_email);
+						managedUserList.add(managedUserJson);
+						leaderJson.put("managedUserList",managedUserList);
+						saleLeaderList.add(leaderJson);
+					}else{
+						JSONObject managedUserJson = new JSONObject();
+						managedUserJson.put("managedUserId", managedUserId);
+						managedUserJson.put("managedUserName", managed_user_name);
+						managedUserJson.put("managedGender", managed_gender);
+						managedUserJson.put("managedEmail", managed_email);
+						managedUserList.add(managedUserJson);
+					}
 				}
 			}
 		}
@@ -529,7 +562,8 @@ public class UserServiceImpl implements UserService {
 			resultJson.put("message", "更新成功");
 			return resultJson;
 		}else{
-			resultJson.put("msg", "请输入管理者id");
+			resultJson.put("state", "fail");
+			resultJson.put("message", "请输入管理者id");
 			return resultJson;
 		}
 	}
@@ -552,41 +586,73 @@ public class UserServiceImpl implements UserService {
 		List<Map<String,Object>> serviceLeaderArr = serviceLeaderMapper.queryByServiceLeaderAndManagedName(leaderName,managedName,userId);
 		Long nowLeaderId = null;
 		JSONArray managedUserList = null;
-		JSONArray saleLeaderList = new JSONArray();
+		JSONArray serviceLeaderList = new JSONArray();
 		if(!serviceLeaderArr.isEmpty()){ 
 			for (Map<String,Object> map : serviceLeaderArr) {
 				Long leaderId = Long.parseLong(map.get("leader_id").toString());
-				String leader_name = map.get("leader_name").toString();
-				Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
-				String managed_user_name = map.get("managed_user_name").toString();
-				String managed_gender = map.get("managed_gender").toString();
-				String managed_email = map.get("managed_email").toString();
-				
-				if(leaderId!=nowLeaderId){
-					managedUserList = new JSONArray();
-					nowLeaderId = leaderId;
-					JSONObject leaderJson = new JSONObject();
-					leaderJson.put("leaderId", leaderId);
-					leaderJson.put("leaderName", leader_name);
-					JSONObject managedUserJson = new JSONObject();
-					managedUserJson.put("managedUserId", managedUserId);
-					managedUserJson.put("managedUserName", managed_user_name);
-					managedUserJson.put("managedGender", managed_gender);
-					managedUserJson.put("managedEmail", managed_email);
-					managedUserList.add(managedUserJson);
-					leaderJson.put("managedUserList",managedUserList);
-					saleLeaderList.add(leaderJson);
+				if(!"%%".equals(managedName.replaceAll(" ", ""))){
+					List<Map<String,Object>> serviceLeaderIdArr = serviceLeaderMapper.queryByLeaderId(leaderId);
+					for(Map<String,Object> map1 : serviceLeaderIdArr){
+						String leader_name = map1.get("leader_name").toString();
+						Long managedUserId = Long.parseLong(map1.get("managed_user_id").toString());
+						String managed_user_name = map1.get("managed_user_name").toString();
+						String managed_gender = map1.get("managed_gender").toString();
+						String managed_email = map1.get("managed_email").toString();
+						if(leaderId!=nowLeaderId){
+							managedUserList = new JSONArray();
+							nowLeaderId = leaderId;
+							JSONObject leaderJson = new JSONObject();
+							leaderJson.put("leaderId", leaderId);
+							leaderJson.put("leaderName", leader_name);
+							JSONObject managedUserJson = new JSONObject();
+							managedUserJson.put("managedUserId", managedUserId);
+							managedUserJson.put("managedUserName", managed_user_name);
+							managedUserJson.put("managedGender", managed_gender);
+							managedUserJson.put("managedEmail", managed_email);
+							managedUserList.add(managedUserJson);
+							leaderJson.put("managedUserList",managedUserList);
+							serviceLeaderList.add(leaderJson);
+						}else{
+							JSONObject managedUserJson = new JSONObject();
+							managedUserJson.put("managedUserId", managedUserId);
+							managedUserJson.put("managedUserName", managed_user_name);
+							managedUserJson.put("managedGender", managed_gender);
+							managedUserJson.put("managedEmail", managed_email);
+							managedUserList.add(managedUserJson);
+						}
+					}
 				}else{
-					JSONObject managedUserJson = new JSONObject();
-					managedUserJson.put("managedUserId", managedUserId);
-					managedUserJson.put("managedUserName", managed_user_name);
-					managedUserJson.put("managedGender", managed_gender);
-					managedUserJson.put("managedEmail", managed_email);
-					managedUserList.add(managedUserJson);
+					String leader_name = map.get("leader_name").toString();
+					Long managedUserId = Long.parseLong(map.get("managed_user_id").toString());
+					String managed_user_name = map.get("managed_user_name").toString();
+					String managed_gender = map.get("managed_gender").toString();
+					String managed_email = map.get("managed_email").toString();
+					if(leaderId!=nowLeaderId){
+						managedUserList = new JSONArray();
+						nowLeaderId = leaderId;
+						JSONObject leaderJson = new JSONObject();
+						leaderJson.put("leaderId", leaderId);
+						leaderJson.put("leaderName", leader_name);
+						JSONObject managedUserJson = new JSONObject();
+						managedUserJson.put("managedUserId", managedUserId);
+						managedUserJson.put("managedUserName", managed_user_name);
+						managedUserJson.put("managedGender", managed_gender);
+						managedUserJson.put("managedEmail", managed_email);
+						managedUserList.add(managedUserJson);
+						leaderJson.put("managedUserList",managedUserList);
+						serviceLeaderList.add(leaderJson);
+					}else{
+						JSONObject managedUserJson = new JSONObject();
+						managedUserJson.put("managedUserId", managedUserId);
+						managedUserJson.put("managedUserName", managed_user_name);
+						managedUserJson.put("managedGender", managed_gender);
+						managedUserJson.put("managedEmail", managed_email);
+						managedUserList.add(managedUserJson);
+					}
 				}
 			}
 		}
-		resultJson.put("serviceLeaderList", saleLeaderList);
+		resultJson.put("serviceLeaderList", serviceLeaderList);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 		return resultJson;

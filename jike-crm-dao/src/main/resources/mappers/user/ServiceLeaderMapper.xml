@@ -191,4 +191,21 @@
    delete from service_leader
    where leader_id = #{leaderId,jdbcType=BIGINT}
   </delete>
+  <select id = "queryByLeaderId" resultType="java.util.Map">
+	select
+	s.leader_id,
+	(select name from user u where u.user_id = s.leader_id) leader_name,
+	s.managed_user_id,
+	(select name from user u where u.user_id = s.managed_user_id) managed_user_name,
+	(select gender from user u where u.user_id = s.managed_user_id) managed_gender,
+	(select email from user u where u.user_id = s.managed_user_id) managed_email
+	from
+	service_leader s
+	<where>
+	<if test="leaderId != null">
+     leader_id = #{leaderId,jdbcType=BIGINT}
+	</if>
+	</where> 
+	order by s.leader_id,s.create_time
+  </select>
 </mapper>
