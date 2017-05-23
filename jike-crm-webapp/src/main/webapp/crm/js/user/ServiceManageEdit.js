@@ -1,7 +1,7 @@
 
 //返回上一级
 $('.goBack').click(function(){
-	$('.R-wap').load('user/SaleManage.html');
+	$('.R-wap').load('user/ServiceManage.html');
 })
 
 //选择被管理者
@@ -13,7 +13,7 @@ $('.EditBymanagePerson').click(function(){
 		BySaleidArry.push($(this).attr('byuserid'));
 	})
 	$('.BymanagePersonwap').modal('toggle');
-	$ajax('post','user/queryNoBeManegeSales','{}',function succF(jo){
+	$ajax('post','user/queryNoBeManegeServiceLeaders','{}',function succF(jo){
 		BymanagePersonList(jo.userList,uid);
 		addState=false;
 		$.each(BySaleidArry, function(i3,item3) {
@@ -44,7 +44,6 @@ $('.EditBymanagePerson').click(function(){
 				Mhtml+='</tr>';
 			}	
 		});
-		console.log(addState)
 		if(addState){
 			addManage();
 			$('.BymanagePersonItem').append(Mhtml);
@@ -83,7 +82,7 @@ function addManage(){
 		_this.find('.checkimg').toggleClass('checkedimg');
 
 	}
-	$('.BymanagePersonConfirm').click(function(){
+	$('.busnisListConfirm').click(function(){
 		$('.BymanagePersonwap').modal('hide');
 		var BymanagePArry=[];
 		$('.BymanagePersonItem .checkedimg').each(function(i,item){
@@ -112,8 +111,8 @@ function addManage(){
 		})
 		editSaleJ.leaderId=leaderId;
 		editSaleJ.managedUserIds=BySaleidArry;
-		$ajax('post','user/updateSalesLeader',editSaleJ,function succF(jo){
-			$('.R-wap').load('user/SaleManage.html')
+		$ajax('post','user/updateServiceLeader',editSaleJ,function succF(jo){
+			$('.R-wap').load('user/ServiceManage.html')
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
