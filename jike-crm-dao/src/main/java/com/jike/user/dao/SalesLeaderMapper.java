@@ -75,7 +75,15 @@ public interface SalesLeaderMapper {
 	 * @createtime 2017年5月16日上午10:04:18
 	 */
 	List<Map<String, Object>> queryByLeaderAndManagedName(@Param("leaderName")String leaderName, @Param("managedName")String managedName, @Param("userId")Long userId);
-
+	/**
+	 * 查询销售管理和被管理者 查询有参数
+	 * @param leaderName
+	 * @param managedName
+	 * @param userId 
+	 * @return
+	 * @created xushaoxiong
+	 */
+	List<Map<String, Object>> queryByLeaderId(@Param("leaderId")Long leaderId);
 	/**
 	 * 删除销售管理
 	 * @param leaderId
