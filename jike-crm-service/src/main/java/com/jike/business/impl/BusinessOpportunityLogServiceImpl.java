@@ -1377,27 +1377,32 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				
 			}
 		}
-	    if (roleId == 4){
-	    	List<ServiceLeader> serviceLeaderList = servieLeaderMapper.selectByLeaderId(userId);
-	    	if(!serviceLeaderList.isEmpty()){
-	    		for(ServiceLeader serviceLeader : serviceLeaderList){
-	    			userIds.add(serviceLeader.getManagedUserId());
-	    		}
-	    	}
-			userIds.add(userId);
-			//模糊查询用户
+		if (roleId == 4) {
+
+			List<Long> leadUserIds = new ArrayList<Long>();
+			List<ServiceLeader> serviceLeaderList = servieLeaderMapper.selectByLeaderId(userId);
+			if (!serviceLeaderList.isEmpty()) {
+				for (ServiceLeader serviceLeader : serviceLeaderList) {
+					leadUserIds.add(serviceLeader.getManagedUserId());
+				}
+			}
+			leadUserIds.add(userId);
+			// 模糊查询用户
 			if (userName != null && !StringUtils.isEmpty(userName.trim())) {
-				createUserIds =new ArrayList<Long>();
 				userName = "%" + userName + "%";
 				userList = userService.queryUserByUserName(userName);
 				if (!userList.isEmpty()) {
 					for (User user : userList) {
-						createUserIds.add(user.getUserId());
+						if(leadUserIds.contains(user.getUserId())){
+							userIds.add(user.getUserId());
+						}
 					}
 				} else {
-					createUserIds.add(-1L);
+					userIds.add(-1L);
 				}
-				
+
+			} else {
+				userIds.addAll(leadUserIds);
 			}
 		}
 		int totalCount =0;
