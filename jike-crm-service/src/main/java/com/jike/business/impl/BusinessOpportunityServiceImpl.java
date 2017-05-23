@@ -691,7 +691,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		//如果是服务，查询服务商机
 		if (queryJson.getLong("roleId") != 3) {
 			resultJson.put("state", "fail");
-			resultJson.put("message", "没有编辑权限");
+			resultJson.put("message", "没有权限");
 			return resultJson;
 		}		
 		List<BusinessOpportunity> businessOpportunityList = businessOpportunityMapper.getCopBusinessOpportunity(businessOpportunityName,userId);
