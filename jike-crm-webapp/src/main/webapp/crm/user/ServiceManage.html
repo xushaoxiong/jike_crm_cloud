@@ -3,14 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/pagination.css" />
-		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
-		<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="../js/jquery.pagination.js" ></script>
-		<script type="text/javascript" src="../js/pub/ajaxUrl.js"></script>
 	</head>
 	<style>
+		.managedUserNameWap .manauserline:last-child{
+			display: none;
+		}
+		
+		.managedUserNameWap .manauserline:nth-child(3){
+			display: none;
+		}
 
 	</style>
 	<body>
@@ -48,25 +49,8 @@
 							<th>操作</th>
 						</tr>
 					</thead>
-					<tbody class="list-tr">
-						<tr>
-							<td>1</td>
-							<td>张三</td>
-							<td>李四/赵武/刘浏</td>	
-							<td>
-								<button class="btn btn-primary edit">编辑</button>
-								<button class="btn btn-primary delBuiness">删除</button>
-							</td>
-						</tr>
-					</tbody>
+					<tbody class="list-tr"></tbody>
 				</table>
-			</div>
-			<!--分页-->
-			<div class="Page-wap text-center clearfix">
-				<div class="pagination-wap text-center" style="display: inline-block;">
-					<span class="totalNum pull-left"></span>
-					<div id="Pagination" class="pagination"></div>
-				</div>
 			</div>
 		</div>
 		<!--删除弹框-->
@@ -77,7 +61,7 @@
 						<h4>删除商机</h4>
 					</div>
 					<div class="modal-body clearfix">
-						<p style="margin-top: 15px;">提醒：是否确删除（<span class="businessNum"></span>），删除后将不再显示</p>
+						<p style="margin-top: 15px;">提醒：是否确删除服务管理者（<span class="serverName"></span>）</p>
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary delConfirm">确定</button>
@@ -87,5 +71,5 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="../js/personnelmanage/serverperssonList.js" ></script>
+	<script type="text/javascript" src="js/user/ServiceManage.js" ></script>
 </html>

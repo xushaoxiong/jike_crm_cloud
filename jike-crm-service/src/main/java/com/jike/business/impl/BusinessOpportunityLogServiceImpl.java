@@ -2269,19 +2269,19 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 	public JSONObject checkIfCreateLog(Long cooperativePartnerSchoolId) {
 		JSONObject resultJson = new JSONObject();
 		List<BoCustomerService> boCustomerServiceList = boCustomerServiceMapper.selectBoCustomerServiceByCspId(cooperativePartnerSchoolId);
-		if(boCustomerServiceList.isEmpty()){
+		if(!boCustomerServiceList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在服务日志");
 			return resultJson;
 		}
 		List<BoSupport> boSupportList = boSupportMapper.selectBoSupportByCspId(cooperativePartnerSchoolId);
-		if(boSupportList.isEmpty()){
+		if(!boSupportList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在支持日志");
 			return resultJson;
 		}
 		List<BoTrain> boTrainList = boTrainMapper.selectBoTrainByCspId(cooperativePartnerSchoolId);
-		if(boTrainList.isEmpty()){
+		if(!boTrainList.isEmpty()){
 			resultJson.put("state", "fail");
 			resultJson.put("message", "已存在培训日志");
 			return resultJson;
