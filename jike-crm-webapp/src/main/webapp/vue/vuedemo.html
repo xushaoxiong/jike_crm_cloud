@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="js/vue.js" ></script>
+	</head>
+	<style>
+		.class1{
+			background: red;
+		}
+	</style>
+	<body>
+		<div class="box1">
+			<p>{{message}}</p>
+			<ul  v-html="liItem"></ul>
+		</div>
+		<div id="app">
+			  <label for="r1">修改颜色</label><input type="checkbox" v-model="class1" id="r1">
+			  <br><br>
+			  <div v-bind:class="{'class1': class1}">
+			    directiva v-bind:class
+			  </div>
+		</div>
+		
+		<div>(指令是带有 v- 前缀的特殊属性)</div>
+		<div class="box2">
+			<p v-if="ok">hello world</p>
+			<p v-if="ok2">hello hello</p>
+			<a v-bind:href="url">百度链接</a>
+			<p>{{test}}</p>
+			<input v-model="test">
+			<button v-on:click="btn1">点击btn</button>
+			
+		</div>
+		<ul class="box3">
+			<li v-for='lis in list'></li>
+		</ul>
+	</body>
+	<script>
+	var list=['项目1','项目2','项目3']
+	function list(jo){
+		var html="";
+		$.each(jo, function(i,item) {
+			html+='<li>'+item+'</li>';
+			return html;
+		});
+	}
+	
+		new Vue({
+		  el: '.box1',
+		  data: {
+		    message: 'Hello Vue.js!',
+		    liItem:'<li>hello</li>'
+		  }
+		})
+		new Vue({
+		    el: '#app',
+			data:{
+			    class1: false
+			}
+		});
+		new Vue({
+		    el: '.box2',
+			data:{
+			    ok: false,
+			    ok2:true,
+			    url:'http://www.baidu.com',
+			    test:''
+			},
+			methods: {
+			    btn1: function () {
+			      	$('.box2').css('background','red');
+			      	console.log($(this))
+			    }
+		  }
+		});
+		new Vue({
+		    el: '.box3',
+			data:{
+			   
+			},
+			items: [
+		      { message: 'www.runoob.com' },
+		      { message: 'www.w3cschool.cc' }
+		    ]
+		});
+	</script>
+</html>
