@@ -89,4 +89,13 @@ public interface ServiceLeaderMapper {
 	 * @createtime 2017年5月16日下午1:35:31
 	 */
 	void deleteByLeaderId(Long leaderId);
+	/**
+	 * 查询销售管理和被管理者 查询有参数
+	 * @param leaderName
+	 * @param managedName
+	 * @param userId 
+	 * @return
+	 * @created xushaoxiong
+	 */
+	List<Map<String, Object>> queryByLeaderId(@Param("leaderId")Long leaderId);
 }
