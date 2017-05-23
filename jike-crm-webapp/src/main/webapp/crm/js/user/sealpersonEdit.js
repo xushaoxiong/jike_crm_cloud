@@ -1,3 +1,9 @@
+
+//返回上一级
+$('.goBack').click(function(){
+	$('.R-wap').load('user/SaleManage.html');
+})
+
 //选择被管理者
 var addState=true;
 $('.EditBymanagePerson').click(function(){
@@ -38,6 +44,7 @@ $('.EditBymanagePerson').click(function(){
 				Mhtml+='</tr>';
 			}	
 		});
+		console.log(addState)
 		if(addState){
 			addManage();
 			$('.BymanagePersonItem').append(Mhtml);

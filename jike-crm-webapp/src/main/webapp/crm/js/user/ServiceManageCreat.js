@@ -21,7 +21,7 @@
 			pub.Alt(jo.message,false);
 		})
 	})
-	//销售管理者列表
+	//服务管理者列表
 	function managePersonList(Mdata){
 		var Mhtml='';
 		$.each(Mdata, function(i,item) {
@@ -44,7 +44,7 @@
 		var SaleManageid=$('.checkedimg').next().attr('userid');
 		$('.managePerson').html(SaleManagehtml);
 		$('.managePerson').attr('saleid',SaleManageid);
-		//当销售管理者改变时去掉被管理者时候相同和管理者相同的人
+		//当服务管理者改变时去掉被管理者时候相同和管理者相同的人
 		$('.BymanagePerson span').each(function(i,item){
 			if($(this).attr('byuserid')==SaleManageid){
 				$(this).remove();
@@ -87,7 +87,7 @@
 	}
 	//被选择人状态，没有选择管理者被管理者不能点击
 	function BymanagePState(){
-		if($('.managePerson').html()!='请选择销售管理者'){
+		if($('.managePerson').html()!='请选择服务管理者'){
 			$('.BymanagePerson').attr('disabled',false);
 			BymanagePersonclick();
 		}else{
@@ -155,8 +155,8 @@
 		saleJ.leaderId=Saleuid;
 		saleJ.managedUserIds=BySaleuid;
 		var BySaleuid=$('.BymanagePerson').html();
-		if(SaleManagehtml=='请选择销售管理者'){
-			pub.Alt('请选择销售管理者',false);
+		if(SaleManagehtml=='请选择服务管理者'){
+			pub.Alt('请选择服务管理者',false);
 			return;
 		}
 		if(BySaleManagehtml=='请选择被管理者'){
