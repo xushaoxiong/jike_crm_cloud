@@ -512,22 +512,26 @@ public class UserServiceImpl implements UserService {
 			return resultJson;
 		}
 		Long leaderId = json.getLong("leaderId");
-		serviceLeaderMapper.deleteByPrimaryKey(leaderId);
-		
-		JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
-		Date nowDate = new Date();
-		for (Object obj : managedUserIds) {
-			Long managedUserId = Long.parseLong(obj.toString());
-			ServiceLeader leader = new ServiceLeader();
-			leader.setLeaderId(leaderId);
-			leader.setManagedUserId(managedUserId);
-			leader.setCreateBy(json.getLong("userId"));
-			leader.setCreateTime(nowDate);
-			serviceLeaderMapper.insert(leader);
+		if(!"".equals(leaderId) && leaderId != null){
+			serviceLeaderMapper.deleteByPrimaryKey(leaderId);
+			JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
+			Date nowDate = new Date();
+			for (Object obj : managedUserIds) {
+				Long managedUserId = Long.parseLong(obj.toString());
+				ServiceLeader leader = new ServiceLeader();
+				leader.setLeaderId(leaderId);
+				leader.setManagedUserId(managedUserId);
+				leader.setCreateBy(json.getLong("userId"));
+				leader.setCreateTime(nowDate);
+				serviceLeaderMapper.insert(leader);
+			}
+			resultJson.put("state", "success");
+			resultJson.put("message", "更新成功");
+			return resultJson;
+		}else{
+			resultJson.put("msg", "请输入管理者id");
+			return resultJson;
 		}
-		resultJson.put("state", "success");
-		resultJson.put("message", "更新成功");
-		return resultJson;
 	}
 	public JSONObject queryServiceLeader(JSONObject queryjson) {
 		JSONObject resultJson = new JSONObject();
