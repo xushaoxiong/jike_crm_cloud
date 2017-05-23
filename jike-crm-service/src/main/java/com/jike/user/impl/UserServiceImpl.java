@@ -513,7 +513,7 @@ public class UserServiceImpl implements UserService {
 		}
 		Long leaderId = json.getLong("leaderId");
 		if(!"".equals(leaderId) && leaderId != null){
-			serviceLeaderMapper.deleteByPrimaryKey(leaderId);
+			serviceLeaderMapper.deleteByLeaderId(leaderId);
 			JSONArray  managedUserIds = json.getJSONArray("managedUserIds");
 			Date nowDate = new Date();
 			for (Object obj : managedUserIds) {
