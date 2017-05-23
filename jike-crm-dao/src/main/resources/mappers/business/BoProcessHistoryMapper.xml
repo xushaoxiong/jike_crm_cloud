@@ -168,4 +168,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where bo_process_history_id = #{boProcessHistoryId,jdbcType=BIGINT}
   </update>
+  <select id="selectByBoIdAndBoProcess" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from bo_process_history
+    where business_opportunity_id = #{businessOpportunityId,jdbcType=BIGINT}
+    and  business_opportunity_process = #{businessOpportunityProcess,jdbcType=VARCHAR}
+  </select>
 </mapper>
