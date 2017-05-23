@@ -1,5 +1,7 @@
 package com.jike.business.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jike.business.model.BoProcessHistory;
 
 public interface BoProcessHistoryMapper {
@@ -50,4 +52,6 @@ public interface BoProcessHistoryMapper {
      * @mbggenerated Thu Apr 27 14:46:09 CST 2017
      */
     int updateByPrimaryKey(BoProcessHistory record);
+
+	BoProcessHistory selectByBoIdAndBoProcess(@Param("businessOpportunityId")Long businessOpportunityId, @Param("businessOpportunityProcess")String businessOpportunityProcess);
 }

@@ -546,6 +546,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 			boProcessHistory.setCreateTime(new Date());
 			boProcessHistory.setLogDate(json.getDate("logDate"));
 			boProcessHistoryMapper.insert(boProcessHistory);
+		}else{
+			BoProcessHistory boProcessHistory = boProcessHistoryMapper.selectByBoIdAndBoProcess(businessOpportunityId,businessOpportunityProcess);
+			if(boProcessHistory!=null){
+				boProcessHistory.setLogDate(json.getDate("logDate"));
+				boProcessHistory.setUpdateBy(json.getLong("userId"));
+				boProcessHistory.setUpdateTime(new Date());
+			}
 		}
 	}
 	
