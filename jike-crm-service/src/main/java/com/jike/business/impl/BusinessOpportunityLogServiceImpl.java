@@ -1584,7 +1584,12 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 						JSONObject comJson = JSONObject.parseObject(json);
 						comJson.put("cooperationDetailsJson", cooperationDetailsJson);
 						json = comJson.toJSONString();
+
 					}
+					JSONObject comJson = JSONObject.parseObject(json);
+					comJson.put("cooperationDetailsJson", cooperationDetailsJson);
+					json = comJson.toJSONString();
+				}
 			}
 			
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
