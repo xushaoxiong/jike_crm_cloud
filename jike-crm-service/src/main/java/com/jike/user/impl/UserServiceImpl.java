@@ -295,7 +295,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		String name = "";
 		if(!"".equals(json.getString("name")) && json.getString("name") != null){
-			name = "%" + name + "%";
+			name = "%" + json.getString("name") + "%";
 		}else{
 			name = "%%";
 		}
@@ -308,7 +308,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		String name = "";
 		if(!"".equals(json.getString("name")) && json.getString("name") != null){
-			name = "%" + name + "%";
+			name = "%" + json.getString("name") + "%";
 		}else{
 			name = "%%";
 		}
@@ -683,7 +683,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		String name = "";
 		if(!"".equals(json.getString("name")) && json.getString("name") != null){
-			name = "%" + name + "%";
+			name = "%" + json.getString("name") + "%";
 		}else{
 			name = "%%";
 		}
@@ -695,7 +695,7 @@ public class UserServiceImpl implements UserService {
 		JSONObject resultJson = new JSONObject();
 		String name = "";
 		if(!"".equals(json.getString("name")) && json.getString("name") != null){
-			name = "%" + name + "%";
+			name = "%" + json.getString("name") + "%";
 		}else{
 			name = "%%";
 		}
