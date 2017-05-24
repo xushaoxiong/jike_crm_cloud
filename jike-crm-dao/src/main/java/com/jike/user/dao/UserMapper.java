@@ -1,6 +1,7 @@
 package com.jike.user.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -90,7 +91,8 @@ public interface UserMapper {
 	 * @created wangyb
 	 * @createtime 2017年4月18日下午3:29:33
 	 */
-	List<User> selectByRoleId(Long roleId);
+	//List<User> selectByRoleIdAndName(Long roleId,String name);
+	List<Map<String, Object>> selectByRoleIdAndName(@Param("roleId")Long roleId,@Param("name")String name);
 
 	/**
 	 * 通过名称模糊查询销售服务用户
@@ -115,11 +117,11 @@ public interface UserMapper {
 	 * @created wangyb
 	 * @createtime 2017年5月12日下午5:54:04
 	 */
-	List<User> queryNoBeManegeSales();
+	List<User> queryNoBeManegeSales(String name);
 	/**
 	 * 查询没有被管理的服务人员
 	 * @return
 	 * @created xushaoxiong
 	 */
-	List<User> queryNoBeManegeServiceLeaders();
+	List<User> queryNoBeManegeServiceLeaders(String name);
 }

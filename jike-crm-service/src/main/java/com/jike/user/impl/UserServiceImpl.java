@@ -293,31 +293,47 @@ public class UserServiceImpl implements UserService {
 	
 	public JSONObject querySaleList(JSONObject json){
 		JSONObject resultJson = new JSONObject();
+		String name = "";
+		if(!"".equals(json.getString("name")) && json.getString("name") != null){
+			name = "%" + name + "%";
+		}else{
+			name = "%%";
+		}
 		Long roleId = 3L;
-		this.queryUserList(resultJson, roleId);
+		this.queryUserList(resultJson, roleId,name);
 		return resultJson;
 	}
 	
 	public JSONObject queryServiceList(JSONObject json){
 		JSONObject resultJson = new JSONObject();
+		String name = "";
+		if(!"".equals(json.getString("name")) && json.getString("name") != null){
+			name = "%" + name + "%";
+		}else{
+			name = "%%";
+		}
 		Long roleId = 4L;
-		this.queryUserList(resultJson, roleId);
+		this.queryUserList(resultJson, roleId,name);
 		return resultJson;
 	}
 	
-	private void queryUserList(JSONObject resultJson, Long roleId) {
-		List<User> userList = userMapper.selectByRoleId(roleId);
-		JSONArray userArr = new JSONArray();
-		for (User user : userList) {
-			JSONObject userJson = new JSONObject();
-			userJson.put("name", user.getName());
-			userJson.put("loginName", user.getLoginName());
-			userJson.put("gender", user.getGender());
-			userJson.put("email", user.getEmail());
-			userJson.put("userId", user.getUserId());
-			userArr.add(userJson);
+	private void queryUserList(JSONObject resultJson, Long roleId,String name) {
+		List<Map<String,Object>> map = userMapper.selectByRoleIdAndName(roleId,name);
+		JSONArray serviceLeaderList = new JSONArray();
+		if(!map.isEmpty()){ 
+			for(int i = 0;i<map.size();i++){
+				JSONObject userJson = new JSONObject();
+				User user = (User)map.get(i);
+				userJson.put("name",user.getName());
+				userJson.put("loginName",user.getLoginName());
+				userJson.put("gender",user.getGender());
+				userJson.put("email",user.getEmail());
+				userJson.put("userId",user.getUserId());
+				serviceLeaderList.add(userJson);
+			}
+			
 		}
-		resultJson.put("userList", userArr);
+		resultJson.put("userList", serviceLeaderList);
 		resultJson.put("state", "success");
 		resultJson.put("message", "查询成功");
 	}
@@ -336,7 +352,13 @@ public class UserServiceImpl implements UserService {
 			resultJson.put("message", "没有权限");
 			return resultJson;
 		} 
-		List<User> userList = userMapper.queryNoBeManegeSales();
+		String name = "";
+		if(!"".equals(queryJson.get("name")) && queryJson.get("name") != null){
+			name = "%" + queryJson.get("name") + "%";
+		}else{
+			name = "%%";
+		}
+		List<User> userList = userMapper.queryNoBeManegeSales(name);
 		JSONArray userArr = new JSONArray();
 		for (User user : userList) {
 			JSONObject userJson = new JSONObject();
@@ -659,14 +681,26 @@ public class UserServiceImpl implements UserService {
 	}
 	public JSONObject queryServiceLeaderList(JSONObject json) {
 		JSONObject resultJson = new JSONObject();
+		String name = "";
+		if(!"".equals(json.getString("name")) && json.getString("name") != null){
+			name = "%" + name + "%";
+		}else{
+			name = "%%";
+		}
 		Long roleId = 3L;
-		this.queryUserList(resultJson, roleId);
+		this.queryUserList(resultJson, roleId,name);
 		return resultJson;
 	}
 	public JSONObject queryServerServiceLeaderList(JSONObject json){
 		JSONObject resultJson = new JSONObject();
+		String name = "";
+		if(!"".equals(json.getString("name")) && json.getString("name") != null){
+			name = "%" + name + "%";
+		}else{
+			name = "%%";
+		}
 		Long roleId = 4L;
-		this.queryUserList(resultJson, roleId);
+		this.queryUserList(resultJson, roleId,name);
 		return resultJson;
 	}
 	public JSONObject queryNoBeManegeServiceLeaders(JSONObject parseObject) {
@@ -676,8 +710,14 @@ public class UserServiceImpl implements UserService {
 			resultJson.put("state", "fail");
 			resultJson.put("message", "没有权限");
 			return resultJson;
-		} 
-		List<User> userList = userMapper.queryNoBeManegeServiceLeaders();
+		}
+		String name = "";
+		if(!"".equals(parseObject.get("name")) && parseObject.get("name") != null){
+			name = "%" + parseObject.get("name") + "%";
+		}else{
+			name = "%%";
+		}
+		List<User> userList = userMapper.queryNoBeManegeServiceLeaders(name);
 		JSONArray userArr = new JSONArray();
 		for (User user : userList) {
 			JSONObject userJson = new JSONObject();
