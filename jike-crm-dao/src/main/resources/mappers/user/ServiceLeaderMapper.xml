@@ -24,7 +24,7 @@
     service_leader_id, leader_id, managed_user_id, create_by, create_time, update_by, 
     update_time
   </sql>
-  <select id="selectByLeaderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from service_leader
@@ -207,5 +207,11 @@
 	</if>
 	</where> 
 	order by s.leader_id,s.create_time
+  </select>
+    <select id="selectByLeaderId"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	 select 
+    <include refid="Base_Column_List" />
+    from service_leader
+    where leader_id = #{leaderId,jdbcType=BIGINT}
   </select>
 </mapper>
