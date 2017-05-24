@@ -25,6 +25,13 @@ function supportHtml(){
 				suportHtml+='</div>';
 				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
 			suportHtml+='</div>';
+			suportHtml+='<div class="form-group row ">';
+				suportHtml+='<label class="col-sm-2">增删查改教师学生信息</label>';
+				suportHtml+='<div class="col-sm-1">';
+					suportHtml+='<input type="text" class="form-control StudentInformationCount" onkeyup="PosiintegerNum(this)"/>';
+				suportHtml+='</div>';
+				suportHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
+			suportHtml+='</div>';
 			suportHtml+='<div class="planbtn-group row">';
 				suportHtml+='<button class="btn btn-primary suprtConfirm" style="margin-left:9%; padding:6px 40px;" onclick="suprtConfirm()">提交</button>';
 	//			suportHtml+='<button class="btn btn-primary">重置</button>';
@@ -45,25 +52,28 @@ function supportdata(supdata){
 	}
 	$('.scolAccoutnumb').val(supdata.accountOpenCount);
 	$('.goodrepNumb').val(supdata.informationConfirmationCount);
+	$('.StudentInformationCount').val(supdata.modifyStudentInformationCount);
 }
 //获取试用结果信息
 function infodetail(boSupport){
 	boSupport.accountOpenCount=$('.scolAccoutnumb').val();
 	boSupport.informationConfirmationCount=$('.goodrepNumb').val();
+	boSupport.modifyStudentInformationCount=$('.StudentInformationCount').val();
 	
 }
 //试用结果详情提交
 function suprtConfirm(){
 	var scolAccoutnumb=$('.scolAccoutnumb').val();
 	var goodrepNumb=$('.goodrepNumb').val();
-	if(scolAccoutnumb==''&& goodrepNumb==''){
+	var StudentInformationCount=$('.StudentInformationCount').val();
+	if(scolAccoutnumb==''&& goodrepNumb==''&&StudentInformationCount==''){
 		pub.Alt('请填写一项信息',false);
 		return false;
 	}
 	$('.editInfo').hide();
 	$('#addJournal').show();
 	//计算工时
-	var timeVal=(Number(scolAccoutnumb)+Number(goodrepNumb))*0.5;
+	var timeVal=(Number(scolAccoutnumb)+Number(goodrepNumb)+Number(StudentInformationCount))*0.5;
 	$('.timeVal').val(timeVal)
 }
 

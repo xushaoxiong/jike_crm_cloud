@@ -69,20 +69,27 @@ $(function(){
 	//提交费用
 	$('.reachConfirm').click(function(){
 		var totalReach=0;
-		for (var i=0;i<$('.ReachInp').length;i++) {
+		var inp7=$.trim($('.editreachInp7').val());
+		var inp8=$.trim($('.reachInpPerson').val());
+		for (var i=0;i<$('.editReachInp').length;i++) {
 			
-			if($('.reachInp'+(i+1)).val()!=''){
-				totalReach=totalReach+Number($.trim($('.reachInp'+(i+1)).val()));
+			if($('.editreachInp'+(i+1)).val()!=''){
+				totalReach+=Number($.trim($('.editreachInp'+(i+1)).val()));
 			}
+		}
+		if(inp7!==''&&inp8===''){
+			pub.Alt('请填写垫付人',false);
+			return;
 		}
 		$('.totalCostwap').modal('hide');
 		$('.btnCost').html(totalReach.toFixed(2));
 		
+		
 	});
-	$('.reachInp7').keyup(function(){
-		if($('.reachInp7').val()==''){
+	$('.editreachInp7').keyup(function(){
+		if($('.editreachInp7').val()==''){
 			$('.payperson').hide();
-			$('.reachInp8').val('');
+			$('.reachInpPerson').val('');
 		}else{
 			$('.payperson').show();
 		}

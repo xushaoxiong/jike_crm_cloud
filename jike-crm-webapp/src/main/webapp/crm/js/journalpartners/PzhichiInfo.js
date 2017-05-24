@@ -10,7 +10,7 @@ function supportHtml(){
 			suportHtml+='</div>';
 		suportHtml+='</div>';
 		suportHtml+='<div class="sign-wap supportLabel">';
-			suportHtml+='<h4><b>售后信息：</b><span class="col" style="font-size:13px;">（备注：至少填写一项）</span></h4>';
+			suportHtml+='<h4><b>支持信息：</b><span class="col" style="font-size:13px;">（备注：至少填写一项）</span></h4>';
 			suportHtml+='<div class="form-group row">';
 				suportHtml+='<label class="col-sm-2">开通学校账号</label>';
 				suportHtml+='<div class="col-sm-1">';
@@ -83,7 +83,7 @@ function supportHtml(){
 			html+='<tr>';
 				html+='	<td class="businesscheckimg"></td>';
 				html+='	<td class=" schoolName" schoolid="'+item.cooperativePartnerSchoolId+'">'+item.schoolName+'</td>';
-				html+='	<td class=" schoolLevel">'+item.schoolLevel+'</td>';
+//				html+='	<td class=" schoolLevel">'+item.schoolLevel+'</td>';
 				html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'</td>';
 			html+='	</tr>';
 		});

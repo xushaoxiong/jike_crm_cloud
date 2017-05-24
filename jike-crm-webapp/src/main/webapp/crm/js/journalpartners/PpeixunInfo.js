@@ -13,7 +13,7 @@ function trainiHtml(){
 //				trainiHtml+='</ul>';
 //			trainiHtml+='</div>';
 		trainiHtml+='</div>';
-		trainiHtml+='<div class="trainobject-wap clearfix">';
+		trainiHtml+='<div class="trainobject-wap clearfix" style="padding:0 5%;">';
 			trainiHtml+='<div class="col-sm-3 form-group trainObjitem">';
 				trainiHtml+='<label class="col-sm-2">培训对象</label>';
 				trainiHtml+='<div class="col-sm-6">';

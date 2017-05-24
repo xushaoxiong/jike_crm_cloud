@@ -15,8 +15,8 @@
 		//费用明细
 		function editTotalDetailF(totalDetail){
 			var totalDetailArry=[];
-			for (var i=0;i<$('.ReachInp').length;i++) {
-				totalDetailArry.push($.trim($('.reachInp'+(i+1)).val()));
+			for (var i=0;i<$('.editReachInp').length;i++) {
+				totalDetailArry.push($.trim($('.editreachInp'+(i+1)).val()));
 			}
 			totalDetail.trafficFee=totalDetailArry[0]
 			totalDetail.hotelFee=totalDetailArry[1]
@@ -25,5 +25,5 @@
 			totalDetail.giftFee=totalDetailArry[4]
 			totalDetail.otherFee=totalDetailArry[5]
 			totalDetail.advanceFee=totalDetailArry[6]
-			totalDetail.advancePerson=$.trim($('.reachInp8').val())
+			totalDetail.advancePerson=$.trim($('.reachInpPerson').val())
 		}

@@ -123,7 +123,7 @@ function worktimeNum(obj){
 	}
 //验证正整数
 function PosiintegerNum(obj){
-	obj.value=obj.value.replace(/[^0-9]/g,'');
+	obj.value=obj.value.replace(/[^1-9]/g,'');
 }
 
 

@@ -132,6 +132,8 @@
 						</tr>-->
 					</tbody>
 				</table>
+				<!--无结果-->
+				<p class="Nosearch" style="display: none;"></p>
 			</div>
 			<!--分页-->
 			<div class="Page-wap text-center clearfix">
@@ -146,8 +148,12 @@
 		<div class="modal" id="editsaletModal">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h4>修改销售人员</h4>
+					<div class="modal-header form-inline text-center" style="border: none;">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						 <div class="input-group">
+				            <input type="text" placeholder="填写销售人员名称" class="form-control searchsaleName" />
+				            <span class="input-group-addon cursorm searchBtn" ><span class="glyphicon glyphicon-search"></span></span>
+				        </div>
 					</div>
 					<div class="modal-body clearfix" style="max-height: 400px;overflow-y: scroll;">
 						<table class="table table-bordered table-hover">
@@ -174,6 +180,8 @@
 								</tr>-->
 							</tbody>
 						</table>
+						<!--无结果-->
+						<p class="Nosearch" style="display: none;"></p>
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary salesConfirm">确定</button>
@@ -186,8 +194,12 @@
 		<div class="modal" id="opptModal">
 			<div class="modal-dialog modal-md" >
 				<div class="modal-content">
-					<div class="modal-header">
-						<h4>指派服务人员</h4>
+					<div class="modal-header form-inline text-center" style="border: none;">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						 <div class="input-group">
+				            <input type="text" placeholder="填写服务人员名称" class="form-control searchserverName" />
+				            <span class="input-group-addon cursorm searchBtn2" ><span class="glyphicon glyphicon-search"></span></span>
+				        </div>
 					</div>
 					<div class="modal-body clearfix" style="max-height: 400px;overflow-y: scroll;">
 						<table class="table table-bordered table-hover">
@@ -214,6 +226,7 @@
 								</tr>-->
 							</tbody>
 						</table>
+						<p class="Nosearch" style="display: none;"></p>
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-primary opptConfirm">确定</button>

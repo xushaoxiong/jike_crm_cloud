@@ -6,11 +6,19 @@
 	
 	
 	//查询管理者
+	var managePersonJ={};
+	var searchuserid='';
 	$('.managePerson').click(function(){
 		var userid=$('.managePerson').attr('saleid');
+		searchuserid=userid;
 		$('.managePersonwap').modal('toggle');
 		BymanagePState();
-		$ajax('post','user/queryNoBeManegeSales','{}',function succF(jo){
+		managePersonAjax(userid);
+		
+	})
+	function managePersonAjax(userid){
+		
+		$ajax('post','user/queryNoBeManegeSales',managePersonJ,function succF(jo){
 			managePersonList(jo.userList);
 			$.each(jo.userList, function(i,item) {
 				if(item.userId==userid){
@@ -20,7 +28,7 @@
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
-	})
+	}
 	//销售管理者列表
 	function managePersonList(Mdata){
 		var Mhtml='';
@@ -53,7 +61,12 @@
 		})
 		BymanagePState();
 	})
-	
+	//搜索管理者
+	$('.searchSaleBtn').click(function(){
+		var name=$.trim($('.searchSaleName').val());
+		managePersonJ.name=name;
+		managePersonAjax(searchuserid);
+	})
 	//选择管理人员
 	function checkManPer(_this){
 		$('.managePersonItem .checkimg').removeClass('checkedimg');

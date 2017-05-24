@@ -36,6 +36,7 @@ $(function(){
 		$('.busnamState').removeClass('businessNameSp');
 	}
 	//商机名称弹框
+	var searchbusinesoppid='';
 	$('.busnamewap').on('click','.businessNameSp',function(){
 		$('.bussinessItem').html('');
 		var bussinesNameJ={};
@@ -45,13 +46,14 @@ $(function(){
 		bussinesNameJ.eventType=eventType;
 		$('.bussinesList').modal('toggle');
 		var businesoppid=$(this).attr('businessopptunityid');
+		searchbusinesoppid=businesoppid;
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
 			bussinesList(jo.businessOpportunityList,".bussinessItem");
-			$.each(jo.businessOpportunityList,function(i,item){
-				if(item.businessOpportunityId==businesoppid){
-					$('.bussinesList .businesName[businessopptunityid="'+businesoppid+'"]').prev().addClass('businesscheck');
-				}
-			})
+//			$.each(jo.businessOpportunityList,function(i,item){
+//				if(item.businessOpportunityId==businesoppid){
+			$('.bussinesList .businesName[businessopptunityid="'+businesoppid+'"]').prev().addClass('businesscheck');
+//				}
+//			})
 		},function errF(jo){
 			
 		})
@@ -112,7 +114,15 @@ $(function(){
 		bussinesNameJ.businessOpportunityName=businessOpportunityName;
 		bussinesNameJ.eventType=eventType;
 		$ajax('post','businessOpportunity/queryBusinessOpportunityByName',bussinesNameJ,function succF(jo){
+			if(jo.businessOpportunityList.length==0){
+	        	$('.bussinessItem').hide();
+	        	$('.Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('.bussinessItem').show();
+	        	$('.Nosearch').html('').hide();	
+	        }
 			bussinesList(jo.businessOpportunityList,".bussinessItem");
+			$('.bussinesList .businesName[businessopptunityid="'+searchbusinesoppid+'"]').prev().addClass('businesscheck');
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
@@ -216,7 +226,7 @@ $(function(){
 	//提交费用
 	$('.reachConfirm').click(function(){
 		var inp7=$.trim($('.reachInp7').val());
-		var inp8=$.trim($('.reachInp8').val());
+		var inp8=$.trim($('.reachInpPerson').val());
 		var totalReach=0;
 		for (var i=0;i<$('.ReachInp').length;i++) {
 			if($('.reachInp'+(i+1)).val()!=''){

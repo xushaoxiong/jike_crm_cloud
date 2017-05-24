@@ -295,3 +295,9 @@ textarea{resize: none;height: 100px !important;}
     width: 100%;
     font-size: 13px;
 }
+/*查询无结果*/
+.Nosearch{
+    padding: 7px 30px;
+    text-align: center;
+    font-weight: bold;
+}

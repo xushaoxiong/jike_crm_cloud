@@ -18,10 +18,18 @@
 var salesLaderJ={"leaderName":"","managedName":""};
 function SalesLeader(){
 	$ajax("post","user/queryServiceLeader",salesLaderJ,function succF(jo){
-		console.log(jo)
-	        $(".list-tr").html("");
-	        list(jo.serviceLeaderList);
-	        managedUserstrb();
+		//查询无结果
+		var ListLength=jo.serviceLeaderList.length;
+    	if(ListLength==0){
+        	$('.list-tr').hide();
+        	$('.Nosearch').show().html('查无结果!');
+        }else{
+        	$('.list-tr').show();
+        	$('.Nosearch').html('').hide();	
+        }
+        $(".list-tr").html("");
+        list(jo.serviceLeaderList);
+        managedUserstrb();
 	      
 		},function errF(jo){
 			pub.Alt(jo.message,false);
