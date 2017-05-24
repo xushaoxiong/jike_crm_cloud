@@ -1,5 +1,4 @@
 $(function(){
-	alert(isbussiness)
 		$("#city").citySelect({
 		    prov: "北京",  
 		    city: "北京",  

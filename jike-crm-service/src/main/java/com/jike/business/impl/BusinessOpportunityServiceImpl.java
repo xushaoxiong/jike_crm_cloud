@@ -838,12 +838,13 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		//删除以前的服务
 		cooperativePartnerSchoolServiceMapper.delteByCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 		//添加新服务
-		JSONArray cpsServiceArr = updateJson.getJSONArray("serviceArr");
+		JSONArray cpsServiceArr = cpsJson.getJSONArray("serviceArr");
 		if (cpsServiceArr != null && !cpsServiceArr.isEmpty()) {
 			for (Object object : cpsServiceArr) {
 				JSONObject cpsServiceJson = (JSONObject) object;
 				CooperativePartnerSchoolService cooperativePartnerSchoolService = cpsServiceJson
 						.toJavaObject(CooperativePartnerSchoolService.class);
+				cooperativePartnerSchoolService.setCooperativePartnerSchoolId(cooperativePartnerSchool.getCooperativePartnerSchoolId());
 				cooperativePartnerSchoolServiceMapper.insert(cooperativePartnerSchoolService);
 			}
 		}

@@ -1562,7 +1562,6 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			BoVisit boVisit = boVisitMapper.selectVisitByLogId(logId);
 			if(boVisit!=null){
 				String vistJsonString = JSONObject.toJSONString(boVisit,SerializerFeature.WriteNullStringAsEmpty);
-				
 				//添加拜访计划名称
 				JSONObject vistJson = JSONObject.parseObject(vistJsonString);
 				Long visitPlanId = boVisit.getVisitPlanId();
@@ -1573,20 +1572,20 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 					vistJson.put("visitPlanName", "");
 				}
 				json = vistJson.toJSONString();
-					//如果是达成合作意向，保存合作详情
-					if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())&&businessOpportunityJson.getInteger("businessOpportunityType")==1){
-						CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
-						String json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
-						JSONObject cooperationDetailsJson = JSONObject.parseObject(json2);
-						if(cooperationDetailsJson==null){
-							removeCommonAttribute(cooperationDetailsJson);
-						}
-						JSONObject comJson = JSONObject.parseObject(json);
-						comJson.put("cooperationDetailsJson", cooperationDetailsJson);
-						json = comJson.toJSONString();
+				//如果是达成合作意向，保存合作详情
+				if("达成合作意向".equals(businessOpportunityLog.getSpecificEvent())&&businessOpportunityJson.getInteger("businessOpportunityType")==1){
+					CooperationDetails cooperationDetails =cooperationDetailsMapper.selectByVisitId(boVisit.getVisitId());
+					String json2 = JSONObject.toJSONString(cooperationDetails,SerializerFeature.WriteNullStringAsEmpty);
+					JSONObject cooperationDetailsJson = JSONObject.parseObject(json2);
+					if(cooperationDetailsJson==null){
+						removeCommonAttribute(cooperationDetailsJson);
 					}
+					JSONObject comJson = JSONObject.parseObject(json);
+					comJson.put("cooperationDetailsJson", cooperationDetailsJson);
+					json = comJson.toJSONString();
+
+				}
 			}
-			
 		}else if("商业谈判".equals(businessOpportunityLog.getEventType())){
 			BoNegotiation boNegotiation = boNegotiationMapper.selectNegotiationByLogId(logId);
 			json = JSONObject.toJSONString(boNegotiation,SerializerFeature.WriteNullStringAsEmpty);
