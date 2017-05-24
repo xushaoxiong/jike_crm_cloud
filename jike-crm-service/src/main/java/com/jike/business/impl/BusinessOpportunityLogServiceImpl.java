@@ -1482,10 +1482,13 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				}else{
 					businessOpportunityJson.put("roleName", "");
 				}
-				
+				Long distributedUserId = (Long) businessOpportunityLogMap.get("user_id");
+				User distributeUser = userService.getUserById(distributedUserId);
+				if(distributeUser!= null){
+					businessOpportunityJson.put("name", distributeUser.getName());
+				}
 				if(roleId == 3){//销售编辑权限
 					//查询指派人ID
-					Long distributedUserId = (Long) businessOpportunityLogMap.get("user_id");
 					//如果创建人和登录人ID不相同，或者创建人和被指派商机人不同 没有编辑权限，但是都有查看权限。
 					if(!queryJson.getLong("userId").equals(createBy)||(distributedUserId!=null&&!createBy.equals(distributedUserId))){
 						businessOpportunityJson.put("authority", 1);
