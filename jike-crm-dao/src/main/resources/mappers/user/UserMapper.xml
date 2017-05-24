@@ -239,12 +239,13 @@
    where name like #{name,jdbcType=VARCHAR}
    limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
-  <select id="selectByRoleId"  parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByRoleIdAndName"  resultMap="BaseResultMap">
     select 
     u.*
     from user u,user_role r
     where u.user_id = r.user_id
     and r.role_id = #{roleId,jdbcType=BIGINT}
+    and u.name like #{name,jdbcType=VARCHAR}
   </select>
   <select id="querySaleAndServiceByUserName"  parameterType="java.lang.String" resultMap="BaseResultMap">
    select 
@@ -289,6 +290,7 @@
     where u.user_id = r.user_id
     and r.role_id =4
     and u.user_id not in(select managed_user_id from service_leader s) 
-    and u.user_id not in(select leader_id from service_leader s)     
+    and u.user_id not in(select leader_id from service_leader s)  
+    and u.name like #{name,jdbcType=VARCHAR}   
     </select>
 </mapper>

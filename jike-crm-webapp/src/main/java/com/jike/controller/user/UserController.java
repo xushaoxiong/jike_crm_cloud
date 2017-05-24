@@ -364,10 +364,17 @@ public class UserController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		JSONObject json = new JSONObject();
-		json.put("userId", session.getAttribute(userId));
-		json.put("roleId", session.getAttribute(roleId));
-	    result = userService.queryNoBeManegeSales(json);
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = userService.queryNoBeManegeSales(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result.toString();
 	}
 	/**
@@ -534,10 +541,16 @@ public class UserController extends BaseController{
 		if("unLogin".equals(result.getString("state"))){
 			return result.toJSONString();
 		}
-		JSONObject json = new JSONObject();
-		json.put("userId", session.getAttribute(userId));
-		json.put("roleId", session.getAttribute(roleId));
-	    result = userService.queryNoBeManegeServiceLeaders(json);
+		String queryJson;
+		try {
+			queryJson = RequestUtils.getRequestJsonString(request);
+			JSONObject json = JSONObject.parseObject(queryJson);
+			json.put("userId", session.getAttribute(userId));
+			json.put("roleId", session.getAttribute(roleId));
+			result = userService.queryNoBeManegeServiceLeaders(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return result.toString();
 	}
 	/**
