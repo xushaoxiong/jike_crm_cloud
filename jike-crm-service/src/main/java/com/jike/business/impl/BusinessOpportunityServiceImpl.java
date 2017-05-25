@@ -170,6 +170,7 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	@Transactional
 	public JSONObject updateBusinessOpportunity(JSONObject businessOpportunityJson) {
 			JSONObject resultJson = new JSONObject();
+//			Long roleId = businessOpportunityJson.getLong("roleId");
 			if (!businessOpportunityJson.isEmpty()) {
 				BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
 				if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
