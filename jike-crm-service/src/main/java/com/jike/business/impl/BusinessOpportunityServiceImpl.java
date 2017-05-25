@@ -41,8 +41,10 @@ import com.jike.business.model.ServiceBusinessOpportunity;
 import com.jike.crm.utils.PageUtil;
 import com.jike.user.UserService;
 import com.jike.user.dao.SalesLeaderMapper;
+import com.jike.user.dao.UserRoleMapper;
 import com.jike.user.model.SalesLeader;
 import com.jike.user.model.User;
+import com.jike.user.model.UserRole;
 
 @Service("businessOpportunityService")
 @Transactional
@@ -72,6 +74,8 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 	private CooperativePartnerSchoolServiceLogMapper cooperativePartnerSchoolServiceLogMapper;
 	@Autowired
 	private SalesLeaderMapper salesLeaderMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
 	
 
 	@Transactional
@@ -309,6 +313,14 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 					businessOpportunityJson.put("authority", 1);
 				}else{
 					businessOpportunityJson.put("authority", 0);
+				}
+				
+				UserRole userRole = userRoleMapper.selectByUserId(createBy);
+				if(roleId==2&&userIdObj!=null&&userRole.getRoleId()==3&&!createBy.equals((Long) userIdObj)){
+					businessOpportunityJson.put("authority", 0);
+				}
+				if(roleId==3&&!createBy.equals((Long) userIdObj)){
+					businessOpportunityJson.put("authority", 1);
 				}
 				businessOpportunityArr.add(businessOpportunityJson);
 			}
