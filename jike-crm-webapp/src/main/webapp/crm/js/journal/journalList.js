@@ -226,7 +226,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		}
 		if(freedata.advancePerson!=''){
 			$('.payperson').show();
-			$('.reachInpPerson').val(freedata.advancePerson);
+			$('.editreachInpPerson').val(freedata.advancePerson);
 		}else{
 			$('.payperson').hide();
 		}
