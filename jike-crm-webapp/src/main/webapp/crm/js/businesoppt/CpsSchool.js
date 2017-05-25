@@ -127,14 +127,25 @@
 		var phoneStates=true;
 		$('.panterScolcontainer').each(function(){
 			var serviceJ={};
-			serviceJ.serviceName=$.trim($(this).find('.pScolcontName').val());
-			serviceJ.servicePhone=$.trim($(this).find('.pScolcontphone').val());
+			var pScolcontName=$.trim($(this).find('.pScolcontName').val());
+			var pScolcontphone=$.trim($(this).find('.pScolcontphone').val());
+		
+			serviceJ.serviceName=pScolcontName;
+			serviceJ.servicePhone=pScolcontphone;
 			if(!contact(serviceJ.servicePhone)&&serviceJ.servicePhone!=''){
 				pub.Alt('请填写联系人正确联系方式',false);
 				return phoneStates=false;
 			}
 			serviceArr.push(serviceJ);
+			
 		});
+		//去除服务人员数组空内容
+		var serviceArryA=[];
+		for (var j=0;j<serviceArr.length;j++) {
+			if(serviceArr[j].serviceName!=''||serviceArr[j].servicePhone!=''){
+				serviceArryA[serviceArryA.length]=serviceArr[j]
+			}
+		}
 		if(!phoneStates){
 			return;
 		}
@@ -148,7 +159,7 @@
 		dataJ.schoolLevel=schoolLevel;
 		dataJ.schoolProperty=schoolProperty;
 		dataJ.schoolCategory=scolTypeArry.join('#');
-		dataJ.serviceArr=serviceArr;
+		dataJ.serviceArr=serviceArryA;
 		$ajax('post','businessOpportunity/addCooperativePartnerSchool',dataJ,function succF(jo){
 			$('.R-wap').load('businesoppt/CpsSchoolList.html');
 		},function errF(jo){
