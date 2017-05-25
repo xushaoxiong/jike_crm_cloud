@@ -79,7 +79,7 @@ $('.delJournal').click(function(){
 					html+='<span class="serviceName">'+item.externalParticipant+'</span>';
 				}	
 				html+='</td>';
-				html+='<td class="jourCost cursorm" onclick="jourCost($(this))"><a>'+item.totalFee+'</a></td>';
+				html+='<td class="jourCost cursorm" onclick="jourCost($(this))"><a>'+(item.totalFee).toFixed(2)+'</a></td>';
 				html+='<td logId="'+item.logId+'" class="Operatwap">';
 					if(item.authority==0){
 						html+='<button class="btn btn-primary edit" style="margin-right:8px;">编辑</button>';

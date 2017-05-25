@@ -93,7 +93,7 @@ function aftSealtHtml(){
 			html+='<tr>';
 				html+='	<td class="businesscheckimg"></td>';
 				html+='	<td class=" schoolName" schoolid="'+item.cooperativePartnerSchoolId+'">'+item.schoolName+'</td>';
-				html+='	<td class=" schoolLevel">'+item.schoolLevel+'</td>';
+//				html+='	<td class=" schoolLevel">'+item.schoolLevel+'</td>';
 				html+='	<td>'+item.addressProvince+''+item.addressCity+''+item.addressCountry+''+item.addressDetail+'</td>';
 			html+='	</tr>';
 		});

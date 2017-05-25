@@ -131,7 +131,7 @@ $(function(){
 			parentsTd.find('.jourTime').html($('#indat').html());
 			parentsTd.find('.jourinnerPeop span').html($('.innerPerson').val());
 			parentsTd.find('.jourouterPeop span').html($('.outPerson').val());
-			parentsTd.find('.jourCost').html($('.btnCost').html());
+			parentsTd.find('.jourCost a').html($('.btnCost').html());
 			parentsTd.find('.jourHours').html($('.timeVal').val());
 			$('.hide-menu li').removeClass('menuCheck');
 			$('.hide-menu li[menuid=7]').addClass('menuCheck');

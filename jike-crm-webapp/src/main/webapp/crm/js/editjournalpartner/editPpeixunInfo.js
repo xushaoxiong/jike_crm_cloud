@@ -59,7 +59,7 @@ function trainiHtml(){
 			trainiHtml+='</div>';
 		trainiHtml+='</div>';
 		trainiHtml+='</div>';
-		trainiHtml+='<div class="sign-wap">';
+		trainiHtml+='<div class="sign-wap" style="padding:0 5%;">';
 			trainiHtml+='<h3><b>培训内容：</b></h3>';
 			trainiHtml+='<div class="col-sm-6">';
 				trainiHtml+='<div class="form-group row">';
