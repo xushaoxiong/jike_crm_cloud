@@ -25,5 +25,5 @@
 			totalDetail.giftFee=totalDetailArry[4]
 			totalDetail.otherFee=totalDetailArry[5]
 			totalDetail.advanceFee=totalDetailArry[6]
-			totalDetail.advancePerson=$.trim($('.reachInpPerson').val())
+			totalDetail.advancePerson=$.trim($('.editreachInpPerson').val())
 		}

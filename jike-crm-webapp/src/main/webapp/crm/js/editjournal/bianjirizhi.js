@@ -70,7 +70,7 @@ $(function(){
 	$('.reachConfirm').click(function(){
 		var totalReach=0;
 		var inp7=$.trim($('.editreachInp7').val());
-		var inp8=$.trim($('.reachInpPerson').val());
+		var inp8=$.trim($('.editreachInpPerson').val());
 		for (var i=0;i<$('.editReachInp').length;i++) {
 			
 			if($('.editreachInp'+(i+1)).val()!=''){
@@ -89,7 +89,7 @@ $(function(){
 	$('.editreachInp7').keyup(function(){
 		if($('.editreachInp7').val()==''){
 			$('.payperson').hide();
-			$('.reachInpPerson').val('');
+			$('.editreachInpPerson').val('');
 		}else{
 			$('.payperson').show();
 		}
