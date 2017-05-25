@@ -12,6 +12,14 @@ $('.delJournal').click(function(){
 	function getDataList(currPage, jg) {
 		paginatorJ.start=currPage+1;
 	    $ajax("post","businessOpportunityLog/queryBusinessOpportunityLogByParams",paginatorJ,function succF(jo){
+	    	//查询无结果
+	    	if(jo.totalCount==0){
+	        	$('.list-tr').hide();
+	        	$('.Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('.list-tr').show();
+	        	$('.Nosearch').html('').hide();	
+	        }
 	    	if (initFlag) {
 	    		//分页
 	    		$("#Pagination").pagination(jo.totalCount,{
@@ -52,10 +60,11 @@ $('.delJournal').click(function(){
 				}
 				html+='<td class="roleName">'+item.roleName+'</td>';
 				html+='<td>'+item.createUserName+'</td>';
+				html+='<td>'+item.name+'</td>';
 				html+='<td class="evtype">'+item.eventType+'</td>';
 				html+='<td class="spetype">'+item.specificEvent+'</td>';
 				html+='<td class="jourHours">'+item.workingHours+'</td>';
-				html+='<td class="jourinnerPeop">';
+				html+='<td class="jourinnerPeop" style="display: none;">';
 					if(item.internalParticipant==undefined){
 						html+='<span class="serviceName"></span>';
 					}else{
@@ -63,7 +72,7 @@ $('.delJournal').click(function(){
 					}
 					
 				html+='</td>';
-				html+='<td class="jourouterPeop">';
+				html+='<td class="jourouterPeop" style="display: none;">';
 				if(item.externalParticipant==undefined){
 					html+='<span class="serviceName"></span>';
 				}else{
@@ -176,10 +185,56 @@ $.each(eventJson2.evenList, function(i,item) {
 		$('.timeVal').val(editdata.workingHours);
 		$('.innerPerson').val(editdata.internalParticipant);
 		$('.outPerson').val(editdata.externalParticipant);
-		$('.btnCost').html(editdata.totalFee);
+		$('.btnCost').html((editdata.totalFee).toFixed(2));
 	}
 	//费用赋值
 	function freedata(freedata){
+		if(freedata.trafficFee==undefined){
+			$('.editreachInp1').val('');
+		}else{
+			$('.editreachInp1').val(freedata.trafficFee);
+		}
+		if(freedata.hotelFee==undefined){
+			$('.editreachInp2').val('');
+		}else{
+			$('.editreachInp2').val(freedata.hotelFee);
+		}
+		if(freedata.foodFee==undefined){
+			$('.editreachInp3').val('');
+		}else{
+			$('.editreachInp3').val(freedata.foodFee);
+		}
+		if(freedata.entertainFee==undefined){
+			$('.editreachInp4').val('');
+		}else{
+			$('.editreachInp4').val(freedata.entertainFee);
+		}
+		if(freedata.giftFee==undefined){
+			$('.editreachInp5').val('');
+		}else{
+			$('.editreachInp5').val(freedata.giftFee);
+		}
+		if(freedata.otherFee==undefined){
+			$('.editreachInp6').val('');
+		}else{
+			$('.editreachInp6').val(freedata.otherFee);
+		}
+		if(freedata.advanceFee==undefined){
+			$('.editreachInp7').val('');
+		}else{
+			$('.editreachInp7').val(freedata.advanceFee);
+		}
+		if(freedata.advancePerson!=''){
+			$('.payperson').show();
+			$('.reachInpPerson').val(freedata.advancePerson);
+		}else{
+			$('.payperson').hide();
+		}
+		
+	}
+	
+	//列表费用弹框
+	function Listfreedata(freedata){
 		if(freedata.trafficFee==undefined){
 			$('.reachInp1').val('');
 		}else{
@@ -217,7 +272,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		}
 		if(freedata.advancePerson!=''){
 			$('.payperson').show();
-			$('.reachInp8').val(freedata.advancePerson);
+			$('.reachInpPerson').val(freedata.advancePerson);
 		}else{
 			$('.payperson').hide();
 		}
@@ -230,7 +285,7 @@ $.each(eventJson2.evenList, function(i,item) {
 		logIdJ.logId=logid;
 		$ajax('post','businessOpportunityLog/queryBOLog',logIdJ,function succF(jo){
 			$('.totalCost').modal('toggle');
-			freedata(jo.boFeeDetailJson);
+			Listfreedata(jo.boFeeDetailJson);
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})

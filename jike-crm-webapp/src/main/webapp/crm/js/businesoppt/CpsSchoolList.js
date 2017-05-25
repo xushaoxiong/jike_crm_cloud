@@ -36,6 +36,13 @@
 	        $(".list-tr").html("");
 	        list(jo.cpsArr,jo.ifBussiness);
 	        $('.totalNum').html('共'+jo.totalCount+'条');
+	        if(jo.totalCount==0){
+	        	$('.list-tr').hide();
+	        	$('.Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('.list-tr').show();
+	        	$('.Nosearch').html('').hide();	
+	        }
 	        businesnamestrb();
 	        panterScoladdrstrb();
 			panterScolNamestrb();
@@ -48,7 +55,7 @@
 	//列表内容
 	function list(List,assignSale){
 		var Html="";
-		$.each(List, function(i,item) {
+		$.each(List, function(i,item) {	
 			var addrLenfth=(item.addressProvince).length+(item.addressCity).length+(item.addressCountry).length+(item.addressDetail).length;
 			Html+='<tr>';
 				Html+='<td>'+(i+1)+'</td>';
@@ -87,8 +94,8 @@
 	//商机名称字数限制
 	function businesnamestrb(){
 		for (var i=0;i<$('.panterScolBusinesName').length;i++) {
-			var businessplit=$('.panterScolBusinesName').eq(i).html().substring(0,11);
-			if($('.panterScolBusinesName').eq(i).html().length>10){
+			var businessplit=$('.panterScolBusinesName').eq(i).html().substring(0,10);
+			if($('.panterScolBusinesName').eq(i).html().length>11){
 				$('.panterScolBusinesName').eq(i).html(businessplit+'...');
 			}
 			
@@ -97,8 +104,8 @@
 	//关联学校名称字数限制
 	function panterScolNamestrb(){
 		for (var i=0;i<$('.panterScolName').length;i++) {
-			var businessplit=$('.panterScolName').eq(i).html().substring(0,11);
-			if($('.panterScolName').eq(i).html().length>10){
+			var businessplit=$('.panterScolName').eq(i).html().substring(0,10);
+			if($('.panterScolName').eq(i).html().length>11){
 				$('.panterScolName').eq(i).html(businessplit+'...');
 			}
 		}	
@@ -106,8 +113,8 @@
 	//关联学校地址字数限制
 	function panterScoladdrstrb(){
 		for (var i=0;i<$('.panterScoladdr').length;i++) {
-			var businessplit=$('.panterScoladdr').eq(i).html().substring(0,11);
-			if($('.panterScoladdr').eq(i).html().length>10){
+			var businessplit=$('.panterScoladdr').eq(i).html().substring(0,10);
+			if($('.panterScoladdr').eq(i).html().length>11){
 				$('.panterScoladdr').eq(i).html(businessplit+'...');
 			}
 		}

@@ -11,7 +11,7 @@ function receiveHtml(){
 			receiveHtml+='<div class="form-group row ">';
 				receiveHtml+='<label class="col-md-1 col-sm-1"><span class="col"></span>金额</label>';
 				receiveHtml+='<div class="col-md-2 col-sm-2">';
-					receiveHtml+='<input type="text" class="form-control paymoney" onkeyup="num(this)"/>';
+					receiveHtml+='<input type="text" class="form-control paymoney" onkeyup="num(this)" maxlength="8"/>';
 				receiveHtml+='</div>';
 				receiveHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;元</span>';
 			receiveHtml+='</div>';

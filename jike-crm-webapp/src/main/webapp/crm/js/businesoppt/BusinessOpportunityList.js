@@ -19,6 +19,14 @@ var initFlag=true;
 function getDataList(currPage, jg) {
 	paginatorJ.start=currPage+1;
     $ajax("post","businessOpportunity/queryBusinessOpportunity",paginatorJ,function succF(jo){
+    	//查询无结果
+    	if(jo.totalCount==0){
+        	$('.list-tr').hide();
+        	$('.Nosearch').show().html('查无结果!');
+        }else{
+        	$('.list-tr').show();
+        	$('.Nosearch').html('').hide();	
+        }
     	if (initFlag) {
     		//分页
     		$("#Pagination").pagination(jo.totalCount,{
@@ -148,8 +156,8 @@ function getDataList(currPage, jg) {
 	//商机名称字数限制
 	function businesnamestrb(){
 		for (var i=0;i<$('.opptNumb').length;i++) {
-			var businessplit=$('.opptNumb a').eq(i).html().substring(0,11);
-			if($('.opptNumb a').eq(i).html().length>10){
+			var businessplit=$('.opptNumb a').eq(i).html().substring(0,10);
+			if($('.opptNumb a').eq(i).html().length>11){
 				$('.opptNumb a').eq(i).html(businessplit+'...');
 				businesnameall=businessplit+'...';
 			}
@@ -246,15 +254,21 @@ function getDataList(currPage, jg) {
 		
 	}
 	//添加服务人员
+	var searchservnamelistArry=[];
 	$('.list-tr').on('click','.plusOppt',function(){
 		$("#opptModal").modal("toggle");
+		$('#opptModal .salesPeople').show();
+		$('.searchserverName').val('');
+		$('#opptModal .Nosearch').html('').hide();	
 		var servnumb=$(this).parent().prev().prev().html();
 		$("#opptModal").attr('servopptnum',servnumb);
 		var servnamelistArry=[];
 		$(this).parent().find('span[userid]').each(function(i){
 			servnamelistArry.push($(this).attr('userid'))
 		})	
+		searchservnamelistArry=servnamelistArry;
 		var serverlistJ={};
+		serverlistJ.name=$('.searchserverName').val();
 		$ajax('post','user/queryServiceList',serverlistJ,function succF(jo){
 			serverlist(jo.userList);
 			$.each(servnamelistArry, function(i2,item2) {
@@ -269,6 +283,29 @@ function getDataList(currPage, jg) {
 	//选择服务人员
 	$('.serverPeople').on('click','tr',function(){
 		$(this).find('.bussinessimg').toggleClass('checked');
+	})
+	//搜索服务人员
+	$('.searchBtn2').click(function(){
+		var searchServerNameJ={};
+		var name=$.trim($('.searchserverName').val());
+		searchServerNameJ.name=name;
+		$ajax('post','user/queryServiceList',searchServerNameJ,function succF(jo){
+			//无结果
+			 if(jo.userList.length==0){
+	        	$('#opptModal .salesPeople').hide();
+	        	$('#opptModal .Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('#opptModal .salesPeople').show();
+	        	$('#opptModal .Nosearch').html('').hide();	
+	        }
+			serverlist(jo.userList);
+			$.each(searchservnamelistArry, function(i2,item2) {
+				$('.servname[userid="'+item2+'"]').prev().addClass('checked');
+				
+			});
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
 	})
 	$('.opptConfirm').click(function(){
 		$("#opptModal").modal("hide");
@@ -306,12 +343,12 @@ function getDataList(currPage, jg) {
 		var saleHtml="";
 		$.each(sdata, function(i,item) {
 			saleHtml+='<tr class="cursorm">';
-				if(item.userId==checkeduser){
-					saleHtml+='<td class="salesimg checked" opptnum="'+opptnum+'"></td>';
-				}else{
-					saleHtml+='<td class="salesimg" opptnum="'+opptnum+'"></td>';
-				}
-				saleHtml+='<td userid="'+item.userId+'">'+item.name+'</td>';
+//				if(item.userId==checkeduser){
+//					saleHtml+='<td class="salesimg checked" opptnum="'+opptnum+'"></td>';
+//				}else{
+				saleHtml+='<td class="salesimg" ></td>';
+//				}
+				saleHtml+='<td userid="'+item.userId+'" class="saleName">'+item.name+'</td>';
 				if(item.gender==1){
 					saleHtml+='<td>男 </td>';
 				}else{
@@ -324,15 +361,25 @@ function getDataList(currPage, jg) {
 		
 	}
 	//修改销售人员
+	var searchuserid='';
+	var searchopptnum='';
 	var salesbusinesnum='';
 	$('.list-tr').on('click','.editserver',function(){
 		$("#editsaletModal").modal("toggle");
+		$('#editsaletModal .salesPeople').show();
+		$('.searchsaleName').val('');
+		$('#editsaletModal .Nosearch').html('').hide();	
 		var userid=$(this).parent().attr('userid');
 		var opptnum=$(this).parent().prev().html();
+		searchuserid=userid;
+		searchopptnum=opptnum;
 		salesbusinesnum=opptnum;
 		var saleslistJ={};
+		saleslistJ.name=$('.searchsaleName').val();
 		$ajax('post','user/querySaleList',saleslistJ,function succF(jo){
-			saleslist(jo.userList,userid,opptnum);
+			saleslist(jo.userList);
+			$('.saleName[userid='+userid+']').prev().addClass('checked');
+			$('.saleName[userid='+userid+']').prev().attr('opptnum',opptnum);
 		},function errF(jo){
 			pub.Alt(jo.message,false);
 		})
@@ -346,6 +393,27 @@ function getDataList(currPage, jg) {
 			thischeck.addClass('checked');
 		}
 		
+	})
+	//搜索销售人员
+	$('.searchBtn').click(function(){
+		var searchSealNameJ={};
+		var name=$.trim($('.searchsaleName').val());
+		searchSealNameJ.name=name;
+		$ajax('post','user/querySaleList',searchSealNameJ,function succF(jo){
+			//无结果
+			 if(jo.userList.length==0){
+	        	$('#editsaletModal .salesPeople').hide();
+	        	$('#editsaletModal .Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('#editsaletModal .salesPeople').show();
+	        	$('#editsaletModal .Nosearch').html('').hide();	
+	        }
+			saleslist(jo.userList);
+			$('.saleName[userid='+searchuserid+']').prev().addClass('checked');
+			$('.saleName[userid='+searchuserid+']').prev().attr('opptnum',salesbusinesnum);
+		},function errF(jo){
+			pub.Alt(jo.message,false);
+		})
 	})
 	//确定选择销售人员
 	$('.salesConfirm').click(function(){

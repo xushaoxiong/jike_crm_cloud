@@ -47,6 +47,10 @@
 				<div class="modal-content">
 					<div class="modal-header form-inline text-center" style="border: none;">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						 <div class="input-group">
+				            <input type="text" placeholder="填写销售管理者名称" class="form-control searchServerName" />
+				            <span class="input-group-addon cursorm searchServerBtn" ><span class="glyphicon glyphicon-search"></span></span>
+				        </div>
 					</div>
 					<div class="modal-body" style="max-height:400px;overflow-y: scroll;">
 						<table class="table table-bordered">
@@ -62,6 +66,8 @@
 								
 							</tbody>
 						</table>
+						<!--无结果-->
+						<p class="Nosearch" style="display: none;"></p>
 					</div>
 					<div class="modal-footer" style="text-align: center;">
 						<button class="btn btn-primary managePersonConfirm">确定</button>
@@ -76,6 +82,10 @@
 				<div class="modal-content">
 					<div class="modal-header form-inline text-center" style="border: none;">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+						 <div class="input-group">
+				            <input type="text" placeholder="填写被管理者名称" class="form-control BysearchServerName" />
+				            <span class="input-group-addon cursorm searchByServerBtn" ><span class="glyphicon glyphicon-search"></span></span>
+				        </div>
 					</div>
 					<div class="modal-body" style="max-height:400px;overflow-y: scroll;">
 						<table class="table table-bordered">
@@ -91,6 +101,8 @@
 								
 							</tbody>
 						</table>
+						<!--无结果-->
+						<p class="Nosearch" style="display: none;"></p>
 					</div>
 					<div class="modal-footer" style="text-align: center;">
 						<button class="btn btn-primary busnisListConfirm">确定</button>
