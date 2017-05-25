@@ -173,11 +173,11 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 //			Long roleId = businessOpportunityJson.getLong("roleId");
 			if (!businessOpportunityJson.isEmpty()) {
 				BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityJson.getString("businessOpportunityNum"));
-				if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
-					resultJson.put("state", "fail");
-					resultJson.put("message", "没有编辑权限");
-					return resultJson;
-				}
+//				if(!businessOpportunityJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
+//					resultJson.put("state", "fail");
+//					resultJson.put("message", "没有编辑权限");
+//					return resultJson;
+//				}
 				
 				businessOpportunity.setBusinessOpportunityName(businessOpportunityJson.getString("businessOpportunityName"));
 				businessOpportunity.setBusinessOpportunityType(businessOpportunityJson.getInteger("businessOpportunityType"));
@@ -368,12 +368,6 @@ public class BusinessOpportunityServiceImpl implements BusinessOpportunityServic
 		BusinessOpportunity businessOpportunity = businessOpportunityMapper.selectByBusinessOpportunityNum(businessOpportunityNum);
 		JSONObject resultJson = new JSONObject();
 		if(businessOpportunity!=null){
-			if(!queryJson.getLong("userId").equals(businessOpportunity.getCreateBy())){
-				resultJson.put("state", "fail");
-				resultJson.put("message", "没有编辑权限");
-				return resultJson;
-			}
-		
 			resultJson.put("businessOpportunityName", businessOpportunity.getBusinessOpportunityName());
 			resultJson.put("businessOpportunityType", businessOpportunity.getBusinessOpportunityType());
 			resultJson.put("addressProvince", businessOpportunity.getAddressProvince());
