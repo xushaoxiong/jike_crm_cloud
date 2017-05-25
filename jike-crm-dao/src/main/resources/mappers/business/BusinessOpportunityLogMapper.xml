@@ -324,6 +324,9 @@
     from business_opportunity_log bol left join business_opportunity bo
     on 
     bol.business_opportunity_id = bo.business_opportunity_id
+    left join sale_business_opportunity sbo     
+    on 
+    bol.business_opportunity_id = sbo.business_opportunity_id
     <where>
     	<if test="businessOpportunityName != null">
 			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
@@ -357,10 +360,14 @@
     bol.specific_event,
     bol.working_hours,
     bol.internal_participant,
-    bol.external_participant
+    bol.external_participant,
+    sbo.user_id
     from business_opportunity_log bol left join business_opportunity bo
     on 
     bol.business_opportunity_id = bo.business_opportunity_id
+    left join sale_business_opportunity sbo     
+    on 
+    bol.business_opportunity_id = sbo.business_opportunity_id
     <where>
     	<if test="businessOpportunityName != null">
 			 bo.business_opportunity_name like #{businessOpportunityName,jdbcType=VARCHAR}
