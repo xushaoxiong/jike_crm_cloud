@@ -60,10 +60,11 @@ $('.delJournal').click(function(){
 				}
 				html+='<td class="roleName">'+item.roleName+'</td>';
 				html+='<td>'+item.createUserName+'</td>';
+				html+='<td>'+item.name+'</td>';
 				html+='<td class="evtype">'+item.eventType+'</td>';
 				html+='<td class="spetype">'+item.specificEvent+'</td>';
 				html+='<td class="jourHours">'+item.workingHours+'</td>';
-				html+='<td class="jourinnerPeop">';
+				html+='<td class="jourinnerPeop" style="display: none;">';
 					if(item.internalParticipant==undefined){
 						html+='<span class="serviceName"></span>';
 					}else{
@@ -71,7 +72,7 @@ $('.delJournal').click(function(){
 					}
 					
 				html+='</td>';
-				html+='<td class="jourouterPeop">';
+				html+='<td class="jourouterPeop" style="display: none;">';
 				if(item.externalParticipant==undefined){
 					html+='<span class="serviceName"></span>';
 				}else{

@@ -257,6 +257,7 @@ function getDataList(currPage, jg) {
 	var searchservnamelistArry=[];
 	$('.list-tr').on('click','.plusOppt',function(){
 		$("#opptModal").modal("toggle");
+		$('#opptModal .salesPeople').show();
 		$('.searchserverName').val('');
 		$('#opptModal .Nosearch').html('').hide();	
 		var servnumb=$(this).parent().prev().prev().html();
@@ -267,6 +268,7 @@ function getDataList(currPage, jg) {
 		})	
 		searchservnamelistArry=servnamelistArry;
 		var serverlistJ={};
+		serverlistJ.name=$('.searchserverName').val();
 		$ajax('post','user/queryServiceList',serverlistJ,function succF(jo){
 			serverlist(jo.userList);
 			$.each(servnamelistArry, function(i2,item2) {
@@ -290,10 +292,10 @@ function getDataList(currPage, jg) {
 		$ajax('post','user/queryServiceList',searchServerNameJ,function succF(jo){
 			//无结果
 			 if(jo.userList.length==0){
-	        	$('.salesPeople').hide();
+	        	$('#opptModal .salesPeople').hide();
 	        	$('#opptModal .Nosearch').show().html('查无结果!');
 	        }else{
-	        	$('.salesPeople').show();
+	        	$('#opptModal .salesPeople').show();
 	        	$('#opptModal .Nosearch').html('').hide();	
 	        }
 			serverlist(jo.userList);
@@ -364,6 +366,7 @@ function getDataList(currPage, jg) {
 	var salesbusinesnum='';
 	$('.list-tr').on('click','.editserver',function(){
 		$("#editsaletModal").modal("toggle");
+		$('#editsaletModal .salesPeople').show();
 		$('.searchsaleName').val('');
 		$('#editsaletModal .Nosearch').html('').hide();	
 		var userid=$(this).parent().attr('userid');
@@ -372,6 +375,7 @@ function getDataList(currPage, jg) {
 		searchopptnum=opptnum;
 		salesbusinesnum=opptnum;
 		var saleslistJ={};
+		saleslistJ.name=$('.searchsaleName').val();
 		$ajax('post','user/querySaleList',saleslistJ,function succF(jo){
 			saleslist(jo.userList);
 			$('.saleName[userid='+userid+']').prev().addClass('checked');
@@ -398,10 +402,10 @@ function getDataList(currPage, jg) {
 		$ajax('post','user/querySaleList',searchSealNameJ,function succF(jo){
 			//无结果
 			 if(jo.userList.length==0){
-	        	$('.salesPeople').hide();
+	        	$('#editsaletModal .salesPeople').hide();
 	        	$('#editsaletModal .Nosearch').show().html('查无结果!');
 	        }else{
-	        	$('.salesPeople').show();
+	        	$('#editsaletModal .salesPeople').show();
 	        	$('#editsaletModal .Nosearch').html('').hide();	
 	        }
 			saleslist(jo.userList);
