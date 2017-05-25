@@ -9,16 +9,24 @@
 	var managePersonJ={};
 	var searchuserid='';
 	$('.managePerson').click(function(){
+		$('.managePersonwap .Nosearch').html('').hide();
 		var userid=$('.managePerson').attr('saleid');
-		searchuserid=userid;
+		$('.searchSaleName').val('');
+		managePersonJ.name=$('.searchSaleName').val();
 		$('.managePersonwap').modal('toggle');
 		BymanagePState();
 		managePersonAjax(userid);
 		
 	})
 	function managePersonAjax(userid){
-		
 		$ajax('post','user/queryNoBeManegeSales',managePersonJ,function succF(jo){
+			if(jo.userList.length==0){
+	        	$('.managePersonItem').hide();
+	        	$('.managePersonwap .Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('.managePersonItem').show();
+	        	$('.managePersonwap .Nosearch').html('').hide();	
+	        }
 			managePersonList(jo.userList);
 			$.each(jo.userList, function(i,item) {
 				if(item.userId==userid){
@@ -61,41 +69,60 @@
 		})
 		BymanagePState();
 	})
+	
+	//选择管理人员
+	function checkManPer(_this){
+		$('.managePersonItem .checkimg').removeClass('checkedimg');
+		_this.find('.checkimg').addClass('checkedimg');
+		var userid=$('.checkedimg').next().attr('userid');
+		searchuserid=userid;
+
+	}
 	//搜索管理者
 	$('.searchSaleBtn').click(function(){
 		var name=$.trim($('.searchSaleName').val());
 		managePersonJ.name=name;
 		managePersonAjax(searchuserid);
 	})
-	//选择管理人员
-	function checkManPer(_this){
-		$('.managePersonItem .checkimg').removeClass('checkedimg');
-		_this.find('.checkimg').addClass('checkedimg');
-
-	}
-	
 	//被管理者
+	var BymanagePersonJ={};
+	var searchByuserid='';
 	function BymanagePersonclick(){
 		$('.BymanagePerson').on('click',function(){
 			var uid=$('.managePerson').attr('saleid');
+			$('.BymanagePersonwap .Nosearch').html('').hide();	
+			$('.searchBySaleName').val('');
+			BymanagePersonJ.name=$('.searchBySaleName').val();
+			searchByuserid=uid;
 			var BySaleidArry=[];
 			$('.BymanagePerson span').each(function(i,item){
 				BySaleidArry.push($(this).attr('byuserid'));
 			})
 			$('.BymanagePersonwap').modal('toggle');
-			$ajax('post','user/queryNoBeManegeSales','{}',function succF(jo){
-				BymanagePersonList(jo.userList,uid);
-				$.each(BySaleidArry, function(i3,item3) {
-					$.each(jo.userList, function(i2,item2) {					
-						if(item3==item2.userId){
-							$('.BymanagePersonItem td[userid='+item3+']').prev().addClass('checkedimg');
-						}
-					});
-				});
-			},function errF(jo){
-				pub.Alt(jo.message,false);
-			})
+			 BymanagePersonAjax(uid,BySaleidArry)
+			
 		
+		})
+	}
+	function BymanagePersonAjax(uid,uidArry){
+		$ajax('post','user/queryNoBeManegeSales',BymanagePersonJ,function succF(jo){
+			if(jo.userList.length==0){
+	        	$('.BymanagePersonItem').hide();
+	        	$('.BymanagePersonwap .Nosearch').show().html('查无结果!');
+	        }else{
+	        	$('.BymanagePersonItem').show();
+	        	$('.BymanagePersonwap .Nosearch').html('').hide();	
+	        }
+			BymanagePersonList(jo.userList,uid);
+			$.each(uidArry, function(i3,item3) {
+				$.each(jo.userList, function(i2,item2) {					
+					if(item3==item2.userId){
+						$('.BymanagePersonItem td[userid='+item3+']').prev().addClass('checkedimg');
+					}
+				});
+			});
+		},function errF(jo){
+			pub.Alt(jo.message,false);
 		})
 	}
 	//被选择人状态，没有选择管理者被管理者不能点击
@@ -130,11 +157,25 @@
 		});
 		$('.BymanagePersonItem').html(Mhtml);
 	}
+	
 	//选择被管理人员
+	var searchBymanagePArry=[];
 	function checkByManPer(_this){
+		var BymanagePArry=[];
 		_this.find('.checkimg').toggleClass('checkedimg');
+		$('.BymanagePersonItem .checkedimg').each(function(i,item){
+			var byuserid=$(this).next().attr('userid');
+			BymanagePArry.push(byuserid);
+		})
+		searchBymanagePArry=BymanagePArry;
 
 	}
+	//搜索被管理者
+	$('.searchBySaleBtn').click(function(){
+		var name=$.trim($('.searchBySaleName').val());
+		BymanagePersonJ.name=name;
+		BymanagePersonAjax(searchByuserid,searchBymanagePArry);
+	})
 	$('.BymanagePersonConfirm').click(function(){
 		$('.BymanagePersonwap').modal('hide');
 		var BymanagePArry=[];

@@ -12,7 +12,7 @@ function signHtml(){
 			signHtml+='<div class="form-group row ">';
 				signHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>合同金额</label>';
 				signHtml+='<div class="col-md-2 col-sm-4">';
-					signHtml+='<input type="text" class="form-control anmontCost" onkeyup="num(this)"/>';
+					signHtml+='<input type="text" class="form-control anmontCost" onkeyup="num(this)" maxlength="8"/>';
 				signHtml+='</div>';
 				signHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;元</span>';
 			signHtml+='</div>';

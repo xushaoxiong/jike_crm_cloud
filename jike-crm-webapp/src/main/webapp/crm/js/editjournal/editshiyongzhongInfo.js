@@ -50,7 +50,7 @@ function TrialHtml(){
 			traHtml+='<div class="form-group row">';
 				traHtml+='<label class="col-md-1 col-sm-2"><span class="col">*</span>试用机型数量</label>';
 				traHtml+='<div class="col-md-1 col-sm-2">';
-					traHtml+='<input type="text" class="form-control triamModalNumb" onkeyup="PosiintegerNum(this)"/>&nbsp;';
+					traHtml+='<input type="text" class="form-control triamModalNumb" onkeyup="PosiintegerNum(this)" maxlength="4"/>&nbsp;';
 				traHtml+='</div>';
 				traHtml+='<span style="line-height: 34px;">台</span>';
 			traHtml+='</div>';

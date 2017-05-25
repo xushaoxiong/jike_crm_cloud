@@ -66,7 +66,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">采购预算</label>';
 				vFhtml+='	<div class="col-md-3 col-sm-5">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control budget"/>&nbsp;';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control budget" maxlength="8"/>&nbsp;';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="padding-top: 6px;display: inline-block;">元</span>';
 			vFhtml+='	</div>';

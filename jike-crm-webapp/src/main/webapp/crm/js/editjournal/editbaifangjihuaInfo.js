@@ -87,7 +87,7 @@ function visitPlan(){
 			vPhtml+='<div class="form-group row">';
 				vPhtml+='<label class="col-md-1 col-sm-2">预估费用</label>';
 				vPhtml+='<div class="col-md-3 col-sm-5">';
-					vPhtml+='<input type="text" value="" placeholder="" class="form-control planCost" onkeyup="num(this)"/>&nbsp;';
+					vPhtml+='<input type="text" value="" placeholder="" class="form-control planCost" onkeyup="num(this)" maxlength="8"/>&nbsp;';
 				vPhtml+='</div>';
 				vPhtml+='<span style="padding-top: 6px;display: inline-block;">元</span>';
 			vPhtml+='</div>';

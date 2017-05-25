@@ -65,7 +65,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">采购预算</label>';
 				vFhtml+='	<div class="col-md-3 col-sm-5">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control budget"/>&nbsp;';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control budget" maxlength="8"/>&nbsp;';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="padding-top: 6px;padding-left:5px;display: inline-block;">元</span>';
 			vFhtml+='	</div>';
@@ -107,7 +107,7 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">注册资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost" onkeyup="num(this)"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control registCost" onkeyup="num(this)" maxlength="4"/>';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';
@@ -120,13 +120,14 @@ function vistInformation(){
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">服务人员数量</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control servNum"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control servNum" onkeyup="PosiintegerNum(this)" maxlength="3" />';
 				vFhtml+='	</div>';
+				vFhtml+='	<span style="line-height:34px;padding-left:5px;">人</span>';
 			vFhtml+='	</div>';
 			vFhtml+='	<div class="form-group row">';
 				vFhtml+='	<label class="col-md-1 col-sm-2">启动资金</label>';
 				vFhtml+='	<div class="col-md-4 col-sm-6">';
-					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"  onkeyup="num(this)"/>';
+					vFhtml+='	<input type="text" value="" placeholder="" class="form-control startCost"  onkeyup="num(this)" maxlength="4"/>';
 				vFhtml+='	</div>';
 				vFhtml+='	<span style="line-height:34px;padding-left:5px;">万元</span>';
 			vFhtml+='	</div>';

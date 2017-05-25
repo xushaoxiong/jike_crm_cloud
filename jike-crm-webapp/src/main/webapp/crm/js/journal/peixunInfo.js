@@ -6,14 +6,14 @@ function trainiHtml(){
 			trainiHtml+='<div class="form-group row">';
 				trainiHtml+='<label class="col-md-3 col-sm-3">产品详细使用操作培训</label>';
 				trainiHtml+='<div class="col-md-1 col-sm-1">';
-					trainiHtml+='<input type="text" class="form-control trainPersonNumb" onkeyup="PosiintegerNum(this)" />';
+					trainiHtml+='<input type="text" class="form-control trainPersonNumb" onkeyup="PosiintegerNum(this)" maxlength="3"/>';
 				trainiHtml+='</div>';
 				trainiHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;人</span>';
 			trainiHtml+='</div>';
 			trainiHtml+='<div class="form-group row ">';
 				trainiHtml+='<label class="col-md-3 col-sm-3">考务实施、学生作答、老师批改培训</label>';
 				trainiHtml+='<div class="col-md-1 col-sm-1">';
-					trainiHtml+='<input type="text" class="form-control trainNumb" onkeyup="PosiintegerNum(this)"/>';
+					trainiHtml+='<input type="text" class="form-control trainNumb" onkeyup="PosiintegerNum(this)" maxlength="3"/>';
 				trainiHtml+='</div>';
 				trainiHtml+='<span style="line-height: 34px;">&nbsp;&nbsp;次</span>';
 			trainiHtml+='</div>';

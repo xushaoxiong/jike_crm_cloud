@@ -257,6 +257,8 @@ function getDataList(currPage, jg) {
 	var searchservnamelistArry=[];
 	$('.list-tr').on('click','.plusOppt',function(){
 		$("#opptModal").modal("toggle");
+		$('.searchserverName').val('');
+		$('#opptModal .Nosearch').html('').hide();	
 		var servnumb=$(this).parent().prev().prev().html();
 		$("#opptModal").attr('servopptnum',servnumb);
 		var servnamelistArry=[];
@@ -362,6 +364,8 @@ function getDataList(currPage, jg) {
 	var salesbusinesnum='';
 	$('.list-tr').on('click','.editserver',function(){
 		$("#editsaletModal").modal("toggle");
+		$('.searchsaleName').val('');
+		$('#editsaletModal .Nosearch').html('').hide();	
 		var userid=$(this).parent().attr('userid');
 		var opptnum=$(this).parent().prev().html();
 		searchuserid=userid;
