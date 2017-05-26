@@ -1,5 +1,8 @@
-
-	var ajaxUrl="http://localhost:8080/jike-crm-webapp/";
+	//生产    
+//	var ajaxUrl="http://crm.fclassroom.com/jike/";
+    //测试
+    	var ajaxUrl="http://47.93.43.215:8080/jike-crm-webapp/";  
+//    var ajaxUrl="http://localhost:8080/jike-crm-webapp/";
 
 	var $ajax=function(type,url,data,succF,errF){
 		$.ajax({
