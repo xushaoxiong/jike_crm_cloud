@@ -113,12 +113,19 @@ function editPanterScoldata(vdata){
 			var serviceJ={};
 			serviceJ.serviceName=$.trim($(this).find('.pScolcontName').val());
 			serviceJ.servicePhone=$.trim($(this).find('.pScolcontphone').val());
+			
 			if(!contact(serviceJ.servicePhone)&&serviceJ.servicePhone!=''){
 				pub.Alt('请填写联系人正确联系方式',false);
 				return phoneState=false;
 			}	
 			serviceArry.push(serviceJ);
 		});
+		var serviceArryA=[];
+		for (var j=0;j<serviceArry.length;j++) {
+			if(serviceArry[j].serviceName!=''||serviceArry[j].servicePhone!=''){
+				serviceArryA[serviceArryA.length] = serviceArry[j]
+			}
+		}
 		if(!phoneState){
 			return;
 		}
@@ -132,7 +139,8 @@ function editPanterScoldata(vdata){
 		cpsJson.schoolLevel=schoolLevel;
 		cpsJson.schoolProperty=schoolProperty;
 		cpsJson.schoolCategory=scolTypeArry.join('#');
-		cpsJson.serviceArr=serviceArry;
+		cpsJson.serviceArr=serviceArryA;
+		return;
 		dataJ.cpsJson=cpsJson
 		$ajax('post','businessOpportunity/updateCpsById',dataJ,function succF(jo){
 			 $('.R-wap').load('businesoppt/CpsSchoolList.html');
