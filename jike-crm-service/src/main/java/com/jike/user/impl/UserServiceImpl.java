@@ -398,7 +398,7 @@ public class UserServiceImpl implements UserService {
 		if(!saleLeaderArr.isEmpty()){ 
 			for (Map<String,Object> map : saleLeaderArr) {
 				Long leaderId = Long.parseLong(map.get("leader_id").toString());
-				if(!"%%".equals(managedName.replaceAll(" ", ""))){
+				if(!"%%".equals(managedName.trim())){
 					List<Map<String,Object>> saleLeaderIdArr = salesLeaderMapper.queryByLeaderId(leaderId);
 					for(Map<String,Object> map1 : saleLeaderIdArr){
 						String leader_name = map1.get("leader_name").toString();
@@ -612,7 +612,7 @@ public class UserServiceImpl implements UserService {
 		if(!serviceLeaderArr.isEmpty()){ 
 			for (Map<String,Object> map : serviceLeaderArr) {
 				Long leaderId = Long.parseLong(map.get("leader_id").toString());
-				if(!"%%".equals(managedName.replaceAll(" ", ""))){
+				if(!"%%".equals(managedName.trim())){
 					List<Map<String,Object>> serviceLeaderIdArr = serviceLeaderMapper.queryByLeaderId(leaderId);
 					for(Map<String,Object> map1 : serviceLeaderIdArr){
 						String leader_name = map1.get("leader_name").toString();
