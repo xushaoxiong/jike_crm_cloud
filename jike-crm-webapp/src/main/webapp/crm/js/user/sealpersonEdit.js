@@ -7,13 +7,14 @@ $('.goBack').click(function(){
 //选择被管理者
 var addState=true;
 $('.EditBymanagePerson').click(function(){
+	var EditBymanagePerson={};
 	var uid=$('.EditmanagePerson').attr('leaderid');
 	var BySaleidArry=[];
 	$('.EditBymanagePerson span').each(function(i,item){
 		BySaleidArry.push($(this).attr('byuserid'));
 	})
 	$('.BymanagePersonwap').modal('toggle');
-	$ajax('post','user/queryNoBeManegeSales','{}',function succF(jo){
+	$ajax('post','user/queryNoBeManegeSales',EditBymanagePerson,function succF(jo){
 		BymanagePersonList(jo.userList,uid);
 		addState=false;
 		$.each(BySaleidArry, function(i3,item3) {
