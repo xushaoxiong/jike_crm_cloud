@@ -1486,6 +1486,8 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 				User distributeUser = userService.getUserById(distributedUserId);
 				if(distributeUser!= null){
 					businessOpportunityJson.put("name", distributeUser.getName());
+				}else{
+					businessOpportunityJson.put("name", "");
 				}
 				if(roleId == 3){//销售编辑权限
 					//查询指派人ID
@@ -1611,17 +1613,19 @@ public class BusinessOpportunityLogServiceImpl implements BusinessOpportunityLog
 			}else if(businessOpportunityJson.getInteger("businessOpportunityType")==1){//合作伙伴
 				BoSign boSign = boSignMapper.selectBoSignByLogId(logId);
 				json = JSONObject.toJSONString(boSign,SerializerFeature.WriteNullStringAsEmpty);
-				List<PartnerAgentArea> partnerAgentAreas = agentAreaMapper.selectBySignId(boSign.getSignId());
-				JSONArray partnerAgentAreaList = new JSONArray();
-				for (PartnerAgentArea partnerAgentArea : partnerAgentAreas) {
-					String partnerAgentAreaString = JSONObject.toJSONString(partnerAgentArea,SerializerFeature.WriteNullStringAsEmpty);
-					JSONObject partnerAgentAreaJson = JSONObject.parseObject(partnerAgentAreaString);
-					removeCommonAttribute(partnerAgentAreaJson);
-					partnerAgentAreaList.add(partnerAgentAreaJson);
+				if(boSign!=null){
+					List<PartnerAgentArea> partnerAgentAreas = agentAreaMapper.selectBySignId(boSign.getSignId());
+					JSONArray partnerAgentAreaList = new JSONArray();
+					for (PartnerAgentArea partnerAgentArea : partnerAgentAreas) {
+						String partnerAgentAreaString = JSONObject.toJSONString(partnerAgentArea,SerializerFeature.WriteNullStringAsEmpty);
+						JSONObject partnerAgentAreaJson = JSONObject.parseObject(partnerAgentAreaString);
+						removeCommonAttribute(partnerAgentAreaJson);
+						partnerAgentAreaList.add(partnerAgentAreaJson);
+					}
+					JSONObject newJson = JSONObject.parseObject(json);
+					newJson.put("partnerAgentAreaList", partnerAgentAreaList);
+					json = newJson.toString();
 				}
-				JSONObject newJson = JSONObject.parseObject(json);
-				newJson.put("partnerAgentAreaList", partnerAgentAreaList);
-				json = newJson.toString();
 			}
 			
 			
